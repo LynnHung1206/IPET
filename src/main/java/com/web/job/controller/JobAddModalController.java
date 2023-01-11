@@ -2,8 +2,8 @@ package com.web.job.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.web.job.model.services.JobSchduleServices;
-import com.web.job.model.services.imp.JobSchduleServicesImp;
+import com.web.job.model.services.JobScheduleServices;
+import com.web.job.model.services.imp.JobScheduleServicesImp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +26,10 @@ public class JobAddModalController extends HttpServlet {
         Integer asstID2 = null;
         String[] periods = null;
         Map<String, Object> map = new HashMap<>();
+        GsonBuilder builder =  new GsonBuilder();
+        Gson gson = builder.serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
 
         if (req.getParameter("groomerID") != null && !req.getParameter("groomerID").trim().equals("")){
             groomerID =  Integer.parseInt(req.getParameter("groomerID"));
@@ -42,10 +46,10 @@ public class JobAddModalController extends HttpServlet {
 
         // 挑出不可選擇的日期
         if (groomerID != null && asstID1 != null && asstID2 != null && periods != null){
-            JobSchduleServices jobSchduleServices = new JobSchduleServicesImp();
+            JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
             Set<Object> illegalDates = new HashSet<>();
             for (String str : periods){
-                illegalDates.addAll(jobSchduleServices.findIllegalDatesToAddJobs(groomerID, asstID1, asstID2, str));
+                illegalDates.addAll(jobScheduleServices.findIllegalDatesToAddJobs(groomerID, asstID1, asstID2, str));
             }
             map.put("illegalDate", illegalDates);
         }else{
@@ -81,10 +85,6 @@ public class JobAddModalController extends HttpServlet {
         map.put("asstNames", asstNames);
 
         resp.setCharacterEncoding("UTF-8");
-        GsonBuilder builder =  new GsonBuilder();
-        builder.serializeNulls()
-                .setDateFormat("yyyy-MM-dd");
-        Gson gson = builder.create();
         resp.getWriter().print(gson.toJson(map));
 
     }

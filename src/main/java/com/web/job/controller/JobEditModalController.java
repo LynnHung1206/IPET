@@ -3,8 +3,9 @@ package com.web.job.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.job.model.entities.JobSchedule;
-import com.web.job.model.services.JobSchduleServices;
-import com.web.job.model.services.imp.JobSchduleServicesImp;
+import com.web.job.model.services.JobScheduleServices;
+import com.web.job.model.services.imp.JobScheduleServicesImp;
+import com.web.staff.model.service.StaffService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,22 +28,17 @@ public class JobEditModalController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         req.setCharacterEncoding("UTF-8");
         Integer schID = Integer.parseInt(req.getParameter("schID"));
-        JobSchduleServices jobSchduleServices  = new JobSchduleServicesImp();
+        JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
+        StaffService staffService = new StaffService();
         Map<String, Object> map = new HashMap<>();
-        JobSchedule jobByID = jobSchduleServices.findJobByID(schID);
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
+        JobSchedule jobByID = jobScheduleServices.findJobByID(schID);
 
         // 根據傳入的 schID 從資料庫拉出此班表訊息
-        map.put("schDate", jobByID.getSchDate());
-        map.put("schPeriod", jobByID.getSchPeriod());
-        // TODO: 模擬拿到 emp ID 對應的 NAME
-        map.put("groomerID", jobByID.getGroomerID());
-        map.put("groomerName", jobByID.getGroomerName());
-        map.put("asstID1", jobByID.getAsstID1());
-        map.put("asstID1Name", jobByID.getAsstID1Name());
-        map.put("asstID2", jobByID.getAsstID2());
-        map.put("asstID2Name", jobByID.getAsstID2Name());
-        map.put("employeeNote", jobByID.getEmployeeNote());
-
+        map.put("job", jobByID);
 
         // TODO: 模擬取得所有員工姓名 與 ID
         List<Integer> groomerIds = new ArrayList<>();
@@ -71,12 +67,7 @@ public class JobEditModalController extends HttpServlet {
         asstNames.add("助理7");
         map.put("asstNames", asstNames);
 
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.serializeNulls()
-                           .setDateFormat("yyyy-MM-dd")
-                           .create();
-        String jsonJob = gson.toJson(map);
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().print(jsonJob);
+        resp.getWriter().print(gson.toJson(map));
     }
 }

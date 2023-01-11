@@ -1,7 +1,7 @@
 package com.web.job.model.dao;
 
-import com.web.job.model.entities.JobSchedule;
 import com.core.model.dao.CoreDAO;
+import com.web.job.model.entities.JobSchedule;
 
 import java.sql.Date;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.web.job.controller;
 
 import com.web.job.model.entities.JobSchedule;
-import com.web.job.model.services.JobSchduleServices;
-import com.web.job.model.services.imp.JobSchduleServicesImp;
+import com.web.job.model.services.JobScheduleServices;
+import com.web.job.model.services.imp.JobScheduleServicesImp;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,10 +22,10 @@ public class JobOperationController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         String path = req.getServletPath();
+        JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
         if ("/ipet-back/job/job_delete".equals(path)) {
             Integer schID = Integer.parseInt(req.getParameter("schID")) ;
-            JobSchduleServices jobSchduleServices = new JobSchduleServicesImp();
-            Boolean deleteJob = jobSchduleServices.deleteJob(schID);
+            Boolean deleteJob = jobScheduleServices.deleteJob(schID);
             resp.setCharacterEncoding("UTF-8");
             resp.getWriter().print(deleteJob);
 
@@ -53,8 +53,7 @@ public class JobOperationController extends HttpServlet {
                 }
             }
 
-            JobSchduleServices jobSchduleServices = new JobSchduleServicesImp();
-            jobSchduleServices.addJobs(jobs);
+            jobScheduleServices.addJobs(jobs);
             for (JobSchedule job : jobs) {
                 if (!job.isSuccessful()){
                     message.append("無法新增此班表: ")
@@ -84,7 +83,6 @@ public class JobOperationController extends HttpServlet {
             System.out.println(req.getParameter("asstID2"));
             Integer asstID2 =  Integer.parseInt(req.getParameter("asstID2"));
             String employeeNote = req.getParameter("employeeNote");
-            JobSchduleServices jobSchduleServices = new JobSchduleServicesImp();
             JobSchedule job = new JobSchedule();
 
             job.setSchID(schID);
@@ -95,7 +93,7 @@ public class JobOperationController extends HttpServlet {
             job.setAsstID2(asstID2);
             job.setEmployeeNote(employeeNote);
 
-            JobSchedule editJob = jobSchduleServices.editJob(job);
+            JobSchedule editJob = jobScheduleServices.editJob(job);
 
             resp.setCharacterEncoding("UTF-8");
             resp.getWriter().print(editJob.getMessage());

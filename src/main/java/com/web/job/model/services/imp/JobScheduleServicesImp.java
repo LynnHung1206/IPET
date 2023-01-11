@@ -1,23 +1,34 @@
 package com.web.job.model.services.imp;
 
+import com.web.appoint.model.dao.AppointmentDAO;
 import com.web.appoint.model.dao.imp.AppointmentImp;
 import com.web.appoint.model.entities.Appointment;
+import com.web.job.model.dao.JobScheduleDAO;
 import com.web.job.model.dao.JobScheduleImp;
 import com.web.job.model.entities.JobSchedule;
-import com.web.job.model.services.JobSchduleServices;
+import com.web.job.model.services.JobScheduleServices;
+import com.web.staff.model.dao.StaffDAO;
+import com.web.staff.model.dao.StaffDAOImpl;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Yu-Jing
  * @create 2023/1/3 下午 08:13
  */
-public class JobSchduleServicesImp implements JobSchduleServices {
-    private final JobScheduleImp jobScheduleImp = new JobScheduleImp();
-    private final AppointmentImp appointmentImp = new AppointmentImp();
+public class JobScheduleServicesImp implements JobScheduleServices {
+    private final JobScheduleDAO jobScheduleDAO;
+    private final AppointmentDAO appointmentDAO;
+    private final StaffDAO staffDAO;
 
-    // TODO: private StaffImp staffImp
+    public JobScheduleServicesImp(){
+        jobScheduleDAO = new JobScheduleImp();
+        appointmentDAO = new AppointmentImp();
+        staffDAO = new StaffDAOImpl();
+    }
 
     @Override
     public JobSchedule[] addJobs(JobSchedule[] jobSchedules) {
@@ -28,12 +39,13 @@ public class JobSchduleServicesImp implements JobSchduleServices {
             Integer asstID1 = job.getAsstID1();
             Integer asstID2 = job.getAsstID2();
 
-            List<JobSchedule> schByDatePeriod = jobScheduleImp.getSchByDatePeriod(schDate, schPeriod);
-            Set<Integer> empsByDatePeriod = jobScheduleImp.getEmpsByDatePeriod(schDate, schPeriod);
+            List<JobSchedule> schByDatePeriod = jobScheduleDAO.getSchByDatePeriod(schDate, schPeriod);
+            Set<Integer> empsByDatePeriod = jobScheduleDAO.getEmpsByDatePeriod(schDate, schPeriod);
 
             // 1. 判斷員工是否選擇正確
-            //TODO: 需串接 staff, StaffDAO.getPOSI(id) == "美容師" ...
-            if (false){
+            if (!"美容師".equals(staffDAO.getById(groomerID).getPosi()) ||
+                !"美容助理".equals(staffDAO.getById(asstID1).getPosi()) ||
+                !"美容助理".equals(staffDAO.getById(asstID2).getPosi())){
                 job.setSuccessful(false);
                 job.setMessage("新增失敗，員工種類錯誤。");
                 return jobSchedules;
@@ -55,17 +67,17 @@ public class JobSchduleServicesImp implements JobSchduleServices {
             job.setMessage("暫時新增。");
         }
 
-        jobScheduleImp.addBatch(jobSchedules);
+        jobScheduleDAO.addBatch(jobSchedules);
         return jobSchedules;
     }
 
     @Override
     public Boolean deleteJob(Integer id) {
         // 必須沒有預約單才可以刪除
-        Appointment appointBySchId = appointmentImp.findAppointBySchId(id);
+        Appointment appointBySchId = appointmentDAO.findAppointBySchId(id);
         System.out.println(appointBySchId);
         if (appointBySchId == null){
-            jobScheduleImp.delete(id);
+            jobScheduleDAO.delete(id);
             return true;
         }
         return false;
@@ -80,11 +92,12 @@ public class JobSchduleServicesImp implements JobSchduleServices {
         Integer asstID2 = newJobSchedule.getAsstID2();
         Date newSchDate = newJobSchedule.getSchDate();
         String newSchPeriod = newJobSchedule.getSchPeriod();
-        Set<Integer> empsByDatePeriodExcludedSchID = jobScheduleImp.getEmpsByDatePeriod(newSchDate, newSchPeriod, schID);
+        Set<Integer> empsByDatePeriodExcludedSchID = jobScheduleDAO.getEmpsByDatePeriod(newSchDate, newSchPeriod, schID);
 
 
-        // 1. TODO:判斷員工是否選擇正確
-        if (false){
+        if (!"美容師".equals(staffDAO.getById(groomerID).getPosi()) ||
+            !"美容助理".equals(staffDAO.getById(asstID1).getPosi()) ||
+            !"美容助理".equals(staffDAO.getById(asstID2).getPosi())){
             newJobSchedule.setMessage("修改失敗，員工種類錯誤。");
             newJobSchedule.setSuccessful(false);
             return newJobSchedule;
@@ -100,7 +113,7 @@ public class JobSchduleServicesImp implements JobSchduleServices {
         }
 
         // 更改備註
-        jobScheduleImp.update(newJobSchedule);
+        jobScheduleDAO.update(newJobSchedule);
         newJobSchedule.setMessage("修改成功");
         newJobSchedule.setSuccessful(true);
         return newJobSchedule;
@@ -109,32 +122,44 @@ public class JobSchduleServicesImp implements JobSchduleServices {
     @Override
     public List<JobSchedule> findAllJobs() {
         // 完整顯示 schID schDate schPeriod groomerName asstID1Name asstID2Name employeeNote apmID
-        // 必須與員工資料串接 (先暫不接)
-        List<JobSchedule> all = jobScheduleImp.getAll();
+        List<JobSchedule> all = jobScheduleDAO.getAll();
         return integrateJobSchedules(all);
     }
 
     @Override
     public JobSchedule findJobByID(Integer id) {
-        return jobScheduleImp.getById(id);
+        List<JobSchedule> jobs = new ArrayList<>();
+        jobs.add(jobScheduleDAO.getById(id));
+        return integrateJobSchedules(jobs).get(0);
     }
 
     @Override
     public Set <Object> findIllegalDatesToAddJobs(Integer groomerId, Integer asstId1, Integer asstId2, String period) {
-        return jobScheduleImp.findIllegalDatesToAddJobs(groomerId, asstId1, asstId2, period);
+        return jobScheduleDAO.findIllegalDatesToAddJobs(groomerId, asstId1, asstId2, period);
     }
 
+    @Override
+    public List<JobSchedule> findAvailableJobsToAddAppoint() {
+        List<JobSchedule> all = new ArrayList<>();
+        Date today = new Date(System.currentTimeMillis());
+        for (JobSchedule job : integrateJobSchedules(jobScheduleDAO.getAll())){
+            if (job.getApmId() == null && (job.getSchDate().after(today) || job.getSchDate().equals(today))){
+                all.add(job);
+            }
+        }
+        return all;
+    }
 
     private List<JobSchedule> integrateJobSchedules(List<JobSchedule> all) {
         for(JobSchedule job : all){
-            Appointment appoint = appointmentImp.findAppointBySchId(job.getSchID());
+            Appointment appoint = appointmentDAO.findAppointBySchId(job.getSchID());
             if (appoint != null){
-                job.setAmpId(appoint.getApmID());
+                job.setApmId(appoint.getApmID());
             }
-            // TODO: 模擬從 staff 串接員工姓名, StaffDAO.getName(id)
-            job.setGroomerName(job.getGroomerID() + "-美容師名字");
-            job.setAsstID1Name(job.getAsstID1() + "-助理1號名字");
-            job.setAsstID2Name(job.getAsstID2() + "-助理2號名字");
+
+            job.setGroomerName(staffDAO.getById(job.getGroomerID()).getName());
+            job.setAsstID1Name(staffDAO.getById(job.getAsstID1()).getName());
+            job.setAsstID2Name(staffDAO.getById(job.getAsstID2()).getName());
         }
         return all;
     }

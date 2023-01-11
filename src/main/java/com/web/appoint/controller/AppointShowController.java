@@ -1,13 +1,11 @@
 package com.web.appoint.controller;
 
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.appoint.model.entities.Appointment;
 import com.web.appoint.model.services.AppointServices;
 import com.web.appoint.model.services.imp.AppointServicesImp;
-
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +22,7 @@ import java.util.List;
  */
 
 @WebServlet({"/ipet-back/appoint/appoints", "/ipet-back/appoint/appoints_cancelled", "/ipet-back/appoint/appoints_payed", "/ipet-back/appoint/appoints_finished", "/ipet-back/appoint/appoints_outdated"})
-public class AppointController extends HttpServlet {
+public class AppointShowController extends HttpServlet {
 
     // forward: 預約瀏覽, 已取消預約, 已付費預約, 已完成預約, 逾時預約
     @Override
