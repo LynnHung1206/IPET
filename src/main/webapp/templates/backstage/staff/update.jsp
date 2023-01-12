@@ -87,94 +87,107 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 							</c:forEach>
 						</ul>
 					</c:if>
-					
-						<form action="${pageContext.request.contextPath}/ipet-back/staff/edit" method="post">
-						
-							<table id="staffdata">
-								<tr>
-									<td><label>姓名:</label></td>
-									<td><input type="text" name="sname"
-										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}"
-										value="<%=staff.getName()%>" required></td>
-								</tr>
 
-								<tr>
-									<td><label>身分證字號:</label></td>
-									<td><input type="text" name="uid"
-										value="<%=staff.getUid()%>" required></td>
-								</tr>
-								<tr>
-									<td><label>生日:</label></td>
-									<td><input type="date" name="birth"
-										value="<%=staff.getBth()%>" readonly required></td>
-								</tr>
-								<tr>
-									<td>性別:</td>
-									<td><label for="girl"><input type="radio"
-											name="sex" value="<%=staff.getSex()%>" checked><%=staff.getSex()%></label></td>
-								</tr>
-								<tr>
-									<td><label>Email:</label></td>
-									<td><input type="email" name="email"
-										value="<%=staff.getEmail()%>" required></td>
-								</tr>
-								<tr>
-									<td><label>手機:</label></td>
-									<td><input type="tel" name="phone"
-										value="<%=staff.getPhone()%>" required></td>
-								</tr>
-								<tr>
-									<td><label>市內電話:</label></td>
-									<td><input type="tel" name="tel"
-										value="${staff.getTel() == null?'':staff.getTel()}"></td>
-								</tr>
-								<tr>
-									<td><label>地址:</label></td>
-									<td><input type="text" name="address"
-										value="<%=staff.getAdd()%>" required></td>
-								</tr>
-								<tr>
-									<td><label>帳號:</label></td>
-									<td><input type="text" name="acount"
-										value="<%=staff.getAc()%>" readonly required></td>
-								</tr>
-								<tr>
-									<td><label>密碼:</label></td>
-									<td><input type="password" name="password"
-										value="<%=staff.getPw()%>" required></td>
-								</tr>
-								<tr>
-									<td><label> 職稱: </label></td>
-									<td><select name="job">
-											<option value="" disabled selected>請選擇</option>
-											<option value="經理" ${staff.getPosi()== "經理"? 'selected':''}>經理</option>
-											<option value="財務" ${staff.getPosi()== "財務"? 'selected':''}>財務</option>
-											<option value="會計" ${staff.getPosi()== "會計"? 'selected':''}>會計</option>
-											<option value="人事" ${staff.getPosi()== "人事"? 'selected':''}>人事</option>
-											<option value="美容師" ${staff.getPosi()== "美容師"? 'selected':''}>美容師</option>
-											<option value="美容助理"
-												${staffVO.getPosi()== "美容助理"? 'selected':''}>美容助理</option>
-											<option value="一般人員"
-												${staff.getPosi()== "一般人員"? 'selected':''}>一般人員</option>
-									</select></td>
-							
-								<tr>
-									<jsp:useBean id="staffSvc" scope="page"
-										class="com.web.staff.model.service.StaffService" />
-									<td><label>狀態:</label></td>
-									<td><select name="status">
-											<option value="0" ${staff.getStatus() == 0 ?'selected':''}>在職</option>
-											<option value="1" ${staff.getStatus() == 1 ?'selected':''}>離職</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td><input type="hidden" name="action" value="update">
-										<input type="hidden" name="staffId"
-										value="<%=staff.getId()%> "></td>
-									<td><input type="submit" value="送出修改" onclick="enter()"></td>
-								</tr>
-							</table>
-						</form>
+					<form
+						action="${pageContext.request.contextPath}/ipet-back/staff/edit"
+						method="post">
+
+						<table id="staffdata">
+							<tr>
+								<td><label>姓名:</label></td>
+								<td><input type="text" name="sname"
+									pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}"
+									value="<%=staff.getName()%>" required></td>
+							</tr>
+
+							<tr>
+								<td><label>身分證字號:</label></td>
+								<td><input type="text" name="uid"
+									value="<%=staff.getUid()%>" required></td>
+							</tr>
+							<tr>
+								<td><label>生日:</label></td>
+								<td><input type="date" name="birth"
+									value="<%=staff.getBth()%>" readonly required></td>
+							</tr>
+							<tr>
+								<td>性別:</td>
+								<td><label for="girl"><input type="radio"
+										name="sex" value="<%=staff.getSex()%>" checked><%=staff.getSex()%></label></td>
+							</tr>
+							<tr>
+								<td><label>Email:</label></td>
+								<td><input type="email" name="email"
+									value="<%=staff.getEmail()%>" required></td>
+							</tr>
+							<tr>
+								<td><label>手機:</label></td>
+								<td><input type="tel" name="phone"
+									value="<%=staff.getPhone()%>" required></td>
+							</tr>
+							<tr>
+								<td><label>市內電話:</label></td>
+								<td><input type="tel" name="tel"
+									value="${staff.getTel() == null?'':staff.getTel()}"></td>
+							</tr>
+							<tr>
+								<td><label>地址:</label></td>
+								<td><input type="text" name="address"
+									value="<%=staff.getAdd()%>" required></td>
+							</tr>
+							<tr>
+								<td><label>帳號:</label></td>
+								<td><input type="text" name="acount"
+									value="<%=staff.getAc()%>" readonly required></td>
+							</tr>
+							<tr>
+								<td><label>密碼:</label></td>
+								<td><input type="password" name="password"
+									value="<%=staff.getPw()%>" required></td>
+							</tr>
+							<tr>
+								<td><label> 職稱: </label></td>
+								<td><select name="job">
+										<option value="" disabled selected>請選擇</option>
+										<option value="經理" ${staff.getPosi()== "經理"? 'selected':''}>經理</option>
+										<option value="財務" ${staff.getPosi()== "財務"? 'selected':''}>財務</option>
+										<option value="會計" ${staff.getPosi()== "會計"? 'selected':''}>會計</option>
+										<option value="人事" ${staff.getPosi()== "人事"? 'selected':''}>人事</option>
+										<option value="美容師" ${staff.getPosi()== "美容師"? 'selected':''}>美容師</option>
+										<option value="美容助理"
+											${staffVO.getPosi()== "美容助理"? 'selected':''}>美容助理</option>
+										<option value="一般人員"
+											${staff.getPosi()== "一般人員"? 'selected':''}>一般人員</option>
+								</select></td>
+							<tr>
+								<jsp:useBean id="staffSvc" scope="page"
+									class="com.web.staff.model.service.StaffService" />
+								<td><label>狀態:</label></td>
+								<td><select name="status">
+										<option value="0" ${staff.getStatus() == 0 ?'selected':''}>在職</option>
+										<option value="1" ${staff.getStatus() == 1 ?'selected':''}>離職</option>
+								</select></td>
+							</tr>
+							<tr>
+								<jsp:useBean id="adminFuncSvc" scope="page"
+									class="com.web.admin.model.service.AdminFuncService" />
+								<td><label>權限:</label></td>
+								<td><c:forEach var="adminFunc"
+										items="${adminFuncSvc.getAll()}">
+										<label for="${adminFunc.getAdminID()}"
+											style="font-size: 10px;"><input type="radio"
+											name="admin" id="${adminFunc.getAdminID()}"
+											value="${adminFunc.getAdminID()} ">
+											${adminFunc.getAdminName()}</label>
+									</c:forEach></td>
+							</tr>
+							<tr>
+								<td><input type="hidden" name="action" value="update">
+									<input type="hidden" name="staffId" value="<%=staff.getId()%> "></td>
+								<td><input type="submit" value="送出修改" onclick="enter()"></td>
+							</tr>
+						</table>
+					</form>
 					<div class="col-sm-6"></div>
 					<div class="row mb-2"></div>
 				</div>

@@ -3,7 +3,6 @@ package com.web.staff.model.dao;
 import java.util.*;
 
 import org.hibernate.Session;
-
 import com.web.staff.model.entity.Staff;
 
 
@@ -41,7 +40,6 @@ public class StaffDAOImpl implements StaffDAO {
 	public Staff getById(Integer id) {
 		 Session session = getSession();
 	        return session.get(Staff.class, id);
-		
 	}
 	
 
