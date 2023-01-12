@@ -65,7 +65,6 @@ public class StaffServlet extends HttpServlet {
 		}
 		if ("update".equals(action)) {
 			update(req, res);
-			System.out.println("here==========");
 		}
 	}
 

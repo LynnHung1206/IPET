@@ -157,11 +157,7 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 											<option value="一般人員"
 												${staff.getPosi()== "一般人員"? 'selected':''}>一般人員</option>
 									</select></td>
-<!-- 								<tr> -->
-<%-- 									<jsp:useBean id="adminFuncSvc" scope="page" --%>
-<%-- 										class="com.web.admin.model.service.AdminFuncService" /> --%>
-
-<!-- 								</tr> -->
+							
 								<tr>
 									<jsp:useBean id="staffSvc" scope="page"
 										class="com.web.staff.model.service.StaffService" />
