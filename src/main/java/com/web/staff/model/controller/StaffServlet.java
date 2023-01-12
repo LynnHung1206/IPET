@@ -65,6 +65,7 @@ public class StaffServlet extends HttpServlet {
 		}
 		if ("update".equals(action)) {
 			update(req, res);
+			System.out.println("here==========");
 		}
 	}
 
@@ -84,6 +85,7 @@ public class StaffServlet extends HttpServlet {
 		String idStr = req.getParameter("staffId");
 		java.sql.Date birth = Date.valueOf(birthStr);
 
+//		System.out.println("here==========");
 		Integer status = Integer.valueOf(statusStr);
 		Integer id = Integer.valueOf(idStr.toString().trim());
 

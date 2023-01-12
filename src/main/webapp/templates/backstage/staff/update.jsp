@@ -88,7 +88,7 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 						</ul>
 					</c:if>
 					
-						<form action="register" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-back/staff/edit" method="post">
 						
 							<table id="staffdata">
 								<tr>
@@ -157,11 +157,11 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 											<option value="一般人員"
 												${staff.getPosi()== "一般人員"? 'selected':''}>一般人員</option>
 									</select></td>
-								<tr>
-									<jsp:useBean id="adminFuncSvc" scope="page"
-										class="com.web.admin.model.service.AdminFuncService" />
+<!-- 								<tr> -->
+<%-- 									<jsp:useBean id="adminFuncSvc" scope="page" --%>
+<%-- 										class="com.web.admin.model.service.AdminFuncService" /> --%>
 
-								</tr>
+<!-- 								</tr> -->
 								<tr>
 									<jsp:useBean id="staffSvc" scope="page"
 										class="com.web.staff.model.service.StaffService" />
