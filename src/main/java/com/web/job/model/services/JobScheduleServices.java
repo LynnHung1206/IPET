@@ -2,6 +2,7 @@ package com.web.job.model.services;
 
 import com.core.model.service.CoreService;
 import com.web.job.model.entities.JobSchedule;
+import com.web.staff.model.entity.Staff;
 
 import java.util.List;
 import java.util.Set;

@@ -66,6 +66,65 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+            <!-- Filter -->
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">班表 Filter</h3>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>班表編號</label>
+                        <input type="text" class="form-control column_filter" id="col0-search"  data-column="0" placeholder="Enter ...">
+                      </div>
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>美容師姓名</label>
+                        <input type="text" class="form-control column_filter" id="col1-search" data-column="1" placeholder="Enter ...">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>助理1姓名</label>
+                        <input type="text" class="form-control column_filter" id="col2-search" data-column="2" placeholder="Enter ...">
+                      </div>
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>助理2姓名</label>
+                        <input type="text" class="form-control column_filter" id="col3-search" data-column="3" placeholder="Enter ...">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>班表日期</label>
+                        <input type="text" class="form-control column_filter" id="col4-search" data-column="4" placeholder="Enter ...">
+                      </div>
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>班表時段</label>
+                        <input type="text" class="form-control column_filter" id="col5-search" data-column="5" placeholder="Enter ...">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>預約單編號</label>
+                        <input type="text" class="form-control column_filter" id="col6-search" data-column="6" placeholder="Enter ...">
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+            <!-- /.filter -->
+
+            <!-- table -->
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title"></h3>
@@ -120,7 +179,7 @@
               </div>
               <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <!-- /.table -->
           </div>
           <!-- /.col -->
         </div>
@@ -341,10 +400,10 @@
 
 <!-- Data presentation and operation show -->
 <script>
+  let table;
   $(document).ready(function() {
 
-
-    let table = $('#scheduleTable').DataTable({
+    table = $('#scheduleTable').DataTable({
       autoWidth: false,
       responsive: true,
       lengthChange: true,
@@ -757,7 +816,17 @@
         <!-- /.Add data from modal -->
       }
     });
+
+    $('input.column_filter').on('keyup click', function () {
+      filterColumn($(this).attr('data-column'));
+    });
   });
+  function filterColumn(i) {
+    table.column(i)
+            .search($('#col' + i + '-search').val())
+            .draw();
+  }
+
 </script>
 </body>
 </html>

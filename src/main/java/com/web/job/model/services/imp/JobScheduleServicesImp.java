@@ -9,6 +9,7 @@ import com.web.job.model.entities.JobSchedule;
 import com.web.job.model.services.JobScheduleServices;
 import com.web.staff.model.dao.StaffDAO;
 import com.web.staff.model.dao.StaffDAOImpl;
+import com.web.staff.model.entity.Staff;
 
 import java.sql.Date;
 import java.util.ArrayList;
