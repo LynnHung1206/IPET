@@ -16,7 +16,7 @@
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
   <style>
     .fa-envelope:before {
       content: "";
