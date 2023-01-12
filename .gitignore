@@ -4,3 +4,5 @@
 /lib/
 .classpath
 .project
+/bin/
+src/main/webapp/META-INF/context.xml
