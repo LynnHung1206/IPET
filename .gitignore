@@ -4,3 +4,7 @@
 /lib/
 .classpath
 .project
+# Intellij
+.idea/
+*.iml
+*.iws
