@@ -28,40 +28,36 @@ public class AppointShowController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
+        AppointServices appointDetailServices = new AppointServicesImp();
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
         if ("/ipet-back/appoint/appoints".equals(path)){
-            AppointServices appointDetailServices = new AppointServicesImp();
-            GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.serializeNulls()
-                    .setDateFormat("yyyy-MM-dd")
-                    .create();
-
             List<Appointment> allServices = appointDetailServices.findAllAppoint();
-            String allServicesJSON = gson.toJson(allServices);
-            req.setAttribute("appoints", allServicesJSON);
+
+            req.setAttribute("appoints", gson.toJson(allServices));
             req.getRequestDispatcher("/templates/backstage/salon/salonAppointAll.jsp").forward(req, resp);
 
         }else if ("/ipet-back/appoint/appoints_cancelled".equals(path)){
-            AppointServices appointDetailServices = new AppointServicesImp();
             List<Appointment> allServices = appointDetailServices.findAppointBasedOnStatus(2);
-            req.setAttribute("appoints_cancelled", allServices);
+
+            req.setAttribute("appoints", gson.toJson(allServices));
             req.getRequestDispatcher("/templates/backstage/salon/salonAppointCancelled.jsp").forward(req, resp);
 
         }else if ("/ipet-back/appoint/appoints_payed".equals(path)){
-            AppointServices appointDetailServices = new AppointServicesImp();
             List<Appointment> allServices = appointDetailServices.findAppointBasedOnStatus(0);
-            req.setAttribute("appoints_payed", allServices);
+            req.setAttribute("appoints", gson.toJson(allServices));
             req.getRequestDispatcher("/templates/backstage/salon/salonAppointPayed.jsp").forward(req, resp);
 
         }else if ("/ipet-back/appoint/appoints_finished".equals(path)){
-            AppointServices appointDetailServices = new AppointServicesImp();
             List<Appointment> allServices = appointDetailServices.findAppointBasedOnStatus(1);
-            req.setAttribute("appoints_payed", allServices);
+            req.setAttribute("appoints", gson.toJson(allServices));
             req.getRequestDispatcher("/templates/backstage/salon/salonAppointFinished.jsp").forward(req, resp);
 
         }else if ("/ipet-back/appoint/appoints_outdated".equals(path)){
-            AppointServices appointDetailServices = new AppointServicesImp();
             List<Appointment> allServices = appointDetailServices.findAppointBasedOnStatus(3);
-            req.setAttribute("appoints_payed", allServices);
+            req.setAttribute("appoints", gson.toJson(allServices));
             req.getRequestDispatcher("/templates/backstage/salon/salonAppointOutdated.jsp").forward(req, resp);
         }
     }

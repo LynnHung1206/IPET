@@ -9,16 +9,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="/static/backstage/plugins/fontawesome-free/css/all.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="/static/backstage/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="/static/backstage/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="/static/backstage/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <link rel="stylesheet" href="/static/backstage/plugins/datatables-select/css/select.bootstrap4.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/css/select.bootstrap4.css">
 
   <!-- TODO: 目前先使用 完整css-->
   <!-- Theme style -->
-  <link rel="stylesheet" href="/static/backstage/css/adminlte.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
   <!-- childTable style -->
   <style>
     .childTable th{
@@ -34,12 +34,12 @@
     }
 
     td.details-control {
-      background: url("../../../static/backstage/img/more.png") no-repeat center;
+      background: url("${pageContext.request.contextPath}/static/backstage/img/more.png") no-repeat center;
       background-size: 25px;
       cursor: pointer;
     }
     tr.shown td.details-control {
-      background: url("../../../static/backstage/img/close.png") no-repeat center;
+      background: url("${pageContext.request.contextPath}/static/backstage/img/close.png") no-repeat center;
       background-size: 20px;
       cursor: pointer;
     }
@@ -71,9 +71,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/templates/backstage/index.htmljsp">Home</a></li>
+              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
               <li class="breadcrumb-item">美容預約管理</li>
-              <li class="breadcrumb-item active"><a href="/templates/backstage/salon/salonAppointPayed.jsp">已付訂金的預約</a></li>
+              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/appoint/appoints_payed">已付訂金的預約</a></li>
             </ol>
           </div>
         </div>
@@ -121,28 +121,6 @@
     </section>
     <!-- /.content -->
 
-    <!-- Remove Modal content   -->
-    <div class="modal fade" id="RemoveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">資料刪除</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            確認要刪除此筆資料?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="submit" class="btn btn-danger btn-remove-confirm">確認</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.Remove Modal content   -->
-
     <!-- Edit Modal content   -->
     <div class="modal fade" id="EditModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -155,42 +133,79 @@
           </div>
           <div class="modal-body">
             <form>
+              <%-- 預約日期 --%>
               <div class="form-group">
-                <label for="reserveDate-modal" class="col-form-label">預約日期</label>
-                <input type="date" class="form-control" id="reserveDate-modal" readonly>
+                <label for="reserveDate-modal-edit" class="col-form-label">預約日期</label>
+                <input type="date" class="form-control" id="reserveDate-modal-edit" readonly>
               </div>
+              <%-- 預約時段 --%>
               <div class="form-group">
-                <label for="reservePeriod-modal" class="col-form-label">預約時段</label>
-                <input type="text" id="reservePeriod-modal"  class="form-control"  readonly>
+                <label for="reservePeriod-modal-edit" class="col-form-label">預約時段</label>
+                <input type="text" id="reservePeriod-modal-edit"  class="form-control"  readonly>
               </div>
+              <%-- 預約單狀態 --%>
               <div class="form-group">
-                <label for="reserveStatus-modal" class="col-form-label">預約單狀態</label>
-                <select id="reserveStatus-modal" class="form-control">
-                  <option value="1">已支付訂金</option>
-                  <option value="2">已完成預約</option>
-                  <option value="3">已取消</option>
-                  <option value="4">逾時未到</option>
+                <label for="reserveStatus-modal-edit" class="col-form-label">預約單狀態</label>
+                <select id="reserveStatus-modal-edit" class="form-control">
+                  <option value="0">已支付訂金</option>
+                  <option value="1">已完成預約</option>
+                  <option value="2">已取消</option>
+                  <option value="3">逾時未到</option>
                 </select>
               </div>
+
+              <div>
+                <button type="button" class="btn btn-outline-dark" id="searchAvailableJob">查詢可用班表</button>
+              </div>
+              <%-- 班表編號 --%>
               <div class="form-group">
-                <label for="jobId-modal" class="col-form-label">班表編號</label>
-                <select id="jobId-modal" class="form-control">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
+                <label for="jobId-modal-edit" class="col-form-label">班表編號</label>
+                <select id="jobId-modal-edit" class="form-control">
                 </select>
+              </div>
+              <%-- 備註 --%>
+              <div>
+                <label for="jobId-modal-edit" class="col-form-label">顧客備註</label>
+                <textarea id="clientNote-modal-edit" class="form-control"></textarea>
+              </div>
+              <div>
+                <p id="editModalMessage"></p>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="submit" class="btn btn-primary btn-edit-confirm">確認修改</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
+            <button data-toggle="modal" class="btn btn-primary btn-edit-confirm">確認修改</button>
           </div>
         </div>
       </div>
     </div>
     <!-- /. Edit Modal content   -->
+
+    <!-- Edit Confirm Modal content   -->
+    <div class="modal fade" id="EditConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            確認要修改此筆資料? <br>
+            <p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或 "逾時未到"，該筆資料後續將無法再被更改。</p>
+            <br>
+            <p id="editConfirmModalMessage"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
+            <button type="submit" class="btn btn-danger btn-edit-confirm-confirm" >確認修改</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.Edit Confirm Modal content   -->
 
   </div>
   <!-- /.content-wrapper -->
@@ -207,37 +222,27 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="/static/backstage/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="/static/backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE -->
-<script src="/static/backstage/js/adminlte.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
 
 <!-- DataTables  & Plugins -->
-<script src="/static/backstage/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/static/backstage/plugins/jszip/jszip.min.js"></script>
-<script src="/static/backstage/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="/static/backstage/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<script src="/static/backstage/plugins/datatables-select/js/dataTables.select.js" ></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/jszip/jszip.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/js/dataTables.select.js" ></script>
 
-<!-- LoadHTML-->
-<script>
-  $(function () {
-    // Navbar script
-    $("#Mynavbar").load("../../navbar_pages.html");
-
-    // Footer script
-    $("#Myfooter").load("../../footer.html");
-  })
-</script>
 
 <!-- sidebar menu Class -->
 <script>
@@ -247,72 +252,65 @@
 
 <!-- DataTable show child row -->
 <script>
-  /* Formatting function for row details - modify as you need */
-  function format ( d ) {
+  function format (detailService) {
     // `d` is the original data object for the row
     let tbody = `
-<tbody class="childTable">
-  <tr>
-      <th>服務編號</th>
-      <th>服務名稱</th>
-      <th>服務價格</th>
-      <th>優惠方案編號</th>
-      <th>優惠方案名稱</th>
-      <th>優惠方案價</th>
-  </tr>`;
+        <tbody class="childTable">
+          <tr>
+              <th>服務編號</th>
+              <th>服務名稱</th>
+              <th>服務價格</th>
+              <th>優惠方案編號</th>
+              <th>優惠方案名稱</th>
+              <th>優惠方案價</th>
+          </tr>`;
 
 
-    for (let i = 0; i < d.serviceId.length; i ++){
+    for (let detail of detailService.appointmentDetails){
       tbody += `
         <tr>
-            <td>${d.serviceId[i]}</td>
-            <td>${d.serviceName[i]}</td>
-            <td>${d.servicePrice[i]}</td>
-            <td>${d.saleId[i]}</td>
-            <td>${d.saleName[i]}</td>
-            <td>${d.salePrice[i]}</td>
+            <td>\${detail.svcId}</td>
+            <td>\${detail.svcName}</td>
+            <td>\${detail.svcPrice}</td>
+            <td>\${detail.saleId}</td>
+            <td>\${detail.saleName}</td>
+            <td>\${detail.salePrice}</td>
         </tr>
         `
     }
 
     tbody += `
-                <tr>
-                  <td colspan="6" style="border-top: 1px solid #dee2e6;
-                  border-right: 1px solid #dee2e6;
-                  border-bottom: 1px solid #dee2e6"><b>顧客備註</b>: ${d.clientNote}</td>
-                </tr>
                 </tbody>
             `;
     return tbody;
   }
-
   $(document).ready(function() {
+
     let table = $('#reserveTable').DataTable({
       autoWidth: false,
       responsive: true,
       lengthChange: true,
       info: true,
-      altEditor: true,     // Enable altEditor
-      ajax: "/templates/backstage/salon/objects.txt",
+      altEditor: false,     // Enable altEditor
+      data: ${appoints},
 
       //  填寫直接顯示的欄位，需要與thead tfoot 對應
       "columns": [
-        { data: "reserveId",  responsivePriority: 1,  className: "reserveId"},
-        { data: "memberName",  responsivePriority: 2,  className: "memberName"},
-        { data: "petName",  className: "petName"},
-        { data: "reserveDate",  responsivePriority: 3 , className: "reserveDate"},
-        { data: "reservePeriod",  responsivePriority: 4, className: "reservePeriod"},
-        { data: "totalPrice", className: "totalPrice" },
-        { data: "reserveStatus", className: "reserveStatus"},
-        { data: "jobId", className: "jobId"},
-        {
+        {data: "apmID", responsivePriority: 1,  className: "reserveId"},
+        {data: "memName", responsivePriority: 2,  className: "memberName"},
+        {data: "petName", className: "petName"},
+        {data: "schDate", responsivePriority: 3 , className: "reserveDate"},
+        {data: "schPeriod", responsivePriority: 4, className: "reservePeriod"},
+        {data: "totalPrice", className: "totalPrice" },
+        {data: "apmStatusDesc", className: "reserveStatus"},
+        {data: "schID", className: "jobId"},
+        {data: null,
           className:      'details-control',
           orderable:      false,
-          data:           null,
           defaultContent: '',
-          responsivePriority: 5,
-          type: "readonly"
+          responsivePriority: 5
         },
+        {data: "customerNote", className: "customerNote", orderable: false},
         {
           data: null,
           defaultContent:
@@ -322,125 +320,187 @@
           className: 'row-edit dt-center',
           orderable: false,
           responsivePriority: 6
-        },
-        {
-          data: null,
-          defaultContent:
-                  '<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#RemoveModal">\n' +
-                  ' <i class="fas fa-solid fa-trash"></i>' +
-                  '</button>',
-          className: 'row-remove dt-center',
-          orderable: false,
-          responsivePriority: 7
         }
       ],
       select: {
         style: 'single',
         toggleable: false
       },
-      order: [[1, 'asc']]
-    });
+      order: [[0, 'desc']],
+      fnDrawCallback : function (){
+        <!-- 當預約狀態不是 "已支付訂金時", 直接移除 可編輯按鈕 -->
+        $("#reserveTable tr").each(function (){
+          if (this.querySelector(".reserveStatus").innerText !== "已支付訂金"){
+            this.querySelector(".row-edit, .dt-center").innerHTML = "";
+          }
+        });
 
 
+        <!-- Add event listener for opening and closing details -->
+        $('#reserveTable tbody').on('click', 'td.details-control', function () {
+          let tr = $(this).closest('tr');
+          let row = table.row( tr );
+
+          if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+          }
+          else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+          }
+        });
+
+        <!--  Edit data from modal -->
+        let apmIDEdit;
+        let targetDataEdit;
+        let apmObjectEdit;
+        let editRefresh;
+        $('td.row-edit').on('click',  function (){
+          // get the selected tr
+          targetDataEdit = $(event.target).closest("tr")[0];
+          apmIDEdit = targetDataEdit.querySelector("td.reserveId").innerText.trim();
 
 
-    // Add event listener for opening and closing details
-    $('#reserveTable tbody').on('click', 'td.details-control', function () {
-      let tr = $(this).closest('tr');
-      let row = table.row( tr );
-      console.log(row.data());
+          // send the request to server, and response the data on the modal
+          $.ajax({
+            url: "${pageContext.request.contextPath}/ipet-back/appoint/editModalInput",
+            method: "POST",
+            data:{"apmID": apmIDEdit},
+            success : function (resp){
+              if (resp !== ""){
+                apmObjectEdit = JSON.parse(resp);
+                // 載入預約狀態 並選擇起來
+                $('#reserveStatus-modal-edit  option[value="' + apmObjectEdit.appoint.apmStatus + '"]').attr("selected");
+                console.log(apmObjectEdit.appoint.apmStatus);
 
-      if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
+                // 載入note
+                $("#clientNote-modal-edit").val(apmObjectEdit.appoint.customerNote);
+
+                // 載入原始班表並鎖定
+                $("#jobId-modal-edit").html(`<option value="\${apmObjectEdit.appoint.schID}" selected>(\${apmObjectEdit.appoint.schID}) \${apmObjectEdit.appoint.schDate} \${apmObjectEdit.appoint.schPeriod} </option>`);
+                $("#jobId-modal-edit").prop("disabled", true);
+
+                // 載入原始日期
+                $("#reserveDate-modal-edit").val(apmObjectEdit.appoint.schDate);
+
+                // 載入原始時段
+                $("#reservePeriod-modal-edit").val(apmObjectEdit.appoint.schPeriod);
+
+              }else{
+                $("#editModalMessage").html("錯誤: 預約單載入失敗。")
+                        .css("color","red");
+              }
+            }
+          });
+        })
+
+        // 當你更新了狀態....
+        $("#reserveStatus-modal-edit").on("change", function (){
+          // 班表會被回復到原始數值並鎖起來
+          $("#jobId-modal-edit").val(apmObjectEdit.appoint.schID)
+                  .prop("disabled", true);
+        });
+
+        // 當狀態為 "已支付訂金" 才可點選查詢班表，進而顯示可選擇班表
+        $("#searchAvailableJob").on("click", function(){
+          if ($("#reserveStatus-modal-edit").val() === "0"){
+            // 解除班表鎖定
+            $("#jobId-modal-edit").removeAttr("disabled");
+            // 將可選擇的班表顯示於下拉選單中
+            let jobHTMLEdit = $("#jobId-modal-edit").html();
+            for (let job of apmObjectEdit.availableJob) {
+              if (job.schID === apmObjectEdit.schID) {
+                jobHTMLEdit += `<option value="\${job.schID}">(\${job.schID}) \${job.schDate} \${job.schPeriod}</option>`
+              }else{
+                jobHTMLEdit += `<option value="\${job.schID}" selected>(\${job.schID}) \${job.schDate} \${job.schPeriod}</option>`
+              }
+              $('#jobId-modal-edit').html(jobHTMLEdit);
+            }
+          }else{
+            $("#editModalMessage").html("預約單狀態為已支付訂金，才可以查詢班表並更改。")
+                    .css("color","red");
+          }
+        })
+
+        // 當班表被更新，更動日期 時段，且狀態鎖起來
+        let selectNewJobID;
+        $("#jobId-modal-edit").on("change", function (){
+          let selectJobDatePeriod = $("#jobId-modal-edit").find(":selected").text();
+          selectNewJobID = $("#jobId-modal-edit").val()[0];
+          let selectNewJobDate = selectJobDatePeriod.split(" ")[1].trim();
+          let selectNewJobPeriod = selectJobDatePeriod.split(" ")[2].trim();
+          $("#reserveDate-modal-edit").val(selectNewJobDate);
+          $("#reservePeriod-modal-edit").val(selectNewJobPeriod);
+          $("#reserveStatus-modal-edit").prop("disabled", true);
+        })
+
+        // 當資料確定很完整後，送出後才能跳出下一個視窗
+        $(".btn-edit-confirm").on("click", function(){
+          //data-target="#EditConfirmModal"
+          if (apmObjectEdit.appoint.apmID !== "" &&
+                  apmObjectEdit.appoint.memID !== "" &&
+                  apmObjectEdit.appoint.petID != "" &&
+                  $("#jobId-modal-edit").val().trim() !== "" &&
+                  $("#reserveStatus-modal-edit").val().trim() !== "")
+          {
+            $(".btn-edit-confirm").attr("data-target","#EditConfirmModal");
+          }else{
+            $("#editModalMessage").html("錯誤: 資料不完整，請重新填寫。")
+                    .css("color","red");
+          }
+
+        })
+
+
+        $('.modal-footer').on('click', '.btn-edit-confirm-confirm', function (){
+          $.ajax({
+            url:"${pageContext.request.contextPath}/ipet-back/appoint/appoint_edit",
+            method:"POST",
+            data:{
+              apmID: apmObjectEdit.appoint.apmID,
+              memID: apmObjectEdit.appoint.memID,
+              petID: apmObjectEdit.appoint.petID,
+              totalPrice: apmObjectEdit.appoint.totalPrice,
+              schID: $("#jobId-modal-edit").val(),
+              apmStatus: $("#reserveStatus-modal-edit").val(),
+              customerNote: $("#clientNote-modal-edit").val()
+            },
+            success: function (resp){
+              if (resp === "修改成功"){
+                $("#editConfirmModalMessage").html("修改成功")
+                        .css("color","green");
+                $(".btn-edit-confirm-confirm").addClass("disabled")
+                        .attr("disabled");
+                editRefresh = true;
+              }else{
+                $("#editConfirmModalMessage").html("錯誤: 無法修改!")
+                        .css("color","red");
+              }
+            }
+          })
+        })
+
+        $('#EditConfirmModal').on("hidden.bs.modal", function (){
+          $("#EditModal").modal("hide");
+        });
+
+        $("#EditModal").on("hidden.bs.modal", function (){
+          // clean the previous data and class
+          $(".btn-edit-confirm").removeAttr("data-target", "disabled")
+                  .removeClass("disabled");
+          $(".btn-edit-confirm-confirm").removeClass("disabled")
+                  .removeAttr("disabled");
+
+          if (editRefresh) {
+            window.location.reload();
+          }
+        });
+        <!--  /.Edit data from modal -->
       }
-      else {
-        // Open this row
-        row.child( format(row.data()) ).show();
-        tr.addClass('shown');
-      }
     });
-
-
-    // TODO: (需要重寫) Delete data from modal
-    $('#reserveTable tbody').on('click', 'td.row-remove', function (){
-      // TODO: 從資料庫移除資料
-      let targetData = $(event.target).closest("tr");
-      $('.modal-footer').on('click', '.btn-remove-confirm', function (){
-        targetData.remove();
-        // table.ajax().reload();
-        $('#RemoveModal').modal('hide');
-      })
-    });
-
-
-    // TODO: (需要重寫)  Edit data from modal
-    $('#reserveTable tbody').on('click', 'td.row-edit', function (){
-      // TODO: 將資料庫的資料顯示在 Modal 上
-      let targetData = $(event.target).closest("tr")[0]; // get tr data
-
-      //  1. edit the reserveDate
-      $('#reserveDate-modal').val(targetData.querySelector("td.reserveDate").innerText);
-
-      //  2. edit the reserveStatus
-      switch (targetData.querySelector("td.reservePeriod").innerText) {
-        case "已支付訂金":
-          $('#reserveStatus-modal').val(1);
-          return;
-        case "已完成預約":
-          $('#reserveStatus-modal').val(2);
-          return;
-        case "已取消":
-          $('#reserveStatus-modal').val(3);
-          return;
-        case "逾時未到":
-          $('#reserveStatus-modal').val(4);
-          return;
-      }
-
-      //  3. edit the reservePeriod
-      $('#reservePeriod-modal').val(targetData.querySelector("td.reservePeriod").innerText);
-
-      // 4. edit the jobId
-      $('#jobId-modal').val(targetData.querySelector("td.jobId").innerText);
-
-      // TODO: 從資料庫修改資料，並重新顯現在 table 上 (以下方法由於目前是使用靜態資料，故是失效的)
-      $('.modal-footer').on('click', '.btn-edit-confirm', function (){
-        // 1. update the reserveDate
-        targetData.querySelector("td.reserveDate").innerText = $('#reserveDate-modal').val();
-
-        // 2. update the reserveStatus
-        console.log($('#reserveStatus-modal').val());
-        switch ($('#reserveStatus-modal').val()) {
-          case 1:
-            targetData.querySelector("td.reserveStatus").innerText = "已支付訂金";
-            table.ajax().reload();
-            return;
-          case 2:
-            targetData.querySelector("td.reserveStatus").innerText = "已完成預約";
-            table.ajax().reload();
-            return;
-          case 3:
-            targetData.querySelector("td.reserveStatus").innerText = "已取消";
-            table.ajax().reload();
-            return;
-          case 4:
-            targetData.querySelector("td.reserveStatus").innerText = "逾時未到";
-            table.ajax().reload();
-            return;
-        }
-        console.log(targetData.querySelector("td.reserveStatus").innerText);
-
-        // 3. update the reservePeriod
-        targetData.querySelector("td.reservePeriod").innerText = $('#reservePeriod-modal').val();
-
-        // 4. update the jobId
-        targetData.querySelector("td.jobId").innerText = $('#jobId-modal').val();
-
-        $("#EditModal").modal("hide");
-      })
-    })
   });
 </script>
 </body>

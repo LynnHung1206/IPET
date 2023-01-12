@@ -74,9 +74,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/backstage/back-index.jsp">Home</a></li>
+              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
               <li class="breadcrumb-item">美容預約管理</li>
-              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/templates/backstage/salon/salonAppointAll.jsp">預約總覽</a></li>
+              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/appoint/appoints">預約總覽</a></li>
             </ol>
           </div>
         </div>
@@ -255,7 +255,6 @@
 
 <!-- DataTable show child row -->
 <script>
-
   function format (detailService) {
     // `d` is the original data object for the row
     let tbody = `
@@ -498,13 +497,6 @@
           $(".btn-edit-confirm-confirm").removeClass("disabled")
                   .removeAttr("disabled");
 
-          $('#reserveStatus-modal-edit').prop("selected", false);
-          $('#clientNote-modal-edit').val("");
-          $('#jobId-modal-edit').val("");
-          $('#reserveDate-modal-edit').val("");
-          $('#reservePeriod-modal-edit').val("");
-          $("#jobId-modal-edit").prop("disabled", false);
-          $("#reserveDate-modal-edit").prop("disabled", false);
           if (editRefresh) {
             window.location.reload();
           }
