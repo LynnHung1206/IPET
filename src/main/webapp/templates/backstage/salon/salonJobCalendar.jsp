@@ -76,9 +76,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/backstage/back-index.jsp">Home</a></li>
+              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
               <li class="breadcrumb-item">班表管理</li>
-              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/templates/backstage/salon/salon_schedule.jsp">班表瀏覽</a></li>
+              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/job/jobs_calendar">班表瀏覽</a></li>
             </ol>
           </div>
         </div>

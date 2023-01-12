@@ -72,9 +72,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/backstage/index.htmljsp">Home</a></li>
+              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
               <li class="breadcrumb-item">美容預約管理</li>
-              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/templates/backstage/salon/salonAppointCancelled.jsp">已取消的預約</a></li>
+              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/appoint/appoints_cancelled">已取消的預約</a></li>
             </ol>
           </div>
         </div>
@@ -104,8 +104,6 @@
                     <th>預約單狀態</th>
                     <th>班表編號</th>
                     <th>服務詳情</th>
-                    <th></th>
-                    <th></th>
                   </tr>
                   </thead>
                 </table>
@@ -121,78 +119,6 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-
-    <!-- Remove Modal content   -->
-    <div class="modal fade" id="RemoveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">資料刪除</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            確認要刪除此筆資料?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="submit" class="btn btn-danger btn-remove-confirm">確認</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.Remove Modal content   -->
-
-    <!-- Edit Modal content   -->
-    <div class="modal fade" id="EditModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">資料編輯</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="reserveDate-modal" class="col-form-label">預約日期</label>
-                <input type="date" class="form-control" id="reserveDate-modal" readonly>
-              </div>
-              <div class="form-group">
-                <label for="reservePeriod-modal" class="col-form-label">預約時段</label>
-                <input type="text" id="reservePeriod-modal"  class="form-control"  readonly>
-              </div>
-              <div class="form-group">
-                <label for="reserveStatus-modal" class="col-form-label">預約單狀態</label>
-                <select id="reserveStatus-modal" class="form-control">
-                  <option value="1">已支付訂金</option>
-                  <option value="2">已完成預約</option>
-                  <option value="3">已取消</option>
-                  <option value="4">逾時未到</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="jobId-modal" class="col-form-label">班表編號</label>
-                <select id="jobId-modal" class="form-control">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="submit" class="btn btn-primary btn-edit-confirm">確認修改</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /. Edit Modal content   -->
-
   </div>
   <!-- /.content-wrapper -->
 
@@ -240,7 +166,7 @@
 <!-- DataTable show child row -->
 <script>
   /* Formatting function for row details - modify as you need */
-  function format ( d ) {
+  function format (detailService) {
     // `d` is the original data object for the row
     let tbody = `
         <tbody class="childTable">
@@ -254,25 +180,20 @@
           </tr>`;
 
 
-    for (let i = 0; i < d.serviceId.length; i ++){
+    for (let detail of detailService.appointmentDetails){
       tbody += `
         <tr>
-            <td>\${d.serviceId[i]}</td>
-            <td>\${d.serviceName[i]}</td>
-            <td>\${d.servicePrice[i]}</td>
-            <td>\${d.saleId[i]}</td>
-            <td>\${d.saleName[i]}</td>
-            <td>\${d.salePrice[i]}</td>
+            <td>\${detail.svcId}</td>
+            <td>\${detail.svcName}</td>
+            <td>\${detail.svcPrice}</td>
+            <td>\${detail.saleId}</td>
+            <td>\${detail.saleName}</td>
+            <td>\${detail.salePrice}</td>
         </tr>
         `
     }
 
     tbody += `
-                <tr>
-                  <td colspan="6" style="border-top: 1px solid #dee2e6;
-                  border-right: 1px solid #dee2e6;
-                  border-bottom: 1px solid #dee2e6"><b>顧客備註</b>: \${d.clientNote}</td>
-                </tr>
                 </tbody>
             `;
     return tbody;
@@ -285,18 +206,18 @@
       lengthChange: true,
       info: true,
       altEditor: true,     // Enable altEditor
-      ajax: "${pageContext.request.contextPath}/templates/backstage/salon/objects.txt",
+      data: ${appoints},
 
       //  填寫直接顯示的欄位，需要與thead tfoot 對應
       "columns": [
-        { data: "reserveId",  responsivePriority: 1,  className: "reserveId"},
-        { data: "memberName",  responsivePriority: 2,  className: "memberName"},
-        { data: "petName",  className: "petName"},
-        { data: "reserveDate",  responsivePriority: 3 , className: "reserveDate"},
-        { data: "reservePeriod",  responsivePriority: 4, className: "reservePeriod"},
-        { data: "totalPrice", className: "totalPrice" },
-        { data: "reserveStatus", className: "reserveStatus"},
-        { data: "jobId", className: "jobId"},
+        {data: "apmID", responsivePriority: 1,  className: "reserveId"},
+        {data: "memName", responsivePriority: 2,  className: "memberName"},
+        {data: "petName", className: "petName"},
+        {data: "schDate", responsivePriority: 3 , className: "reserveDate"},
+        {data: "schPeriod", responsivePriority: 4, className: "reservePeriod"},
+        {data: "totalPrice", className: "totalPrice" },
+        {data: "apmStatusDesc", className: "reserveStatus"},
+        {data: "schID", className: "jobId"},
         {
           className:      'details-control',
           orderable:      false,
@@ -304,136 +225,32 @@
           defaultContent: '',
           responsivePriority: 5,
           type: "readonly"
-        },
-        {
-          data: null,
-          defaultContent:
-                  '<button type="submit" class="btn btn-light" data-toggle="modal" data-target="#EditModal" data-whatever="@mdo">' +
-                  '<i class="fas fa-solid fa-pen"></i>' +
-                  '</button>',
-          className: 'row-edit dt-center',
-          orderable: false,
-          responsivePriority: 6
-        },
-        {
-          data: null,
-          defaultContent:
-                  '<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#RemoveModal">\n' +
-                  ' <i class="fas fa-solid fa-trash"></i>' +
-                  '</button>',
-          className: 'row-remove dt-center',
-          orderable: false,
-          responsivePriority: 7
         }
       ],
       select: {
         style: 'single',
         toggleable: false
       },
-      order: [[1, 'asc']]
-    });
+      order: [[0, 'desc']],
+      fnDrawCallback: function (){
+        <!-- Add event listener for opening and closing details -->
+        $('#reserveTable tbody').on('click', 'td.details-control', function () {
+          let tr = $(this).closest('tr');
+          let row = table.row( tr );
 
-
-
-
-    // Add event listener for opening and closing details
-    $('#reserveTable tbody').on('click', 'td.details-control', function () {
-      let tr = $(this).closest('tr');
-      let row = table.row( tr );
-      console.log($(this).closest('tr'));
-      console.log("this is row:" + row.data());
-      console.log(row.child);
-
-      if ( row.child.isShown() ) {
-        // This row is already open - close it
-        row.child.hide();
-        tr.removeClass('shown');
-      }
-      else {
-        // Open this row
-        row.child( format(row.data()) ).show();
-        tr.addClass('shown');
+          if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+          }
+          else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
+          }
+        });
       }
     });
-
-
-    // TODO: (需要重寫) Delete data from modal
-    $('#reserveTable tbody').on('click', 'td.row-remove', function (){
-      // TODO: 從資料庫移除資料
-      let targetData = $(event.target).closest("tr");
-      $('.modal-footer').on('click', '.btn-remove-confirm', function (){
-        targetData.remove();
-        // table.ajax().reload();
-        $('#RemoveModal').modal('hide');
-      })
-    });
-
-
-    // TODO: (需要重寫)  Edit data from modal
-    $('#reserveTable tbody').on('click', 'td.row-edit', function (){
-      // TODO: 將資料庫的資料顯示在 Modal 上
-      let targetData = $(event.target).closest("tr")[0]; // get tr data
-
-      //  1. edit the reserveDate
-      $('#reserveDate-modal').val(targetData.querySelector("td.reserveDate").innerText);
-
-      //  2. edit the reserveStatus
-      switch (targetData.querySelector("td.reservePeriod").innerText) {
-        case "已支付訂金":
-          $('#reserveStatus-modal').val(1);
-          return;
-        case "已完成預約":
-          $('#reserveStatus-modal').val(2);
-          return;
-        case "已取消":
-          $('#reserveStatus-modal').val(3);
-          return;
-        case "逾時未到":
-          $('#reserveStatus-modal').val(4);
-          return;
-      }
-
-      //  3. edit the reservePeriod
-      $('#reservePeriod-modal').val(targetData.querySelector("td.reservePeriod").innerText);
-
-      // 4. edit the jobId
-      $('#jobId-modal').val(targetData.querySelector("td.jobId").innerText);
-
-      // TODO: 從資料庫修改資料，並重新顯現在 table 上 (以下方法由於目前是使用靜態資料，故是失效的)
-      $('.modal-footer').on('click', '.btn-edit-confirm', function (){
-        // 1. update the reserveDate
-        targetData.querySelector("td.reserveDate").innerText = $('#reserveDate-modal').val();
-
-        // 2. update the reserveStatus
-        switch ($('#reserveStatus-modal').val()) {
-          case 1:
-            targetData.querySelector("td.reserveStatus").innerText = "已支付訂金";
-            table.ajax().reload();
-            return;
-          case 2:
-            targetData.querySelector("td.reserveStatus").innerText = "已完成預約";
-            table.ajax().reload();
-            return;
-          case 3:
-            targetData.querySelector("td.reserveStatus").innerText = "已取消";
-            table.ajax().reload();
-            return;
-          case 4:
-            targetData.querySelector("td.reserveStatus").innerText = "逾時未到";
-            table.ajax().reload();
-            return;
-        }
-        console.log(targetData.querySelector("td.reserveStatus").innerText);
-
-        // 3. update the reservePeriod
-        targetData.querySelector("td.reservePeriod").innerText = $('#reservePeriod-modal').val();
-
-        // 4. update the jobId
-        targetData.querySelector("td.jobId").innerText = $('#jobId-modal').val();
-
-        $("#EditModal").modal("hide");
-      })
-    })
   });
 </script>
 </body>

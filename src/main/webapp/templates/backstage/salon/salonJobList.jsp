@@ -433,7 +433,6 @@
         let editRefresh;
 
         $('td.row-edit').on('click', function (){
-          console.log("click");
           // get the selected tr
           targetDataEdit = $(event.target).closest("tr")[0];
           schIDEdit = targetDataEdit.querySelector("td.schID").innerText.trim();
