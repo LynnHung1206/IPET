@@ -3,8 +3,8 @@ package com.web.job.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.job.model.entities.JobSchedule;
-import com.web.job.model.services.JobSchduleServices;
-import com.web.job.model.services.imp.JobSchduleServicesImp;
+import com.web.job.model.services.JobScheduleServices;
+import com.web.job.model.services.imp.JobScheduleServicesImp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,11 +24,11 @@ import java.util.List;
 public class JobShowController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getServletPath();
         req.setCharacterEncoding("UTF-8");
+        String path = req.getServletPath();
+        JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
 
         if ("/ipet-back/job/jobs_calendar".equals(path)) {
-            JobSchduleServices jobSchduleServices = new JobSchduleServicesImp();
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.serializeNulls()
                     .setDateFormat("yyyy-MM-dd")
@@ -36,7 +36,6 @@ public class JobShowController extends HttpServlet {
 
             //TODO: 模擬取得所有員工姓名 與 ID
             List<Integer> groomerIds = new ArrayList<>();
-            List<String> groomerColors = new ArrayList<>();
             groomerIds.add(1);
             groomerIds.add(2);
             req.setAttribute("groomerIds", groomerIds);
@@ -47,7 +46,6 @@ public class JobShowController extends HttpServlet {
             req.setAttribute("groomNames", groomNames);
 
             List<Integer> asstIds = new ArrayList<>();
-            List<String> asstColors = new ArrayList<>();
             asstIds.add(3);
             asstIds.add(4);
             asstIds.add(5);
@@ -65,22 +63,13 @@ public class JobShowController extends HttpServlet {
             req.setAttribute("asstNames", asstNames);
 
             //獲取所有 job
-            List<JobSchedule> allJobs = jobSchduleServices.findAllJobs();
+            List<JobSchedule> allJobs = jobScheduleServices.findAllJobs();
             req.setAttribute("allJobs", gson.toJson(allJobs));
-
-
             resp.setCharacterEncoding("UTF-8");
-
             req.getRequestDispatcher("/templates/backstage/salon/salonJobCalendar.jsp").forward(req, resp);
 
-
-
-
-
-
         } else if ("/ipet-back/job/jobs_list".equals(path)){
-            JobSchduleServices jobSchduleServices = new JobSchduleServicesImp();
-            List<JobSchedule> allJobs = jobSchduleServices.findAllJobs();
+            List<JobSchedule> allJobs = jobScheduleServices.findAllJobs();
             req.setAttribute("allJob", allJobs);
             req.getRequestDispatcher("/templates/backstage/salon/salonJobList.jsp").forward(req, resp);
             resp.setCharacterEncoding("UTF-8");

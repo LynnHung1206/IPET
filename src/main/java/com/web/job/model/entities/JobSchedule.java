@@ -1,7 +1,9 @@
 package com.web.job.model.entities;
 
 import com.core.model.entities.Core;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -48,10 +50,10 @@ public class JobSchedule extends Core {
     @Column(name = "EMPLOYEE_NOTE")
     private String employeeNote;
     @Transient
-    private Integer ampId;
+    private Integer apmId;
 
 
-    public JobSchedule(Integer schID, Date schDate, String schPeriod, Integer groomerID, String groomerName, Integer asstID1, String asstID1Name, Integer asstID2, String asstID2Name, String employeeNote, Integer ampId) {
+    public JobSchedule(Integer schID, Date schDate, String schPeriod, Integer groomerID, String groomerName, Integer asstID1, String asstID1Name, Integer asstID2, String asstID2Name, String employeeNote, Integer apmId) {
         this.schID = schID;
         this.schDate = schDate;
         this.schPeriod = schPeriod;
@@ -62,7 +64,7 @@ public class JobSchedule extends Core {
         this.asstID2 = asstID2;
         this.asstID2Name = asstID2Name;
         this.employeeNote = employeeNote;
-        this.ampId = ampId;
+        this.apmId = apmId;
     }
 
     public JobSchedule(Date schDate, String schPeriod, Integer groomerID, Integer asstID1, Integer asstID2, String employeeNote) {
@@ -156,12 +158,12 @@ public class JobSchedule extends Core {
         this.employeeNote = employeeNote;
     }
 
-    public Integer getAmpId() {
-        return ampId;
+    public Integer getApmId() {
+        return apmId;
     }
 
-    public void setAmpId(Integer ampId) {
-        this.ampId = ampId;
+    public void setApmId(Integer apmId) {
+        this.apmId = apmId;
     }
 
     @Override
@@ -170,11 +172,11 @@ public class JobSchedule extends Core {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         JobSchedule that = (JobSchedule) o;
-        return Objects.equals(schID, that.schID) && Objects.equals(schDate, that.schDate) && Objects.equals(schPeriod, that.schPeriod) && Objects.equals(groomerID, that.groomerID) && Objects.equals(groomerName, that.groomerName) && Objects.equals(asstID1, that.asstID1) && Objects.equals(asstID1Name, that.asstID1Name) && Objects.equals(asstID2, that.asstID2) && Objects.equals(asstID2Name, that.asstID2Name) && Objects.equals(employeeNote, that.employeeNote) && Objects.equals(ampId, that.ampId);
+        return Objects.equals(schID, that.schID) && Objects.equals(schDate, that.schDate) && Objects.equals(schPeriod, that.schPeriod) && Objects.equals(groomerID, that.groomerID) && Objects.equals(groomerName, that.groomerName) && Objects.equals(asstID1, that.asstID1) && Objects.equals(asstID1Name, that.asstID1Name) && Objects.equals(asstID2, that.asstID2) && Objects.equals(asstID2Name, that.asstID2Name) && Objects.equals(employeeNote, that.employeeNote) && Objects.equals(apmId, that.apmId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), schID, schDate, schPeriod, groomerID, groomerName, asstID1, asstID1Name, asstID2, asstID2Name, employeeNote, ampId);
+        return Objects.hash(super.hashCode(), schID, schDate, schPeriod, groomerID, groomerName, asstID1, asstID1Name, asstID2, asstID2Name, employeeNote, apmId);
     }
 }

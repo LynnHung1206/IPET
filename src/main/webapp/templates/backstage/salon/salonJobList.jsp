@@ -101,7 +101,7 @@
                         <td>${job.asstID2Name}</td>
                         <td>${job.schDate}</td>
                         <td>${job.schPeriod}</td>
-                        <td>${job.ampId}</td>
+                        <td>${job.apmId}</td>
                         <td>${job.employeeNote}</td>
                         <td>
                           <button type="submit" class="btn btn-light row-edit dt-center" data-toggle="modal" data-target="#EditModal" data-whatever="@mdo">
@@ -376,7 +376,7 @@
     let targetDataDelete;
     let schIDDelete;
     let deleteRefresh;
-    $('#scheduleTable tbody').on('click', 'td.row-remove', function (){
+    $('td.row-remove').on('click', function (){
       // get the selected tr
       targetDataDelete = $(this).closest("tr")[0];
       schIDDelete = targetDataDelete.querySelector("td.schID").innerText.trim();
@@ -432,7 +432,7 @@
     let targetDataEdit;
     let empObjectEdit;
     let editRefresh;
-    $('#scheduleTable tbody').on('click', 'td.row-edit', function (){
+    $('td.row-edit').on('click', function (){
       // get the selected tr
       targetDataEdit = $(event.target).closest("tr")[0];
       schIDEdit = targetDataEdit.querySelector("td.schID").innerText.trim();
@@ -443,55 +443,65 @@
         method: "POST",
         data:{"schID": schIDEdit},
         success : function (resp){
-          empObjectEdit = JSON.parse(resp);
-          // 載入 groomer 的選單 與 欄位 value
-          let groomerHTMLEdit = ``;
-          for (let i = 0; i < empObjectEdit.groomerIds.length; i ++) {
-            if (empObjectEdit.groomerID === empObjectEdit.groomerIds[i]) {
-              groomerHTMLEdit += `<option value="\${empObjectEdit.groomerIds[i]}" selected> \${empObjectEdit.groomNames[i]}</option>`
-            } else{
-              groomerHTMLEdit += `<option value="\${empObjectEdit.groomerIds[i]}"> \${empObjectEdit.groomNames[i]}</option>`
-            }
-          }
-          $('#GROOMER_name-modal-edit').html(groomerHTMLEdit);
-
-          // 載入 asst1 的選單 與 欄位 value
-          let asst1HTMLEdit = ``;
-          for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
-            if (empObjectEdit.asstID1 === empObjectEdit.asstIds[i]){
-              asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]}</option>`
-            }else{
-              asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]}</option>`
-            }
-          }
-          $('#ASST_name_1-modal-edit').html(asst1HTMLEdit);
-
-          // 載入 asst2 的選單 與 欄位 value
-          let asst2HTMLEdit = ``;
-          let asstID1 = $('#ASST_name_1-modal-edit').val();
-          for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
-            if (asstID1 !== empObjectEdit.asstIds[i].toString()) {
-              if (empObjectEdit.asstID2 === empObjectEdit.asstIds[i]) {
-                asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]} </option>`
-              } else {
-                asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]} </option>`
+          if (resp !== ""){
+            empObjectEdit = JSON.parse(resp);
+            // 載入 groomer 的選單 與 欄位 value
+            let groomerHTMLEdit = ``;
+            for (let i = 0; i < empObjectEdit.groomerIds.length; i ++) {
+              if (empObjectEdit.job.groomerID === empObjectEdit.groomerIds[i]) {
+                groomerHTMLEdit += `<option value="\${empObjectEdit.groomerIds[i]}" selected> \${empObjectEdit.groomNames[i]}</option>`
+              } else{
+                groomerHTMLEdit += `<option value="\${empObjectEdit.groomerIds[i]}"> \${empObjectEdit.groomNames[i]}</option>`
               }
             }
-            $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
+            $('#GROOMER_name-modal-edit').html(groomerHTMLEdit);
+
+            // 載入 asst1 的選單 與 欄位 value
+            let asst1HTMLEdit = ``;
+            for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
+              if (empObjectEdit.job.asstID1 === empObjectEdit.asstIds[i]){
+                asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]}</option>`
+              }else{
+                asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]}</option>`
+              }
+            }
+            $('#ASST_name_1-modal-edit').html(asst1HTMLEdit);
+
+            // 載入 asst2 的選單 與 欄位 value
+            let asst2HTMLEdit = ``;
+            let asstID1 = $('#ASST_name_1-modal-edit').val();
+            for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
+              if (asstID1 !== empObjectEdit.asstIds[i].toString()) {
+                if (empObjectEdit.job.asstID2 === empObjectEdit.asstIds[i]) {
+                  asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]} </option>`
+                } else {
+                  asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]} </option>`
+                }
+              }
+              $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
+            }
+
+            // 載入 period 並 唯讀
+            $('#schPeriod-modal-edit').val(empObjectEdit.job.schPeriod);
+
+            // 載入 日期 並 唯讀
+            $('#schDate-modal-edit').val(empObjectEdit.job.schDate);
+
+            // 載入員工備註
+            $('#schNote-edit-modal').val(empObjectEdit.job.employeeNote);
+          }else{
+            $("#editModalMessage").html("錯誤: 無法從伺服器抓取該筆資料")
+                                  .css("color","red");
+            editRefresh = false;
           }
 
-          // 載入 period 並 唯讀
-          $('#schPeriod-modal-edit').val(empObjectEdit.schPeriod);
-
-          // 載入 日期 並 唯讀
-          $('#schDate-modal-edit').val(empObjectEdit.schDate);
         },
         error: function(resp){}
       })
 
       // 當挑選出助理1後，顯示助理2的可選名單
       $('#ASST_name_1-modal-edit').on("change", function (){
-        if ($('#ASST_name_1-modal-edit').val() === empObjectEdit.asstID2.toString()){
+        if ($('#ASST_name_1-modal-edit').val() === empObjectEdit.job.asstID2.toString()){
           let asst2HTMLEdit = `<option disabled selected>請選擇</option>`;
           $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
           let asstID1 = $('#ASST_name_1-modal-edit').val();
@@ -647,7 +657,7 @@
                   minDate: 0
                 });
               }
-              
+
               // https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/issues/67
               <!-- 解決 MultiDatePicker 閃爍問題並處理需點兩次才可關閉的問題 -->
               $.datepicker._selectDateOverload = $.datepicker._selectDate;
