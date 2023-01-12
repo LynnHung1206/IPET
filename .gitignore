@@ -4,11 +4,9 @@
 /lib/
 .classpath
 .project
-<<<<<<< HEAD
 /bin/
-=======
+src/main/webapp/META-INF/context.xml
 # Intellij
 .idea/
 *.iml
 *.iws
->>>>>>> 7237d7d65cf66773b530fcd82f9b23ba92c3b938
