@@ -173,17 +173,9 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 										value="<%=staff.getId()%> "></td>
 									<td><input type="submit" value="送出修改" onclick="enter()"></td>
 								</tr>
-
-
 							</table>
-
-			
 						</form>
-
 					<div class="col-sm-6"></div>
-
-
-
 					<div class="row mb-2"></div>
 				</div>
 				<!-- /.container-fluid -->
