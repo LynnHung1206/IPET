@@ -52,7 +52,7 @@ public class StaffDAOImpl implements StaffDAO {
 		return staff.getId();
 	}
 
-	public List<Staff> getStaffByName(String posi) {
+	public List<Staff> getStaffByPosi(String posi) {
 		Session session = getSession();
 		String hql = "FROM Staff WHERE posi = :posi";
 		
