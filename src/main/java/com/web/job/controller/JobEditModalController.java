@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.web.job.model.entities.JobSchedule;
 import com.web.job.model.services.JobScheduleServices;
 import com.web.job.model.services.imp.JobScheduleServicesImp;
+import com.web.staff.model.entity.Staff;
 import com.web.staff.model.service.StaffService;
 
 import javax.servlet.annotation.WebServlet;
@@ -40,31 +41,24 @@ public class JobEditModalController extends HttpServlet {
         // 根據傳入的 schID 從資料庫拉出此班表訊息
         map.put("job", jobByID);
 
-        // TODO: 模擬取得所有員工姓名 與 ID
-        List<Integer> groomerIds = new ArrayList<>();
-        groomerIds.add(1);
-        groomerIds.add(2);
-        map.put("groomerIds", groomerIds);
 
+        List<Integer> groomerIds = new ArrayList<>();
         List<String> groomNames = new ArrayList<>();
-        groomNames.add("美容師1");
-        groomNames.add("美容師2");
+        for (Staff staff : jobScheduleServices.findSalonStaff("美容師")){
+            groomerIds.add(staff.getId());
+            groomNames.add(staff.getName());
+        }
+        map.put("groomerIds", groomerIds);
         map.put("groomNames", groomNames);
 
-        List<Integer> asstIds = new ArrayList<>();
-        asstIds.add(3);
-        asstIds.add(4);
-        asstIds.add(5);
-        asstIds.add(6);
-        asstIds.add(7);
-        map.put("asstIds", asstIds);
 
+        List<Integer> asstIds = new ArrayList<>();
         List<String> asstNames = new ArrayList<>();
-        asstNames.add("助理3");
-        asstNames.add("助理4");
-        asstNames.add("助理5");
-        asstNames.add("助理6");
-        asstNames.add("助理7");
+        for (Staff staff : jobScheduleServices.findSalonStaff("美容助理")){
+            asstIds.add(staff.getId());
+            asstNames.add(staff.getName());
+        }
+        map.put("asstIds", asstIds);
         map.put("asstNames", asstNames);
 
         resp.setCharacterEncoding("UTF-8");

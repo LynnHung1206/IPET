@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.job.model.services.JobScheduleServices;
 import com.web.job.model.services.imp.JobScheduleServicesImp;
+import com.web.staff.model.entity.Staff;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +26,7 @@ public class JobAddModalController extends HttpServlet {
         Integer asstID1 = null;
         Integer asstID2 = null;
         String[] periods = null;
+        JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
         Map<String, Object> map = new HashMap<>();
         GsonBuilder builder =  new GsonBuilder();
         Gson gson = builder.serializeNulls()
@@ -46,7 +48,6 @@ public class JobAddModalController extends HttpServlet {
 
         // 挑出不可選擇的日期
         if (groomerID != null && asstID1 != null && asstID2 != null && periods != null){
-            JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
             Set<Object> illegalDates = new HashSet<>();
             for (String str : periods){
                 illegalDates.addAll(jobScheduleServices.findIllegalDatesToAddJobs(groomerID, asstID1, asstID2, str));
@@ -57,32 +58,26 @@ public class JobAddModalController extends HttpServlet {
         }
 
 
-        //TODO: 模擬取得所有員工姓名 與 ID
-        List<Integer> groomerIds = new ArrayList<>();
-        groomerIds.add(1);
-        groomerIds.add(2);
-        map.put("groomerIds", groomerIds);
 
+        List<Integer> groomerIds = new ArrayList<>();
         List<String> groomNames = new ArrayList<>();
-        groomNames.add("美容師1");
-        groomNames.add("美容師2");
+        for (Staff staff : jobScheduleServices.findSalonStaff("美容師")){
+            groomerIds.add(staff.getId());
+            groomNames.add(staff.getName());
+        }
+        map.put("groomerIds", groomerIds);
         map.put("groomNames", groomNames);
 
-        List<Integer> asstIds = new ArrayList<>();
-        asstIds.add(3);
-        asstIds.add(4);
-        asstIds.add(5);
-        asstIds.add(6);
-        asstIds.add(7);
-        map.put("asstIds", asstIds);
 
+        List<Integer> asstIds = new ArrayList<>();
         List<String> asstNames = new ArrayList<>();
-        asstNames.add("助理3");
-        asstNames.add("助理4");
-        asstNames.add("助理5");
-        asstNames.add("助理6");
-        asstNames.add("助理7");
+        for (Staff staff : jobScheduleServices.findSalonStaff("美容助理")){
+            asstIds.add(staff.getId());
+            asstNames.add(staff.getName());
+        }
+        map.put("asstIds", asstIds);
         map.put("asstNames", asstNames);
+
 
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().print(gson.toJson(map));

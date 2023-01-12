@@ -151,6 +151,11 @@ public class JobScheduleServicesImp implements JobScheduleServices {
         return all;
     }
 
+    @Override
+    public List<Staff> findSalonStaff(String position) {
+        return staffDAO.getStaffByPosi(position);
+    }
+
     private List<JobSchedule> integrateJobSchedules(List<JobSchedule> all) {
         for(JobSchedule job : all){
             Appointment appoint = appointmentDAO.findAppointBySchId(job.getSchID());

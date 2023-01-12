@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.web.job.model.entities.JobSchedule;
 import com.web.job.model.services.JobScheduleServices;
 import com.web.job.model.services.imp.JobScheduleServicesImp;
+import com.web.staff.model.entity.Staff;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,33 +35,25 @@ public class JobShowController extends HttpServlet {
                     .setDateFormat("yyyy-MM-dd")
                     .create();
 
-            //TODO: 模擬取得所有員工姓名 與 ID
-            List<Integer> groomerIds = new ArrayList<>();
-            groomerIds.add(1);
-            groomerIds.add(2);
-            req.setAttribute("groomerIds", groomerIds);
 
+            List<Integer> groomerIds = new ArrayList<>();
             List<String> groomNames = new ArrayList<>();
-            groomNames.add("美容師1");
-            groomNames.add("美容師2");
+            for (Staff staff : jobScheduleServices.findSalonStaff("美容師")){
+                groomerIds.add(staff.getId());
+                groomNames.add(staff.getName());
+            }
+            req.setAttribute("groomerIds", groomerIds);
             req.setAttribute("groomNames", groomNames);
 
             List<Integer> asstIds = new ArrayList<>();
-            asstIds.add(3);
-            asstIds.add(4);
-            asstIds.add(5);
-            asstIds.add(6);
-            asstIds.add(7);
-            req.setAttribute("asstIds", asstIds);
-
-
             List<String> asstNames = new ArrayList<>();
-            asstNames.add("助理3");
-            asstNames.add("助理4");
-            asstNames.add("助理5");
-            asstNames.add("助理6");
-            asstNames.add("助理7");
+            for (Staff staff : jobScheduleServices.findSalonStaff("美容助理")){
+                asstIds.add(staff.getId());
+                asstNames.add(staff.getName());
+            }
+            req.setAttribute("asstIds", asstIds);
             req.setAttribute("asstNames", asstNames);
+
 
             //獲取所有 job
             List<JobSchedule> allJobs = jobScheduleServices.findAllJobs();

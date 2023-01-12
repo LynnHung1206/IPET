@@ -244,7 +244,7 @@
         }
       }
       jobEvent.push({
-        title: "(" + job.schPeriod + ") " +  job.groomerName + "; " + job.asstID1Name + "; " + job.asstID2Name,
+        title: "(" + job.schPeriod + ") " +  job.groomerName + ", " + job.asstID1Name + ", " + job.asstID2Name,
         employee: [job.groomerName, job.asstID1Name, job.asstID2Name],
         allDay: true,
         start: job.schDate,
