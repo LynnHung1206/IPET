@@ -17,8 +17,6 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // avoid sending requests repeatedly
-    	System.out.println(req.getContextPath());
-    	System.out.println(req.getRequestURI());
     	
         req.getRequestDispatcher("/templates/backstage/back-index.jsp").forward(req, resp);
     }

@@ -40,7 +40,7 @@
               消息管理
               <i class="fas fa-angle-left right"></i>
               <!--      TODO: {最新消息管理-消息管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
+<!--               <span class="badge badge-info right">999</span> -->
             </p>
           </a>
           <!--    TODO: {最新消息管理-消息管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
@@ -48,13 +48,13 @@
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目1</p>
+                <p>最新消息列表</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
+                <p>新增最新消息</p>
               </a>
             </li>
           </ul>
@@ -78,12 +78,12 @@
                 <p>員工總覽</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
-              </a>
-            </li>
+<!--             <li class="nav-item"> -->
+<!--               <a href="#" class="nav-link"> -->
+<!--                 <i class="far fa-circle nav-icon"></i> -->
+<!--                 <p>項目2</p> -->
+<!--               </a> -->
+<!--             </li> -->
           </ul>
         </li>
         <li class="nav-item">
@@ -94,8 +94,6 @@
             <p>
               權限管理
               <i class="fas fa-angle-left right"></i>
-              <!--      TODO: {員工專區-權限管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
             </p>
           </a>
           <!--    TODO: {員工專區-權限管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
@@ -103,15 +101,15 @@
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目1</p>
+                <p>新增權限</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
-              </a>
-            </li>
+<!--             <li class="nav-item"> -->
+<!--               <a href="#" class="nav-link"> -->
+<!--                 <i class="far fa-circle nav-icon"></i> -->
+<!--                 <p>項目2</p> -->
+<!--               </a> -->
+<!--             </li> -->
           </ul>
         </li>
         <li class="nav-header"><b>購物商城專區</b></li>

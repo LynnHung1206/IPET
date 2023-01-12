@@ -33,11 +33,7 @@ Staff staffVO = (Staff) request.getAttribute("staffVO");
 	margin: auto;
 }
 </style>
-<script>
-	function enter() {
-		alert("新增成功");
-	}
-</script>
+
 <style type="text/css">
 input#allStaff {
 	background-color: lightgray;
@@ -91,7 +87,9 @@ input#allStaff:hover, #search:hover {
 
 					<!-- 新增員工資料 -->
 					<div id="newStaff">
-						<form action="${pageContext.request.contextPath}/ipet-back/staff/getAllList" method="post">
+						<form
+							action="${pageContext.request.contextPath}/ipet-back/staff/getAllList"
+							method="post">
 							<table id="staffdata">
 								<tr>
 									<td><label>姓名:</label></td>
@@ -200,7 +198,11 @@ input#allStaff:hover, #search:hover {
 
 
 
-
+<!-- 		<script> -->
+// 			function enter() {
+// 				alert("新增成功");
+// 			}
+<!-- 		</script> -->
 		<!-- Main Footer -->
 		<%@ include file="/templates/backstage/common/footer.jsp"%>
 	</div>
