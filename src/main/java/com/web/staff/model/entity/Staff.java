@@ -11,8 +11,6 @@ import javax.persistence.Table;
 
 
 import com.core.model.entities.Core;
-import com.web.admin.model.entities.Admin;
-import com.web.admin.model.entities.AdminFunc;
 @Entity
 @Table(name = "Staff", catalog = "ipetdb")
 public class Staff extends Core {
@@ -47,7 +45,7 @@ public class Staff extends Core {
 	@Column(name = "POSI")
 	private String posi;
 	
-
+	
 
 
 	public Integer getId() {
@@ -154,17 +152,4 @@ public class Staff extends Core {
 		this.posi = posi;
 	}
 	
-	public Admin getAdminID() {
-		Admin admin = new Admin();
-		admin.getAdminID();
-		return admin;
-	}
-	
-	public AdminFunc getFuncName() {
-		AdminFunc func = new AdminFunc();
-		func.getAdminName();
-		return func;
-		
-	}
-
 }

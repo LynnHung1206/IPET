@@ -11,7 +11,8 @@
 <title>IPET 寵物</title>
 <!-- TODO: 目前先使用 完整css，後續再換成 min.css-->
 <!-- summernote -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -55,8 +56,15 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
+
 					<div>
-					<label>內容</label>
+					<label>標題</label>
+					
+					</div>
+
+
+					<div>
+						<label>內容</label>
 						<textarea id="summernote"></textarea>
 					</div>
 
