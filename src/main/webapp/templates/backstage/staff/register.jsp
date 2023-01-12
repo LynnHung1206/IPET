@@ -91,7 +91,7 @@ input#allStaff:hover, #search:hover {
 
 					<!-- 新增員工資料 -->
 					<div id="newStaff">
-						<form action="register" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-back/staff/getAllList" method="post">
 							<table id="staffdata">
 								<tr>
 									<td><label>姓名:</label></td>

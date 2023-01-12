@@ -52,12 +52,9 @@ public class StaffServlet extends HttpServlet {
 			StaffService staffSvc = new StaffService();
 			AdminService adminSvc = new AdminService();
 			
-//			List<Admin.PK> adminpk = adminSvc.getPk(staffId);
 			
 			Admin admin = adminSvc.getOneAdminByInt(staffId);
 			Staff staff = staffSvc.getStaff(staffId);
-			
-//			req.setAttribute("adminpk", adminpk);
 			
 			req.setAttribute("admin", admin);
 			req.setAttribute("staff", staff);
@@ -87,6 +84,7 @@ public class StaffServlet extends HttpServlet {
 		String idStr = req.getParameter("staffId");
 		java.sql.Date birth = Date.valueOf(birthStr);
 
+//		System.out.println("here==========");
 		Integer status = Integer.valueOf(statusStr);
 		Integer id = Integer.valueOf(idStr.toString().trim());
 
@@ -126,18 +124,14 @@ public class StaffServlet extends HttpServlet {
 		String acount = req.getParameter("acount");
 		String password = req.getParameter("password");
 		String posi = req.getParameter("job");
-		String[] adminStr = req.getParameterValues("admin");
+		String adminStr = req.getParameter("admin");
 
 		List<String> errorMsgs = getErrorMsgs(sname, uid, birthStr, sex, email, phone, address, acount, password, posi,
 				adminStr);
-
 		java.sql.Date birth = Date.valueOf(birthStr);
 
-		Integer adminInt[] = new Integer[adminStr.length];
-
-		for (int idx = 0; idx < adminStr.length; idx++) {
-			adminInt[idx] = Integer.valueOf(adminStr[idx].trim());
-		}
+		Integer adminInt = Integer.valueOf(adminStr.trim());
+		
 
 		Staff staff = new Staff();
 		staff.setName(sname);
@@ -153,27 +147,27 @@ public class StaffServlet extends HttpServlet {
 		staff.setPosi(posi);
 
 		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("staffVO", staff); // 含有輸入格式錯誤的empVO物件,也存入req
-			RequestDispatcher failureView = req.getRequestDispatcher("/backEnd/staff/register.jsp");
+			req.setAttribute("staff", staff); // 含有輸入格式錯誤的empVO物件,也存入req
+			RequestDispatcher failureView = req.getRequestDispatcher("/templates/backstage/staff/register.jsp");
 			failureView.forward(req, res);
 			return;
 		}
-
+		
 		StaffService staffSvc = new StaffService();
-		int id = staffSvc.addStaff(staff);
+		int staffid = staffSvc.addStaff(staff);
+		
 
 		AdminService adminSvc = new AdminService();
-		for (int idx = 0; idx < adminInt.length; idx++) {
-			Admin admin = adminSvc.addAdminOnStaff(adminInt[idx], id);
-		}
+			Admin admin = adminSvc.addAdminOnStaff(adminInt, staffid);
+		
 //			轉交
-		String url = "staffList.jsp";
+		String url = "/templates/backstage/staff/staffList.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 	}
 
 	private List<String> getErrorMsgs(String sname, String uid, String birthStr, String sex, String email, String phone,
-			String address, String acount, String password, String posi, String[] adminStr) {
+			String address, String acount, String password, String posi, String adminStr) {
 		List<String> errorMsgs = new LinkedList<String>();
 		String snameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 		if (sname == null || sname.trim().length() == 0) {

@@ -74,9 +74,9 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/templates/backstage/back-index.jsp">Home</a></li>
+              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
               <li class="breadcrumb-item">美容預約管理</li>
-              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/templates/backstage/salon/salonAppointAll.jsp">預約總覽</a></li>
+              <li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/appoint/appoints">預約總覽</a></li>
             </ol>
           </div>
         </div>
@@ -179,12 +179,38 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
-            <button type="submit" class="btn btn-primary btn-edit-confirm">確認修改</button>
+            <button data-toggle="modal" class="btn btn-primary btn-edit-confirm">確認修改</button>
           </div>
         </div>
       </div>
     </div>
     <!-- /. Edit Modal content   -->
+
+    <!-- Edit Confirm Modal content   -->
+    <div class="modal fade" id="EditConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            確認要修改此筆資料? <br>
+            <p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或 "逾時未到"，該筆資料後續將無法再被更改。</p>
+            <br>
+            <p id="editConfirmModalMessage"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
+            <button type="submit" class="btn btn-danger btn-edit-confirm-confirm" >確認修改</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.Edit Confirm Modal content   -->
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -229,7 +255,6 @@
 
 <!-- DataTable show child row -->
 <script>
-
   function format (detailService) {
     // `d` is the original data object for the row
     let tbody = `
@@ -304,172 +329,180 @@
         style: 'single',
         toggleable: false
       },
-      order: [[0, 'desc']]
-    });
+      order: [[0, 'desc']],
+      fnDrawCallback : function (){
+        <!-- 當預約狀態不是 "已支付訂金時", 直接移除 可編輯按鈕 -->
+        $("#reserveTable tr").each(function (){
+          if (this.querySelector(".reserveStatus").innerText !== "已支付訂金"){
+            this.querySelector(".row-edit, .dt-center").innerHTML = "";
+          }
+        });
 
 
-    // 當預約狀態不是 "已支付訂金時", 直接移除 可編輯按鈕
-    $("#reserveTable tr").each(function (){
-      if (this.querySelector(".reserveStatus").innerText !== "已支付訂金"){
-        this.querySelector(".row-edit, .dt-center").innerHTML = "";
-      }
-    });
-
-
-
-    <!-- Add event listener for opening and closing details -->
-    $('#reserveTable tbody').on('click', 'td.details-control', function () {
+        <!-- Add event listener for opening and closing details -->
+        $('#reserveTable tbody').on('click', 'td.details-control', function () {
           let tr = $(this).closest('tr');
           let row = table.row( tr );
 
           if ( row.child.isShown() ) {
-              // This row is already open - close it
-              row.child.hide();
-              tr.removeClass('shown');
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
           }
           else {
-              // Open this row
-              row.child(format(row.data())).show();
-              tr.addClass('shown');
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
           }
-      });
+        });
+
+        <!--  Edit data from modal -->
+        let apmIDEdit;
+        let targetDataEdit;
+        let apmObjectEdit;
+        let editRefresh;
+        $('td.row-edit').on('click',  function (){
+          // get the selected tr
+          targetDataEdit = $(event.target).closest("tr")[0];
+          apmIDEdit = targetDataEdit.querySelector("td.reserveId").innerText.trim();
 
 
+          // send the request to server, and response the data on the modal
+          $.ajax({
+            url: "${pageContext.request.contextPath}/ipet-back/appoint/editModalInput",
+            method: "POST",
+            data:{"apmID": apmIDEdit},
+            success : function (resp){
+              if (resp !== ""){
+                apmObjectEdit = JSON.parse(resp);
+                // 載入預約狀態 並選擇起來
+                $('#reserveStatus-modal-edit  option[value="' + apmObjectEdit.appoint.apmStatus + '"]').attr("selected");
+                console.log(apmObjectEdit.appoint.apmStatus);
 
-    // TODO: (需要重寫)  Edit data from modal
-    let apmIDEdit;
-    let targetDataEdit;
-    let apmObjectEdit;
-    let editRefresh;
-    $('td.row-edit').on('click',  function (){
-      // get the selected tr
-      targetDataEdit = $(event.target).closest("tr")[0];
-      apmIDEdit = targetDataEdit.querySelector("td.reserveId").innerText.trim();
+                // 載入note
+                $("#clientNote-modal-edit").val(apmObjectEdit.appoint.customerNote);
 
+                // 載入原始班表並鎖定
+                $("#jobId-modal-edit").html(`<option value="\${apmObjectEdit.appoint.schID}" selected>(\${apmObjectEdit.appoint.schID}) \${apmObjectEdit.appoint.schDate} \${apmObjectEdit.appoint.schPeriod} </option>`);
+                $("#jobId-modal-edit").prop("disabled", true);
 
-      // send the request to server, and response the data on the modal
-      // TODO: 重這裡開始寫!!!!
-      $.ajax({
-        url: "${pageContext.request.contextPath}/ipet-back/appoint/editModalInput",
-        method: "POST",
-        data:{"apmID": apmIDEdit},
-        success : function (resp){
-          if (resp !== ""){
-            apmObjectEdit = JSON.parse(resp);
-            // 載入預約狀態 並選擇起來
-            $('#reserveStatus-modal-edit  option[value="' + apmObjectEdit.appoint.apmStatus + '"]').attr("selected");
+                // 載入原始日期
+                $("#reserveDate-modal-edit").val(apmObjectEdit.appoint.schDate);
 
-            // 載入note
-            $("#clientNote-modal-edit").val(apmObjectEdit.appoint.customerNote);
+                // 載入原始時段
+                $("#reservePeriod-modal-edit").val(apmObjectEdit.appoint.schPeriod);
 
-            // 載入原始班表並鎖定
-            $("#jobId-modal-edit").html(`<option value="\${apmObjectEdit.appoint.schID}" selected>(\${apmObjectEdit.appoint.schID}) \${apmObjectEdit.appoint.schDate} \${apmObjectEdit.appoint.schPeriod} </option>`);
-            $("#jobId-modal-edit").prop("disabled", true);
-
-            // 載入原始日期
-            $("#reserveDate-modal-edit").val(apmObjectEdit.appoint.schDate);
-
-            // 載入原始時段
-            $("#reservePeriod-modal-edit").val(apmObjectEdit.appoint.schPeriod);
-
-          }
-        }
-      });
-    })
-
-    // 當你更新了狀態....
-    $("#reserveStatus-modal-edit").on("change", function (){
-      // 班表會被回復到原始數值並鎖起來
-      $("#jobId-modal-edit").val(apmObjectEdit.schID)
-                            .prop("disabled", true);
-    });
-
-    // 當狀態為 "已支付訂金" 才可點選查詢班表，進而顯示可選擇班表
-    $("#searchAvailableJob").on("click", function(){
-      if ($("#reserveStatus-modal-edit").val() === "0"){
-        // 解除班表鎖定
-        $("#jobId-modal-edit").removeAttr("disabled");
-        // 將可選擇的班表顯示於下拉選單中
-        let jobHTMLEdit = $("#jobId-modal-edit").html();
-        for (let job of apmObjectEdit.availableJob) {
-          if (job.schID === apmObjectEdit.schID) {
-            jobHTMLEdit += `<option value="\${job.schID}">(\${job.schID}) \${job.schDate} \${job.schPeriod}</option>`
-          }else{
-            jobHTMLEdit += `<option value="\${job.schID}" selected>(\${job.schID}) \${job.schDate} \${job.schPeriod}</option>`
-          }
-          $('#jobId-modal-edit').html(jobHTMLEdit);
-        }
-      }else{
-        $("#editModalMessage").html("預約單狀態為已支付訂金，才可以查詢班表並更改。")
-                .css("color","red");
-      }
-    })
-
-    // 當班表被更新，更動日期 時段，且狀態鎖起來
-    let selectNewJobID;
-    $("#jobId-modal-edit").on("change", function (){
-      let selectJobDatePeriod = $("#jobId-modal-edit").find(":selected").text();
-      selectNewJobID = $("#jobId-modal-edit").val()[0];
-      let selectNewJobDate = selectJobDatePeriod.split(" ")[1].trim();
-      let selectNewJobPeriod = selectJobDatePeriod.split(" ")[2].trim();
-      $("#reserveDate-modal-edit").val(selectNewJobDate);
-      $("#reservePeriod-modal-edit").val(selectNewJobPeriod);
-      $("#reserveStatus-modal-edit").prop("disabled", true);
-    })
-
-
-    $('.modal-footer').on('click', '.btn-edit-confirm', function (){
-      if (apmObjectEdit.appoint.apmID !== "" &&
-          apmObjectEdit.appoint.memID !== "" &&
-          apmObjectEdit.appoint.petID != "" &&
-          $("#jobId-modal-edit").val().trim() !== "" &&
-          $("#reserveStatus-modal-edit").val().trim() !== ""
-      ) {
-        $.ajax({
-          url:"${pageContext.request.contextPath}/ipet-back/appoint/appoint_edit",
-          method:"POST",
-          data:{
-            apmID: apmObjectEdit.appoint.apmID,
-            memID: apmObjectEdit.appoint.memID,
-            petID: apmObjectEdit.appoint.petID,
-            totalPrice: apmObjectEdit.appoint.totalPrice,
-            schID: $("#jobId-modal-edit").val(),
-            apmStatus: $("#reserveStatus-modal-edit").val(),
-            customerNote: $("#clientNote-modal-edit").val()
-          },
-          success: function (resp){
-            if (resp === "修改成功"){
-              console.log("送出成功!!");
-              $("#editModalMessage").html("修改成功")
-                      .css("color","green");
-              $(".btn-edit-confirm").addClass("disabled")
-                      .attr("disabled")
-              editRefresh = true;
-            }else{
-              $("#editModalMessage").html(resp)
-                      .css("color","red");
-              editRefresh = false;
+              }else{
+                $("#editModalMessage").html("錯誤: 預約單載入失敗。")
+                        .css("color","red");
+              }
             }
+          });
+        })
+
+        // 當你更新了狀態....
+        $("#reserveStatus-modal-edit").on("change", function (){
+          // 班表會被回復到原始數值並鎖起來
+          $("#jobId-modal-edit").val(apmObjectEdit.appoint.schID)
+                  .prop("disabled", true);
+        });
+
+        // 當狀態為 "已支付訂金" 才可點選查詢班表，進而顯示可選擇班表
+        $("#searchAvailableJob").on("click", function(){
+          if ($("#reserveStatus-modal-edit").val() === "0"){
+            // 解除班表鎖定
+            $("#jobId-modal-edit").removeAttr("disabled");
+            // 將可選擇的班表顯示於下拉選單中
+            let jobHTMLEdit = $("#jobId-modal-edit").html();
+            for (let job of apmObjectEdit.availableJob) {
+              if (job.schID === apmObjectEdit.schID) {
+                jobHTMLEdit += `<option value="\${job.schID}">(\${job.schID}) \${job.schDate} \${job.schPeriod}</option>`
+              }else{
+                jobHTMLEdit += `<option value="\${job.schID}" selected>(\${job.schID}) \${job.schDate} \${job.schPeriod}</option>`
+              }
+              $('#jobId-modal-edit').html(jobHTMLEdit);
+            }
+          }else{
+            $("#editModalMessage").html("預約單狀態為已支付訂金，才可以查詢班表並更改。")
+                    .css("color","red");
           }
         })
 
-      }else{
-        $("#editModalMessage").html("錯誤: 資料不完整，請重新填寫。")
-                .css("color","red");
-        editRefresh = false;
-      }
-    })
+        // 當班表被更新，更動日期 時段，且狀態鎖起來
+        let selectNewJobID;
+        $("#jobId-modal-edit").on("change", function (){
+          let selectJobDatePeriod = $("#jobId-modal-edit").find(":selected").text();
+          selectNewJobID = $("#jobId-modal-edit").val()[0];
+          let selectNewJobDate = selectJobDatePeriod.split(" ")[1].trim();
+          let selectNewJobPeriod = selectJobDatePeriod.split(" ")[2].trim();
+          $("#reserveDate-modal-edit").val(selectNewJobDate);
+          $("#reservePeriod-modal-edit").val(selectNewJobPeriod);
+          $("#reserveStatus-modal-edit").prop("disabled", true);
+        })
 
-    $('#EditModal').on("hidden.bs.modal", function (){
-      // clean the previous data
-      $('#reserveStatus-modal-edit').val("");
-      $('#clientNote-modal-edit').val("");
-      $('#jobId-modal-edit').val("");
-      $('#reserveDate-modal-edit').val("");
-      $('#reservePeriod-modal-edit').val("");
-      $("#jobId-modal-edit").prop("disabled", false);
-      $("#reserveDate-modal-edit").prop("disabled", false);
-      window.location.reload();
+        // 當資料確定很完整後，送出後才能跳出下一個視窗
+        $(".btn-edit-confirm").on("click", function(){
+          //data-target="#EditConfirmModal"
+          if (apmObjectEdit.appoint.apmID !== "" &&
+                  apmObjectEdit.appoint.memID !== "" &&
+                  apmObjectEdit.appoint.petID != "" &&
+                  $("#jobId-modal-edit").val().trim() !== "" &&
+                  $("#reserveStatus-modal-edit").val().trim() !== "")
+          {
+            $(".btn-edit-confirm").attr("data-target","#EditConfirmModal");
+          }else{
+            $("#editModalMessage").html("錯誤: 資料不完整，請重新填寫。")
+                    .css("color","red");
+          }
+
+        })
+
+
+        $('.modal-footer').on('click', '.btn-edit-confirm-confirm', function (){
+          $.ajax({
+            url:"${pageContext.request.contextPath}/ipet-back/appoint/appoint_edit",
+            method:"POST",
+            data:{
+              apmID: apmObjectEdit.appoint.apmID,
+              memID: apmObjectEdit.appoint.memID,
+              petID: apmObjectEdit.appoint.petID,
+              totalPrice: apmObjectEdit.appoint.totalPrice,
+              schID: $("#jobId-modal-edit").val(),
+              apmStatus: $("#reserveStatus-modal-edit").val(),
+              customerNote: $("#clientNote-modal-edit").val()
+            },
+            success: function (resp){
+              if (resp === "修改成功"){
+                $("#editConfirmModalMessage").html("修改成功")
+                        .css("color","green");
+                $(".btn-edit-confirm-confirm").addClass("disabled")
+                        .attr("disabled");
+                editRefresh = true;
+              }else{
+                $("#editConfirmModalMessage").html("錯誤: 無法修改!")
+                        .css("color","red");
+              }
+            }
+          })
+        })
+
+        $('#EditConfirmModal').on("hidden.bs.modal", function (){
+          $("#EditModal").modal("hide");
+        });
+
+        $("#EditModal").on("hidden.bs.modal", function (){
+          // clean the previous data and class
+          $(".btn-edit-confirm").removeAttr("data-target", "disabled")
+                  .removeClass("disabled");
+          $(".btn-edit-confirm-confirm").removeClass("disabled")
+                  .removeAttr("disabled");
+
+          if (editRefresh) {
+            window.location.reload();
+          }
+        });
+        <!--  /.Edit data from modal -->
+      }
     });
   });
 </script>

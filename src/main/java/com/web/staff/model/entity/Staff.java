@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 
 import com.core.model.entities.Core;
 @Entity
@@ -21,7 +20,7 @@ public class Staff extends Core {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "NAME")
+	@Column(name = "SNAME")
 	private String name;
 	@Column(name = "UID")
 	private String uid;
@@ -35,7 +34,7 @@ public class Staff extends Core {
 	private String phone;
 	@Column(name = "TEL")
 	private String tel;
-	@Column(name = "ADD")
+	@Column(name = "ADDR")
 	private String add;
 	@Column(name = "AC")
 	private String ac;
@@ -46,27 +45,6 @@ public class Staff extends Core {
 	@Column(name = "POSI")
 	private String posi;
 	
-	public  Staff() {}
-	
-	
-
-	public Staff(Integer id, String name, String uid, Date bth, String sex, String email, String phone, String tel,
-			String add, String ac, String pw, Integer status, String posi) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.uid = uid;
-		this.bth = bth;
-		this.sex = sex;
-		this.email = email;
-		this.phone = phone;
-		this.tel = tel;
-		this.add = add;
-		this.ac = ac;
-		this.pw = pw;
-		this.status = status;
-		this.posi = posi;
-	}
 
 
 

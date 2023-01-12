@@ -153,7 +153,8 @@ public class JobScheduleServicesImp implements JobScheduleServices {
     private List<JobSchedule> integrateJobSchedules(List<JobSchedule> all) {
         for(JobSchedule job : all){
             Appointment appoint = appointmentDAO.findAppointBySchId(job.getSchID());
-            if (appoint != null){
+            if (appoint != null && appoint.getApmStatus() != 2){
+                // 只有狀態不是已取消的才可以附在job上
                 job.setApmId(appoint.getApmID());
             }
 

@@ -124,12 +124,12 @@ input#addNew:hover, #search:hover {
 									<td>${staffVO.add}</td>
 									<td>${staffVO.posi}</td>
 									<td>${staffVO.status == 0 ? "在職" : "離職"}</td>
-									<td><jsp:useBean id="adminFuncSvc" scope="page"
-											class="com.web.admin.model.service.AdminFuncService" /> <c:forEach
-											var="adminFunc" items="${admin}">
-													${AdminFunc.getName()}			
-										</c:forEach>
-										</td>
+<%-- 									<td><jsp:useBean id="adminFuncSvc" scope="page" --%>
+<%-- 											class="com.web.admin.model.service.AdminFuncService" /> <c:forEach --%>
+<%-- 											var="adminFunc" items="${admin}"> --%>
+<%-- 													${AdminFunc.getName()}			 --%>
+<%-- 										</c:forEach> --%>
+<!-- 										</td> -->
 									<td>
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/ipet-back/staff/edit"
