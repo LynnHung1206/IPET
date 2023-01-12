@@ -64,7 +64,7 @@ public class AppointServicesImp implements AppointServices {
         appointment.setMessage("新增成功");
         Integer ampId = appointmentDAO.add(appointment);
 
-        // 4. 更新 jobschedule: 將 AmpID 加進 job schedule中
+        // 4. 更新 jobschedule: 將 ApmID 加進 job schedule中
         job.setApmId(ampId);
         jobScheduleDAO.update(job);
 
@@ -117,7 +117,8 @@ public class AppointServicesImp implements AppointServices {
 
 
         // 3. 通過上面的檢查，開始進行資料update
-        // 3.1 更改班表
+
+        // 3.1 更改班表 (狀態必須為 已支付訂金)
         if (!oldAppointment.getSchID().equals(newAppointment.getSchID())){
             //  "新班表" 是否已被預約
             if (newSelectJob.getApmId() != null) {
@@ -130,18 +131,19 @@ public class AppointServicesImp implements AppointServices {
                 jobScheduleDAO.update(newSelectJob);
 
                 newAppointment.setSuccessful(true);
-                newAppointment.setMessage("修改成功。");
+                newAppointment.setMessage("修改成功");
                 appointmentDAO.update(newAppointment);
             }
             return newAppointment;
         }
 
-        // 3.2 更改狀態 與 註解
+        // 3.2 更改狀態
         // 3.2.1 改為已完成 或 逾時未到 (不用更新班表)
         if (newAppointment.getApmStatus().equals(1) || newAppointment.getApmStatus().equals(3)){
             newAppointment.setSuccessful(true);
-            newAppointment.setMessage("修改成功。");
+            newAppointment.setMessage("修改成功");
             appointmentDAO.update(newAppointment);
+            return newAppointment;
         }
 
         // 3.2.2 改為已取消 (需要更新班表)
@@ -149,12 +151,20 @@ public class AppointServicesImp implements AppointServices {
             originalJob.setApmId(null);
             jobScheduleDAO.update(originalJob);
             newAppointment.setSuccessful(true);
-            newAppointment.setMessage("修改成功。");
+            newAppointment.setMessage("修改成功");
             appointmentDAO.update(newAppointment);
+            return newAppointment;
         }
 
-        // 3.2.3 未更改
-        return newAppointment;
+        // 3.3 狀態與班表都未更新
+        if (oldAppointment.getSchID().equals(newAppointment.getSchID()) &&
+            oldAppointment.getApmStatus().equals(newAppointment.getApmStatus())){
+            newAppointment.setSuccessful(true);
+            newAppointment.setMessage("修改成功");
+            appointmentDAO.update(newAppointment);
+            return newAppointment;
+        }
+        return null;
     }
 
     @Override
