@@ -84,7 +84,7 @@ public class StaffServlet extends HttpServlet {
 		String idStr = req.getParameter("staffId");
 		
 		String adminStr = req.getParameter("admin");
-		
+//		System.out.println("admin:"+adminStr);
 		Integer adminid = Integer.valueOf(adminStr.trim());
 		java.sql.Date birth = Date.valueOf(birthStr);
 		Integer status = Integer.valueOf(statusStr);
@@ -113,7 +113,8 @@ public class StaffServlet extends HttpServlet {
 		admin.setAdminID(adminid);
 		AdminService adminSvc = new AdminService();
 		adminSvc.update(admin);
-
+//		System.out.println("admin.getAdminID:"+admin.getAdminID());
+//		System.out.println("admin.getStaffID:"+admin.getStaffID());
 //			轉交
 		String url = "/templates/backstage/staff/staffList.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
