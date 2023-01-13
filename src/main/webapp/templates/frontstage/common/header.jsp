@@ -35,7 +35,7 @@
                         <div class="main-menu text-center">
                             <nav>
                                 <ul>
-                                    <li><a href="news.html">最新消息</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/ipet-front/news/allNews">最新消息</a></li>
                                     <li class="mega-menu-position"><a href="shop-page.html">商城</a>
                                         <ul class="mega-menu">
                                             <li>

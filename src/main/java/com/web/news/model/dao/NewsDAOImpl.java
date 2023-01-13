@@ -28,7 +28,7 @@ public class NewsDAOImpl implements NewsDAO {
 	@Override
 	public List<News> getAll() {
 		Session session = getSession();
-		String hql = "FROM ipetdb.news";
+		String hql = "FROM News";
 		return session.createQuery(hql,News.class).list();
 	}
 

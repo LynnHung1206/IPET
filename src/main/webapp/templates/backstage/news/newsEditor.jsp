@@ -10,10 +10,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IPET 寵物</title>
 <!-- TODO: 目前先使用 完整css，後續再換成 min.css-->
-<!-- <!-- summernote -->
--->
-<!-- <link rel="stylesheet" -->
-<%-- 	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css"> --%>
+<!-- summernote
+ -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -120,23 +120,24 @@ height:200px;
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
 	<!-- 	<!-- Summernote -->
 	-->
-	<!-- 	<script -->
-	<%-- 		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script> --%>
+		<script
+			src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 
 	<script>
-// 		$("#summernote").summernote();
+		$("#summernote").summernote();
 
 		const textarea = document.getElementById('summernote').innerText;
 		const title = document.getElementById('title').innerText;
 		
 // 		const p = document.getElementsByTagName('p');
-
 // 		p[47].setAttribute('id', 'text');
 // 		const pNew = document.getElementById('text').innerText;
-// 		function ck() {
-// 			if (pNew == '' || pNew == null) {
-// 				alert("請輸入內容");
-// 			}
+
+
+		function ck() {
+			if ($("#summernote").val()== '' || $("#summernote").val() == null) {
+				alert("請輸入內容");
+			}
 		}
 	</script>
 </body>
