@@ -1,7 +1,5 @@
 package com.web.staff.model.service;
 
-
-
 import java.util.List;
 
 import com.web.staff.model.dao.StaffDAO;

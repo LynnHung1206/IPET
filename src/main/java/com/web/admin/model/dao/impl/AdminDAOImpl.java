@@ -13,12 +13,8 @@ public class AdminDAOImpl implements AdminDAO {
 	public void update(Admin admin) {
 		Session session = getSession();
 		String hql = "UPDATE Admin SET adminID = :adminid WHERE  staffID = :staffid";
-		System.out.println("admin.getStaffID()"+admin.getStaffID());
-		System.out.println("admin.getAdminID()"+admin.getAdminID());
-		
-		 int i = session.createQuery(hql).setParameter("staffid", admin.getStaffID())
+		 session.createQuery(hql).setParameter("staffid", admin.getStaffID())
 				.setParameter("adminid", admin.getAdminID()).executeUpdate();
-		 System.out.println(i);
 		
 
 	}

@@ -10,7 +10,6 @@ Staff staff = (Staff) request.getAttribute("staff");
 %>
 <%
 Admin admin = (Admin) request.getAttribute("admin");
-
 %>
 
 
@@ -102,7 +101,7 @@ Admin admin = (Admin) request.getAttribute("admin");
 							<tr>
 								<td><label>生日:</label></td>
 								<td><input type="date" name="birth"
-									value="<%=staff.getBth()%>" readonly required></td>
+									value="<%=staff.getBth()%>" style="background-color:lightgray;" readonly required></td>
 							</tr>
 							<tr>
 								<td>性別:</td>
@@ -132,7 +131,7 @@ Admin admin = (Admin) request.getAttribute("admin");
 							<tr>
 								<td><label>帳號:</label></td>
 								<td><input type="text" name="acount"
-									value="<%=staff.getAc()%>" readonly required></td>
+									value="<%=staff.getAc()%>"  style="background-color:lightgray;" readonly required></td>
 							</tr>
 							<tr>
 								<td><label>密碼:</label></td>

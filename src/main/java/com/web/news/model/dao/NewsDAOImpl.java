@@ -24,7 +24,6 @@ public class NewsDAOImpl implements NewsDAO {
 		news.setId(newsID);
 		session.remove(news);
 	}
-		
 
 	@Override
 	public List<News> getAll() {
@@ -47,5 +46,5 @@ public class NewsDAOImpl implements NewsDAO {
 
 	}
 
-	
+
 }

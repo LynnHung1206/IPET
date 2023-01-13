@@ -10,9 +10,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IPET 寵物</title>
 <!-- TODO: 目前先使用 完整css，後續再換成 min.css-->
-<!-- summernote -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
+<!-- <!-- summernote -->
+-->
+<!-- <link rel="stylesheet" -->
+<%-- 	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css"> --%>
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -30,7 +31,15 @@
 .note-btn-group.btn-group.note-insert {
 	display: none;
 }
+/* #editBlock { */
+/* 	margin-left:400px; */
+/* } */
+textarea{
+width:200px;
+height:200px;
+}
 </style>
+
 </head>
 <!--
 `body` tag options:
@@ -57,23 +66,28 @@
 			<section class="content-header">
 				<div class="container-fluid">
 
-					<div>
-					<label>標題</label>
-					
+					<div id="editBlock">
+						<form method="post"
+							action="${pageContext.request.contextPath}/ipet-back/news/addNewNews">
+							<div>
+								<label>標題</label>
+							</div>
+							<div>
+								<input type="text" id="title" name="title" required>
+							</div>
+							<div>
+								<label>內容</label>
+							</div>
+							<div>
+								<textarea id="summernote" name="text" required></textarea>
+							</div>
+							<!-- 						<input type="hidden" name="action" value="insert"> -->
+							<input type="submit" value="送出" onclick="ck()">
+						</form>
 					</div>
-
-
-					<div>
-						<label>內容</label>
-						<textarea id="summernote"></textarea>
-					</div>
-
 
 
 					<div class="col-sm-6"></div>
-
-
-
 					<div class="row mb-2"></div>
 				</div>
 				<!-- /.container-fluid -->
@@ -104,12 +118,26 @@
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
-	<!-- Summernote -->
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
+	<!-- 	<!-- Summernote -->
+	-->
+	<!-- 	<script -->
+	<%-- 		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script> --%>
 
 	<script>
-		$("#summernote").summernote();
+// 		$("#summernote").summernote();
+
+		const textarea = document.getElementById('summernote').innerText;
+		const title = document.getElementById('title').innerText;
+		
+// 		const p = document.getElementsByTagName('p');
+
+// 		p[47].setAttribute('id', 'text');
+// 		const pNew = document.getElementById('text').innerText;
+// 		function ck() {
+// 			if (pNew == '' || pNew == null) {
+// 				alert("請輸入內容");
+// 			}
+		}
 	</script>
 </body>
 </html>
