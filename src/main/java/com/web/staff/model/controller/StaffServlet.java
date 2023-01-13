@@ -82,9 +82,11 @@ public class StaffServlet extends HttpServlet {
 		String posi = req.getParameter("job");
 		String statusStr = req.getParameter("status");
 		String idStr = req.getParameter("staffId");
+		
+		String adminStr = req.getParameter("admin");
+		
+		Integer adminid = Integer.valueOf(adminStr.trim());
 		java.sql.Date birth = Date.valueOf(birthStr);
-
-//		System.out.println("here==========");
 		Integer status = Integer.valueOf(statusStr);
 		Integer id = Integer.valueOf(idStr.toString().trim());
 
@@ -105,6 +107,12 @@ public class StaffServlet extends HttpServlet {
 
 		StaffService staffSvc = new StaffService();
 		staffSvc.updateStaff(staff);
+		
+		Admin admin = new Admin();
+		admin.setStaffID(id);
+		admin.setAdminID(adminid);
+		AdminService adminSvc = new AdminService();
+		adminSvc.update(admin);
 
 //			轉交
 		String url = "/templates/backstage/staff/staffList.jsp";

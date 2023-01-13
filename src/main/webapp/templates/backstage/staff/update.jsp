@@ -9,16 +9,10 @@
 Staff staff = (Staff) request.getAttribute("staff");
 %>
 <%
-// Admin admin = (Admin) request.getAttribute("admin");
+Admin admin = (Admin) request.getAttribute("admin");
 
-List<Admin.PK> adminpk = new ArrayList<>();
-for (Admin.PK pk : adminpk) {
-	pk = (Admin.PK) request.getAttribute("adminpk");
-}
 %>
-<%
-AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
-%>
+
 
 
 
@@ -155,7 +149,7 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 										<option value="人事" ${staff.getPosi()== "人事"? 'selected':''}>人事</option>
 										<option value="美容師" ${staff.getPosi()== "美容師"? 'selected':''}>美容師</option>
 										<option value="美容助理"
-											${staffVO.getPosi()== "美容助理"? 'selected':''}>美容助理</option>
+											${staff.getPosi()== "美容助理"? 'selected':''}>美容助理</option>
 										<option value="一般人員"
 											${staff.getPosi()== "一般人員"? 'selected':''}>一般人員</option>
 								</select></td>
@@ -177,7 +171,8 @@ AdminFunc adminFunc = (AdminFunc) request.getAttribute("adminFunc");
 										<label for="${adminFunc.getAdminID()}"
 											style="font-size: 10px;"><input type="radio"
 											name="admin" id="${adminFunc.getAdminID()}"
-											value="${adminFunc.getAdminID()} ">
+											value="${adminFunc.getAdminID()}
+											" ${adminFunc.getAdminID() == admin.getAdminID()? 'checked':''}>
 											${adminFunc.getAdminName()}</label>
 									</c:forEach></td>
 							</tr>
