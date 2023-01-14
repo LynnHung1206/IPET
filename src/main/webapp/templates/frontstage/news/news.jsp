@@ -141,7 +141,7 @@ td.details-control {
                 "info": false,
                 "searching": false,
                 "bLengthChange": false,
-                "ordering": false,
+                "ordering": true,
                 "columns": [{
                         "className": 'details-control',
                         "orderable": false,
@@ -156,9 +156,10 @@ td.details-control {
                     }
                 ],
                 "order": [
-                    [1, 'asc']
+                    [2, 'desc']
                 ]
             });
+            
 
             $('#example tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');

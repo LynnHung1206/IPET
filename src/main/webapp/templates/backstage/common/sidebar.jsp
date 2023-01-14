@@ -46,7 +46,7 @@
           <!--    TODO: {最新消息管理-消息管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/news/getAllList" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>最新消息列表</p>
               </a>

@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.news.model.entity.News;
 import com.web.news.model.service.NewsService;
 
-@WebServlet({ "/ipet-back/news/addNew", "/ipet-back/news/getAllList","/ipet-back/news/addNewNews","/ipet-back/news/editNews","/ipet-front/news/allNews" })
+@WebServlet({ "/ipet-back/news/addNew", "/ipet-back/news/getAllList","/ipet-back/news/addNewNews","/ipet-back/news/editNews","/ipet-front/news/allNews","/ipet-front/news/deleteNews" })
 public class NewsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,16 +34,20 @@ public class NewsServlet extends HttpServlet {
 					.create();
 			List<News> allnews = newsSvc.getAll();
 			req.setAttribute("allnews",gson.toJson(allnews));
-			System.out.println(gson.toJson(allnews));
 			req.getRequestDispatcher("/templates/frontstage/news/news.jsp").forward(req, res);
 		}
+		if("/ipet-back/news/getAllList".equals(path)) {
+			turnToGson(req);
+			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
+		}
+		
 		
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
 		if("/ipet-back/news/addNewNews".equals(path)) {
-			req.setCharacterEncoding("UTF-8");
 			String title = req.getParameter("title");
 			String text = req.getParameter("text");
 			
@@ -50,12 +56,51 @@ public class NewsServlet extends HttpServlet {
 			news.setText(text);
 			NewsService newsSvc = new NewsService();
 			newsSvc.add(news);
-//			TODO 待改網址
-			req.getRequestDispatcher("/templates/backstage/news/newsEditor.jsp").forward(req, res);
+			
+//			新增完轉交all並帶入物件們
+			turnToGson(req);
+			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
+		}
+		
+		if("/ipet-back/news/editNews".equals(path)) {
+			String idStr = req.getParameter("id");
+			String title = req.getParameter("title");
+			String text = req.getParameter("text");
+			
+			Integer id = Integer.valueOf(idStr);
+			
+			News news = new News();
+			news.setId(id);
+			news.setTitle(title);
+			news.setText(text);
+			NewsService newsSvc = new NewsService();
+			newsSvc.update(news);
+			
+			turnToGson(req);
+			
+			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
+		}
+		
+		if("/ipet-front/news/deleteNews".equals(path)) {
+			String idStr = req.getParameter("newsId");
+			System.out.println("idStr:"+idStr);
+			Integer id = Integer.valueOf(idStr);
+			NewsService newsSvc = new NewsService();
+			newsSvc.delete(id);
+			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
 		}
 
 		
 		
+	}
+	public  void turnToGson(HttpServletRequest req) {
+		NewsService newsSvc = new NewsService();
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.serializeNulls()
+				.setDateFormat("yyyy-MM-dd")
+				.create();
+		List<News> allnews = newsSvc.getAll();
+		req.setAttribute("allnews",gson.toJson(allnews));
 	}
 	
 	

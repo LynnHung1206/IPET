@@ -118,8 +118,7 @@ height:200px;
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
-	<!-- 	<!-- Summernote -->
-	-->
+	<!-- Summernote -->
 		<script
 			src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 
