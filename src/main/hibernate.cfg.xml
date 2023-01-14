@@ -26,5 +26,10 @@
 		<mapping class="com.web.news.model.entity.News"/>
 		<mapping class="com.web.admin.model.vo.AdminFunc"/>
 		<mapping class="com.web.admin.model.vo.Admin"/>
+		<mapping class="com.web.salonSale.model.entities.Sale" />
+		<mapping class="com.web.salonSale.model.entities.SaleDetail" />
+		<mapping class="com.web.salonService.model.entities.Category" />
+		<mapping class="com.web.salonService.model.entities.PetType" />
+		<mapping class="com.web.salonService.model.entities.Service" />
     </session-factory>
 </hibernate-configuration>
