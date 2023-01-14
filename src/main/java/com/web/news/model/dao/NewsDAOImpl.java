@@ -24,12 +24,11 @@ public class NewsDAOImpl implements NewsDAO {
 		news.setId(newsID);
 		session.remove(news);
 	}
-		
 
 	@Override
 	public List<News> getAll() {
 		Session session = getSession();
-		String hql = "FROM ipetdb.news";
+		String hql = "FROM News";
 		return session.createQuery(hql,News.class).list();
 	}
 
@@ -47,5 +46,5 @@ public class NewsDAOImpl implements NewsDAO {
 
 	}
 
-	
+
 }
