@@ -57,9 +57,7 @@ public class NewsServlet extends HttpServlet {
 			NewsService newsSvc = new NewsService();
 			newsSvc.add(news);
 			
-//			新增完轉交all並帶入物件們
-			turnToGson(req);
-			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
+			req.getRequestDispatcher("/templates/backstage/news/newsEditor.jsp").forward(req, res);
 		}
 		
 		if("/ipet-back/news/editNews".equals(path)) {

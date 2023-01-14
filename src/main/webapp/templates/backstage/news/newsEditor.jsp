@@ -136,7 +136,10 @@ height:200px;
 		function ck() {
 			if ($("#summernote").val()== '' || $("#summernote").val() == null) {
 				alert("請輸入內容");
+			}else if(title !=null || title !=''){
+				alert("新增成功");
 			}
+			
 		}
 	</script>
 </body>

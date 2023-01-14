@@ -11,13 +11,13 @@
 
 <!-- summernote
  -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 
 <!-- DataTable -->
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -138,9 +138,6 @@ textarea {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
-	<!-- Summernote -->
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 
 
 	<!-- DataTable -->
@@ -174,6 +171,9 @@ textarea {
 		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/js/dataTables.select.js"></script>
+	<!-- Summernote -->
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 
 
 	<script>
@@ -191,9 +191,9 @@ textarea {
 	        '<input type="hidden" name="id" value="'+allnews.id+'">'+
 	        '</tr>'+
 		    '</table><input type="submit" value="送出修改" style="margin-left:180px; '+
-		    'background-color: pink;border: none;border-radius: 5px"></form>';
+		    'background-color: pink;border: none;border-radius: 5px" onclick="ok()"></form>';
 	}
-// 	    $("#summernote").summernote();
+
 
 		$(document).ready(function() {
 			var table = $('#example').DataTable({
@@ -238,35 +238,46 @@ textarea {
 				fnDrawCallback: function(){
 					let targetDataDelete;
 					let newsId;
+					let deleteRefresh;
 					 $('td.row-remove').on('click', function (){
 					targetDataDelete = $(this).closest("tr")[0];
 					newsId =  targetDataDelete.querySelector("td.newsid").innerText.trim();
 					console.log("td.row-remove: "+ newsId);
 					   });
-					$('.modal-footer').on('click', function (){
+					$('.modal-footer').on('click','.btn-remove-confirm', function (){
 						console.log("button.row-remove: " + newsId);
 						 $.ajax({
 							 url: "${pageContext.request.contextPath}/ipet-front/news/deleteNews", 
 							 method: "POST",
 							 data: {"newsId" : newsId},
 							 success:function(res){
-					              if (res === "true"){
-					                $("#deleteModalMessage").html("成功刪除")
-					                        .css("color","green");
-					                $(".btn-remove-confirm").addClass("disabled")
-					                        .attr("disabled");
-					                deleteRefresh = true;
-					              }else {
-					                $("#deleteModalMessage").html("刪除失敗")
-					                        .css("color","red");
-					                $(".btn-remove-confirm").addClass("disabled")
-					                        .attr("disabled");
-					                deleteRefresh = false;
-					              }
+// 					              if (res === "true"){
+// 					                $("#deleteModalMessage").html("成功刪除")
+// 					                        .css("color","green");
+// 					                $(".btn-remove-confirm").addClass("disabled")
+// 					                        .attr("disabled");
+// 					                deleteRefresh = true;
+// 					              }else {
+// 					                $("#deleteModalMessage").html("刪除失敗")
+// 					                        .css("color","red");
+// 					                $(".btn-remove-confirm").addClass("disabled")
+// 					                        .attr("disabled");
+// 					                deleteRefresh = false;
+// 					              }
+// 								console.log(res);
+								 window.location.reload();
 					            }
 						 })
-						
-					})
+					});
+					   $('#RemoveModal').on('hidden.bs.modal', function (){
+					          // clean the value
+					          $("#deleteModalMessage").text("");
+					          $(".btn-remove-confirm").removeAttr("disabled");
+					          $(".btn-remove-confirm").removeClass("disabled");
+					          if (deleteRefresh === true) {
+					            window.location.reload();
+					          }
+					        });
 				}
 			});
 			
@@ -287,6 +298,10 @@ textarea {
 				}
 			});
 		});
+		
+		function ok(){
+			alert("修改成功");
+		}
 	</script>
 </body>
 </html>

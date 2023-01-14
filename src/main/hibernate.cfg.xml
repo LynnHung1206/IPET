@@ -24,8 +24,8 @@
         <mapping class="com.web.job.model.entities.JobSchedule"/>
         <mapping class="com.web.staff.model.entity.Staff" />
 		<mapping class="com.web.news.model.entity.News"/>
-		<mapping class="com.web.admin.model.vo.AdminFunc"/>
-		<mapping class="com.web.admin.model.vo.Admin"/>
+		<mapping class="com.web.admin.model.entities.AdminFunc" />
+		<mapping class="com.web.admin.model.entities.Admin" />
 		<mapping class="com.web.salonSale.model.entities.Sale" />
 		<mapping class="com.web.salonSale.model.entities.SaleDetail" />
 		<mapping class="com.web.salonService.model.entities.Category" />
