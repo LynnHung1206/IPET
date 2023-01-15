@@ -4,6 +4,10 @@ import com.web.appoint.model.dao.AppointmentDetailDAO;
 import com.web.appoint.model.dao.imp.AppointmentDetailImp;
 import com.web.appoint.model.entities.AppointmentDetail;
 import com.web.appoint.model.services.AppointDetailServices;
+import com.web.salonSale.model.dao.SaleDAO;
+import com.web.salonSale.model.dao.impl.SaleDAOImpl;
+import com.web.salonService.model.dao.ServiceDAO;
+import com.web.salonService.model.dao.impl.ServiceDAOImpl;
 
 import java.util.List;
 
@@ -13,18 +17,20 @@ import java.util.List;
  */
 public class AppointDetailServicesImp implements AppointDetailServices {
     private final AppointmentDetailDAO appointmentDetailDAO;
+    private final SaleDAO saleDAO;
+    private final ServiceDAO serviceDAO;
 
     public AppointDetailServicesImp(){
         appointmentDetailDAO = new AppointmentDetailImp();
+        saleDAO = new SaleDAOImpl();
+        serviceDAO = new ServiceDAOImpl();
     }
     @Override
     public List<AppointmentDetail> findAllServices() {
         List<AppointmentDetail> all = appointmentDetailDAO.getAll();
-        // 完整顯示 svcId svcName svcPrice SALE_ID saleName salePrice
-        // TODO:必須與service and service category 資料串接 (先暫不接)
         for (AppointmentDetail appoint : all) {
-            appoint.setSvcName(appoint.getSvcId() + "-服務名稱");
-            appoint.setSaleName(appoint.getSaleId() + "-方案名稱");
+            appoint.setSvcName( serviceDAO.getById(appoint.getSvcId()).getSvcName());
+            appoint.setSaleName(saleDAO.getById(appoint.getSaleId()).getSaleName());
         }
         return all;
     }

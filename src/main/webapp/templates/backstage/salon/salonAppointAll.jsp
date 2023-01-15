@@ -399,27 +399,10 @@
         <!-- 當預約狀態不是 "已支付訂金時", 直接移除 可編輯按鈕 -->
         $("#reserveTable tr").each(function (){
           if (this.querySelector(".reserveStatus").innerText !== "已支付訂金"){
-            this.querySelector(".row-edit, .dt-center").innerHTML = "";
+            this.querySelector(".row-edit").innerHTML = "";
           }
         });
 
-
-        <!-- Add event listener for opening and closing details -->
-        $('#reserveTable tbody').on('click', 'td.details-control', function () {
-          let tr = $(this).closest('tr');
-          let row = table.row( tr );
-
-          if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-          }
-          else {
-            // Open this row
-            row.child(format(row.data())).show();
-            tr.addClass('shown');
-          }
-        });
 
         <!--  Edit data from modal -->
         let apmIDEdit;
@@ -568,6 +551,21 @@
         });
         <!--  /.Edit data from modal -->
       },
+    });
+
+    <!-- Add event listener for opening and closing details -->
+    $('#reserveTable tbody').on('click', 'td.details-control', function () {
+      let tr = $(this).closest('tr');
+      let row = table.row( tr );
+      if ( row.child.isShown() ) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      } else {
+        // Open this row
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
+      }
     });
 
 

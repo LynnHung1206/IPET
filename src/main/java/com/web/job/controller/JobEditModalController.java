@@ -30,7 +30,6 @@ public class JobEditModalController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         Integer schID = Integer.parseInt(req.getParameter("schID"));
         JobScheduleServices jobScheduleServices = new JobScheduleServicesImp();
-        StaffService staffService = new StaffService();
         Map<String, Object> map = new HashMap<>();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.serializeNulls()

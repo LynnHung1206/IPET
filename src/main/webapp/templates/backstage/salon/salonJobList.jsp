@@ -430,6 +430,14 @@
       },
       order: [[0, 'desc']],
       fnDrawCallback: function (){
+        <!-- 當有預約單時", 直接移除 刪除按鈕 -->
+        $("#scheduleTable tr").each(function (){
+          if (this.querySelector(".APM_ID").innerText !== ""){
+            console.log(this.querySelector(".row-remove").innerHTML);
+            this.querySelector(".row-remove").innerHTML = "";
+          }
+        });
+
         <!-- Delete data from modal -->
         let targetDataDelete;
         let schIDDelete;
@@ -816,6 +824,7 @@
         <!-- /.Add data from modal -->
       }
     });
+
 
     $('input.column_filter').on('keyup click', function () {
       filterColumn($(this).attr('data-column'));
