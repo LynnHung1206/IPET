@@ -46,6 +46,7 @@ table, th, td {
 
 th, td {
 	background-color: pink;
+	margin: 0 auto;
 }
 
 input#addNew {
@@ -104,8 +105,7 @@ input#addNew:hover, #search:hover {
 								<td>地址</td>
 								<td>職稱</td>
 								<td>狀態</td>
-								<!-- 									<td>權限</td> -->
-								<td></td>
+								<td>修改</td>
 							</tr>
 
 							<%@ include file="page1.file"%>
@@ -124,19 +124,20 @@ input#addNew:hover, #search:hover {
 									<td>${staffVO.add}</td>
 									<td>${staffVO.posi}</td>
 									<td>${staffVO.status == 0 ? "在職" : "離職"}</td>
-<%-- 									<td><jsp:useBean id="adminFuncSvc" scope="page" --%>
-<%-- 											class="com.web.admin.model.service.AdminFuncService" /> <c:forEach --%>
-<%-- 											var="adminFunc" items="${admin}"> --%>
-<%-- 													${AdminFunc.getName()}			 --%>
-<%-- 										</c:forEach> --%>
-<!-- 										</td> -->
+									
 									<td>
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/ipet-back/staff/edit"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="修改"> <input type="hidden"
-												name="staffId" value="${staffVO.getId()}"> <input
-												type="hidden" name="action" value="updateTemp">
+
+											<button type="submit" class="btn btn-lightt details-control"
+												data-toggle="modal" data-target="#EditModal"
+												data-whatever="@mdo">
+												<i class="fas fa-solid fa-pen"></i>
+											</button>
+											<input type="hidden" name="staffId"
+												value="${staffVO.getId()}"> <input type="hidden"
+												name="action" value="updateTemp">
 										</FORM>
 									</td>
 								</tr>
