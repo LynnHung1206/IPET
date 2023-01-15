@@ -10,6 +10,10 @@ import com.web.appoint.model.services.AppointServices;
 import com.web.job.model.dao.JobScheduleDAO;
 import com.web.job.model.dao.JobScheduleImp;
 import com.web.job.model.entities.JobSchedule;
+import com.web.salonSale.model.dao.SaleDAO;
+import com.web.salonSale.model.dao.impl.SaleDAOImpl;
+import com.web.salonService.model.dao.ServiceDAO;
+import com.web.salonService.model.dao.impl.ServiceDAOImpl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,13 +29,17 @@ public class AppointServicesImp implements AppointServices {
     private final AppointmentDetailDAO appointmentDetailDAO;
     private final JobScheduleDAO jobScheduleDAO;
 
+    private final ServiceDAO serviceDAO;
+    private final SaleDAO saleDAO;
+
     // TODO: private MemDAO memDAOImp
-    // TODO: private ServiceCategory
 
     public AppointServicesImp(){
         appointmentDAO = new AppointmentImp();
         appointmentDetailDAO = new AppointmentDetailImp();
         jobScheduleDAO = new JobScheduleImp();
+        saleDAO = new SaleDAOImpl();
+        serviceDAO = new ServiceDAOImpl();
     }
 
     @Override
@@ -51,8 +59,10 @@ public class AppointServicesImp implements AppointServices {
         // 2. 判斷此預約是否只預約一種 Service category
         Set<Integer> serviceCategoryIds = new HashSet<>();
         for (AppointmentDetail appointmentDetail : appointmentDetailDAO.getAllServicesByApmId(appointment.getApmID())) {
-            // TODO: 串接 serviceCategory
+            Integer svcID = appointmentDetail.getSvcId();
+            serviceCategoryIds.add(serviceDAO.getById(svcID).getCatId());
         }
+
         if (serviceCategoryIds.size() != 1) {
             appointment.setSuccessful(false);
             appointment.setMessage("新增失敗，服務類別數量異常");
@@ -206,7 +216,16 @@ public class AppointServicesImp implements AppointServices {
             appoint.setSchDate(job.getSchDate());
             appoint.setSchPeriod(job.getSchPeriod());
 
-            // 加入 appointmentdetil 的資料
+
+            // 將 AppointmentDetail service 的資料填齊
+            for (AppointmentDetail detail : allServicesByAmpId){
+                Integer svcID = detail.getSvcId();
+                Integer saleID = detail.getSaleId();
+                detail.setSvcName(serviceDAO.getById(svcID).getSvcName());
+                detail.setSaleName(saleDAO.getById(saleID).getSaleName());
+            }
+
+
             appoint.setAppointmentDetails(allServicesByAmpId.toArray(AppointmentDetail[]::new));
             appoint.setTotalPrice(price);
             switch (appoint.getApmStatus()) {

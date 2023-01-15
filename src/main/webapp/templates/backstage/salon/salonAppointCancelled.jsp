@@ -297,23 +297,23 @@
         toggleable: false
       },
       order: [[0, 'desc']],
-      fnDrawCallback: function (){
-        <!-- Add event listener for opening and closing details -->
-        $('#reserveTable tbody').on('click', 'td.details-control', function () {
-          let tr = $(this).closest('tr');
-          let row = table.row( tr );
+      fnDrawCallback: function (){}
+    });
 
-          if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-          }
-          else {
-            // Open this row
-            row.child(format(row.data())).show();
-            tr.addClass('shown');
-          }
-        });
+    <!-- Add event listener for opening and closing details -->
+    $('#reserveTable tbody').on('click', 'td.details-control', function () {
+      let tr = $(this).closest('tr');
+      let row = table.row( tr );
+
+      if ( row.child.isShown() ) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      }
+      else {
+        // Open this row
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
       }
     });
 
