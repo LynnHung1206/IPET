@@ -128,9 +128,6 @@ td.details-control {
                 '<td>' + newsDetail.text + '</td>' +
                 '</tr>' +
                 '</table>';
-           
-                
-
         }
 
 
