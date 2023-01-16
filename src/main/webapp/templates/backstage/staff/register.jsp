@@ -104,7 +104,7 @@ input#allStaff:hover, #search:hover {
 								</tr>
 								<tr>
 									<td><label>身分證字號:</label></td>
-									<td><input type="text" name="uid" required></td>
+									<td><input type="text" name="uid" pattern="[(A-Z)(0-9)]{10}" required></td>
 								</tr>
 								<tr>
 									<td><label>生日:</label></td>
@@ -168,11 +168,11 @@ input#allStaff:hover, #search:hover {
 									<td><label>權限:</label></td>
 									<td><c:forEach var="adminFunc"
 											items="${adminFuncSvc.getAll()}">
-											<label for="${adminFunc.getAdminID()}"
+											<label for="${adminFunc.getId()}"
 												style="font-size: 10px;"><input type="radio"
-												name="admin" id="${adminFunc.getAdminID()}"
-												value="${adminFunc.getAdminID()} ">
-												${adminFunc.getAdminName()}</label>
+												name="admin" id="${adminFunc.getId()}"
+												value="${adminFunc.getId()} ">
+												${adminFunc.getName()}</label>
 										</c:forEach></td>
 								</tr>
 								<tr>

@@ -167,12 +167,12 @@ Admin admin = (Admin) request.getAttribute("admin");
 								<td><label>權限:</label></td>
 								<td><c:forEach var="adminFunc"
 										items="${adminFuncSvc.getAll()}">
-										<label for="${adminFunc.getAdminID()}"
+										<label for="${adminFunc.getId()}"
 											style="font-size: 10px;"><input type="radio"
-											name="admin" id="${adminFunc.getAdminID()}"
-											value="${adminFunc.getAdminID()}
-											" ${adminFunc.getAdminID() == admin.getAdminID()? 'checked':''}>
-											${adminFunc.getAdminName()}</label>
+											name="admin" id="${adminFunc.getId()}"
+											value="${adminFunc.getId()}
+											" ${adminFunc.getId() == admin.getAdminID()? 'checked':''}>
+											${adminFunc.getName()}</label>
 									</c:forEach></td>
 							</tr>
 							<tr>

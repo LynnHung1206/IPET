@@ -72,7 +72,7 @@ input#addNew:hover, #search:hover {
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini"  onload="opener.location.reload()">
 	<div class="wrapper">
 		<!--  Navbar -->
 		<%@ include file="/templates/backstage/common/navbar.jsp"%>

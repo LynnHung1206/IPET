@@ -13,9 +13,9 @@ public class AdminFuncDAOImpl implements AdminFuncDAO {
 	public void update(AdminFunc adminFuncVO) {
 
 		Session session = getSession();
-		AdminFunc oldadminFuncVO = session.get(AdminFunc.class, adminFuncVO.getAdminID());
-		oldadminFuncVO.setAdminID(adminFuncVO.getAdminID());
-		oldadminFuncVO.setAdminName(adminFuncVO.getAdminName());
+		AdminFunc oldadminFuncVO = session.get(AdminFunc.class, adminFuncVO.getId());
+		oldadminFuncVO.setId(adminFuncVO.getId());
+		oldadminFuncVO.setName(adminFuncVO.getName());
 		}
 		
 	@Override
@@ -35,7 +35,7 @@ public class AdminFuncDAOImpl implements AdminFuncDAO {
 	public Integer add(AdminFunc adminFuncVO) {
 		Session session = getSession();
         session.persist(adminFuncVO);
-        return adminFuncVO.getAdminID();
+        return adminFuncVO.getId();
 	}
 
 }

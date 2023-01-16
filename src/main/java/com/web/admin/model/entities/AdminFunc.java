@@ -22,26 +22,22 @@ public class AdminFunc implements java.io.Serializable {
 	public AdminFunc() {
 	}
 
-	public AdminFunc(Integer id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-
-	public Integer getAdminID() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setAdminID(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getAdminName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setAdminName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
+
+
 
 }

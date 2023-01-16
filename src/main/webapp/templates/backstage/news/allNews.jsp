@@ -11,13 +11,13 @@
 
 <!-- summernote
  -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 
 <!-- DataTable -->
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -54,7 +54,7 @@ textarea {
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini"  onload="opener.location.reload()">
 	<div class="wrapper">
 		<!--  Navbar -->
 		<%@ include file="/templates/backstage/common/navbar.jsp"%>
@@ -242,7 +242,6 @@ textarea {
 					 $('td.row-remove').on('click', function (){
 					targetDataDelete = $(this).closest("tr")[0];
 					newsId =  targetDataDelete.querySelector("td.newsid").innerText.trim();
-					console.log("td.row-remove: "+ newsId);
 					   });
 					$('.modal-footer').on('click','.btn-remove-confirm', function (){
 						console.log("button.row-remove: " + newsId);

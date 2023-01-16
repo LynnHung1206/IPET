@@ -101,7 +101,7 @@
             <li class="nav-item">
               <a href="${pageContext.request.contextPath}/ipet-back/admin/admin" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>新增權限</p>
+                <p>員工權限與新增權限</p>
               </a>
             </li>
 <!--             <li class="nav-item"> -->

@@ -27,13 +27,7 @@ public class NewsServlet extends HttpServlet {
 		}
 		
 		if("/ipet-front/news/allNews".equals(path)) {
-			NewsService newsSvc = new NewsService();
-			GsonBuilder builder = new GsonBuilder();
-			Gson gson = builder.serializeNulls()
-					.setDateFormat("yyyy-MM-dd")
-					.create();
-			List<News> allnews = newsSvc.getAll();
-			req.setAttribute("allnews",gson.toJson(allnews));
+			turnToGson(req);
 			req.getRequestDispatcher("/templates/frontstage/news/news.jsp").forward(req, res);
 		}
 		if("/ipet-back/news/getAllList".equals(path)) {
@@ -56,8 +50,8 @@ public class NewsServlet extends HttpServlet {
 			news.setText(text);
 			NewsService newsSvc = new NewsService();
 			newsSvc.add(news);
-			
-			req.getRequestDispatcher("/templates/backstage/news/newsEditor.jsp").forward(req, res);
+			turnToGson(req);
+			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
 		}
 		
 		if("/ipet-back/news/editNews".equals(path)) {
@@ -85,13 +79,14 @@ public class NewsServlet extends HttpServlet {
 			Integer id = Integer.valueOf(idStr);
 			NewsService newsSvc = new NewsService();
 			newsSvc.delete(id);
+			turnToGson(req);
 			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
 		}
 
 		
 		
 	}
-	public  void turnToGson(HttpServletRequest req) {
+	public void turnToGson(HttpServletRequest req) {
 		NewsService newsSvc = new NewsService();
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.serializeNulls()
