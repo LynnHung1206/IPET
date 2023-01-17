@@ -47,35 +47,35 @@ body {
 		<div class="card">
 			<div class="card-body login-card-body">
 
-				<form action=" index.html" method="post">
-					<div class="input-group mb-3">
-						<input type="text" class="form-control" placeholder="ID"
-							id="account" name="account">
-						<div class="input-group-append">
-							<div class="input-group-text">
-								<span class="fas fa-envelope"></span>
-							</div>
+				<%-- 				<form action="${pageContext.request.contextPath}/ipet-back/staff/login" method="POST"> --%>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" placeholder="ID"
+						id="account" name="account" required>
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-envelope"></span>
 						</div>
 					</div>
-					<div class="input-group mb-3">
-						<input type="password" class="form-control" placeholder="Password"
-							id="password" name="password">
-						<div class="input-group-append">
-							<div class="input-group-text">
-								<span class="fas fa-lock"></span>
-							</div>
+				</div>
+				<div class="input-group mb-3">
+					<input type="password" class="form-control" placeholder="Password"
+						id="password" name="password" required>
+					<div class="input-group-append">
+						<div class="input-group-text">
+							<span class="fas fa-lock"></span>
 						</div>
 					</div>
-					<div class="row">
-
-						<!-- /.col -->
-						<div class="col-4" style="margin: auto;">
-							<button type="submit" class="btn btn-primary btn-block"
-								id="btnlogin">Sign In</button>
-						</div>
-						<!-- /.col -->
+				</div>
+					<div id="errMsg" class="error" style="color:pink"></div>
+				<div class="row">
+					<!-- /.col -->
+					<div class="col-4" style="margin: auto;">
+						<button type="submit" class="btn btn-primary btn-block"
+							id="btnlogin" >Sign In</button>
 					</div>
-				</form>
+					<!-- /.col -->
+				</div>
+				<!-- 				</form> -->
 
 			</div>
 			<!-- /.login-card-body -->
@@ -91,40 +91,50 @@ body {
 		src="${pageContext.request.contextPath}/static/backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script
-		src="${pageContext.request.contextPath}/staticbackstage/plugins//js/adminlte.min.js"></script>
+		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.min.js"></script>
+
 	<script>
+	
 const account = document.querySelector('#account');
 const password = document.querySelector('#password');
 const btnlogin = document.querySelector('#btnlogin');
+const errMsg = document.querySelector('#errMsg');
+
+
+
+
 btnlogin.addEventListener('click',function(){
-	fetch('ipet-back/staff/login',{
+	fetch('${pageContext.request.contextPath}/ipet-back/login',{
 		method : 'POST',
 		header : {
 			'Content-Type' : 'application/json'
 		},
 		body : JSON.stringify({
-			account : account.value,
-			password : password.value
+			ac : account.value,
+			pw : password.value
 		})
 	})
 	.then(resp=>resp.json())
     .then(body => {
         errMsg.textContent = '';
         const { successful, message } = body;
+        console.log(successful);
         if (successful) {
           const { id, name } = body;
           sessionStorage.setItem('id', id);
           sessionStorage.setItem('name', name);
-          location = './back-index.jsp';
+          location = '${pageContext.request.contextPath}/templates/backstage/back-index.jsp';
         } else {
+//           console.log("經過這裡");
           errMsg.textContent = message;
+          
         }
       });
 	});
 	
 	
 	
-});
+
 </script>
 
 </body>
