@@ -57,4 +57,13 @@ public class StaffDAOImpl implements StaffDAO {
 		return  session.createQuery(hql,Staff.class)
 				.setParameter("posi",posi).list();
 	}
+
+	@Override
+	public Staff getByAcAndPw(Staff staff) {
+		Session session = getSession();
+		String hql = "FROM Staff WHERE ac = :ac AND pw = :pw";
+		return session.createQuery(hql,Staff.class)
+				.setParameter("ac", staff.getAc())
+				.setParameter("pw", staff.getPw()).getSingleResult();
+	}
 }

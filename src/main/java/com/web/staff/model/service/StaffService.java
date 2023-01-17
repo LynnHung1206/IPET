@@ -35,6 +35,19 @@ public class StaffService {
 		return dao.getAll();
 	}
 
-	
+	public boolean login(Staff staff) {
+		if(staff == null) {
+			return false;
+		}
+		final String account = staff.getAc();
+		final String password = staff.getPw();
+		if(account == null || account.isEmpty()) {
+			return false;
+		}
+		if(password == null || password.isEmpty()) {
+			return false;
+		}
+		return dao.getByAcAndPw(staff)!= null;
+	}
 
 }

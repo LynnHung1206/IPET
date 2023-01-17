@@ -21,7 +21,7 @@
         <img src="${pageContext.request.contextPath}/static/backstage/img/Employee1.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">IPET 寵物員工1 </a>
+      <p style="color:white;">IPET 寵物員工1 </p>
       </div>
     </div>
 
