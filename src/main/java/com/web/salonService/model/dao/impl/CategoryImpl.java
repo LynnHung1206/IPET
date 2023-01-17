@@ -39,4 +39,6 @@ public class CategoryImpl implements CategoryDAO {
 				.setParameter("catId", catId)
 				.list();
 	}
+	
 }
+

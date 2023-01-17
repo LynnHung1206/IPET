@@ -12,7 +12,7 @@ public class CategoryService {
 		dao = new CategoryImpl();
 	}
 	
-	public Category addCategory(String catName, 
+	public Integer addCategory(String catName, 
 			byte[] catImg, Integer catStatus) {
 		
 		Category category = new Category();
@@ -20,9 +20,8 @@ public class CategoryService {
 		category.setCatName(catName);
 		category.setCatImg(catImg);
 		category.setCatStatus(catStatus);
-		dao.add(category);
 		
-		return category;
+		return dao.add(category);
 	}
 	
 	public Category updateCategory(Integer catId, String catName, 

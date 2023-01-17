@@ -15,22 +15,19 @@ pageContext.setAttribute("catlist", catlist);
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AdminLTE 3 | DataTables</title>
-<!-- TODO: 目前先使用 完整css，後續再換成 min.css-->
-<!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
-<!-- IonIcons -->
-<link rel="stylesheet"
-	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Theme style -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IPET 寵物 | 美容專區 | 美容服務總覽</title>
+  	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
+	<!-- IonIcons -->
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 <style>
 .cantSee {
 	display: none !important;
@@ -130,374 +127,12 @@ div label.pet-label {
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 		<!--  Navbar -->
-		<div id="Mynavbar"></div>
-		<!-- /.navbar -->
-
-		<!-- 左邊選單區 Main Sidebar Container -->
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			<!-- Brand Logo -->
-			<a href="../../index.html" class="brand-link"> <!--  TODO: {LOGO} 修改LOGO!    -->
-				<img src="${pageContext.request.contextPath}/static/backstage/img/AdminLTELogo.png" alt="AdminLTE Logo"
-				class="brand-image img-circle"> <span
-				class="brand-text font-weight-light">IPET</span>
-			</a>
-
-			<!-- Left Sidebar -->
-			<div class="sidebar">
-
-				<!-- Sidebar user panel (optional) -->
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
-						<img src="${pageContext.request.contextPath}/static/backstage/img/Employee1.jpg"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info">
-						<a href="#" class="d-block">IPET 寵物員工1 </a>
-					</div>
-				</div>
-
-				<!-- Sidebar Menu -->
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column"
-						data-widget="treeview" role="menu" data-accordion="false">
-						<!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-						<li class="nav-header"><b>最新消息</b></li>
-						<li class="nav-item">
-							<!--  TODO: {最新消息管理-消息管理} 請修改消息管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {最新消息管理-消息管理} 可以修改消息管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-bullhorn"></i>
-								<p>
-									消息管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {最新消息管理-消息管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {最新消息管理-消息管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-header"><b>員工專區</b></li>
-						<li class="nav-item">
-							<!--  TODO: {員工專區-員工管理} 請修改員工管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {員工專區-員工管理} 可以修改員工管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-user-tie"></i>
-								<p>
-									員工管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {員工專區-員工管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {員工專區-員工管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {員工專區-權限管理} 請修改權限管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {員工專區-權限管理} 可以修改權限管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-user-lock"></i>
-								<p>
-									權限管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {員工專區-權限管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {員工專區-權限管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-header"><b>購物商城專區</b></li>
-						<li class="nav-item">
-							<!--  TODO: {購物商城專區-商品管理} 請修改商品管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {購物商城專區-商品管理} 可以修改商品管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-box"></i>
-								<p>
-									商品管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {購物商城專區-商品管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {購物商城專區-商品管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {購物商城專區-訂單管理} 請修改訂單管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {購物商城專區-訂單管理} 可以修改訂單管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-regular fa-clipboard-list"></i>
-								<p>
-									訂單管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {購物商城專區-訂單管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {購物商城專區-訂單管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-header"><b>寵物住宿專區</b></li>
-						<li class="nav-item">
-							<!--  TODO: {寵物住宿專區-住宿預約管理} 請修改住宿預約管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物住宿專區-住宿預約管理} 可以修改住宿預約管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-regular fa-clipboard-list"></i>
-								<p>
-									住宿預約管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物住宿專區-住宿預約管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物住宿專區-住宿預約管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {寵物住宿專區-房間管理} 請修改房間管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物住宿專區-房間管理} 可以修改房間管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-regular fa-bed"></i>
-								<p>
-									房間管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物住宿專區-房間管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物住宿專區-房間管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {寵物住宿專區-房務管理} 請修改房務管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物住宿專區-房務管理} 可以修改房務管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-broom"></i>
-								<p>
-									房務管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物住宿專區-房務管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物住宿專區-房務管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {寵物住宿專區-優惠管理} 請修改優惠管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物住宿專區-優惠管理} 可以修改優惠管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-receipt"></i>
-								<p>
-									住宿優惠管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物住宿專區-優惠管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物住宿專區-優惠管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-header"><b>寵物美容專區</b></li>
-						<li class="nav-item menu-open">
-							<!--  TODO: {寵物美容專區-美容預約管理} 請修改美容預約管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物美容專區-美容預約管理} 可以修改美容預約管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-regular fa-clipboard-list"></i>
-								<p>
-									美容預約管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物美容專區-美容預約管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物美容專區-美容預約管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="salon_reserve_all.html"
-									class="nav-link active"> <i class="far fa-circle nav-icon"></i>
-										<p>預約總覽</p>
-								</a></li>
-								<li class="nav-item"><a href="salon_reserve_payed.html"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>已付訂金的預約</p>
-								</a></li>
-								<li class="nav-item"><a href="salon_reserve_cancelled.html"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>已取消的預約</p>
-								</a></li>
-								<li class="nav-item"><a href="salon_reserve_finished.html"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>已完成的預約</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {寵物美容專區-班表管理} 請修改班表管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物美容專區-班表管理} 可以修改班表管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-calendar-alt"></i>
-								<p>
-									班表管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物美容專區-班表管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物美容專區-班表管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {寵物美容專區-服務項目管理} 請修改服務項目管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物美容專區-服務項目管理} 可以修改服務項目管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-dog"></i>
-								<p>
-									服務項目管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物美容專區-服務項目管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物美容專區-服務項目管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<!--  TODO: {寵物美容專區-優惠管理} 請修改優惠管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {寵物美容專區-優惠管理} 可以修改優惠管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-receipt"></i>
-								<p>
-									美容優惠管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {寵物美容專區-優惠管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {寵物美容專區-優惠管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-header"><b>會員專區</b></li>
-						<li class="nav-item">
-							<!--  TODO: {會員專區-會員資料管理} 請修改會員資料管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {會員專區-會員資料管理} 可以修改會員資料管理的icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-solid fa-users"></i>
-								<p>
-									會員資料管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {會員專區-會員資料管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {會員專區-會員資料管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-						<li class="nav-header"><b>客服專區</b></li>
-						<li class="nav-item">
-							<!--  TODO: {客服專區-客服管理} 請修改客服管理的 href  --> <a href="#"
-							class="nav-link"> <!--  TODO: {客服專區-客服管理} 可以修改客服管理的 icon，參考網站: font awesome  -->
-								<i class="nav-icon fas fa-sharp fa-solid fa-headset"></i>
-								<p>
-									客服管理 <i class="fas fa-angle-left right"></i>
-									<!--      TODO: {客服專區-客服管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-									<span class="badge badge-info right">999</span>
-								</p>
-						</a> <!--    TODO: {客服專區-客服管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目1</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>項目2</p>
-								</a></li>
-							</ul>
-						</li>
-					</ul>
-				</nav>
-				<!-- /.sidebar-menu -->
-			</div>
-			<!-- /.sidebar -->
-		</aside>
+	  <%@ include file="/templates/backstage/common/navbar.jsp" %>
+	  <!-- /.navbar -->
+	
+	  <!-- 左邊選單區 Main Sidebar Container -->
+	  <%@ include file="/templates/backstage/common/sidebar.jsp" %>
+	  <!-- /.aside -->
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -506,12 +141,12 @@ div label.pet-label {
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h3 style="margin-top: .6rem;">美容服務</h3>
+							<h3 style="margin-top: .6rem;">美容服務總覽</h3>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">美容服務</li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
+								<li class="breadcrumb-item active">美容服務總覽</li>
 							</ol>
 						</div>
 					</div>
@@ -534,7 +169,7 @@ div label.pet-label {
 				<!-- /.container-fluid -->
 			</section>
 			<div>
-				<form method="post" action="${pageContext.request.contextPath}/static/backstage/salon/svc.servlet">
+				<form method="post" action="${pageContext.request.contextPath}/ipet-back/service/allService">
 					<input type="text" placeholder="查詢服務編號" name="svcId"><br>
 					<input type="text" placeholder="查詢服務名稱" name="svcName"><br>
 					<select name="catId" id="">
@@ -631,10 +266,9 @@ div label.pet-label {
 							%>
 						</div>
 					</div>
-					<input type="hidden" name="action" value="listServices_ByCompositeQuery">
 					<button>查詢</button>
 				</form>
-				<a href="salon_addservice.jsp">新增資料</a>
+				<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
 			</div>
 			<!-- Main content -->
 			<div class="container-fluid">
@@ -657,7 +291,7 @@ div label.pet-label {
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="svcVO" items="${listServices_ByCompositeQuery}">
+										<c:forEach var="svcVO" items="${searchList}">
 											<tr>
 												<td>${svcVO.svcId}</td>
 												<td>${svcVO.svcName}</td>
@@ -672,17 +306,15 @@ div label.pet-label {
 												</c:if>
 												<td>
 	<!--											<i class="nav-icon fas fa-solid fa-pen"></i> -->
-													<form METHOD="post" ACTION="svc.servlet"style="margin-bottom: 0px;">
+													<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService"style="margin-bottom: 0px;">
 														<input type="submit" value="修改">
 														<input type="hidden" name="svcId" value="${svcVO.svcId}">														
-														<input type="hidden" name="action" value="getOne_For_Update">
 													</form>
 												</td>
 												<td>
-													<form METHOD="post" ACTION="svc.servlet"style="margin-bottom: 0px;">
+													<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService"style="margin-bottom: 0px;">
 														<input type="submit" value="刪除">
 														<input type="hidden" name="svcId" value="${svcVO.svcId}">														
-														<input type="hidden" name="action" value="delete">
 													</form>
 												</td>
 											</tr>
@@ -707,7 +339,7 @@ div label.pet-label {
 		<!-- /.content-wrapper -->
 
 		<!-- Main Footer -->
-		<div id="Myfooter"></div>
+		<%@ include file="/templates/backstage/common/footer.jsp" %>
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
@@ -726,16 +358,11 @@ div label.pet-label {
 
 	<!-- DataTables  & Plugins -->
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/jszip/jszip.min.js"></script>
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/pdfmake.min.js"></script>
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/vfs_fonts.js"></script>

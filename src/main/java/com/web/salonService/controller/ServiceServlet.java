@@ -21,21 +21,36 @@ import com.google.gson.JsonObject;
 import com.web.salonService.model.entities.Service;
 import com.web.salonService.model.services.ServiceService;
 
-@WebServlet("/static/backstage/salon/svc.servlet")
+@WebServlet({"/ipet-back/service/addService", "/ipet-back/service/allService", 
+	"/ipet-back/service/editService", "/ipet-back/service/updateService", "/ipet-back/service/deleteService"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ServiceServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String path = req.getServletPath();
+		if("/ipet-back/service/addService".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/salon/salon_addservice.jsp").forward(req, res);
+		}
+		if("/ipet-back/service/allService".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/salon/salon_showservice.jsp").forward(req, res);
+		}
+		
+		
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
+		String path = req.getServletPath();
 		
-		if("insert".equals(action)) {
+		/**********************************進入新增頁面，新增資料************************************/
+		if("/ipet-back/service/addService".equals(path)) {
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 		
-				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				/*************1.接收請求參數 - 輸入格式的錯誤處理**********/
 				//取得服務名稱
 				String svcName = req.getParameter("svcName");
 				if (svcName == null || svcName.trim().length() == 0) {
@@ -103,7 +118,7 @@ public class ServiceServlet extends HttpServlet{
 					return; //程式中斷
 				}
 				
-				/***************************2.開始新增資料***************************************/
+				/*********************2.開始新增資料************************/
 				Gson gson = new Gson();
 				
 				jsonArray = gson.fromJson(typeAndPrice, JsonArray.class);
@@ -118,14 +133,14 @@ public class ServiceServlet extends HttpServlet{
 					svcSvc.addService(svcName, svcContent, svcImg, catId, typeId, svcPrice, svcStatus);
 				}
 				
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				/******************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/templates/backstage/salon/salon_showservice.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);	
+				req.getRequestDispatcher(url).forward(req, res);
 			
 		}
 		
-		if ("listServices_ByCompositeQuery".equals(action)) { // 來自salon_showservice.jsp的複合查詢請求
+		// 來自salon_showservice.jsp 或 salon_selectservice.jsp的複合查詢請求
+		if ("/ipet-back/service/allService".equals(path)) { 
 			
 				List<String> errorMsgs = new LinkedList<String>();
 				req.setAttribute("errorMsgs", errorMsgs);
@@ -138,12 +153,12 @@ public class ServiceServlet extends HttpServlet{
 				List<Service> list  = svcSvc.findIfService(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("listServices_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-				RequestDispatcher successView = req.getRequestDispatcher("/templates/backstage/salon/salon_selectservice.jsp");
-				successView.forward(req, res);
+				req.setAttribute("searchList", list); // 資料庫取出的list物件,存入request
+				req.getRequestDispatcher("/templates/backstage/salon/salon_selectservice.jsp").forward(req, res);
 		}
 		
-		if ("getOne_For_Update".equals(action)) { // 來自salon_showservice.jsp的請求
+		// 來自salon_showservice.jsp的修改項目請求
+		if ("/ipet-back/service/editService".equals(path)) { 
 
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -166,11 +181,10 @@ public class ServiceServlet extends HttpServlet{
 						       "&svcPrice=" + svcVO.getSvcPrice() + 
 						       "&svcStatus=" + svcVO.getSvcStatus();
 				String url = "/templates/backstage/salon/salon_updateservice.jsp"+param;
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updateservice.jsp
-				successView.forward(req, res);
+				req.getRequestDispatcher(url).forward(req, res);	// 轉交 updateservice.jsp
 		}
 		
-		if ("update".equals(action)) { // 來自salon_updateservice.jsp的請求
+		if ("/ipet-back/service/updateService".equals(path)) { // 來自salon_updateservice.jsp的請求
 			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -251,22 +265,24 @@ public class ServiceServlet extends HttpServlet{
 				successView.forward(req, res);
 		}
 		
-		if ("delete".equals(action)) { // 來自salon_showservice.jsp的請求
-
+		//刪除請求
+		if ("/ipet-back/service/deleteService".equals(path)) {
+			
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-	
+			
 				/***************************1.接收請求參數***************************************/
 				Integer svcId = Integer.valueOf(req.getParameter("svcId"));
-				
+
 				/***************************2.開始刪除資料***************************************/
+				
 				ServiceService svcSvc = new ServiceService();
 				svcSvc.deleteService(svcId);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
 				String url = "/templates/backstage/salon/salon_showservice.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-				successView.forward(req, res);
+				req.getRequestDispatcher(url).forward(req, res);// 刪除成功後,轉交回送出刪除的來源網頁
+				
 		}
 	}
 }
