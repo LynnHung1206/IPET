@@ -425,15 +425,15 @@
           <!--    TODO: {會員專區-會員資料管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/member/allMemberList" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目1</p>
+                <p>會員列表</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/pet/allPetList" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
+                <p>寵物列表</p>
               </a>
             </li>
           </ul>
