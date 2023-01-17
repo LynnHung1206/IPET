@@ -4,14 +4,14 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-<!-- 		<property name="hibernate.connection.driver_class"> -->
-<!-- 		com.mysql.cj.jdbc.Driver -->
-<!-- 		</property> -->
-<!-- 		<property name="hibernate.connection.url"> -->
-<!-- 		jdbc:mysql://localhost:3306/IPETDB -->
-<!-- 		</property> -->
-<!-- 		<property name="hibernate.connection.username">root</property> -->
-<!-- 		<property name="hibernate.connection.password">abc123</property> -->
+		<!-- <property name="hibernate.connection.driver_class"> -->
+		<!-- com.mysql.cj.jdbc.Driver -->
+		<!-- </property> -->
+		<!-- <property name="hibernate.connection.url"> -->
+		<!-- jdbc:mysql://localhost:3306/IPETDB -->
+		<!-- </property> -->
+		<!-- <property name="hibernate.connection.username">root</property> -->
+		<!-- <property name="hibernate.connection.password">abc123</property> -->
 
 		<!-- 這裡的 jdbc/javaFramework 對應到 content.xml 的 Resource name="jdbc/IPETDB" -->
 		<property name="hibernate.connection.datasource">java:comp/env/jdbc/IPETDB</property>
@@ -23,20 +23,11 @@
 			class="com.web.appoint.model.entities.AppointmentDetail" />
 		<mapping class="com.web.job.model.entities.JobSchedule" />
 		<mapping class="com.web.staff.model.entity.Staff" />
-		<mapping class="com.web.pet.model.entity.Pet" />
-		<mapping class="com.web.member.model.entity.Member" />
 		<mapping class="com.web.news.model.entity.News" />
 		<mapping class="com.web.admin.model.entities.AdminFunc" />
 		<mapping class="com.web.admin.model.entities.Admin" />
-		<mapping class="com.web.salonSale.model.entities.Sale" />
-		<mapping class="com.web.salonSale.model.entities.SaleDetail" />
-		<mapping class="com.web.salonService.model.entities.Category" />
-		<mapping class="com.web.salonService.model.entities.PetType" />
-		<mapping class="com.web.salonService.model.entities.Service" />
-		<mapping class="com.web.list.model.entities.CartList" />
-		<mapping class="com.web.list.model.entities.WishList" />
-		<mapping class="com.web.order.model.entities.OrderMaster" />
-		<mapping class="com.web.order.model.entities.OrderReturn" />
-		<mapping class="com.web.order.model.entities.OrderDetail" />
+		<mapping class="com.web.product.model.entity.Product"/>
+		<mapping class="com.web.productImg.model.entity.ProductImg"/>
+		<mapping class="com.web.productType.model.entity.ProductType"/>
 	</session-factory>
 </hibernate-configuration>
