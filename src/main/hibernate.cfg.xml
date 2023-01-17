@@ -3,29 +3,29 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-<!--        <property name="hibernate.connection.driver_class">-->
-<!--        com.mysql.cj.jdbc.Driver-->
-<!--        </property>-->
-<!--        <property name="hibernate.connection.url">-->
-<!--            jdbc:mysql://localhost:3306/IPETDB-->
-<!--        </property>-->
-<!--        <property name="hibernate.connection.username">root</property>-->
-<!--        <property name="hibernate.connection.password">0000</property>-->
+	<session-factory>
+		<!-- <property name="hibernate.connection.driver_class"> -->
+		<!-- com.mysql.cj.jdbc.Driver -->
+		<!-- </property> -->
+		<!-- <property name="hibernate.connection.url"> -->
+		<!-- jdbc:mysql://localhost:3306/IPETDB -->
+		<!-- </property> -->
+		<!-- <property name="hibernate.connection.username">root</property> -->
+		<!-- <property name="hibernate.connection.password">0000</property> -->
 
-        <!--   這裡的 jdbc/javaFramework 對應到 content.xml 的 Resource name="jdbc/IPETDB"
-         -->
-        <property name="hibernate.connection.datasource">java:comp/env/jdbc/IPETDB</property>
-        <property name="hibernate.current_session_context_class">thread</property>
+		<!-- 這裡的 jdbc/javaFramework 對應到 content.xml 的 Resource name="jdbc/IPETDB" -->
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/IPETDB</property>
+		<property name="hibernate.current_session_context_class">thread</property>
 
-        <!--   ask Hibernate to Scan this  class    -->
-        <mapping class="com.web.appoint.model.entities.Appointment"/>
-        <mapping class="com.web.appoint.model.entities.AppointmentDetail"/>
-        <mapping class="com.web.job.model.entities.JobSchedule"/>
-        <mapping class="com.web.staff.model.entity.Staff" />
-        <mapping class="com.web.pet.model.entity.Pet" />
-        <mapping class="com.web.member.model.entity.Member" />
-		<mapping class="com.web.news.model.entity.News"/>
+		<!-- ask Hibernate to Scan this class -->
+		<mapping class="com.web.appoint.model.entities.Appointment" />
+		<mapping
+			class="com.web.appoint.model.entities.AppointmentDetail" />
+		<mapping class="com.web.job.model.entities.JobSchedule" />
+		<mapping class="com.web.staff.model.entity.Staff" />
+		<mapping class="com.web.pet.model.entity.Pet" />
+		<mapping class="com.web.member.model.entity.Member" />
+		<mapping class="com.web.news.model.entity.News" />
 		<mapping class="com.web.admin.model.entities.AdminFunc" />
 		<mapping class="com.web.admin.model.entities.Admin" />
 		<mapping class="com.web.salonSale.model.entities.Sale" />
@@ -33,5 +33,8 @@
 		<mapping class="com.web.salonService.model.entities.Category" />
 		<mapping class="com.web.salonService.model.entities.PetType" />
 		<mapping class="com.web.salonService.model.entities.Service" />
-    </session-factory>
+		<mapping class="com.web.product.model.entity.Product" />
+		<mapping class="com.web.productImg.model.entity.ProductImg" />
+		<mapping class="com.web.productType.model.entity.ProductType" />
+	</session-factory>
 </hibernate-configuration>
