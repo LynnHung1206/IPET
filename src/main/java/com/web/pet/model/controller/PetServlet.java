@@ -66,6 +66,7 @@ public class PetServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			update(req, res);
 		}
+		
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -77,7 +78,7 @@ public class PetServlet extends HttpServlet {
 		String petBirthStr = req.getParameter("petBirth");
 		String petStatusStr = req.getParameter("petStatus");
 		String petIdStr = req.getParameter("petId");
-		
+		System.out.println(petBirthStr);
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
 		Integer petStatus = Integer.valueOf(petStatusStr);
 		Integer petId = Integer.valueOf(petIdStr.toString().trim());

@@ -102,7 +102,7 @@ input#addNew:hover, #search:hover {
 								<td>地址</td>
 								<td>狀態</td>
 								<td></td>
-<!-- 								<td></td> -->
+								<td></td>
 							</tr>
 
 							<%@ include file="page1.file"%>
@@ -129,21 +129,20 @@ input#addNew:hover, #search:hover {
 												type="hidden" name="action" value="updateTemp">
 										</FORM>
 									</td>
-<!-- 									<td> -->
-<!-- 										<FORM METHOD="post" -->
-<%-- 											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew" --%>
-<!-- 											style="margin-bottom: 0px;"> -->
-<!-- 											<input type="submit" value="新增寵物"> <input type="hidden" -->
-<%-- 												name="memId" value="${memberVO.getMemId()}"> <input --%>
-<!-- 												type="hidden" name="action"> -->
-<!-- 										</FORM> -->
-<!-- 									</td> -->
+									<td>
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew"
+											style="margin-bottom: 0px;">
+											<input type="submit" value="新增寵物"> <input type="hidden"
+												name="memId" value="${memberVO.getMemId()}"> <input
+												type="hidden" name="action" value="insert">
+										</FORM>
+									</td>
 								</tr>
 							</c:forEach>
 						</table>
 						<div class="col-sm-6">
 							<%@ include file="page2.file"%>
-
 						</div>
 					</div>
 				</div>
