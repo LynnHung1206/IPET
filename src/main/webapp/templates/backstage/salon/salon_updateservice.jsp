@@ -19,7 +19,7 @@ pageContext.setAttribute("catlist", catlist);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IPET 寵物 | 美容專區 | 編輯服務</title>
+  <title>IPET 寵物 | 美容專區 | 新增服務</title>
   	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 	<!-- Font Awesome Icons -->
@@ -30,10 +30,43 @@ pageContext.setAttribute("catlist", catlist);
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 	<!-- summernote -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
-
+		#mainModal {
+ 		display: none; 
+		position: fixed;
+		z-index: 9999;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+		box-sizing: border-box;
+	}
+	
+	/* 彈出視窗本人
+	.main-modal-content {
+		background-color: #fafafa;
+		margin: 15% auto;
+		border: 1px solid #888;
+		width: 500px;
+		border-radius: 0.5rem;
+	} */
+	
+	.d-flex.align-items-center {
+		margin: 20% auto;
+		width: 180px;
+	}
+	
+	#loading-text {
+		color: #f8f9fa;
+		font-size: 16px
+	}
+	
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -80,8 +113,6 @@ pageContext.setAttribute("catlist", catlist);
 
 			<!-- Main content -->
 			<section class="content">
-
-
 				<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/ipet-back/service/updateService" name="form1">
 				<div class="card card-secondary">
 					<!-- card-body -->
@@ -103,13 +134,11 @@ pageContext.setAttribute("catlist", catlist);
 								<input type="text" id="svc_name" class="form-control input-shadow" value="${param.svcName}" name="svcName">
 								<div>
 									<div class="choice-title c3">服務圖片</div>
-									<label class="svc_picture input-shadow">
-										<input type="file" id="add-img" accept="image/*" style="display: none;" value="${param.svcImg}" name="svcImg">
-										<img src="${pageContext.request.contextPath}/static/backstage/img/image.png" alt="">
-									</label>
-									<figure id="showImgFather" style="border: 5px solid pink;">
-										<img id="showImg">
-									<figure>	
+								<label class="svc_picture_label input-shadow">
+									<input type="file" id="add-img" accept="image/*" style="display: none;" name="svcImg">
+									<i class="nav-icon fas fa-regular fa-image" id="aPictureImg"></i>
+									<img id="showImg">
+								</label>	
 								</div>
 								<div id="summernoteFather">
 									<label for="svc_img">服務描述</label>

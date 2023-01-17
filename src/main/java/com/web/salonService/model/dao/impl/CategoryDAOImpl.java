@@ -5,7 +5,7 @@ import com.web.salonService.model.dao.CategoryDAO;
 import com.web.salonService.model.entities.Category;
 import com.web.salonService.model.entities.Service;
 
-public class CategoryImpl implements CategoryDAO {
+public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Integer add(Category category) {

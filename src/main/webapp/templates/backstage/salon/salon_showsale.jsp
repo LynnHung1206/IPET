@@ -1,11 +1,20 @@
+<%@page import="java.sql.Timestamp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.web.salonService.model.*"%>
-<%@ page import="com.web.salonService.model.entities.*"%>
-<%@ page import="com.web.salonService.model.services.*"%>
-<%@ page import="com.web.salonService.model.dao.*"%>
-<%@ page import="com.web.salonService.model.dao.impl.*"%>
+<%@ page import="com.web.salonSale.model.*"%>
+<%@ page import="com.web.salonSale.model.entities.*"%>
+<%@ page import="com.web.salonSale.model.services.*"%>
+<%@ page import="com.web.salonSale.model.dao.*"%>
+<%@ page import="com.web.salonSale.model.dao.impl.*"%>
 <%@ page import="java.util.*"%>
+
+<%
+SaleService saleSvc = new SaleService();
+List<Sale> saleList = saleSvc.selectAll();
+pageContext.setAttribute("saleList", saleList);
+
+Timestamp now = new Timestamp(System.currentTimeMillis());
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,38 +37,80 @@
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
-	#mainModal {
- 		display: none; 
-		position: fixed;
-		z-index: 9999;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgba(0,0,0,0.4);
-		box-sizing: border-box;
-	}
-	
-	/* 彈出視窗本人
-	.main-modal-content {
-		background-color: #fafafa;
-		margin: 15% auto;
-		border: 1px solid #888;
-		width: 500px;
-		border-radius: 0.5rem;
-	} */
-	
-	.d-flex.align-items-center {
-		margin: 20% auto;
-		width: 180px;
-	}
-	
-	#loading-text {
-		color: #f8f9fa;
-		font-size: 16px
-	}
-	
+/* ================== 預約導覽列 ====================*/
+    .card-header {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0;
+
+    }
+
+    .card-change {
+      text-align: center;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      border: 0;
+      background-color: rgb(230, 230, 230, 0);
+    }
+
+    .card-change:first-child {
+      border-radius: 0.25rem 0 0 0;
+    }
+
+    .card-change:last-child {
+      border-radius: 0 0.25rem 0 0;
+    }
+
+    .card-change:hover {
+      cursor: pointer;
+      background-color: rgb(230, 230, 230);
+    }
+
+    .card-change.on {
+      background-color: #007bff;
+      color: aliceblue;
+      /* border-bottom: 3px solid #007bff; */
+    }
+
+    /* ================== 彈出視窗 ====================*/
+    /* 彈出視窗出現時的暗色背景 */
+    #mainModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /* 彈出視窗本人 */
+    .main-modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /* 叉叉(X) */
+    #modalClose {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    #modalClose:hover,
+    #modalClose:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -83,7 +134,7 @@
 			</div>
 		</div>
 	  <!-- ================== 彈出視窗 end ==================== -->
-
+	  
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -112,209 +163,80 @@
 	</c:forEach>
 </c:if>
 
-			<!-- Main content1 -->
-			<section class="content">
-				<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/ipet-back/service/addService" id="addSvcForm">
-					<div class="card card-secondary">
-						<div class="card-header">
-							<h3 class="card-title">新增美容服務</h3>
-							<div class="card-tools">
-								<button type="button" class="btn btn-tool"
-									data-card-widget="collapse" title="Collapse">
-									<i class="fas fa-minus"></i>
-								</button>
-							</div>
-						</div>
-						<!-- card-body -->
-						<div class="card-body">
-							<label for="svc_category_id">服務類型</label> <select
-								id="svc_category_id" class="form-control custom-select" required
-								name="catId">
-								<option selected style="display: none;">請選擇服務類型</option>
-								<%
-								List<Category> listcaCategoryVOs = new ArrayList<Category>();
-														CategoryService categorySvc = new CategoryService();
-														listcaCategoryVOs = categorySvc.selectAll();
-														int count = 0;
-														for (Category category : listcaCategoryVOs) {
-															if (category.getCatStatus() == 0) {
-																count += 1;
-								%>
-								<option value="<%=category.getCatId()%>"><%=category.getCatName()%></option>
-								<%
-								} else if (category.getCatStatus() == 1) {
-								count += 1;
-								%>
-								<option value="<%=category.getCatId()%>"><%=category.getCatName()%>(未上架)
-								</option>
-								<%
-								}
-								if (count == 0) {
-								%>
-								<option disabled>尚無資料</option>
-								<%
-								}
-								}
-								%>
-
-							</select> <label for="svc_name" class="c3">服務名稱</label> <input type="text"
-								id="svc_name" class="form-control input-shadow"
-								placeholder="請輸入服務名稱" required name="svcName">
-							<div>
-								<div class="choice-title c3">服務圖片</div>
-								<label class="svc_picture_label input-shadow">
-									<input type="file" id="add-img" accept="image/*" style="display: none;" name="svcImg">
-									<i class="nav-icon fas fa-regular fa-image" id="aPictureImg"></i>
-									<img id="showImg">
-								</label>
-							</div>
-							<div id="summernoteFather">
-								<label for="summernote">服務描述</label>
-								<div>
-									<textarea id="summernote" name="svcContent" required> </textarea>
-								</div>
-							</div>
-							<label>是否立即上架</label><br>
-							<input type="radio" id="svc_status1" value="0" name="svcStatus">
-							<label for="svc_status1" class="c3" style="margin-top: 8px; margin-right: 20px;">是</label>
-							<input type="radio" id="svc_status2" value="1" checked name="svcStatus">
-							<label for="svc_status2" class="c3" style="margin-top: 8px;">否</label>
-						</div>
-						<!-- /.card-body -->
-				</div>
-				</form>
-			</section>
-			<!-- /.content1 -->
-
-			<!-- Main content2 -->
-			<section class="content">
-				<div class="card card-secondary n2" id="second-card">
-					<div class="card-header">
-						<h3 class="card-title">瀏覽服務單價</h3>
-
-						<div class="card-tools">
-							<button type="button" class="btn btn-tool"
-								data-card-widget="collapse" title="Collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="card-body">
-						<label for="svc_img" style="margin-top: 8.5px;">寵物品種與價格</label> <select
-							id="pet-size" class="form-control custom-select">
-							<option selected style="display: none;">請選擇寵物體型</option>
-							<option>大型犬</option>
-							<option>中型犬</option>
-							<option>小型犬</option>
-						</select>
-						<div class="choose-type-price" id="showBigDog">
-							<%
-							List<PetType> listPetTypeVOs = new ArrayList<PetType>();
-																	PetTypeDAOImpl petTypeDAO = new PetTypeDAOImpl();
-																	listPetTypeVOs = petTypeDAO.findByPetSize("大型犬");
-																	int count2 = 0;
-																	for (PetType petType : listPetTypeVOs) {
-																		int typeId = petType.getTypeId();
-																		count2 += 1;
-							%>
-							<div class="pet-type">
-								<input type="checkbox" id="pet-type<%=typeId%>"
-									class="form-control aType" value="<%=typeId%>"> <label
-									for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
-								<input type="hidden" value="<%=petType.getPetSize()%>">
-							</div>
-							<%
-							}
-																	if (count2 == 0) {
-							%>
-							尚無資料
-							<%
-							}
-							%>
-						</div>
-						<div class="choose-type-price cantSee" id="showMediumDog">
-							<%
-							List<PetType> list2 = new ArrayList<PetType>();
-																	PetTypeDAOImpl petTypeDAO2 = new PetTypeDAOImpl();
-																	list2 = petTypeDAO2.findByPetSize("中型犬");
-																	int count3 = 0;
-																	for (PetType petType : list2) {
-																		int typeId = petType.getTypeId();
-																		count3 += 1;
-							%>
-							<div class="pet-type">
-								<input type="checkbox" id="pet-type<%=typeId%>"
-									class="form-control aType" value="<%=typeId%>"> <label
-									for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
-								<input type="hidden" value="<%=petType.getPetSize()%>">
-							</div>
-							<%
-							}
-																	if (count3 == 0) {
-							%>
-							尚無資料
-							<%
-							}
-							%>
-						</div>
-
-						<div class="choose-type-price cantSee" id="showSmallDog">
-							<%
-							List<PetType> list3 = new ArrayList<PetType>();
-																	PetTypeDAOImpl petTypeDAO3 = new PetTypeDAOImpl();
-																	list3 = petTypeDAO3.findByPetSize("小型犬");
-																	int count4 = 0;
-																	for (PetType petType : list3) {
-																		int typeId = petType.getTypeId();
-																		count4 += 1;
-							%>
-							<div class="pet-type">
-								<input type="checkbox" id="pet-type<%=typeId%>"
-									class="form-control aType" value="<%=typeId%>"> <label
-									for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
-								<input type="hidden" value="<%=petType.getPetSize()%>">
-							</div>
-							<%
-							}
-							if (count4 == 0) {
-							%>
-							尚無資料
-							<%
-							}
-							%>
-						</div>
-						<div class="add-service">
-							<div id="to-right">
-								<span>服務單價：</span>
-								<div style="position: relative; display: inline-block;">
-									<span id="money-icon">$</span> <input type="number"
-										id="enterPrice" class="input-shadow" min="0" max="999999999">
-								</div>
-								<button class="button-style blue" id="addService">新增價格</button>
-							</div>
-						</div>
-					</div>
-					<table class="view-type-price c3">
-						<thead>
-							<tr>
-								<th>寵物體型</th>
-								<th>寵物品種</th>
-								<th colspan="3">服務單價</th>
-							</tr>
-						</thead>
-						<tbody id="showList">
-						</tbody>
-					</table>
-					<!-- /.card-body -->
-				</div>
-				<!-- /.card -->
-				<div id="before-submit">
-					<input type="submit" class="service-submit" value="新增服務"
-						id="submitAll" form="addSvcForm">
-				</div>
-			</section>
+	<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
+	  <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <form class="card-header">
+                  <input type="submit" class="card-change on" value="優惠總覽" id="apm">
+                  <input type="submit" class="card-change" value="未開始" id="apm0">
+                  <input type="submit" class="card-change" value="優惠中" id="apm1">
+                  <input type="submit" class="card-change" value="已完成" id="apm2">
+                </form>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>優惠編號</th>
+                        <th>優惠名稱</th>
+                        <th>優惠描述</th>
+                        <th>優惠開始時間</th>
+                        <th>優惠結束時間</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <c:forEach var="saleVO" items="${salelist}">
+						<tr>
+							<td>${saleVO.saleId}</td>
+							<td>${saleVO.saleName}</td>
+							<td>${saleVO.salContent}</td>
+							<td>${saleVO.startTime}</td>
+							<td>${saleVO.endTime}</td>
+							<c:if test="${saleVO.endTime < now}" var="true">
+								<td>已結束</td>
+							</c:if>
+							<c:if test="${saleVO.startTime < now || saleVO.endTime > now}" var="true">
+								<td>優惠中</td>
+							</c:if>
+							<c:if test="${saleVO.startTime > now}" var="true">
+								<td>未開始</td>
+							</c:if>
+							<td>
+						<!--	<i class="nav-icon fas fa-solid fa-pen"></i> -->
+								<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService" style="margin-bottom: 0px;">
+									<input type="submit" value="修改">
+									<input type="hidden" name="saleId" value="${saleVO.saleId}">				
+								</form>
+							</td>
+							<td>
+								<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService" style="margin-bottom: 0px;">
+									<input type="submit" value="刪除">
+									<input type="hidden" name="saleId" value="${saleVO.saleId}">				
+								</form>
+							</td>
+						</tr>
+						</c:forEach>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
 		</div>
-		<!-- /.content1 -->
 		<!-- /.content-wrapper -->
 		<!-- Main Footer -->
 		<%@ include file="/templates/backstage/common/footer.jsp" %>
@@ -365,6 +287,16 @@
 	<!-- Page specific script -->
 	<script>
     $(function () {
+    	
+    	$('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+          });
     	/*===================== 彈出視窗 ==========================*/
 		const mainModal = document.getElementById("mainModal");
 
@@ -545,17 +477,13 @@
     	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
     	 
     	 $.ajax({
-    	        url : "${pageContext.request.contextPath}/ipet-back/service/addService",
+    	        url:"${pageContext.request.contextPath}/ipet-back/service/addService",
     	        type : "POST",
     	        data : formData,
     	        cache: false,
     	        processData: false,
     	        contentType: false,
-    	        beforeSend: function(){
-    	        	$("#mainModal").css("display","block");
-    	        },
     	        success : function(data) {
-    	        	$("#mainModal").css("display","none");
     	        	showSwal("success-message");
     	        },error: function(data) {
     	        	showSwal("something-Wrong");
@@ -576,7 +504,7 @@
     	    	        title: '新增成功!',
     	    	        type: 'success',
      	    		  	showConfirmButton: false,
-     	    		  	timer: 1500
+     	    		  	timer: 2000
     	    	      }, function(){
     	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/service/allService");
     	    	      })

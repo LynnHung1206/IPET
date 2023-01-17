@@ -33,49 +33,10 @@ pageContext.setAttribute("catlist", catlist);
 	display: none !important;
 }
 
-/* ================== table區 ==================*/
+/* ================== showtable區 ==================*/
 #example2 thead {
 	background-color: #6c757d;
 	color: white;
-}
-
-/* ================== 彈出視窗 ====================*/
-/* 彈出視窗出現時的暗色背景 */
-#mainModal {
-	display: none;
-	position: fixed;
-	z-index: 9999;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* 彈出視窗本人 */
-.main-modal-content {
-	background-color: #fefefe;
-	margin: 15% auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%;
-}
-
-/* 叉叉(X) */
-#modalClose {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-	text-align: right;
-}
-
-#modalClose:hover, #modalClose:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
 }
 
 /* ================== 選寵物父元素 ==================*/
@@ -150,21 +111,6 @@ div label.pet-label {
 							</ol>
 						</div>
 					</div>
-
-					<!-- ================== 彈出視窗 ==================== -->
-					<!-- Trigger/Open The Modal -->
-					<!-- <button id="mainBtn">修改預約</button> -->
-
-					<!-- The Modal -->
-					<div id="mainModal">
-						<!-- Modal content -->
-						<div class="main-modal-content">
-							<span id="modalClose">&times;</span>
-							<p>一個施工中的彈出式視窗...</p>
-						</div>
-					</div>
-
-
 				</div>
 				<!-- /.container-fluid -->
 			</section>

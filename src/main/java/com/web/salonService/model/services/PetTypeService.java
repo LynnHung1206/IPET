@@ -34,8 +34,9 @@ public class PetTypeService {
 		return dao.getById(typeId);
 	}
 	
-	public void deletePetType(Integer typeId) {
+	public PetType deletePetType(Integer typeId) {
 		dao.deleteById(typeId);
+		return dao.getById(typeId);
 	}
 	
 	public PetType getOnPetType(Integer typeId) {
