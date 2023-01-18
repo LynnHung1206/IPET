@@ -1,6 +1,7 @@
 package com.web.admin.model.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,22 @@ public class Admin implements java.io.Serializable {
 		@Id
 		@Column(name = "STAFF_ID")
 		public Integer staffID;
+		@Override
+		public int hashCode() {
+			return Objects.hash(adminID, staffID);
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			PK other = (PK) obj;
+			return Objects.equals(adminID, other.adminID) && Objects.equals(staffID, other.staffID);
+		}
+		
 	
 	}
 
@@ -56,5 +73,6 @@ public class Admin implements java.io.Serializable {
 	public void setStaffID(Integer staffID) {
 		this.staffID = staffID;
 	}
+
 
 }

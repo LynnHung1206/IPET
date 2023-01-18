@@ -75,7 +75,6 @@ public class NewsServlet extends HttpServlet {
 		
 		if("/ipet-front/news/deleteNews".equals(path)) {
 			String idStr = req.getParameter("newsId");
-			System.out.println("idStr:"+idStr);
 			Integer id = Integer.valueOf(idStr);
 			NewsService newsSvc = new NewsService();
 			newsSvc.delete(id);

@@ -21,7 +21,7 @@
         <img src="${pageContext.request.contextPath}/static/backstage/img/Employee1.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">IPET 寵物員工1 </a>
+      <p style="color:white;">${sessionScope.name}<a href="${pageContext.request.contextPath}/ipet-back/loginOut" style="display:inline-block"><img src="${pageContext.request.contextPath}/static/backstage/img/logout.png" style="width:20%;display:inline-block;"></a></p>
       </div>
     </div>
 

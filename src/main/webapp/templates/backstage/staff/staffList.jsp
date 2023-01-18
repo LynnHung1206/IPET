@@ -72,7 +72,8 @@ input#addNew:hover, #search:hover {
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini"  onload="opener.location.reload()">
+<body class="hold-transition sidebar-mini"
+	onload="opener.location.reload()">
 	<div class="wrapper">
 		<!--  Navbar -->
 		<%@ include file="/templates/backstage/common/navbar.jsp"%>
@@ -124,7 +125,7 @@ input#addNew:hover, #search:hover {
 									<td>${staffVO.add}</td>
 									<td>${staffVO.posi}</td>
 									<td>${staffVO.status == 0 ? "在職" : "離職"}</td>
-									
+
 									<td>
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/ipet-back/staff/edit"
@@ -175,5 +176,9 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		$("p:contains(員工管理)").closest("li").addClass("menu-open");
+		$("p:contains(員工總覽)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

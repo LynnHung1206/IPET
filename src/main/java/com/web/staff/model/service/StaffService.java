@@ -35,6 +35,37 @@ public class StaffService {
 		return dao.getAll();
 	}
 
+	public boolean findAc(String ac) {
+		return dao.getAc(ac);
+	}
 	
+	
+	public Staff login(Staff staff) {
+		String account = staff.getAc();
+		String password = staff.getPw();
+		if(account == null || account.isEmpty()) {
+			staff.setMessage("請輸入帳號");
+			staff.setSuccessful(false);
+			return staff;
+		}
+		
+		
+		if(password == null || password.isEmpty()) {
+			staff.setMessage("請輸入密碼");
+			staff.setSuccessful(false);
+			return staff;
+		}
+		
+		staff = dao.getByAcAndPw(staff);
+		if(staff == null) {
+			staff = new Staff();
+			staff.setMessage("帳號或是密碼錯誤");
+			staff.setSuccessful(false);
+			return staff;
+		}
+		staff.setMessage("登入成功");
+		staff.setSuccessful(true);
+		return staff;
+	}
 
 }

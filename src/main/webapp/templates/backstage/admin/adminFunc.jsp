@@ -256,5 +256,9 @@ example {
 		}
 		}
 		</script>
+		<script>
+		$("p:contains(權限管理)").closest("li").addClass("menu-open");
+		$("p:contains(員工權限與新增權限)").closest("a").addClass("active");
+	</script>
 </body>
 </html>
