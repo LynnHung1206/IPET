@@ -54,7 +54,8 @@ textarea {
   * sidebar-collapse
   * sidebar-mini
 -->
-<body class="hold-transition sidebar-mini"  onload="opener.location.reload()">
+<body class="hold-transition sidebar-mini"
+	onload="opener.location.reload()">
 	<div class="wrapper">
 		<!--  Navbar -->
 		<%@ include file="/templates/backstage/common/navbar.jsp"%>
@@ -244,26 +245,11 @@ textarea {
 					newsId =  targetDataDelete.querySelector("td.newsid").innerText.trim();
 					   });
 					$('.modal-footer').on('click','.btn-remove-confirm', function (){
-						console.log("button.row-remove: " + newsId);
 						 $.ajax({
 							 url: "${pageContext.request.contextPath}/ipet-front/news/deleteNews", 
 							 method: "POST",
 							 data: {"newsId" : newsId},
 							 success:function(res){
-// 					              if (res === "true"){
-// 					                $("#deleteModalMessage").html("成功刪除")
-// 					                        .css("color","green");
-// 					                $(".btn-remove-confirm").addClass("disabled")
-// 					                        .attr("disabled");
-// 					                deleteRefresh = true;
-// 					              }else {
-// 					                $("#deleteModalMessage").html("刪除失敗")
-// 					                        .css("color","red");
-// 					                $(".btn-remove-confirm").addClass("disabled")
-// 					                        .attr("disabled");
-// 					                deleteRefresh = false;
-// 					              }
-// 								console.log(res);
 								 window.location.reload();
 					            }
 						 })
@@ -301,6 +287,10 @@ textarea {
 		function ok(){
 			alert("修改成功");
 		}
+	</script>
+	<script>
+		$("p:contains(消息管理)").closest("li").addClass("menu-open");
+		$("p:contains(最新消息列表)").closest("a").addClass("active");
 	</script>
 </body>
 </html>

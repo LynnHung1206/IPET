@@ -10,4 +10,6 @@ public interface StaffDAO extends CoreDAO<Staff,Integer> {
 	public Staff update(Staff Staff);
 	public List<Staff> getAll();
 	public List<Staff> getStaffByPosi(String posi);
+	public Staff getByAcAndPw(Staff staff);
+	public boolean getAc(String ac);
 }

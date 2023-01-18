@@ -2,12 +2,12 @@ package com.web.staff.model.dao;
 
 import java.util.*;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import com.web.staff.model.entity.Staff;
 
-
 public class StaffDAOImpl implements StaffDAO {
-
 
 	@Override
 	public Staff update(Staff staff) {
@@ -32,16 +32,15 @@ public class StaffDAOImpl implements StaffDAO {
 	@Override
 	public List<Staff> getAll() {
 		Session session = getSession();
-        String hql = "FROM Staff";
-        return session.createQuery(hql, Staff.class).list();
+		String hql = "FROM Staff";
+		return session.createQuery(hql, Staff.class).list();
 	}
-		
+
 	@Override
 	public Staff getById(Integer id) {
-		 Session session = getSession();
-	        return session.get(Staff.class, id);
+		Session session = getSession();
+		return session.get(Staff.class, id);
 	}
-	
 
 	@Override
 	public Integer add(Staff staff) {
@@ -53,8 +52,33 @@ public class StaffDAOImpl implements StaffDAO {
 	public List<Staff> getStaffByPosi(String posi) {
 		Session session = getSession();
 		String hql = "FROM Staff WHERE posi = :posi";
-		
-		return  session.createQuery(hql,Staff.class)
-				.setParameter("posi",posi).list();
+
+		return session.createQuery(hql, Staff.class).setParameter("posi", posi).list();
+	}
+
+	@Override
+	public Staff getByAcAndPw(Staff staff) {
+		try {
+		Session session = getSession();
+		String hql = "FROM Staff WHERE ac = :ac AND pw = :pw";
+		return session.createQuery(hql,Staff.class)
+				.setParameter("ac", staff.getAc())
+				.setParameter("pw", staff.getPw()).getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+
+	@Override
+	public boolean getAc(String ac) {
+		try {
+		Session session = getSession();
+		String hql = "FROM Staff WHERE ac = :ac";
+		session.createQuery(hql,Staff.class)
+		.setParameter("ac", ac).getSingleResult();
+		return false;
+		}catch(NoResultException e) {
+			return true;
+		}
 	}
 }

@@ -1,6 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="com.web.question.model.entity.*"%>
 
+<%
+Question question = (Question) request.getAttribute("question");
+%>
 
 
 <!DOCTYPE html>
@@ -10,10 +16,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IPET 寵物</title>
 <!-- TODO: 目前先使用 完整css，後續再換成 min.css-->
-<!-- summernote
- -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -28,18 +30,15 @@
 	href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 
 <style>
-.note-btn-group.btn-group.note-insert {
-	display: none;
-}
-/* #editBlock { */
-/* 	margin-left:400px; */
-/* } */
-textarea {
-	width: 200px;
-	height: 200px;
+#questiondata {
+	margin: auto;
 }
 </style>
-
+<script type="text/javascript">
+	function enter() {
+		alert("修改成功");
+	}
+</script>
 </head>
 <!--
 `body` tag options:
@@ -66,27 +65,45 @@ textarea {
 			<section class="content-header">
 				<div class="container-fluid">
 
-					<div id="editBlock">
-						<form method="post"
-							action="${pageContext.request.contextPath}/ipet-back/news/addNewNews">
-							<div>
-								<label>標題</label>
-							</div>
-							<div>
-								<input type="text" id="title" name="title" required>
-							</div>
-							<div>
-								<label>內容</label>
-							</div>
-							<div>
-								<textarea id="summernote" name="text" required></textarea>
-							</div>
-							<!-- 						<input type="hidden" name="action" value="insert"> -->
-							<input type="submit" value="送出" onclick="ck()">
-						</form>
-					</div>
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 
+					<form
+						action="${pageContext.request.contextPath}/ipet-back/question/edit"
+						method="post">
 
+						<table id="questiondata">
+							<tr>
+								<td><label>常見問題編號:</label></td>
+								<td><input type="text" name="quesId"
+									value="<%=question.getQuesId()%>" required readonly></td>
+							</tr>
+							<tr>
+								<td><label>常見問題標題:</label></td>
+								<td><input type="text" name="quesTitle"
+									value="<%=question.getQuesTitle()%>" required></td>
+							</tr>
+
+							<tr>
+								<td><label>常見問題內容:</label></td>
+								<td><input type="text" name="quesText"
+									value="<%=question.getQuesText()%>" required></td>
+							</tr>
+							
+							<tr>
+								<td><input type="hidden" name="action" value="update">
+									<input type="hidden" name="questionId" value="<%=question.getQuesId()%> "></td>
+								<td><input type="submit" value="送出修改" onclick="enter()"></td>
+							</tr>
+						</table>
+					</form>
 					<div class="col-sm-6"></div>
 					<div class="row mb-2"></div>
 				</div>
@@ -107,8 +124,6 @@ textarea {
 
 	<!-- REQUIRED SCRIPTS -->
 
-
-
 	<!-- jQuery -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/plugins/jquery/jquery.min.js"></script>
@@ -118,32 +133,5 @@ textarea {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
-	<!-- Summernote -->
-	<script
-		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
-
-	<script>
-		$("#summernote").summernote();
-
-		const textarea = document.getElementById('summernote').innerText;
-		const title = document.getElementById('title').innerText;
-
-		// 		const p = document.getElementsByTagName('p');
-		// 		p[47].setAttribute('id', 'text');
-		// 		const pNew = document.getElementById('text').innerText;
-
-		function ck() {
-			if ($("#summernote").val() == '' || $("#summernote").val() == null) {
-				alert("請輸入內容");
-			} else if (title != null || title != '') {
-				alert("新增成功");
-			}
-
-		}
-	</script>
-	<script>
-		$("p:contains(消息管理)").closest("li").addClass("menu-open");
-		$("p:contains(新增最新消息)").closest("a").addClass("active");
-	</script>
 </body>
 </html>

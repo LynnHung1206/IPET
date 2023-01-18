@@ -10,6 +10,10 @@ import com.web.appoint.model.services.AppointServices;
 import com.web.job.model.dao.JobScheduleDAO;
 import com.web.job.model.dao.JobScheduleImp;
 import com.web.job.model.entities.JobSchedule;
+import com.web.member.model.dao.MemberDAO;
+import com.web.member.model.dao.MemberDAOImpl;
+import com.web.pet.model.dao.PetDAO;
+import com.web.pet.model.dao.PetDAOImpl;
 import com.web.salonSale.model.dao.SaleDAO;
 import com.web.salonSale.model.dao.impl.SaleDAOImpl;
 import com.web.salonService.model.dao.ServiceDAO;
@@ -28,11 +32,11 @@ public class AppointServicesImp implements AppointServices {
     private final AppointmentDAO appointmentDAO;
     private final AppointmentDetailDAO appointmentDetailDAO;
     private final JobScheduleDAO jobScheduleDAO;
-
     private final ServiceDAO serviceDAO;
     private final SaleDAO saleDAO;
+    private final MemberDAO memberDAO;
+    private final PetDAO petDAO;
 
-    // TODO: private MemDAO memDAOImp
 
     public AppointServicesImp(){
         appointmentDAO = new AppointmentImp();
@@ -40,6 +44,8 @@ public class AppointServicesImp implements AppointServices {
         jobScheduleDAO = new JobScheduleImp();
         saleDAO = new SaleDAOImpl();
         serviceDAO = new ServiceDAOImpl();
+        memberDAO = new MemberDAOImpl();
+        petDAO = new PetDAOImpl();
     }
 
     @Override
@@ -180,7 +186,6 @@ public class AppointServicesImp implements AppointServices {
     @Override
     public List<Appointment> findAllAppoint() {
          // 完整顯示 APM_ID memName petName schDate schPeriod TotalPrice APM_STATUS schId appointmentdetail
-        // TODO: 需串接會員資料
         List<Appointment> all = appointmentDAO.getAll();
         return integrateAppointments(all);
     }
@@ -188,7 +193,6 @@ public class AppointServicesImp implements AppointServices {
     @Override
     public Appointment findAppointById(Integer id) {
         // 完整顯示 APM_ID memName petName schDate schPeriod TotalPrice APM_STATUS schId appointmentdetail
-        // TODO: 需串接會員資料 與 job資料
         List<Appointment> appoint = new ArrayList<>();
         appoint.add(appointmentDAO.getById(id));
         return integrateAppointments(appoint).get(0);
@@ -197,7 +201,6 @@ public class AppointServicesImp implements AppointServices {
     @Override
     public List<Appointment> findAppointBasedOnStatus(Integer status) {
          // 完整顯示 APM_ID memName petName schDate schPeriod TotalPrice APM_STATUS schId appointmentdetail
-        // TODO: 需串接會員資料
         List<Appointment> all = appointmentDAO.findAppointByStatus(status);
         return integrateAppointments(all);
     }
@@ -205,12 +208,15 @@ public class AppointServicesImp implements AppointServices {
     private List<Appointment> integrateAppointments(List<Appointment> all) {
         for (Appointment appoint : all) {
             JobSchedule job = jobScheduleDAO.getById(appoint.getSchID());
+            Integer memID = appoint.getMemID();
+            Integer petID = appoint.getPetID();
+
             List<AppointmentDetail> allServicesByAmpId = appointmentDetailDAO.getAllServicesByApmId(appoint.getApmID());
             Integer price = appointmentDetailDAO.getTotalPriceByApmId(appoint.getApmID());
 
             // 加入會員的資料:  MemName, PetName
-            appoint.setMemName(appoint.getMemID() + "-會員名字");
-            appoint.setPetName(appoint.getPetID() + "-寵物名字");
+            appoint.setMemName(memberDAO.getById(memID).getMemName());
+            appoint.setPetName(petDAO.getById(petID).getPetName());
 
             //加入工作的資料: SchDate, SchPeriod
             appoint.setSchDate(job.getSchDate());

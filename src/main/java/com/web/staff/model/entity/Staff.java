@@ -14,6 +14,7 @@ import com.core.model.entities.Core;
 @Table(name = "Staff", catalog = "ipetdb")
 public class Staff extends Core {
 	
+
 	private static final long serialVersionUID = 1L;
 	@Column(name = "ID")
 	@Id
@@ -122,7 +123,12 @@ public class Staff extends Core {
 		this.posi = posi;
 	}
 	
-
+	@Override
+	public String toString() {
+		return "Staff [id=" + id + ", name=" + name + ", uid=" + uid + ", bth=" + bth + ", sex=" + sex + ", email="
+				+ email + ", phone=" + phone + ", tel=" + tel + ", add=" + add + ", ac=" + ac + ", pw=" + pw
+				+ ", status=" + status + ", posi=" + posi + "]";
+	}
 	
 	
 }

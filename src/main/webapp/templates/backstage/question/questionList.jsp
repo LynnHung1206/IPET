@@ -1,18 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.web.member.model.service.*"%>
-<%@ page import="com.web.member.model.entity.*"%>
-<%@ page import="com.web.pet.model.service.*"%>
-<%@ page import="com.web.pet.model.entity.*"%>
+<%@ page import="com.web.question.model.service.*"%>
+<%@ page import="com.web.question.model.entity.*"%>
 
 <%
-MemberService memberSvc = new MemberService();
-List<Member> list = memberSvc.getAll();
+QuestionService questionSvc = new QuestionService();
+List<Question> list = questionSvc.getAll();
 pageContext.setAttribute("list", list);
-%>
-<%
-Pet petVO = (Pet) request.getAttribute("petVO");
 %>
 
 <!DOCTYPE html>
@@ -92,64 +87,52 @@ input#addNew:hover, #search:hover {
 			<section class="content-header">
 				<div class="container-fluid">
 					<form
-						action="${pageContext.request.contextPath}/ipet-back/member/addNew">
-						<input id="addNew" type="submit" value="新增會員">
+						action="${pageContext.request.contextPath}/ipet-back/question/addNew">
+						<input id="addNew" type="submit" value="新增常見問題">
 					</form>
 					<div class="row mb-2">
 						<table>
 							<tr>
-								<th>會員編號</th>
-								<th>會員姓名</th>
-								<th>身份證字號</th>
-								<th>生日</th>
-								<th>性別</th>
-								<th>信箱</th>
-								<th>手機</th>
-								<th>市內電話</th>
-								<th>地址</th>
-								<th>狀態</th>
+								<th>常見問題編號</th>
+								<th>常見問題標題</th>
+								<th>常見問題內容</th>
+								<th>新增時間</th>
+								<!-- 									<td>權限</td> -->
 								<th></th>
-<!-- 								<th></th> -->
 							</tr>
 
 							<%@ include file="page1.file"%>
-							<c:forEach var="memberVO" items="${list}" begin="<%=pageIndex%>"
+							<c:forEach var="questionVO" items="${list}" begin="<%=pageIndex%>"
 								end="<%=pageIndex+rowsPerPage-1%>">
 
 								<tr>
-									<td>${memberVO.memId}</td>
-									<td>${memberVO.memName}</td>
-									<td>${memberVO.memUid}</td>
-									<td>${memberVO.memBth}</td>
-									<td>${memberVO.memSex}</td>
-									<td>${memberVO.memEmail}</td>
-									<td>${memberVO.memPhone}</td>
-									<td>${memberVO.memTel}</td>
-									<td>${memberVO.memAdd}</td>
-									<td>${memberVO.memStatus != 1 ? "正常" : "停權"}</td>
+									<td>${questionVO.quesId}</td>
+									<td>${questionVO.quesTitle}</td>
+									<td>${questionVO.quesText}</td>
+									<td>${questionVO.quesTime}</td>
+
+<%-- 									<td><jsp:useBean id="adminFuncSvc" scope="page" --%>
+<%-- 											class="com.web.admin.model.service.AdminFuncService" /> <c:forEach --%>
+<%-- 											var="adminFunc" items="${admin}"> --%>
+<%-- 													${AdminFunc.getName()}			 --%>
+<%-- 										</c:forEach> --%>
+<!-- 										</td> -->
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/ipet-back/member/edit"
+											ACTION="<%=request.getContextPath()%>/ipet-back/question/edit"
 											style="margin-bottom: 0px;">
 											<input type="submit" value="修改"> <input type="hidden"
-												name="memId" value="${memberVO.getMemId()}"> <input
+												name="quesId" value="${questionVO.getQuesId()}"> <input
 												type="hidden" name="action" value="updateTemp">
 										</FORM>
 									</td>
-<!-- 									<td> -->
-<!-- 										<FORM METHOD="post" -->
-<%-- 											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew" --%>
-<!-- 											style="margin-bottom: 0px;"> -->
-<!-- 											<input type="submit" value="新增寵物"> <input type="hidden" -->
-<%-- 												name="memId" value="${memberVO.getMemId()}"> <input --%>
-<!-- 												type="hidden" name="action" value="insert"> -->
-<!-- 										</FORM> -->
-<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 						</table>
+
 						<div class="col-sm-6">
 							<%@ include file="page2.file"%>
+
 						</div>
 					</div>
 				</div>

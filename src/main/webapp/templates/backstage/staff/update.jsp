@@ -101,7 +101,8 @@ Admin admin = (Admin) request.getAttribute("admin");
 							<tr>
 								<td><label>生日:</label></td>
 								<td><input type="date" name="birth"
-									value="<%=staff.getBth()%>" style="background-color:lightgray;" readonly required></td>
+									value="<%=staff.getBth()%>"
+									style="background-color: lightgray;" readonly required></td>
 							</tr>
 							<tr>
 								<td>性別:</td>
@@ -131,7 +132,8 @@ Admin admin = (Admin) request.getAttribute("admin");
 							<tr>
 								<td><label>帳號:</label></td>
 								<td><input type="text" name="acount"
-									value="<%=staff.getAc()%>"  style="background-color:lightgray;" readonly required></td>
+									value="<%=staff.getAc()%>" style="background-color: lightgray;"
+									readonly required></td>
 							</tr>
 							<tr>
 								<td><label>密碼:</label></td>
@@ -167,11 +169,11 @@ Admin admin = (Admin) request.getAttribute("admin");
 								<td><label>權限:</label></td>
 								<td><c:forEach var="adminFunc"
 										items="${adminFuncSvc.getAll()}">
-										<label for="${adminFunc.getId()}"
-											style="font-size: 10px;"><input type="radio"
-											name="admin" id="${adminFunc.getId()}"
+										<label for="${adminFunc.getId()}" style="font-size: 10px;"><input
+											type="radio" name="admin" id="${adminFunc.getId()}"
 											value="${adminFunc.getId()}
-											" ${adminFunc.getId() == admin.getAdminID()? 'checked':''}>
+											"
+											${adminFunc.getId() == admin.getAdminID()? 'checked':''}>
 											${adminFunc.getName()}</label>
 									</c:forEach></td>
 							</tr>
@@ -211,5 +213,9 @@ Admin admin = (Admin) request.getAttribute("admin");
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		$("p:contains(員工管理)").closest("li").addClass("menu-open");
+		$("p:contains(員工總覽)").closest("a").addClass("active");
+	</script>
 </body>
 </html>
