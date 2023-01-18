@@ -24,6 +24,7 @@ public class StaffServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
 		if ("/ipet-back/staff/allStaffList".equals(path)) {
 			StaffService staffSvc = new StaffService();

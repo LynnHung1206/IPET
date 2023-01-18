@@ -2,13 +2,9 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>CGA105G1</display-name>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+ 
   </welcome-file-list>
-<<<<<<< HEAD
-<request-character-encoding>UTF-8</request-character-encoding>
-<response-character-encoding>UTF-8</response-character-encoding>
-  
-=======
 
   <error-page>
     <error-code>404</error-code>
@@ -19,5 +15,6 @@
     <error-code>500</error-code>
     <location>/templates/500.jsp</location>
   </error-page>
->>>>>>> 1f84778e30f30c951e1e14f69fa31ec98972971b
+  <request-character-encoding>UTF-8</request-character-encoding>
+	<response-character-encoding>UTF-8</response-character-encoding>
 </web-app>

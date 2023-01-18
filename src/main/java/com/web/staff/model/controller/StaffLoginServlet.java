@@ -22,6 +22,7 @@ public class StaffLoginServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		Gson gson = new Gson();
 		Staff staff = gson.fromJson(req.getReader(), Staff.class);
 		if (staff == null) {
