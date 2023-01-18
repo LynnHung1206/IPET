@@ -5,7 +5,7 @@ import java.util.List;
 import com.web.product.model.dao.ProductDAO;
 import com.web.product.model.entity.Product;
 
-public class ProductDAOImp implements ProductDAO{
+public class ProductDAOImpFront implements ProductDAO{
 
 
 	@Override
