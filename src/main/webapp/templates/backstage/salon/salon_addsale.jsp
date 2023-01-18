@@ -5,19 +5,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/backstage/css/alt/jquery.datetimepicker.css" />
 </head>
 <body>
-
+	<input type="text" id="startDate">
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<script src="<%=request.getContextPath()%>/static/backstage/js/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/static/backstage/js/jquery.datetimepicker.full.js"></script>
 
 <script>
         $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
+        $('#startDate').datetimepicker({
  	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)

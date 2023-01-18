@@ -582,8 +582,8 @@
     	    	      })
     	    }else if (type === "something-Wrong"){
     	    	swal({
-	    	        title: "OOPS！送出失敗:(",
-	    	        text: "請重新嘗試或聯繫客服人員協助處理",
+	    	        title: "OOPS！Something's Wrong:(",
+	    	        text: "請再次嘗試或聯繫客服人員協助處理",
 	    	        type: 'question',
  	    		  	showConfirmButton: true,
 	    	      })
