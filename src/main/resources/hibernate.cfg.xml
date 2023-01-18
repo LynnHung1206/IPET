@@ -22,14 +22,10 @@
 		<mapping class="com.web.appoint.model.entities.AppointmentDetail" />
 		<mapping class="com.web.job.model.entities.JobSchedule" />
 		<mapping class="com.web.staff.model.entity.Staff" />
-<<<<<<< HEAD
 		<mapping class="com.web.member.model.entity.Member" />
 		<mapping class="com.web.pet.model.entity.Pet" />
 		<mapping class="com.web.question.model.entity.Question" />
-=======
-		<mapping class="com.web.pet.model.entity.Pet" />
 		<mapping class="com.web.member.model.entity.Member" />
->>>>>>> 390a031496ced88965bef1475103f7a0894aa0ca
 		<mapping class="com.web.news.model.entity.News" />
 		<mapping class="com.web.admin.model.entities.AdminFunc" />
 		<mapping class="com.web.admin.model.entities.Admin" />
