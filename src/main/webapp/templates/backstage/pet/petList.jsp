@@ -42,16 +42,23 @@ pageContext.setAttribute("memberVO", memberVO);
 table, th, td {
 	border: 1px solid white;
 	border-collapse: collapse;
+	text-align: center;
 }
 
-th, td {
-	background-color: pink;
+th{
+	background-color: green;
+	text-align: center;
+}
+
+td{
+	background-color: lightgreen;
 }
 
 input#addNew {
 	background-color: lightgray;
 	border: none;
 	border-radius: 5px;
+	margin-bottom: 20px;
 }
 
 input#addNew:hover, #search:hover {
@@ -93,16 +100,16 @@ input#addNew:hover, #search:hover {
 					<div class="row mb-2">
 						<table>
 							<tr>
-								<td>寵物編號</td>
-								<td>會員編號</td>
-								<td>寵物名字</td>
-								<td>品種</td>
-								<td>寵物體型</td>
-								<td>性別</td>
-								<td>寵物生日</td>
-								<td>寵物狀態</td>
+								<th>寵物編號</th>
+								<th>會員編號</th>
+								<th>寵物名字</th>
+								<th>品種</th>
+								<th>寵物體型</th>
+								<th>性別</th>
+								<th>寵物生日</th>
+								<th>寵物狀態</th>
 								<!-- 									<td>權限</td> -->
-								<td></td>
+								<th></th>
 							</tr>
 
 							<%@ include file="page1.file"%>
@@ -136,8 +143,9 @@ input#addNew:hover, #search:hover {
 								</tr>
 							</c:forEach>
 						</table>
-
+						
 						<div class="col-sm-6">
+						
 							<%@ include file="page2.file"%>
 
 						</div>

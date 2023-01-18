@@ -40,16 +40,23 @@ Pet petVO = (Pet) request.getAttribute("petVO");
 table, th, td {
 	border: 1px solid white;
 	border-collapse: collapse;
+	text-align: center;
 }
 
-th, td {
-	background-color: pink;
+th{
+	background-color: green;
+	text-align: center;
+}
+
+td{
+	background-color: lightgreen;
 }
 
 input#addNew {
 	background-color: lightgray;
 	border: none;
 	border-radius: 5px;
+	margin-bottom: 20px;
 }
 
 input#addNew:hover, #search:hover {
@@ -91,18 +98,18 @@ input#addNew:hover, #search:hover {
 					<div class="row mb-2">
 						<table>
 							<tr>
-								<td>會員編號</td>
-								<td>會員姓名</td>
-								<td>身份證字號</td>
-								<td>生日</td>
-								<td>性別</td>
-								<td>信箱</td>
-								<td>手機</td>
-								<td>市內電話</td>
-								<td>地址</td>
-								<td>狀態</td>
-								<td></td>
-								<td></td>
+								<th>會員編號</th>
+								<th>會員姓名</th>
+								<th>身份證字號</th>
+								<th>生日</th>
+								<th>性別</th>
+								<th>信箱</th>
+								<th>手機</th>
+								<th>市內電話</th>
+								<th>地址</th>
+								<th>狀態</th>
+								<th></th>
+<!-- 								<th></th> -->
 							</tr>
 
 							<%@ include file="page1.file"%>
@@ -129,15 +136,15 @@ input#addNew:hover, #search:hover {
 												type="hidden" name="action" value="updateTemp">
 										</FORM>
 									</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="新增寵物"> <input type="hidden"
-												name="memId" value="${memberVO.getMemId()}"> <input
-												type="hidden" name="action" value="insert">
-										</FORM>
-									</td>
+<!-- 									<td> -->
+<!-- 										<FORM METHOD="post" -->
+<%-- 											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew" --%>
+<!-- 											style="margin-bottom: 0px;"> -->
+<!-- 											<input type="submit" value="新增寵物"> <input type="hidden" -->
+<%-- 												name="memId" value="${memberVO.getMemId()}"> <input --%>
+<!-- 												type="hidden" name="action" value="insert"> -->
+<!-- 										</FORM> -->
+<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 						</table>

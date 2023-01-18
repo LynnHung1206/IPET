@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import com.core.model.entities.Core;
 @Entity
-@Table(name = "Ques", catalog = "ipetdb")
+@Table(name = "Question", catalog = "ipetdb")
 public class Question extends Core {
 	
 	private static final long serialVersionUID = 1L;

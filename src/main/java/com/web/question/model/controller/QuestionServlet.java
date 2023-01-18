@@ -67,28 +67,18 @@ public class QuestionServlet extends HttpServlet {
 	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String quesTitle = req.getParameter("quesTitle");
 		String quesText = req.getParameter("quesText");
-		String quesTimeStr = req.getParameter("quesTime");
 		String quesIdStr = req.getParameter("quesId");
 		
-		java.sql.Timestamp quesTime = Timestamp.valueOf(quesTimeStr);
 		Integer quesId = Integer.valueOf(quesIdStr);
 
 		Question question = new Question();
 		question.setQuesId(quesId);
 		question.setQuesTitle(quesTitle);
 		question.setQuesText(quesText);
-		question.setQuesTime(quesTime);
 
 		QuestionService questionSvc = new QuestionService();
 		questionSvc.updateQuestion(question);
 		
-//		Admin admin = new Admin();
-//		admin.setStaffID(id);
-//		admin.setAdminID(adminid);
-//		AdminService adminSvc = new AdminService();
-//		adminSvc.update(admin);
-//		System.out.println("admin.getAdminID:"+admin.getAdminID());
-//		System.out.println("admin.getStaffID:"+admin.getStaffID());
 //			轉交
 		String url = "/templates/backstage/question/questionList.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -98,15 +88,12 @@ public class QuestionServlet extends HttpServlet {
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String quesTitle = req.getParameter("quesTitle");
 		String quesText = req.getParameter("quesText");
-		String quesTimeStr = req.getParameter("quesTime");
 
-		List<String> errorMsgs = getErrorMsgs(quesTitle, quesText, quesTimeStr);
-		java.sql.Timestamp quesTime = Timestamp.valueOf(quesTimeStr);
+		List<String> errorMsgs = getErrorMsgs(quesTitle, quesText);
 
 		Question question = new Question();
 		question.setQuesTitle(quesTitle);
 		question.setQuesText(quesText);
-		question.setQuesTime(quesTime);
 
 		if (!errorMsgs.isEmpty()) {
 			req.setAttribute("question", question); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -124,7 +111,7 @@ public class QuestionServlet extends HttpServlet {
 		successView.forward(req, res);
 	}
 
-	private List<String> getErrorMsgs(String quesTitle, String quesText, String quesTimeStr) {
+	private List<String> getErrorMsgs(String quesTitle, String quesText) {
 		List<String> errorMsgs = new LinkedList<String>();
 
 		if (quesTitle == null || quesTitle.trim().length() == 0) {
@@ -133,12 +120,6 @@ public class QuestionServlet extends HttpServlet {
 		
 		if (quesText == null || quesText.trim().length() == 0) {
 			errorMsgs.add("請勿空白");
-		}
-		
-		try {
-			java.sql.Timestamp quesTime = Timestamp.valueOf(quesTimeStr);
-		} catch (IllegalArgumentException e) {
-			errorMsgs.add("請輸入日期!");
 		}
 	
 		return errorMsgs;

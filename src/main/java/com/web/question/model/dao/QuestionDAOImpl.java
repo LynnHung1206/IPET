@@ -23,7 +23,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 	@Override
 	public List<Question> getAll() {
 		Session session = getSession();
-        String hql = "FROM Ques";
+        String hql = "FROM Question";
         return session.createQuery(hql, Question.class).list();
 	}
 		

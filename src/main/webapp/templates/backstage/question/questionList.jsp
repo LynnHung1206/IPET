@@ -35,16 +35,23 @@ pageContext.setAttribute("list", list);
 table, th, td {
 	border: 1px solid white;
 	border-collapse: collapse;
+	text-align: center;
 }
 
-th, td {
-	background-color: pink;
+th{
+	background-color: green;
+	text-align: center;
+}
+
+td{
+	background-color: lightgreen;
 }
 
 input#addNew {
 	background-color: lightgray;
 	border: none;
 	border-radius: 5px;
+	margin-bottom: 20px;
 }
 
 input#addNew:hover, #search:hover {
@@ -86,12 +93,12 @@ input#addNew:hover, #search:hover {
 					<div class="row mb-2">
 						<table>
 							<tr>
-								<td>常見問題編號</td>
-								<td>常見問題標題</td>
-								<td>常見問題內容</td>
-								<td>新增時間</td>
+								<th>常見問題編號</th>
+								<th>常見問題標題</th>
+								<th>常見問題內容</th>
+								<th>新增時間</th>
 								<!-- 									<td>權限</td> -->
-								<td></td>
+								<th></th>
 							</tr>
 
 							<%@ include file="page1.file"%>
@@ -115,7 +122,7 @@ input#addNew:hover, #search:hover {
 											ACTION="<%=request.getContextPath()%>/ipet-back/question/edit"
 											style="margin-bottom: 0px;">
 											<input type="submit" value="修改"> <input type="hidden"
-												name="quesId" value="${questionVO.getQquesId()}"> <input
+												name="quesId" value="${questionVO.getQuesId()}"> <input
 												type="hidden" name="action" value="updateTemp">
 										</FORM>
 									</td>
