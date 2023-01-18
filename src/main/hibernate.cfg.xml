@@ -34,7 +34,8 @@
 		<mapping class="com.web.salonService.model.entities.PetType" />
 		<mapping class="com.web.salonService.model.entities.Service" />
 		<mapping class="com.web.product.model.entity.Product" />
-		<mapping class="com.web.productImg.model.entity.ProductImg" />
-		<mapping class="com.web.productType.model.entity.ProductType" />
+		<mapping class="com.web.product.model.entity.ProductImg" />
+		<mapping class="com.web.product.model.entity.ProductType" />
+		
 	</session-factory>
 </hibernate-configuration>
