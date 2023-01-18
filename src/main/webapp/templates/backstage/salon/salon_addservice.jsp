@@ -83,13 +83,6 @@
 			</div>
 		</div>
 	  <!-- ================== 彈出視窗 end ==================== -->
-	  
-	  
-	  <div class="wrapper text-center">
-          <button class="btn btn-outline-success" onclick="showSwal('success-messages')">Click here!</button>
-      </div>
-	  
-	  <div id="ssssssss"></div>
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -178,7 +171,7 @@
 							<div id="summernoteFather">
 								<label for="summernote">服務描述</label>
 								<div>
-									<textarea id="summernote" name="svcContent" required></textarea>
+									<textarea id="summernote" name="svcContent" required> </textarea>
 								</div>
 							</div>
 							<label>是否立即上架</label><br>
@@ -551,51 +544,47 @@
     	 let formData = new FormData(form);
     	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
     	 
-    	 
+    	 $.ajax({
+    	        url : "${pageContext.request.contextPath}/ipet-back/service/addService",
+    	        type : "POST",
+    	        data : formData,
+    	        cache: false,
+    	        processData: false,
+    	        contentType: false,
+    	        beforeSend: function(){
+    	        	$("#mainModal").css("display","block");
+    	        },
+    	        success : function(data) {
+    	        	$("#mainModal").css("display","none");
+    	        	showSwal("success-message");
+    	        },error: function(data) {
+    	        	showSwal("something-Wrong");
+    	        }
+    	    })
     });
     
-    
-//     $(document).on("submit", "form", function (e){
-//   	 e.preventDefault();
-  	 
-//    	 //迴圈存入金額和品種物件
-//    	 let priceAndTypeArray = [];
-//    	 const beSentTrLength = $(".beSentTr").length;
-//    	 for(let i = 0; i< beSentTrLength; i++){
-//    		priceAndTypeArray.push({
-//    			typeId : $(".beSentTypeId").eq(0).text(),
-//    			svcPrice : $(".beSentPrice").eq(0).text()
-//    		});
-//    	 }
-   	 
-//    	 //建立formData
-//    	 let formData = new FormData($(this));
-//    	 formData.append("typeAndPrice", priceAndTypeArray);
-   	 
 //    	 for(item of formData){
 //    		 console.log(item[0], item[1], item[3], item[4]);
 //    	 }
-   	 
-//     });
     
       /*===================== 新增成功提示 ==========================*/
     (function($) {
     	  showSwal = function(type) {
-    	    'use strict';
-    	     if (type === 'success-message') {
+    	    "use strict";
+    	     if (type === "success-message") {
     	    	 swal({
     	    	        title: '新增成功!',
     	    	        type: 'success',
      	    		  	showConfirmButton: false,
-     	    		  	timer: 2000
+     	    		  	timer: 1500
     	    	      }, function(){
     	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/service/allService");
     	    	      })
-    	    }else{
+    	    }else if (type === "something-Wrong"){
     	    	swal({
-	    	        title: '新增失敗:(',
-	    	        text: '請檢查輸入資訊！',
-	    	        type: 'warning',
+	    	        title: "OOPS！送出失敗:(",
+	    	        text: "請重新嘗試或聯繫客服人員協助處理",
+	    	        type: 'question',
  	    		  	showConfirmButton: true,
 	    	      })
     	    } 

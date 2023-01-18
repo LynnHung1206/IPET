@@ -30,6 +30,12 @@ public class ServiceService {
 		return service;
 	}
 	
+	public Integer addBatchService(Service[] services) {
+		dao.addBatch(services);
+		
+		return services.length;
+	}
+	
 	public Service updateService(Integer svcId, String svcName, String svcContent, 
 			byte[] svcImg, Integer catId, Integer typeId, Integer svcPrice, Integer svcStatus) {
 		
@@ -48,8 +54,10 @@ public class ServiceService {
 		return dao.getById(svcId);
 	}
 	
-	public void deleteService(Integer svcId) {
+	public Service deleteService(Integer svcId) {
+		Service service =  dao.getById(svcId);
 		dao.deleteById(svcId);
+		return service;
 	}
 	
 	public Service getOneService(Integer svcId) {

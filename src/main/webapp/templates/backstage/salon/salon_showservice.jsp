@@ -42,7 +42,7 @@ pageContext.setAttribute("catlist", catlist);
 	display: none !important;
 }
 
-/* ================== table區 ==================*/
+/* ================== showtable區 ==================*/
 #example2 thead {
 	background-color: #6c757d;
 	color: white;

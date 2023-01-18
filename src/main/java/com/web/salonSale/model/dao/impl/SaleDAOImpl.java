@@ -35,22 +35,19 @@ public class SaleDAOImpl implements SaleDAO{
 	@Override
 	public List<Sale> findNotYetStartSale() {
 		final String sql = "select * from SALON_SALE where START_TIME > now() order by SALE_ID;";
-		List<Sale> list = getSession().createNativeQuery(sql, Sale.class).list();
-		return list;
+		return getSession().createNativeQuery(sql, Sale.class).list();
 	}
 
 	@Override
 	public List<Sale> findOnSale() {
 		final String sql = "select * from SALON_SALE where START_TIME <= now() and END_TIME >= now() order by SALE_ID;";
-		List<Sale> list = getSession().createNativeQuery(sql, Sale.class).list();
-		return list;
+		return getSession().createNativeQuery(sql, Sale.class).list();
 	}
 
 	@Override
 	public List<Sale> findEndedSale() {
 		final String sql = "select * from SALON_SALE where END_TIME < now() order by SALE_ID;";
-		List<Sale> list = getSession().createNativeQuery(sql, Sale.class).list();
-		return list;
+		return getSession().createNativeQuery(sql, Sale.class).list();
 	}
 
 }
