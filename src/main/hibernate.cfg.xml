@@ -19,8 +19,7 @@
 
 		<!-- ask Hibernate to Scan this class -->
 		<mapping class="com.web.appoint.model.entities.Appointment" />
-		<mapping
-			class="com.web.appoint.model.entities.AppointmentDetail" />
+		<mapping class="com.web.appoint.model.entities.AppointmentDetail" />
 		<mapping class="com.web.job.model.entities.JobSchedule" />
 		<mapping class="com.web.staff.model.entity.Staff" />
 		<mapping class="com.web.pet.model.entity.Pet" />
