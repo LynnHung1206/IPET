@@ -1,19 +1,12 @@
-package com.web.productImg.model.entity;
+package com.web.product.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GeneratorType;
-
 import com.core.model.entities.Core;
-import com.web.product.model.entity.Product;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,4 +29,19 @@ public class ProductImg extends Core{
 	@Column(name = "IMG_FILE")
 	private byte[] imgFile;
 	
+	public Integer getImgID() {
+		return imgID;
+	}
+	public void setImgID(Integer imgID) {
+		this.imgID = imgID;
+	}
+	public byte[] getImgFile() {
+		return imgFile;
+	}
+	public void setImgFile(byte[] imgFile) {
+		this.imgFile = imgFile;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
