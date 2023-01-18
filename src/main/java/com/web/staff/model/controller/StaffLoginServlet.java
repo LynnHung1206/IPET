@@ -32,7 +32,6 @@ public class StaffLoginServlet extends HttpServlet {
 			turnToJson(resp, staff);
 			return;
 		}
-//		System.out.println("staff = "+staff);
 		StaffService staffSvc = new StaffService();
 		staff = staffSvc.login(staff);
 		if (staff.isSuccessful()) {
@@ -44,7 +43,6 @@ public class StaffLoginServlet extends HttpServlet {
 			session.setAttribute("staff", staff);
 			session.setAttribute("name", staff.getName());
 			session.setAttribute("id", staff.getId());
-			
 		}
 			turnToJson(resp,staff);
 	}
@@ -58,7 +56,5 @@ public class StaffLoginServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

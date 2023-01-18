@@ -34,9 +34,9 @@
 /* #editBlock { */
 /* 	margin-left:400px; */
 /* } */
-textarea{
-width:200px;
-height:200px;
+textarea {
+	width: 200px;
+	height: 200px;
 }
 </style>
 
@@ -119,28 +119,31 @@ height:200px;
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
 	<!-- Summernote -->
-		<script
-			src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 
 	<script>
 		$("#summernote").summernote();
 
 		const textarea = document.getElementById('summernote').innerText;
 		const title = document.getElementById('title').innerText;
-		
-// 		const p = document.getElementsByTagName('p');
-// 		p[47].setAttribute('id', 'text');
-// 		const pNew = document.getElementById('text').innerText;
 
+		// 		const p = document.getElementsByTagName('p');
+		// 		p[47].setAttribute('id', 'text');
+		// 		const pNew = document.getElementById('text').innerText;
 
 		function ck() {
-			if ($("#summernote").val()== '' || $("#summernote").val() == null) {
+			if ($("#summernote").val() == '' || $("#summernote").val() == null) {
 				alert("請輸入內容");
-			}else if(title !=null || title !=''){
+			} else if (title != null || title != '') {
 				alert("新增成功");
 			}
-			
+
 		}
+	</script>
+	<script>
+		$("p:contains(消息管理)").closest("li").addClass("menu-open");
+		$("p:contains(新增最新消息)").closest("a").addClass("active");
 	</script>
 </body>
 </html>

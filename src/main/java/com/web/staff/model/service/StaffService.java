@@ -35,6 +35,11 @@ public class StaffService {
 		return dao.getAll();
 	}
 
+	public boolean findAc(String ac) {
+		return dao.getAc(ac);
+	}
+	
+	
 	public Staff login(Staff staff) {
 		String account = staff.getAc();
 		String password = staff.getPw();
@@ -61,7 +66,6 @@ public class StaffService {
 		staff.setMessage("登入成功");
 		staff.setSuccessful(true);
 		return staff;
-		
 	}
 
 }

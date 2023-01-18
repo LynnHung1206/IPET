@@ -104,7 +104,8 @@ input#allStaff:hover, #search:hover {
 								</tr>
 								<tr>
 									<td><label>身分證字號:</label></td>
-									<td><input type="text" name="uid" pattern="[(A-Z)(0-9)]{10}" required></td>
+									<td><input type="text" name="uid"
+										pattern="[(A-Z)(0-9)]{10}" required></td>
 								</tr>
 								<tr>
 									<td><label>生日:</label></td>
@@ -135,8 +136,8 @@ input#allStaff:hover, #search:hover {
 								</tr>
 								<tr>
 									<td><label>帳號:</label></td>
-									<td><input type="text" name="acount"
-										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" required></td>
+									<td><input type="text" name="acount" id="account"
+										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" required><p id="tips" style="color:pink;"></p></td>
 								</tr>
 								<tr>
 									<td></td>
@@ -168,9 +169,8 @@ input#allStaff:hover, #search:hover {
 									<td><label>權限:</label></td>
 									<td><c:forEach var="adminFunc"
 											items="${adminFuncSvc.getAll()}">
-											<label for="${adminFunc.getId()}"
-												style="font-size: 10px;"><input type="radio"
-												name="admin" id="${adminFunc.getId()}"
+											<label for="${adminFunc.getId()}" style="font-size: 10px;"><input
+												type="radio" name="admin" id="${adminFunc.getId()}"
 												value="${adminFunc.getId()} ">
 												${adminFunc.getName()}</label>
 										</c:forEach></td>
@@ -198,11 +198,9 @@ input#allStaff:hover, #search:hover {
 
 
 
-<!-- 		<script> -->
-// 			function enter() {
-// 				alert("新增成功");
-// 			}
-<!-- 		</script> -->
+		<!-- 		<script> -->
+		// function enter() { // alert("新增成功"); // }
+		<!-- 		</script> -->
 		<!-- Main Footer -->
 		<%@ include file="/templates/backstage/common/footer.jsp"%>
 	</div>
@@ -219,5 +217,28 @@ input#allStaff:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		let account ;
+		let tip ;
+		$('#account').on('change',function(){
+			account = document.getElementById('account').value.trim();
+			tip = document.querySelector('#tips');
+			$.ajax({
+				url:"${pageContext.request.contextPath}/ipet-back/staff/checkAc",
+				method:"POST",
+				data:{"account":account},
+				success : function(resp){
+					if(resp == "false"){
+						tip.textContent = "已存在的帳號";
+					}else if(resp == "true"){
+						tip.textContent = '';
+					}
+				}
+			});
+		})
+		
+		$("p:contains(員工管理)").closest("li").addClass("menu-open");
+		$("p:contains(員工總覽)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

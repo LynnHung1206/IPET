@@ -20,7 +20,6 @@ public class loginFilter  extends HttpFilter  {
 		HttpSession session = req.getSession();
 		Object id = session.getAttribute("id");
 		
-		System.out.println(session.getAttribute("id"));
 		
 		if(id != null) {
 			chain.doFilter(req, res);

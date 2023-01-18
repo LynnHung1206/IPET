@@ -68,4 +68,17 @@ public class StaffDAOImpl implements StaffDAO {
 			return null;
 		}
 	}
+
+	@Override
+	public boolean getAc(String ac) {
+		try {
+		Session session = getSession();
+		String hql = "FROM Staff WHERE ac = :ac";
+		session.createQuery(hql,Staff.class)
+		.setParameter("ac", ac).getSingleResult();
+		return false;
+		}catch(NoResultException e) {
+			return true;
+		}
+	}
 }
