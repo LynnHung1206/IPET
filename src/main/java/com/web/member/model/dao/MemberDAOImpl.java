@@ -2,6 +2,8 @@ package com.web.member.model.dao;
 
 import java.util.*;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 
 import com.web.member.model.entity.Member;
@@ -59,6 +61,20 @@ public class MemberDAOImpl implements MemberDAO{
 		
 		return  session.createQuery(hql,Member.class)
 				.setParameter("memName", memName).getSingleResult();
+	}
+
+	@Override
+	public Member getByAcAndPw(String memAc, String memPw) {
+		Session session = getSession();
+		String hql = "FROM Member WHERE memAc = :memAc and memPw = :memPw";
+		try {
+			return session.createQuery(hql,Member.class)
+					.setParameter("memAc", memAc).setParameter("memPw", memPw).getSingleResult();
+			
+		} catch (NoResultException e) {
+			return null;
+		}
+				
 	}
 	
 //	public static void main(String[] args) {

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -31,7 +32,7 @@
                             <a href="index.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/logo/logo.png"></a>
                         </div>
                     </div>
-                    <div class="col-xl-8 col-lg-7 d-none d-lg-block">
+                    <div class="col-xl-7 col-lg-7 d-none d-lg-block">
                         <div class="main-menu text-center">
                             <nav>
                                 <ul>
@@ -90,7 +91,7 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-8 col-sm-8 col-7">
+                    <div class="col-xl-3 col-lg-2 col-md-8 col-sm-8 col-7">
                         <div class="search-login-cart-wrapper">
                             <div class="header-search same-style">
                                 <button class="search-toggle">
@@ -107,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="header-login same-style">
-                                <a href="login-register.html"><i class="icon-user icons"></i></a>
+                                <a href="login-register.html"><i class="icon-user icons">${member.getMemName()}</i></a>
                             </div>
                             <div class="header-cart same-style">
                                 <button class="icon-cart">

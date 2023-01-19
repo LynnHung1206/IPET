@@ -10,5 +10,7 @@ public interface MemberDAO extends CoreDAO<Member,Integer>{
 	public Member update(Member Member);
 
 	public List<Member> getAll();
-	
+
+	public Member getByAcAndPw(String memAc, String memPw);
+
 }

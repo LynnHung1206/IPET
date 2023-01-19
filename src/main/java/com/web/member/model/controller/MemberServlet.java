@@ -12,14 +12,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.web.member.model.entity.Member;
 import com.web.member.model.service.MemberService;
 
 
 
+
 @WebServlet({ "/ipet-back/member/allMemberList", "/ipet-back/member/edit", "/ipet-back/member/addNew",
-		"/ipet-back/member/getAllList" })
+		"/ipet-back/member/getAllList","/ipet-back/member/login" })
 public class MemberServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,6 @@ public class MemberServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String path = req.getServletPath();
-		
 		if ("/ipet-back/member/allMemberList".equals(path)) {
 			MemberService memberSvc = new MemberService();
 			List<Member> list = memberSvc.getAll();
@@ -47,8 +48,10 @@ public class MemberServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("fdkofkosfkewofjdwao");
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		String path = req.getServletPath();
 		
 		if ("insert".equals(action)) {
 			insert(req, res);
@@ -67,6 +70,36 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("member", member);
 			
 			String url = "/templates/backstage/member/update.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
+		
+		if ("/ipet-back/member/login".equals(path)) {
+			String memAc = req.getParameter("memAc");
+			String memPw = req.getParameter("memPw");
+			
+			if(
+				(memAc == null || memAc.isEmpty()) ||
+				(memPw == null || memPw.isEmpty())
+				) {
+				req.setAttribute("wrong", "請輸入帳號或密碼");
+				String url = "/templates/frontstage/member/login.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+			}
+			MemberService memberSvc = new MemberService();
+			Member member = memberSvc.login(memAc,memPw);
+			System.out.println(member);
+			if (member == null) {
+				req.setAttribute("wrong", "帳號或密碼錯");
+				String url = "/templates/frontstage/member/login.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+			}
+			HttpSession session = req.getSession();
+			session.setAttribute("member", member);
+			String url = "/templates/frontstage/index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
