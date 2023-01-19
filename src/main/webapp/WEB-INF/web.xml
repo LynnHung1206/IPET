@@ -18,6 +18,4 @@
 		<error-code>500</error-code>
 		<location>/templates/500.jsp</location>
 	</error-page>
-	<request-character-encoding>UTF-8</request-character-encoding>
-	<response-character-encoding>UTF-8</response-character-encoding>
 </web-app>

@@ -28,60 +28,10 @@ pageContext.setAttribute("catlist", catlist);
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
+	<!-- showsevice css -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_showservice.css">
 <style>
-.cantSee {
-	display: none !important;
-}
 
-/* ================== showtable區 ==================*/
-#example2 thead {
-	background-color: #6c757d;
-	color: white;
-}
-
-/* ================== 選寵物父元素 ==================*/
-#choose-pet-father {
-	background-color: white;
-}
-
-/* ================== 寵物體型 ==================*/
-#pet-size {
-	border-radius: 0.25rem 0.25rem 0 0;
-	background-color: #f3f5f6;
-}
-
-/* ================== 寵物品種 父元素 ==================*/
-div.choose-type-price {
-	border-bottom: 1px solid #ced4da;
-	border-left: 1px solid #ced4da;
-	border-right: 1px solid #ced4da;
-	padding-right: 0.75rem;
-	padding-bottom: 0.75rem;
-	padding-top: 0.75rem;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	border-radius: 0 0 0.25rem 0.25rem;
-}
-
-/* ================== 品種選項 ==================*/
-div.pet-type {
-	display: inline-block;
-	margin-left: 0.75rem;
-	height: 2rem;
-}
-
-div.pet-type input.form-control {
-	width: 20px;
-	display: inline-block;
-}
-
-div label.pet-label {
-	font-weight: 400 !important;
-	display: inline;
-	position: relative;
-	bottom: 0.75rem;
-	left: 0.25rem;
-}
 </style>
 </head>
 
@@ -114,107 +64,154 @@ div label.pet-label {
 				</div>
 				<!-- /.container-fluid -->
 			</section>
-			<div>
-				<form method="post" action="${pageContext.request.contextPath}/ipet-back/service/allService">
-					<input type="text" placeholder="查詢服務編號" name="svcId"><br>
-					<input type="text" placeholder="查詢服務名稱" name="svcName"><br>
-					<select name="catId" id="">
-						<option style="display: none;" value="">服務類別</option>
-						<c:forEach var="catVO" items="${catlist}">
-							<option value="${catVO.catId}">${catVO.catName}</option>
-						</c:forEach>
-					</select><br>
-					<input type="text" name="lowerPrice">～<input type="text" name="highestPrice"><br>
-					<select name="svcStatus" id="">
-						<option style="display: none;" value="">服務狀態</option>
-						<option value="0">上架中</option>
-						<option value="1">未上架</option>
-					</select><br>
-
-					<div id="choose-pet-father">
-						<select id="pet-size" class="form-control custom-select">
-							<option selected style="display: none;">請選擇寵物體型</option>
-							<option>大型犬</option>
-							<option>中型犬</option>
-							<option>小型犬</option>
-						</select>
-						<div class="choose-type-price cantSee" id="showBigDog">
-							<%
-							List<PetType> listPetTypeVOs = new ArrayList<PetType>();
-																	PetTypeDAOImpl petTypeDAO = new PetTypeDAOImpl();
-																	listPetTypeVOs = petTypeDAO.findByPetSize("大型犬");
-																	int count2 = 0;
-																	for (PetType petType : listPetTypeVOs) {
-																		int typeId = petType.getTypeId();
-																		count2 += 1;
-							%>
-							<div class="pet-type">
-								<input type="radio" id="pet-type<%=typeId%>" class="form-control aType" value="<%=typeId%>" name="typeId">
-								<label for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
+			<div class="card card-secondary">
+						<div class="card-header">
+							<h3 class="card-title">快速查詢</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-plus"></i>
+								</button>
 							</div>
-							<%
-							}
-																	if (count2 == 0) {
-							%>
-							尚無資料
-							<%
-							}
-							%>
 						</div>
-						<div class="choose-type-price cantSee" id="showMediumDog">
-							<%
-							List<PetType> list2 = new ArrayList<PetType>();
-																	PetTypeDAOImpl petTypeDAO2 = new PetTypeDAOImpl();
-																	list2 = petTypeDAO2.findByPetSize("中型犬");
-																	int count3 = 0;
-																	for (PetType petType : list2) {
-																		int typeId = petType.getTypeId();
-																		count3 += 1;
-							%>
-							<div class="pet-type">
-								<input type="radio" id="pet-type<%=typeId%>"
-									class="form-control aType" value="<%=typeId%>" name="typeId">
-								<input type="hidden" value="<%=typeId%>"> <label
-									for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
+						<!-- card-body -->
+						<div class="card-body" style="display: none;">
+							<form method="post" action="${pageContext.request.contextPath}/ipet-back/service/allService">
+						<div class="AGrid">
+							<div class="AGrid-inside">
+								<div class="search-svc">
+									<label for="svc-Id">服務編號：</label>
+									<input type="text" placeholder="請輸入服務編號" id="svc-Id" class="form-control inline-style" name="svcId">
+								</div>
+								<div class="search-svc">
+									<label for="svc-Name">服務名稱：</label>
+									<input type="text" placeholder="請輸入服務名稱" id="svc-Name" class="form-control inline-style" name="svcName">
+								</div>
+								<div class="search-svc">
+									<label for="cat-Id">服務類別：</label>
+									<select id="cat-Id" class="form-control inline-style my-select-style" name="catId">
+										<option style="display: none; color: #7c7c7c;" value="">請選擇服務類別</option>
+										<c:forEach var="catVO" items="${catlist}">
+											<option value="${catVO.catId}">${catVO.catName}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="search-svc" style="position: relative; bottom: 8px; margin-bottom: 1px;">
+									<label>價格範圍：</label>
+									<input type="text" class="form-control inline-style priceBeShort" placeholder="$ 最低價" name="lowerPrice">
+										<span class="drawALine">
+											<p class="drawDownLine"></p>
+											<p></p>
+										</span>
+									<input type="text" class="form-control inline-style priceBeShort" placeholder="$ 最高價" name="highestPrice">
+								</div>
+								<div class="search-svc">
+									<label>服務狀態：</label>
+									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					                  <label class="btn btn-light">
+					                    <input type="radio" id="svc-Status1" autocomplete="off" value="0" name="svcStatus"> 上架中
+					                  </label>
+					                  <label class="btn btn-light">
+					                    <input type="radio" id="svc-Status2" autocomplete="off" value="1" name="svcStatus"> 未上架
+					                  </label>
+					                </div>
+								</div>
 							</div>
-							<%
-							}
-																	if (count3 == 0) {
-							%>
-							尚無資料
-							<%
-							}
-							%>
-						</div>
-
-						<div class="choose-type-price cantSee" id="showSmallDog">
-							<%
-							List<PetType> list3 = new ArrayList<PetType>();
-																	PetTypeDAOImpl petTypeDAO3 = new PetTypeDAOImpl();
-																	list3 = petTypeDAO3.findByPetSize("小型犬");
-																	int count4 = 0;
-																	for (PetType petType : list3) {
-																		int typeId = petType.getTypeId();
-																		count4 += 1;
-							%>
-							<div class="pet-type">
-								<input type="radio" id="pet-type<%=typeId%>" class="form-control aType" value="<%=typeId%>" name="typeId">
-								<input type="hidden" value="<%=typeId%>">
-								<label for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
+						<div class="AGrid-inside">
+							<div id="choose-pet-father">
+								<select id="pet-size" class="form-control custom-select">
+									<option selected style="display: none;">請選擇寵物體型</option>
+									<option>大型犬</option>
+									<option>中型犬</option>
+									<option>小型犬</option>
+								</select>
+								<div class="choose-type-price" id="showBigDog">
+									<%
+									List<PetType> listPetTypeVOs = new ArrayList<PetType>();
+																			PetTypeDAOImpl petTypeDAO = new PetTypeDAOImpl();
+																			listPetTypeVOs = petTypeDAO.findByPetSize("大型犬");
+																			int count2 = 0;
+																			for (PetType petType : listPetTypeVOs) {
+																				int typeId = petType.getTypeId();
+																				count2 += 1;
+									%>
+									<div class="pet-type">
+										<input type="radio" id="pet-type<%=typeId%>" class="form-control aType" value="<%=typeId%>" name="typeId">
+										<label for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
+									</div>
+									<%
+									}
+																			if (count2 == 0) {
+									%>
+									尚無資料
+									<%
+									}
+									%>
+								</div>
+								<div class="choose-type-price cantSee" id="showMediumDog">
+									<%
+									List<PetType> list2 = new ArrayList<PetType>();
+																			PetTypeDAOImpl petTypeDAO2 = new PetTypeDAOImpl();
+																			list2 = petTypeDAO2.findByPetSize("中型犬");
+																			int count3 = 0;
+																			for (PetType petType : list2) {
+																				int typeId = petType.getTypeId();
+																				count3 += 1;
+									%>
+									<div class="pet-type">
+										<input type="radio" id="pet-type<%=typeId%>" class="form-control aType" value="<%=typeId%>" name="typeId">
+										<input type="hidden" value="<%=typeId%>"> <label
+											for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
+									</div>
+									<%
+									}
+																			if (count3 == 0) {
+									%>
+									尚無資料
+									<%
+									}
+									%>
+								</div>
+		
+								<div class="choose-type-price cantSee" id="showSmallDog">
+									<%
+									List<PetType> list3 = new ArrayList<PetType>();
+																			PetTypeDAOImpl petTypeDAO3 = new PetTypeDAOImpl();
+																			list3 = petTypeDAO3.findByPetSize("小型犬");
+																			int count4 = 0;
+																			for (PetType petType : list3) {
+																				int typeId = petType.getTypeId();
+																				count4 += 1;
+									%>
+									<div class="pet-type">
+										<input type="radio" id="pet-type<%=typeId%>" class="form-control aType" value="<%=typeId%>" name="typeId">
+										<input type="hidden" value="<%=typeId%>">
+										<label for="pet-type<%=typeId%>" class="pet-label"><%=petType.getTypeName()%></label>
+									</div>
+									<%
+									}
+									if (count4 == 0) {
+									%>
+									尚無資料
+									<%
+									}
+									%>
+								</div>
 							</div>
-							<%
-							}
-							if (count4 == 0) {
-							%>
-							尚無資料
-							<%
-							}
-							%>
+							<input type="submit" class="search-submit" value="查詢">
+							
+<!-- 							<div class="AGrid2"> -->
+<!-- 								<input type="submit" class="search-submit" value="查詢"> -->
+<!-- 								<span></span> -->
+<!-- 								<input type="button" class="search-submit clear" value="清除"> -->
+<!-- 							</div> -->
+							
 						</div>
 					</div>
-					<button>查詢</button>
 				</form>
-				<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
+					<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
+						</div>
+						<!-- /.card-body -->
 			</div>
 			<!-- Main content -->
 			<div class="container-fluid">
