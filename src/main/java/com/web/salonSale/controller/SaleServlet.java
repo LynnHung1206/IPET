@@ -16,12 +16,15 @@ public class SaleServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String path = req.getServletPath();
+		if("/ipet-back/salonSale/addSale".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/salon/salon_addsale.jsp").forward(req, res);
+		}
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
 		

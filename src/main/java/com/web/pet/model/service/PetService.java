@@ -14,11 +14,11 @@ public class PetService {
 		dao = new PetDAOImpl();
 	}
 
-	int id = 0;
+	int petId = 0;
 
 	public int addPet(Pet petVO) {
-		id = dao.add(petVO);
-		return id;
+		petId = dao.add(petVO);
+		return petId;
 	}
 	
 	public Pet updatePet(Pet petVO) {

@@ -1,27 +1,21 @@
-<%@page import="java.sql.Timestamp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.web.salonSale.model.*"%>
 <%@ page import="com.web.salonSale.model.entities.*"%>
 <%@ page import="com.web.salonSale.model.services.*"%>
 <%@ page import="com.web.salonSale.model.dao.*"%>
 <%@ page import="com.web.salonSale.model.dao.impl.*"%>
+<%@page import="java.sql.Timestamp"%>
 <%@ page import="java.util.*"%>
 
-<%
-SaleService saleSvc = new SaleService();
-List<Sale> saleList = saleSvc.selectAll();
-pageContext.setAttribute("saleList", saleList);
-
-Timestamp now = new Timestamp(System.currentTimeMillis());
-%>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IPET 寵物 | 美容專區 | 新增服務</title>
+  <title>IPET 寵物 | 美容專區 | 優惠總覽</title>
   	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 	<!-- Font Awesome Icons -->
@@ -172,8 +166,8 @@ Timestamp now = new Timestamp(System.currentTimeMillis());
               <div class="card">
                 <form class="card-header">
                   <input type="submit" class="card-change on" value="優惠總覽" id="apm">
-                  <input type="submit" class="card-change" value="未開始" id="apm0">
-                  <input type="submit" class="card-change" value="優惠中" id="apm1">
+                  <input type="submit" class="card-change" value="優惠中" id="apm0">
+                  <input type="submit" class="card-change" value="未開始" id="apm1">
                   <input type="submit" class="card-change" value="已完成" id="apm2">
                 </form>
                 <!-- /.card-header -->
@@ -181,31 +175,49 @@ Timestamp now = new Timestamp(System.currentTimeMillis());
                   <table id="example2" class="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th>優惠編號</th>
+                        <th>編號</th>
                         <th>優惠名稱</th>
-                        <th>優惠描述</th>
                         <th>優惠開始時間</th>
                         <th>優惠結束時間</th>
+                        <th>狀態</th>
+                        <th>修改</th>
+                        <th>刪除</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <c:forEach var="saleVO" items="${salelist}">
-						<tr>
-							<td>${saleVO.saleId}</td>
-							<td>${saleVO.saleName}</td>
-							<td>${saleVO.salContent}</td>
-							<td>${saleVO.startTime}</td>
-							<td>${saleVO.endTime}</td>
-							<c:if test="${saleVO.endTime < now}" var="true">
-								<td>已結束</td>
-							</c:if>
-							<c:if test="${saleVO.startTime < now || saleVO.endTime > now}" var="true">
-								<td>優惠中</td>
-							</c:if>
-							<c:if test="${saleVO.startTime > now}" var="true">
-								<td>未開始</td>
-							</c:if>
-							<td>
+                    
+                    <%
+					SaleService saleSvc = new SaleService();
+					List<Sale> saleList = saleSvc.selectAll();
+					pageContext.setAttribute("saleList", saleList);
+					
+					long now = System.currentTimeMillis();
+					
+					for(Sale sale : saleList){
+							String endTimeStr = sale.getEndTime().toString();
+							int endSpaceStr = endTimeStr.indexOf(" ") + 1;
+							String endDate = endTimeStr.substring(0, endSpaceStr);
+							String endTime = endTimeStr.substring(endSpaceStr, endTimeStr.indexOf("."));
+							
+							String startTimeStr = sale.getStartTime().toString();
+							int startSpaceStr = startTimeStr.indexOf(" ") + 1;
+							String startDate = startTimeStr.substring(0, startSpaceStr);
+							String startTime = startTimeStr.substring(startSpaceStr, startTimeStr.indexOf("."));
+					%>
+					</tr>
+					  <td><%=sale.getSaleId() %></td>
+					  <td><%=sale.getSaleName() %><div style="font-size: 10px; margin-top: 10px;"><%=sale.getSalContent() %></div></td>
+					  <td><div><%=startDate %></div><div><%=startTime %></div></td>
+					  <td><div><%=endDate %></div><div><%=endTime %></div></td>
+					<%
+						if(sale.getEndTime().getTime() < now){
+					%><td>已結束</td><%
+						}else if(sale.getStartTime().getTime() < now && sale.getEndTime().getTime() > now){
+					%><td>優惠中</td><%
+						}else if(sale.getStartTime().getTime() > now){
+					%><td>未開始</td><%
+						}%>
+					  <td>
 						<!--	<i class="nav-icon fas fa-solid fa-pen"></i> -->
 								<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService" style="margin-bottom: 0px;">
 									<input type="submit" value="修改">
@@ -219,7 +231,8 @@ Timestamp now = new Timestamp(System.currentTimeMillis());
 								</form>
 							</td>
 						</tr>
-						</c:forEach>
+					<%
+					}%>
                     </tbody>
                     <tfoot>
                     </tfoot>

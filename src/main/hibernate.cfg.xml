@@ -24,6 +24,7 @@
 		<mapping class="com.web.staff.model.entity.Staff" />
 		<mapping class="com.web.pet.model.entity.Pet" />
 		<mapping class="com.web.member.model.entity.Member" />
+		<mapping class="com.web.question.model.entity.Question" />
 		<mapping class="com.web.news.model.entity.News" />
 		<mapping class="com.web.admin.model.entities.AdminFunc" />
 		<mapping class="com.web.admin.model.entities.Admin" />
@@ -33,7 +34,8 @@
 		<mapping class="com.web.salonService.model.entities.PetType" />
 		<mapping class="com.web.salonService.model.entities.Service" />
 		<mapping class="com.web.product.model.entity.Product" />
-		<mapping class="com.web.productImg.model.entity.ProductImg" />
-		<mapping class="com.web.productType.model.entity.ProductType" />
+		<mapping class="com.web.product.model.entity.ProductImg" />
+		<mapping class="com.web.product.model.entity.ProductType" />
+		
 	</session-factory>
 </hibernate-configuration>

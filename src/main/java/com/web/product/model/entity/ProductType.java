@@ -1,4 +1,4 @@
-package com.web.productType.model.entity;
+package com.web.product.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,9 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import com.core.model.entities.Core;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +24,28 @@ public class ProductType extends Core{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "TYPE_NAME")
+	private String typeName;
 	@Column(name = "TYPE_ID")
 	private Integer typeID;
 	
-	@Column(name = "TYPE_NAME")
-	private String typeName;
-	
+	public Integer getTypeID() {
+		return typeID;
+	}
+
+	public void setTypeID(Integer typeID) {
+		this.typeID = typeID;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
