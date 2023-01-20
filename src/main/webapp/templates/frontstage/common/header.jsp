@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-5">
                         <div class="logo pt-39">
-                            <a href="index.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/logo/logo.png"></a>
+                            <a href="${pageContext.request.contextPath}/ipet-front/home"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/logo/logo.png"></a>
                         </div>
                     </div>
                     <div class="col-xl-7 col-lg-7 d-none d-lg-block">
