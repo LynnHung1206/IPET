@@ -41,7 +41,7 @@
 </head>
 <body>
 <%@include file="/templates/frontstage/common/header.jsp"%>
-    <a id=msg style="z-index:999" href="customer-service.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
+    <a id=msg style="z-index:999" href="customer-service.jsp"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
     <div class="slider-area">
         <div class="slider-active owl-dot-style owl-carousel">
             <div class="single-slider pt-100 pb-100 yellow-bg">
@@ -50,7 +50,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-7 col-12">
                             <div class="slider-content slider-animated-1 pt-114">
                                 <h3 class="animated">welcome to IPET</h3>
-                                <h1 style="font-family:fantasy">寵物商城廣告<br>寵物旅館廣告<br>寵物美容廣告<br></h1>
+                                <h1 style="font-family:fantasy">即刻享用服務</h1>
                                 <div class="slider-btn">
                                     <a class="animated" href="product-details.html">SHOP NOW</a>
                                 </div>
