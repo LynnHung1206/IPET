@@ -39,13 +39,13 @@ Member memberVO = (Member) request.getAttribute("memberVO");
 	}	
 </script>
 <style type="text/css">
-input#allStaff {
+input#allMember {
 	background-color: lightgray;
 	border: none;
 	border-radius: 5px;
 }
 
-input#allStaff:hover, #search:hover {
+input#allMember, #search:hover {
 	cursor: pointer;
 }
 </style>
