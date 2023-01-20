@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(catalog = "IPETID", name = "product_type")
+@Table(catalog = "IPETDB", name = "product_type")
 public class ProductType extends Core{
 
 	private static final long serialVersionUID = 1L;

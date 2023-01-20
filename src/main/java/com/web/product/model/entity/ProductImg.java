@@ -28,6 +28,15 @@ public class ProductImg extends Core{
 	private Integer imgID;
 	@Column(name = "IMG_FILE")
 	private byte[] imgFile;
+	@Column(name = "PROD_ID")
+	private Integer prodID;
+	
+	public Integer getProdID() {
+		return prodID;
+	}
+	public void setProdID(Integer prodID) {
+		this.prodID = prodID;
+	}
 	
 	public Integer getImgID() {
 		return imgID;

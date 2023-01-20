@@ -24,5 +24,10 @@ public class ProductImgDAOImp implements ProductImgDAO{
 		
 		return null;
 	}
-
+	
+	@Override
+	public ProductImg getByProdID(Integer prodID) {
+		final String hql = "From ProductImg where prodID = :prodID";
+		return getSession().createQuery(hql, ProductImg.class).setParameter("prodID", prodID).uniqueResult();
+	}
 }

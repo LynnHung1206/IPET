@@ -36,24 +36,16 @@
                             <nav>
                                 <ul>
                                     <li><a href="${pageContext.request.contextPath}/ipet-front/news/allNews">最新消息</a></li>
-                                    <li class="mega-menu-position"><a href="shop-page.html">商城</a>
-                                        <ul class="mega-menu">
+                                    <li><a href="shop-page.html">商城</a>
+                                        <ul class="submenu">
                                             <li>
                                                 <ul>
-                                                    <li class="mega-menu-title">狗日用品</li>
-                                                    <li><a href="shop-page.html">狗飼料</a></li>
-                                                    <li><a href="shop-page.html">狗玩具</a></li>
-                                                    <li><a href="shop-page.html">狗背帶</a></li>
-                                                    <li><a href="shop-page.html">狗零食</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <ul>
-                                                    <li class="mega-menu-title">貓日用品</li>
-                                                    <li><a href="shop-page.html">貓飼料</a></li>
-                                                    <li><a href="shop-page.html">貓玩具</a></li>
-                                                    <li><a href="shop-page.html">貓砂</a></li>
-                                                    <li><a href="shop-page.html">貓零食</a></li>
+                                                    <li><a href="category?typeID=1">食品</a></li>
+													<li><a href="category?typeID=2">玩具</a></li>
+													<li><a href="category?typeID=3">居家用品</a></li>
+													<li><a href="category?typeID=4">外出用品</a></li>
+													<li><a href="category?typeID=5">美容用品</a></li>
+													<li><a href="category?typeID=6">其他雜貨</a></li>
                                                 </ul>
                                             </li>
                                     </li>

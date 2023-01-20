@@ -11,7 +11,7 @@ public class ProductDAOImpFront implements ProductDAO{
 	@Override
 	public Product getById(Integer id) {
 		
-		return null;
+		return getSession().get(Product.class, id);
 	}
 
 	@Override
@@ -25,14 +25,16 @@ public class ProductDAOImpFront implements ProductDAO{
 		final String hql = "From Product";
 		return getSession().createQuery(hql, Product.class).list();
 	}
-
-	public List<Product> selectByProdType(Integer ProdType) {
-		final String hql = "From Product Where typeID = :ProdType";		
-		return getSession().createQuery(hql, Product.class).setParameter("ProdType", ProdType).list();
+	
+	@Override
+	public List<Product> selectByProdType(Integer prodType) {
+		final String hql = "From Product Where typeID = :prodType";		
+		return getSession().createQuery(hql, Product.class).setParameter("prodType", prodType).list();
 	}
 
-	public List<Product> selectByKeyword(String Keyword) {
-		final String hql = "From Product Where prodName = :Keyword";
-		return getSession().createQuery(hql, Product.class).setParameter("Keyword", "%" + Keyword + "%").list();
+	@Override
+	public List<Product> selectByKeyword(String keyword) {
+		final String hql = "From Product Where prodName like :keyword";
+		return getSession().createQuery(hql, Product.class).setParameter("keyword", "%" + keyword + "%").list();
 	}
 }

@@ -5,4 +5,5 @@ import com.web.product.model.entity.ProductImg;
 
 public interface ProductImgDAO extends CoreDAO<ProductImg, Integer>{
 	
+	ProductImg getByProdID(Integer prodID);
 }
