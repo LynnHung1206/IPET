@@ -124,7 +124,7 @@ input#addNew:hover, #search:hover {
 									<td>${staffVO.tel}</td>
 									<td>${staffVO.add}</td>
 									<td>${staffVO.posi}</td>
-									<td>${staffVO.status == 0 ? "在職" : "離職"}</td>
+									<td>${staffVO.status == 1 ? "離職" : "在職"}</td>
 
 									<td>
 										<FORM METHOD="post"

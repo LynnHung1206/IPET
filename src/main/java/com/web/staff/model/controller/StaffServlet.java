@@ -76,8 +76,6 @@ public class StaffServlet extends HttpServlet {
 			
 			staffSvc.findAc(staff.getAc());
 			
-			System.out.println(staffSvc.findAc(staff.getAc()));
-			
 			res.getWriter().print(staffSvc.findAc(staff.getAc()));
 		}
 	}
@@ -85,7 +83,7 @@ public class StaffServlet extends HttpServlet {
 	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String sname = req.getParameter("sname");
 		String uid = req.getParameter("uid");
-		String birthStr = req.getParameter("birth");
+		java.sql.Date birth = Date.valueOf(req.getParameter("birth"));
 		String sex = req.getParameter("sex");
 		String email = req.getParameter("email");
 		String phone = req.getParameter("phone");
@@ -94,15 +92,11 @@ public class StaffServlet extends HttpServlet {
 		String acount = req.getParameter("acount");
 		String password = req.getParameter("password");
 		String posi = req.getParameter("job");
-		String statusStr = req.getParameter("status");
-		String idStr = req.getParameter("staffId");
+		Integer status = Integer.valueOf(req.getParameter("status").trim());
+		Integer id = Integer.valueOf(req.getParameter("staffId").toString().trim());
 
-		String adminStr = req.getParameter("admin");
-//		System.out.println("admin:"+adminStr);
-		Integer adminid = Integer.valueOf(adminStr.trim());
-		java.sql.Date birth = Date.valueOf(birthStr);
-		Integer status = Integer.valueOf(statusStr);
-		Integer id = Integer.valueOf(idStr.toString().trim());
+		
+		Integer adminid = Integer.valueOf(req.getParameter("admin").trim());
 
 		Staff staff = new Staff();
 		staff.setId(id);
@@ -127,8 +121,6 @@ public class StaffServlet extends HttpServlet {
 		admin.setAdminID(adminid);
 		AdminService adminSvc = new AdminService();
 		adminSvc.update(admin);
-//		System.out.println("admin.getAdminID:"+admin.getAdminID());
-//		System.out.println("admin.getStaffID:"+admin.getStaffID());
 //			轉交
 		String url = "/templates/backstage/staff/staffList.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -169,7 +161,7 @@ public class StaffServlet extends HttpServlet {
 		staff.setPosi(posi);
 
 		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("staff", staff); // 含有輸入格式錯誤的empVO物件,也存入req
+			req.setAttribute("staff", staff);
 			RequestDispatcher failureView = req.getRequestDispatcher("/templates/backstage/staff/register.jsp");
 			failureView.forward(req, res);
 			return;
@@ -242,11 +234,6 @@ public class StaffServlet extends HttpServlet {
 			return errorMsgs;
 		}
 		return errorMsgs;
-	}
-
-	public static void main(String[] args) {
-		Integer admin = Integer.valueOf(null);
-		System.out.println(admin);
 	}
 
 }
