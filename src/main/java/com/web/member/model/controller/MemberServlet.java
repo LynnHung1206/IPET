@@ -21,7 +21,7 @@ import com.web.member.model.service.MemberService;
 
 
 @WebServlet({ "/ipet-back/member/allMemberList", "/ipet-back/member/edit", "/ipet-back/member/addNew",
-		"/ipet-back/member/getAllList","/ipet-back/member/login" })
+		"/ipet-back/member/getAllList","/ipet-back/member/login","/ipet-back/member/toLogin" })
 public class MemberServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -39,6 +39,10 @@ public class MemberServlet extends HttpServlet {
 
 		if ("/ipet-back/member/addNew".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/member/register.jsp").forward(req, res);
+		}
+		
+		if ("/ipet-back/member/toLogin".equals(path)) {
+			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
 		}
 
 		if ("/ipet-back/member/getAllList".equals(path)) {

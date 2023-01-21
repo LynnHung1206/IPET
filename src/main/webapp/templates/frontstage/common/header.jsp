@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="header-login same-style">
-                                <a href="login-register.html"><i class="icon-user icons">${member.getMemName()}</i></a>
+                                <a href="${pageContext.request.contextPath}/ipet-back/member/toLogin"><i class="icon-user icons">${member.getMemName()}</i></a>
                             </div>
                             <div class="header-cart same-style">
                                 <button class="icon-cart">
