@@ -268,6 +268,18 @@ public class ProductDAOImpBack implements ProductDAO {
 	
 	}
 
+	@Override
+	public List<Product> selectByProdType(Integer prodType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> selectByKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

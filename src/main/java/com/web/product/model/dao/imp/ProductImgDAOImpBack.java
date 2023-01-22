@@ -80,6 +80,12 @@ public class ProductImgDAOImpBack implements ProductImgDAO {
 		
 		session.save(productImg);
 	}
+
+	@Override
+	public ProductImg getByProdID(Integer prodID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
