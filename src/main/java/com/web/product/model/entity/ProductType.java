@@ -1,12 +1,18 @@
 package com.web.product.model.entity;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import com.core.model.entities.Core;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +30,14 @@ public class ProductType extends Core{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TYPE_NAME")
-	private String typeName;
+
 	@Column(name = "TYPE_ID")
 	private Integer typeID;
+	@Column(name = "TYPE_NAME")
+	private String typeName;
+//	@Column
+//	private Set<Product> emps = new HashSet<Product>();
+//	
 	
 	public Integer getTypeID() {
 		return typeID;
