@@ -84,13 +84,51 @@
     letter-spacing: 24px;
     text-align: center;
     padding: 6px;
-    margin-top: 14px;
+    margin-top: 3px;
 }
 
 .search-submit.clear {
 	background-color: white;
 	border: 1px solid #7c7c7c;
 	color: #6c757d;
+}
+
+/* ======== 上下架按鈕 =========*/
+.mybtn {
+ 	display: none;
+}
+
+.mybtngroup {
+	display: inline-block;
+	font-size: 0px;
+}
+
+#mybtnlabel-left {
+	font-size: 1rem;
+	width: 150px;
+    height: 32px;
+    border-radius: 0.25rem 0 0 0.25rem;
+    border-left: 1px solid #7c7c7c;
+    border-top: 1px solid #7c7c7c;
+    border-bottom: 1px solid #7c7c7c;
+    padding: 3px;
+    text-align: center;
+}
+
+#mybtnlabel-right {
+	font-size: 1rem;
+	width: 150px;
+    height: 32px;
+    border-radius: 0 0.25rem 0.25rem 0;
+    border-right: 1px solid #7c7c7c;
+    border-top: 1px solid #7c7c7c;
+    border-bottom: 1px solid #7c7c7c;
+    padding: 3px;
+    text-align: center;
+}
+
+.labelOn {
+	background-color: #dae0e5;
 }
 
 /* ================== 選寵物父元素 ==================*/

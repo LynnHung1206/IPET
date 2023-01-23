@@ -29,8 +29,14 @@ public class Service extends Core {
 	@Column(name = "SVC_CATEGORY_ID")
 	private Integer catId;
 	
+	@Transient
+    private String catName;
+	
 	@Column(name = "TYPE_ID")
 	private Integer typeId;
+	
+	@Transient
+    private String typeName;
 	
 	@Column(name = "SVC_PRICE")
 	private Integer svcPrice;
@@ -38,6 +44,8 @@ public class Service extends Core {
 	@Column(name = "SVC_STATUS")
 	private Integer svcStatus;
 	
+	@Transient
+    private String svcStatusName;
 	
 	public Service(Integer svcId, String svcName, String svcContent, byte[] svcImg, Integer catId, Integer typeId, Integer svcPrice, Integer svcStatus) {
 		this.svcId = svcId;
@@ -65,52 +73,91 @@ public class Service extends Core {
 	public Integer getSvcId() {
 		return svcId;
 	}
+
 	public void setSvcId(Integer svcId) {
 		this.svcId = svcId;
 	}
+
 	public String getSvcName() {
 		return svcName;
 	}
+
 	public void setSvcName(String svcName) {
 		this.svcName = svcName;
 	}
+
 	public String getSvcContent() {
 		return svcContent;
 	}
+
 	public void setSvcContent(String svcContent) {
 		this.svcContent = svcContent;
 	}
-	public Integer getCatId() {
-		return catId;
-	}
-	public void setCatId(Integer catId) {
-		this.catId = catId;
-	}
-	public Integer getTypeId() {
-		return typeId;
-	}
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
-	}
-	public Integer getSvcPrice() {
-		return svcPrice;
-	}
-	public void setSvcPrice(Integer svcPrice) {
-		this.svcPrice = svcPrice;
-	}
-	public Integer getSvcStatus() {
-		return svcStatus;
-	}
-	public void setSvcStatus(Integer svcStatus) {
-		this.svcStatus = svcStatus;
-	}
+
 	public byte[] getSvcImg() {
 		return svcImg;
 	}
+
 	public void setSvcImg(byte[] svcImg) {
 		this.svcImg = svcImg;
 	}
-	
+
+	public Integer getCatId() {
+		return catId;
+	}
+
+	public void setCatId(Integer catId) {
+		this.catId = catId;
+	}
+
+	public String getCatName() {
+		return catName;
+	}
+
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
+
+	public Integer getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Integer typeId) {
+		this.typeId = typeId;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public Integer getSvcPrice() {
+		return svcPrice;
+	}
+
+	public void setSvcPrice(Integer svcPrice) {
+		this.svcPrice = svcPrice;
+	}
+
+	public Integer getSvcStatus() {
+		return svcStatus;
+	}
+
+	public void setSvcStatus(Integer svcStatus) {
+		this.svcStatus = svcStatus;
+	}
+
+	public String getSvcStatusName() {
+		return svcStatusName;
+	}
+
+	public void setSvcStatusName(String svcStatusName) {
+		this.svcStatusName = svcStatusName;
+	}
+
 	//for join catId to CategoryVO
 	public Category getCategoryVO() {
 		CategoryService categoryService = new CategoryService();

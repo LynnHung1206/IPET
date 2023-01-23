@@ -39,38 +39,6 @@
 		margin-left: 25px;
 	}
 	
-	#mainModal {
- 		display: none; 
-		position: fixed;
-		z-index: 9999;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgba(0,0,0,0.4);
-		box-sizing: border-box;
-	}
-	
-	/* 彈出視窗本人
-	.main-modal-content {
-		background-color: #fafafa;
-		margin: 15% auto;
-		border: 1px solid #888;
-		width: 500px;
-		border-radius: 0.5rem;
-	} */
-	
-	.d-flex.align-items-center {
-		margin: 20% auto;
-		width: 180px;
-	}
-	
-	#loading-text {
-		color: #f8f9fa;
-		font-size: 16px
-	}
-	
 	#summernoteFather {
 		margin-top: 25px;
 	}
@@ -101,6 +69,42 @@
     	letter-spacing: 1px;
 	}
 	
+	/* ============ 彈出視窗-優惠選擇服務 =============*/
+	#addSaleBox {
+ 		display: none; 
+		position: fixed;
+		z-index: 9998;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+		box-sizing: border-box;
+	}
+	
+	/* 	 彈出視窗本人 */
+	.main-modal-content {
+		background-color: #fafafa;
+		margin: 3% auto;
+		border: 1px solid #888;
+		width: 1000px;
+		height: 87%;
+		border-radius: 0.25rem;
+	}
+	
+	/* 	叉叉 */
+	#modalClose {
+		float: right;
+	    font-size: 22px;
+	    padding: 5px;
+	    margin: 15px 25px;
+	    color: #939393;
+	}
+	
+	#modalClose:hover {
+		cursor: pointer;
+	}
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -114,7 +118,7 @@
 	  <%@ include file="/templates/backstage/common/sidebar.jsp" %>
 	  <!-- /.aside -->
 	  
-	  <!-- ================== 彈出視窗 ==================== -->
+	  <!-- ================== 新增時的loading畫面 ==================== -->
 		<div id="mainModal">
 			<div class="main-modal-content">
 				<div class="d-flex align-items-center">
@@ -123,7 +127,14 @@
 				</div>
 			</div>
 		</div>
-	  <!-- ================== 彈出視窗 end ==================== -->
+	  <!-- ====================== 彈出視窗 ========================= -->
+	  	<div id="addSaleBox">
+			<div class="main-modal-content">
+				<i class="nav-icon fas fa-sharp fa-solid fa-times" id="modalClose"></i>
+				<p>一個施工中的彈出式視窗...</p>
+			</div>
+		</div>
+	  
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -145,13 +156,6 @@
 				</div>
 				<!-- /.container-fluid -->
 			</section>
-
-<c:if test="${not empty errorMsgs}">
-	<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
-	<c:forEach var="message" items="${errorMsgs}">
-		<div style="color: red">${message.value}</div>
-	</c:forEach>
-</c:if>
 
 			<!-- Main content1 -->
 			<section class="content">
@@ -200,7 +204,7 @@
 			<section class="content">
 				<div class="card card-secondary n2" id="second-card">
 					<div class="card-header">
-						<h3 class="card-title">新增優惠服務</h3>
+						<h3 class="card-title">優惠服務</h3>
 
 						<div class="card-tools">
 							<button type="button" class="btn btn-tool"
@@ -210,7 +214,8 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<label for="svc_img" style="margin-top: 8.5px;">查詢服務</label>
+						<button id="addSaleBtn" class="button-style" style="color: #4a4747; border-color: #4a4747;"><i class="fas fa-thin fa-plus" style="margin-right: 5px;"></i>
+						<span style="font-weight: 700;">新增服務</span></button>
 						
 					</div>
 					
@@ -324,13 +329,26 @@
         });
     	
     	/*===================== 彈出視窗 ==========================*/
-		const mainModal = document.getElementById("mainModal");
+		const addSaleBox = document.getElementById("addSaleBox");
 
 		//點擊按鈕時打開彈出視窗
-// 		$("#mainBtn").click(function() {
-// 			mainModal.style.display = "block";
-// 			document.body.style.overflow = "hidden";
-// 		});
+		$("#addSaleBtn").click(function() {
+			addSaleBox.style.display = "block";
+			document.body.style.overflow = "hidden";
+		});
+		
+		//點擊叉叉(X) 或 彈出視窗外面 關閉視窗
+		$("#modalClose").click(function() {
+			addSaleBox.style.display = "none";
+			document.body.style.overflow = "auto";
+		});
+
+		$(window).click(function() {
+			if (event.target == addSaleBox) {
+				addSaleBox.style.display = "none";
+				document.body.style.overflow = "auto";
+			}
+		});
     	
       /*===================== 點擊 card-header 開關 ==========================*/
 
@@ -499,6 +517,7 @@
 	  		});
 	  	 }
 	  	 
+	  	 //資料：formData
     	 let formData = new FormData(form);
     	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
     	 
@@ -521,9 +540,6 @@
     	    })
     });
     
-//    	 for(item of formData){
-//    		 console.log(item[0], item[1], item[3], item[4]);
-//    	 }
     
       /*===================== 新增成功提示 ==========================*/
     (function($) {

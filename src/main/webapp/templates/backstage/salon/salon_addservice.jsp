@@ -28,37 +28,6 @@
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
-	#mainModal {
- 		display: none; 
-		position: fixed;
-		z-index: 9999;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgba(0,0,0,0.4);
-		box-sizing: border-box;
-	}
-	
-	/* 彈出視窗本人
-	.main-modal-content {
-		background-color: #fafafa;
-		margin: 15% auto;
-		border: 1px solid #888;
-		width: 500px;
-		border-radius: 0.5rem;
-	} */
-	
-	.d-flex.align-items-center {
-		margin: 20% auto;
-		width: 180px;
-	}
-	
-	#loading-text {
-		color: #f8f9fa;
-		font-size: 16px
-	}
 	
 </style>
 	</head>
@@ -73,16 +42,14 @@
 	  <%@ include file="/templates/backstage/common/sidebar.jsp" %>
 	  <!-- /.aside -->
 	  
-	  <!-- ================== 彈出視窗 ==================== -->
+	  <!-- ================== 新增時的loading畫面 ==================== -->
 		<div id="mainModal">
-			<div class="main-modal-content">
-				<div class="d-flex align-items-center">
-					 <strong id="loading-text">正在新增服務...</strong>
-					 <div class="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
-				</div>
+			<div class="d-flex align-items-center">
+				 <strong id="loading-text">正在新增服務...</strong>
+				 <div class="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
 			</div>
 		</div>
-	  <!-- ================== 彈出視窗 end ==================== -->
+	  <!-- ================== 新增時的loading畫面 end ==================== -->
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -104,13 +71,6 @@
 				</div>
 				<!-- /.container-fluid -->
 			</section>
-
-<c:if test="${not empty errorMsgs}">
-	<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
-	<c:forEach var="message" items="${errorMsgs}">
-		<div style="color: red">${message.value}</div>
-	</c:forEach>
-</c:if>
 
 			<!-- Main content1 -->
 			<section class="content">
@@ -171,7 +131,7 @@
 							<div id="summernoteFather">
 								<label for="summernote">服務描述</label>
 								<div>
-									<textarea id="summernote" name="svcContent" required> </textarea>
+									<textarea id="summernote" name="svcContent"> </textarea>
 								</div>
 							</div>
 							<label>是否立即上架</label><br>
@@ -501,22 +461,6 @@
 		  }
 	  });
 	  
-	  /*===================== 點擊 新增服務按鈕 新增單項服務 ==========================*/
-//       $("#submitAll").click(function(){
-//     	  const addListLength = $(".addList").length;
-//     	  let str = "[";
-//     	  for(let i = 0; i < addListLength; i++){
-//     		  const addList = $(".addList").eq(i).text();
-//     		  if(i === (addListLength - 1)){
-//     			  str += addList;
-//     		  }else{
-//     		  str += addList + ",";
-//     		  }
-//     	  }
-//     	  str += "]";
-//     	  $("#allTypeAndPrice").val(str);
-//       });
-	  
       /*===================== 匯入圖片檔案時預覽 ==========================*/
       $(document).on("change", "#add-img", function (){
           $("#showImg").attr("src", URL.createObjectURL(event.target.files[0]));
@@ -526,12 +470,10 @@
     
     
     /*===================== 送出新增資訊到後台 ==========================*/
-    const form = document.querySelector("#addSvcForm");
-    
-    form.addEventListener("submit", (e) =>{
-    	e.preventDefault();
+      $(document).on("submit", "#addSvcForm", function (e){
+      	 e.preventDefault();
     	
-    	//迴圈存入金額和品種物件
+    	 //迴圈存入金額和品種物件
 	  	 let priceAndTypeArray = [];
 	  	 const beSentTrLength = $(".beSentTr").length;
 	  	 for(let i = 0; i< beSentTrLength; i++){
@@ -541,7 +483,8 @@
 	  		});
 	  	 }
 	  	 
-    	 let formData = new FormData(form);
+	  	 //資料：formData
+    	 let formData = new FormData(this);
     	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
     	 
     	 $.ajax({
@@ -554,18 +497,22 @@
     	        beforeSend: function(){
     	        	$("#mainModal").css("display","block");
     	        },
-    	        success : function(data) {
+    	        success : function(response) {
     	        	$("#mainModal").css("display","none");
-    	        	showSwal("success-message");
-    	        },error: function(data) {
+    	        	if(!response){
+	    	        	showSwal("success-message");
+    	        	}else {
+	    	        	const res = JSON.parse(response);
+    	 				console.log(res);
+    	        	}
+// 					console.log(errorMsgs);
+    	        },error: function(response) {
     	        	showSwal("something-Wrong");
+					alert("something-Wrong");
     	        }
     	    })
     });
     
-//    	 for(item of formData){
-//    		 console.log(item[0], item[1], item[3], item[4]);
-//    	 }
     
       /*===================== 新增成功提示 ==========================*/
     (function($) {
@@ -584,7 +531,7 @@
     	    	swal({
 	    	        title: "OOPS！Something's Wrong:(",
 	    	        text: "請再次嘗試或聯繫客服人員協助處理",
-	    	        type: 'question',
+	    	        type: 'info',
  	    		  	showConfirmButton: true,
 	    	      })
     	    } 

@@ -107,14 +107,13 @@ pageContext.setAttribute("catlist", catlist);
 								</div>
 								<div class="search-svc">
 									<label>服務狀態：</label>
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
-					                  <label class="btn btn-light">
-					                    <input type="radio" id="svc-Status1" autocomplete="off" value="0" name="svcStatus"> 上架中
-					                  </label>
-					                  <label class="btn btn-light">
-					                    <input type="radio" id="svc-Status2" autocomplete="off" value="1" name="svcStatus"> 未上架
-					                  </label>
-					                </div>
+									<div class="mybtngroup">
+					                  <label id="mybtnlabel-left" for="svc-Status1" >上架中</label>
+					                  <input type="radio" id="svc-Status1" class="mybtn" value="0" name="svcStatus">
+					                  
+					                  <label id="mybtnlabel-right" for="svc-Status2">未上架</label>
+					                  <input type="radio" id="svc-Status2" class="mybtn" value="1" name="svcStatus">
+									</div>
 								</div>
 							</div>
 						<div class="AGrid-inside">
@@ -198,16 +197,14 @@ pageContext.setAttribute("catlist", catlist);
 									%>
 								</div>
 							</div>
-							<input type="submit" class="search-submit" value="查詢">
-							
-<!-- 							<div class="AGrid2"> -->
-<!-- 								<input type="submit" class="search-submit" value="查詢"> -->
-<!-- 								<span></span> -->
-<!-- 								<input type="button" class="search-submit clear" value="清除"> -->
-<!-- 							</div> -->
-							
+<!-- 							<input type="submit" class="search-submit" value="查詢"> -->
 						</div>
 					</div>
+							<div class="AGrid2">
+								<input type="button" class="search-submit clear" value="清除">
+								<span></span>
+								<input type="submit" class="search-submit" value="查詢">
+							</div>
 				</form>
 					<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
 						</div>
@@ -395,6 +392,38 @@ pageContext.setAttribute("catlist", catlist);
 					$("#showBigDog").addClass("cantSee");
 					$("#showMediumDog").addClass("cantSee");
 					$("#showSmallDog").removeClass("cantSee");
+				}
+			});
+			
+			/*===================== 再次點選 radio 取消選取 ==========================*/
+			const $radios = $('input[type="radio"]');
+
+			$('input[type="radio"]').click(function(){
+			    const $this = $(this);
+			
+			    if ($this.data('checked')) {
+			        this.checked = false;
+			    }
+			    const $otherRadios = $radios.not($this).filter('[name="' + $this.attr('name') + '"]');
+			    $otherRadios.prop('checked', false).data('checked', false);
+			    $this.data('checked', this.checked);
+			})
+			
+			$("#svc-Status1").click(function(){
+				if($(this).data("checked")){
+					$("#mybtnlabel-left").addClass("labelOn");
+					$("#mybtnlabel-right").removeClass("labelOn");
+				}else{
+					$("#mybtnlabel-left").removeClass("labelOn");
+				}
+			});
+			
+			$("#svc-Status2").click(function(){
+				if($(this).data("checked")){
+					$("#mybtnlabel-right").addClass("labelOn");
+					$("#mybtnlabel-left").removeClass("labelOn");
+				}else{
+					$("#mybtnlabel-right").removeClass("labelOn");
 				}
 			});
 

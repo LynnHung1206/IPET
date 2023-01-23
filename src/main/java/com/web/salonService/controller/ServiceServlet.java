@@ -2,6 +2,8 @@ package com.web.salonService.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -47,8 +50,8 @@ public class ServiceServlet extends HttpServlet{
 		
 		/**********************************進入新增頁面，新增資料************************************/
 		if("/ipet-back/service/addService".equals(path)) {
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			res.setContentType("text/text;charset=UTF-8");
+			Map<String,String> errorMsgs = new HashMap<>();
 		
 				/*************1.接收請求參數 - 輸入格式的錯誤處理**********/
 				//取得服務名稱
@@ -86,14 +89,14 @@ public class ServiceServlet extends HttpServlet{
 						errorMsgs.put("svcStatus","請填入正確服務狀態");
 					}
 				} catch (IllegalArgumentException e) {
-					errorMsgs.put("svcStatus","請填入正確服務狀態");
+					errorMsgs.put("svcStatus","請選擇服務狀態");
 				}
 				
 				//處理字串>品種與價格
 				String typeAndPrice = req.getParameter("typeAndPrice");
 				JsonArray jsonArray = null;
-				if(typeAndPrice == null || typeAndPrice.trim().length() == 0) {
-					errorMsgs.put("typeAndPrice","請輸入正確品種與價格");
+				if(typeAndPrice.equals("[]")) {
+					errorMsgs.put("typeAndPrice","請選擇品種與價格");
 				}else {
 					try {
 						Gson gson = new Gson();
@@ -105,16 +108,14 @@ public class ServiceServlet extends HttpServlet{
 							obj.get("svcPrice").getAsInt();
 						}
 					} catch (Exception e) {
-//						errorMsgs.put("typeAndPrice","請輸入正確品種與價格");
-//						System.out.println(2);
+						errorMsgs.put("typeAndPrice","請輸入正確品種與價格");
 					}
 				}
 				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/templates/backstage/salon/salon_addservice.jsp");
-					failureView.forward(req, res);
+					res.getWriter().print(new Gson().toJson(errorMsgs));
 					return; //程式中斷
 				}
 				
@@ -133,18 +134,11 @@ public class ServiceServlet extends HttpServlet{
 					svcSvc.addService(svcName, svcContent, svcImg, catId, typeId, svcPrice, svcStatus);
 				}
 				
-				/******************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/templates/backstage/salon/salon_showservice.jsp";
-				req.getRequestDispatcher(url).forward(req, res);
-			
 		}
 		
 		// 來自salon_showservice.jsp 或 salon_selectservice.jsp的複合查詢請求
 		if ("/ipet-back/service/allService".equals(path)) { 
-			
-				List<String> errorMsgs = new LinkedList<String>();
-				req.setAttribute("errorMsgs", errorMsgs);
-				
+				res.setContentType("application/json;charset=UTF-8");
 				/***************************1.將輸入資料轉為Map**********************************/ 
 				Map<String, String[]> map = req.getParameterMap();
 				
@@ -153,8 +147,10 @@ public class ServiceServlet extends HttpServlet{
 				List<Service> list  = svcSvc.findIfService(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("searchList", list); // 資料庫取出的list物件,存入request
-				req.getRequestDispatcher("/templates/backstage/salon/salon_selectservice.jsp").forward(req, res);
+				Gson gson = new GsonBuilder().serializeNulls()
+						.setDateFormat("yyyy-MM-dd")
+						.create();
+				res.getWriter().print(gson.toJson(list));
 		}
 		
 		// 來自salon_showservice.jsp的修改項目請求

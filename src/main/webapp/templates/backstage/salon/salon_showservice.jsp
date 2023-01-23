@@ -39,7 +39,49 @@ pageContext.setAttribute("catlist", catlist);
 	<!-- showsevice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_showservice.css">
 <style>
+	/* ============ 彈出視窗-Loading =============*/
+	/* 彈出視窗出現時的暗色背景 */
+	#mainModal {
+ 		display: none; 
+		position: fixed;
+		z-index: 9999;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.4);
+		box-sizing: border-box;
+	}
+	
+	.d-flex.align-items-center {
+		margin: 20% auto;
+		width: 180px;
+	}
+	
+	#loading-text {
+		color: #f8f9fa;
+		font-size: 16px
+	}
+	
+	/* ============ 修改&刪除圖示 =============*/
+	.fa-pen {
+		padding: 0 10px;
+	}
+	
+	.fa-pen:hover {
+		cursor: pointer;
+		color: #007bff;
+	}
 
+	.fa-trash {
+		padding: 0 10px;
+	}
+	
+	.fa-trash:hover {
+		cursor: pointer;
+		color: #ff0000;
+	}
+	
 </style>
 </head>
 
@@ -74,6 +116,16 @@ pageContext.setAttribute("catlist", catlist);
 						</div>
 					</div>
 
+					<!-- ================== loading畫面 ==================== -->
+					<div id="mainModal">
+						<div class="main-modal-content">
+							<div class="d-flex align-items-center">
+								 <strong id="loading-text">loading...</strong>
+								 <div class="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
+							</div>
+						</div>
+					</div>
+
 					<!-- ================== 彈出視窗 ==================== -->
 					<!-- Trigger/Open The Modal -->
 					<!-- <button id="mainBtn">修改預約</button> -->
@@ -103,7 +155,7 @@ pageContext.setAttribute("catlist", catlist);
 						</div>
 						<!-- card-body -->
 						<div class="card-body" style="display: none;">
-							<form method="post" action="${pageContext.request.contextPath}/ipet-back/service/allService">
+							<form method="post" id="searchForm">
 						<div class="AGrid">
 							<div class="AGrid-inside">
 								<div class="search-svc">
@@ -134,14 +186,13 @@ pageContext.setAttribute("catlist", catlist);
 								</div>
 								<div class="search-svc">
 									<label>服務狀態：</label>
-									<div class="btn-group btn-group-toggle" data-toggle="buttons">
-					                  <label class="btn btn-light">
-					                    <input type="radio" id="svc-Status1" autocomplete="off" value="0" name="svcStatus"> 上架中
-					                  </label>
-					                  <label class="btn btn-light">
-					                    <input type="radio" id="svc-Status2" autocomplete="off" value="1" name="svcStatus"> 未上架
-					                  </label>
-					                </div>
+									<div class="mybtngroup">
+					                  <label id="mybtnlabel-left" for="svc-Status1" >上架中</label>
+					                  <input type="radio" id="svc-Status1" class="mybtn" value="0" name="svcStatus">
+					                  
+					                  <label id="mybtnlabel-right" for="svc-Status2">未上架</label>
+					                  <input type="radio" id="svc-Status2" class="mybtn" value="1" name="svcStatus">
+									</div>
 								</div>
 							</div>
 						<div class="AGrid-inside">
@@ -225,16 +276,16 @@ pageContext.setAttribute("catlist", catlist);
 									%>
 								</div>
 							</div>
-							<input type="submit" class="search-submit" value="查詢">
+<!-- 							<input type="submit" class="search-submit" value="查詢"> -->
 							
-<!-- 							<div class="AGrid2"> -->
-<!-- 								<input type="submit" class="search-submit" value="查詢"> -->
-<!-- 								<span></span> -->
-<!-- 								<input type="button" class="search-submit clear" value="清除"> -->
-<!-- 							</div> -->
 							
 						</div>
 					</div>
+							<div class="AGrid2">
+								<input type="reset" class="search-submit clear" value="清除">
+								<span></span>
+								<input type="submit" class="search-submit" value="查詢">
+							</div>
 				</form>
 					<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
 						</div>
@@ -260,36 +311,6 @@ pageContext.setAttribute("catlist", catlist);
 											<th>刪除</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach var="svcVO" items="${svclist}">
-											<tr>
-												<td>${svcVO.svcId}</td>
-												<td>${svcVO.svcName}</td>
-												<td>${svcVO.categoryVO.catName}</td>
-												<td>${svcVO.petTypeVO.typeName}</td>
-												<td>${svcVO.svcPrice}</td>
-												<c:if test="${svcVO.svcStatus == 1}" var="true">
-													<td>未上架</td>
-												</c:if>
-												<c:if test="${svcVO.svcStatus == 0}" var="true">
-													<td>上架中</td>
-												</c:if>
-												<td>
-	<!--											<i class="nav-icon fas fa-solid fa-pen"></i> -->
-													<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService" style="margin-bottom: 0px;">
-														<input type="submit" value="修改">
-														<input type="hidden" name="svcId" value="${svcVO.svcId}">														
-													</form>
-												</td>
-												<td>
-													<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService" style="margin-bottom: 0px;">
-														<input type="submit" value="刪除">
-														<input type="hidden" name="svcId" value="${svcVO.svcId}">														
-													</form>
-												</td>
-											</tr>
-										</c:forEach>
-									</tbody>
 									<tfoot>
 									</tfoot>
 								</table>
@@ -355,16 +376,8 @@ pageContext.setAttribute("catlist", catlist);
 	<!-- Page specific script -->
 	<script>
 		$(function() {
-			$("#example1").DataTable(
-					{
-						"responsive" : true,
-						"lengthChange" : false,
-						"autoWidth" : false,
-						"buttons" : [ "copy", "csv", "excel", "pdf", "print",
-								"colvis" ]
-					}).buttons().container().appendTo(
-					'#example1_wrapper .col-md-6:eq(0)');
-			$('#example2').DataTable({
+			
+			let myTable = $('#example2').DataTable({
 				"paging" : true,
 				"lengthChange" : false,
 				"searching" : false,
@@ -372,8 +385,89 @@ pageContext.setAttribute("catlist", catlist);
 				"info" : true,
 				"autoWidth" : false,
 				"responsive" : true,
+				"ajax" : {
+					"url" : "${pageContext.request.contextPath}/ipet-back/service/allService",
+					"type" : "POST",
+	    	        "data" : function(){
+	    	        	const formData = new FormData(document.getElementById("searchForm"));
+	    	        	return formData;
+	    	        },
+	    	        "dataSrc": "",
+	    	        "cache": false,
+	    	        "processData": false,
+	    	        "contentType": false,
+				},
+				"columns" : [
+		            { data: "svcId", responsivePriority: 1, className: "svcId" },
+		            { data: "svcName", responsivePriority: 2, className: "svcName" },
+		            { data: "catName", responsivePriority: 6, className: "catName" },
+		            { data: "typeName", responsivePriority: 3, className: "typeName" },
+		            { data: "svcPrice", responsivePriority: 4, className: "svcPrice" },
+		            { data: "svcStatusName", responsivePriority: 7, className: "svcStatusName" },
+		            { data: null,
+		            	defaultContent: `<i class="nav-icon fas fa-solid fa-pen"></i>`,
+		            	responsivePriority: 5,
+		            },
+		            { data: null,
+		            	defaultContent: `<i class="nav-icon fas fa-solid fa-trash"></i>`,
+		            	responsivePriority: 8,
+		            }
+		        ],
+				language: {
+			           "sProcessing": "查詢中...",
+			           "sLengthMenu": "顯示 _MENU_ 項服務",
+			           "sZeroRecords": "查無資料",
+			           "sInfo": "顯示第 _START_ 到 _END_ 項服務，共 _TOTAL_ 項",
+			           "sInfoEmpty": "顯示 0 到 0 項服務，共 0 項",
+			           "sInfoPostFix": "",
+			           "sUrl": "",
+			           "sEmptyTable": "尚未新增服務",
+			           "sLoadingRecords": "載入中...",
+			           "sInfoThousands": ",",
+			           "oPaginate": {
+			               "sFirst": "第一頁",
+			               "sPrevious": "上一頁",
+			               "sNext": "下一頁",
+			               "sLast": "最後一頁"
+			           },
+			     }
 			});
-
+			
+			$(document).on("submit", "#searchForm", function (e){
+		      	 e.preventDefault();
+		    	 myTable.ajax.reload();
+		    });
+			
+			let svcList = `
+				<c:forEach var="svcVO" items="${svclist}">
+				<tr>
+					<td>${svcVO.svcId}</td>
+					<td>${svcVO.svcName}</td>
+					<td>${svcVO.categoryVO.catName}</td>
+					<td>${svcVO.petTypeVO.typeName}</td>
+					<td>${svcVO.svcPrice}</td>
+					<c:if test="${svcVO.svcStatus == 1}" var="true">
+						<td>未上架</td>
+					</c:if>
+					<c:if test="${svcVO.svcStatus == 0}" var="true">
+						<td>上架中</td>
+					</c:if>
+					<td>
+						<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService" style="margin-bottom: 0px;">
+							<input type="submit" value="修改">
+							<input type="hidden" name="svcId" value="${svcVO.svcId}">														
+						</form>
+					</td>
+					<td>
+						<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService" style="margin-bottom: 0px;">
+							<input type="submit" value="刪除">
+							<input type="hidden" name="svcId" value="${svcVO.svcId}">														
+						</form>
+					</td>
+				</tr>
+			</c:forEach>			
+			`;
+			
 			/*===================== 彈出視窗 ==========================*/
 			const mainModal = document.getElementById("mainModal");
 
@@ -426,16 +520,43 @@ pageContext.setAttribute("catlist", catlist);
 			});
 
 			/*===================== 再次點選 radio 取消選取 ==========================*/
-			$("input:radio").click(function(){
-	            const radio = $(this);
-	            if (radio.data('checked')){
-	              radio.prop('checked', false);
-	              radio.data('checked', false);
-	            } else {
-	              radio.prop('checked', true);
-	              radio.data('checked', true);
-	            }
-	});
+			const $radios = $('input[type="radio"]');
+
+			$('input[type="radio"]').click(function(){
+			    const $this = $(this);
+			
+			    if ($this.data('checked')) {
+			        this.checked = false;
+			    }
+			    const $otherRadios = $radios.not($this).filter('[name="' + $this.attr('name') + '"]');
+			    $otherRadios.prop('checked', false).data('checked', false);
+			    $this.data('checked', this.checked);
+			})
+			
+			$("#svc-Status1").click(function(){
+				if($(this).data("checked")){
+					$("#mybtnlabel-left").addClass("labelOn");
+					$("#mybtnlabel-right").removeClass("labelOn");
+				}else{
+					$("#mybtnlabel-left").removeClass("labelOn");
+				}
+			});
+			
+			$("#svc-Status2").click(function(){
+				if($(this).data("checked")){
+					$("#mybtnlabel-right").addClass("labelOn");
+					$("#mybtnlabel-left").removeClass("labelOn");
+				}else{
+					$("#mybtnlabel-right").removeClass("labelOn");
+				}
+			});
+			
+			/*===================== 清空查詢 ==========================*/
+			$(".clear").click(function(){
+				$("#mybtnlabel-left").removeClass("labelOn");
+				$("#mybtnlabel-right").removeClass("labelOn");
+			});
+			
 		});
 	</script>
 </body>

@@ -28,7 +28,7 @@
 		border: 2px solid #6c757d;
 	}
 	
-	/* ================== ªA°È¹Ï¤ùstart ==================*/
+	/* ================== æœå‹™åœ–ç‰‡start ==================*/
 		.svc_picture_label {
 		border: 1px solid #f5f5f5;
 		width: 100px;
@@ -56,13 +56,13 @@
 		height: 100px;
 	}
 	
-	/* ================== Ãdª«Åé«¬ ==================*/
+	/* ================== å¯µç‰©é«”å‹ ==================*/
 	#pet-size {
 		border-radius: 0.25rem 0.25rem 0 0;
 		background-color: #f5f7f9;
 	}
 	
-	/* ================== Ãdª««~ºØ ¤÷¤¸¯À ==================*/
+	/* ================== å¯µç‰©å“ç¨® çˆ¶å…ƒç´  ==================*/
 	div.choose-type-price {
 		border-bottom: 1px solid #ced4da;
 		border-left: 1px solid #ced4da;
@@ -75,7 +75,7 @@
 		border-radius: 0 0 0.25rem 0.25rem;
 	}
 	
-	/* ================== «~ºØ¿ï¶µ ==================*/
+	/* ================== å“ç¨®é¸é … ==================*/
 	div.pet-type {
 		display: inline-block;
 		margin-left: 0.75rem;
@@ -95,7 +95,7 @@
 		left: 0.25rem;
 	}
 	
-	/* ================== °e¥X»ù®æ°Ï ==================*/
+	/* ================== é€å‡ºåƒ¹æ ¼å€ ==================*/
 	div.add-service {
 		padding: 0.375rem 1.75rem 0.375rem 0.75rem;
 		border-top: none;
@@ -150,7 +150,7 @@
 		right: 1px;
 	}
 	
-	/* ============= ­×§ï»ù®æ ========= */
+	/* ============= ä¿®æ”¹åƒ¹æ ¼ ========= */
 	.button-style.short {
 		width: 60px;
 		background-color: #007bff;
@@ -193,7 +193,7 @@
 		box-shadow: none;
 	}
 	
-	/* ================== table°Ï ==================*/
+	/* ================== tableå€ ==================*/
 	.view-type-price {
 		width: 100%- 38px;
 		margin: 19px;
@@ -284,18 +284,18 @@
 	display: none !important;
 }
 
-	/* ================== ¿ïÃdª«¤÷¤¸¯À ==================*/
+	/* ================== é¸å¯µç‰©çˆ¶å…ƒç´  ==================*/
 	#choose-pet-father {
 		background-color: white;
 	}
 	
-	/* ================== Ãdª«Åé«¬ ==================*/
+	/* ================== å¯µç‰©é«”å‹ ==================*/
 	#pet-size {
 		border-radius: 0.25rem 0.25rem 0 0;
 		background-color: #f3f5f6;
 	}
 	
-	/* ================== Ãdª««~ºØ ¤÷¤¸¯À ==================*/
+	/* ================== å¯µç‰©å“ç¨® çˆ¶å…ƒç´  ==================*/
 	div.choose-type-price {
 		border-bottom: 1px solid #ced4da;
 		border-left: 1px solid #ced4da;
@@ -308,7 +308,7 @@
 		border-radius: 0 0 0.25rem 0.25rem;
 	}
 	
-	/* ================== «~ºØ¿ï¶µ ==================*/
+	/* ================== å“ç¨®é¸é … ==================*/
 	div.pet-type {
 		display: inline-block;
 		margin-left: 0.75rem;
@@ -328,7 +328,7 @@
 		left: 0.25rem;
 	}
 	
-	/* ================== summernote°Ï ==================*/
+	/* ================== summernoteå€ ==================*/
 	.note-codable, .card-block {
 		min-height: 170px;
 		padding: 20px !important;
@@ -351,7 +351,7 @@
 		display: none;
 	}
 	
-	/* ================== ·s¼WªA°È «ö¶s ==================*/
+	/* ================== æ–°å¢æœå‹™ æŒ‰éˆ• ==================*/
 	#before-submit {
 		height: 100px;
 	}
@@ -371,8 +371,8 @@
 		transform: scale(0.995);
 	}
 	
-	/* ============ ¼u¥Xµøµ¡-Loading =============*/
-	/* ¼u¥Xµøµ¡¥X²{®Éªº·t¦â­I´º */
+	/* ============ å½ˆå‡ºè¦–çª—-Loading =============*/
+	/* å½ˆå‡ºè¦–çª—å‡ºç¾æ™‚çš„æš—è‰²èƒŒæ™¯ */
 	#mainModal {
  		display: none; 
 		position: fixed;
@@ -386,15 +386,6 @@
 		box-sizing: border-box;
 	}
 	
-	/* ¼u¥Xµøµ¡¥»¤H
-	.main-modal-content {
-		background-color: #fafafa;
-		margin: 15% auto;
-		border: 1px solid #888;
-		width: 500px;
-		border-radius: 0.5rem;
-	} */
-	
 	.d-flex.align-items-center {
 		margin: 20% auto;
 		width: 180px;
@@ -405,4 +396,25 @@
 		font-size: 16px
 	}
 	
+	/* ============ å½ˆå‡ºè¦–çª—-å„ªæƒ é¸æ“‡æœå‹™ =============*/
+	#addSaleBox {
+ 		display: none; 
+		position: fixed;
+		z-index: 9998;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+		box-sizing: border-box;
+	}
 	
+	/* 	 å½ˆå‡ºè¦–çª—æœ¬äºº */
+	.main-modal-content {
+		background-color: #fafafa;
+		margin: 15% auto;
+		border: 1px solid #888;
+		width: 500px;
+		border-radius: 0.5rem;
+	}
