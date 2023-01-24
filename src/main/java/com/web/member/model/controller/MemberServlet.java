@@ -81,7 +81,6 @@ public class MemberServlet extends HttpServlet {
 		if ("/ipet-back/member/login".equals(path)) {
 			String memAc = req.getParameter("memAc");
 			String memPw = req.getParameter("memPw");
-			System.out.println("1==================");
 			if(
 				(memAc == null || memAc.isEmpty()) ||
 				(memPw == null || memPw.isEmpty())
@@ -90,24 +89,21 @@ public class MemberServlet extends HttpServlet {
 				String url = "/templates/frontstage/member/login.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				System.out.println("2==================");
 			}
 			MemberService memberSvc = new MemberService();
 			Member member = memberSvc.login(memAc,memPw);
 			System.out.println(member);
 			if (member == null) {
-				req.setAttribute("wrong", "帳號或密碼錯");
+				req.setAttribute("wrong", "帳號或密碼有誤");
 				String url = "/templates/frontstage/member/login.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				System.out.println("3==================");
 			}
 			HttpSession session = req.getSession();
 			session.setAttribute("member", member);
 			String url = "/templates/frontstage/index.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
-			System.out.println("4==================");
 		}
 		
 	}

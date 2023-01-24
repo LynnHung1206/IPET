@@ -41,10 +41,10 @@ Member memberVO = (Member) request.getAttribute("memberVO");
 	margin: auto;
 }
 </style>
-<script>
-	function enter() {
-		alert("新增成功");
-	}
+<!-- <script> -->
+// 	function enter() {
+// 		alert("新增成功");
+// 	}
 </script>
 <style type="text/css">
 input#allMember {
@@ -96,13 +96,18 @@ input#allMember, #search:hover {
 			</div>
 		</div>
 	</div>
-	<div class="login-register-area pt-95 pb-100">
+<div class="login-register-area pt-95 pb-100">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 col-md-12 ml-auto mr-auto">
 					<div class="login-register-wrapper">
+					
 						<div class="login-register-tab-list nav">
-							<h4>會員註冊</h4>
+							<a class="active" href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">
+								<h4>會員登入</h4>
+							</a> <a href="${pageContext.request.contextPath}/templates/frontstage/member/register.jsp">
+								<h4>會員註冊</h4>
+							</a>
 						</div>
 						<!-- 中間頁面 Content Wrapper. Contains page content -->
 						<%-- 錯誤表列 --%>
@@ -192,7 +197,7 @@ input#allMember, #search:hover {
 												</tr>
 											</table>
 										</form>
-										<div style="text-align:center; margin-top: 20px"><a href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">已有帳號? 會員登入</a></div>
+<%-- 										<div style="text-align:center; margin-top: 20px"><a href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">已有帳號? 會員登入</a></div> --%>
 									</div>
 									<div class="row mb-2">
 										<script>

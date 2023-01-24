@@ -76,9 +76,9 @@
 					<div class="login-register-wrapper">
 					
 						<div class="login-register-tab-list nav">
-							<a class="active" data-toggle="tab" href="#lg1">
+							<a class="active" href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">
 								<h4>會員登入</h4>
-							</a> <a data-toggle="tab" href="#lg2">
+							</a> <a href="${pageContext.request.contextPath}/templates/frontstage/member/register.jsp">
 								<h4>會員註冊</h4>
 							</a>
 						</div>
@@ -86,7 +86,7 @@
 							<div id="lg1" class="tab-pane active">
 								<div class="login-form-container">
 									<div class="login-register-form">
-									<h1 style="color: red;">${wrong}</h1>
+									<h1 style="color: red;font-size: 20px;">${wrong}</h1>
 									<form method="post" action="${pageContext.request.contextPath}/ipet-back/member/login">
 										<div>
 											<input type="text" class="form-control" placeholder="帳號"
