@@ -38,7 +38,7 @@ public class MemberServlet extends HttpServlet {
 		}
 
 		if ("/ipet-back/member/addNew".equals(path)) {
-			req.getRequestDispatcher("/templates/backstage/member/register.jsp").forward(req, res);
+			req.getRequestDispatcher("/templates/frontstage/member/register.jsp").forward(req, res);
 		}
 		
 		if ("/ipet-back/member/toLogin".equals(path)) {
@@ -52,7 +52,6 @@ public class MemberServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("fdkofkosfkewofjdwao");
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		String path = req.getServletPath();
@@ -145,7 +144,7 @@ public class MemberServlet extends HttpServlet {
 		MemberService memberSvc = new MemberService();
 		memberSvc.updateMember(member);
 //			轉交
-		String url = "/templates/backstage/member/memberList.jsp";
+		String url = "/templates/frontstage/member/memberList.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 	}
@@ -163,6 +162,7 @@ public class MemberServlet extends HttpServlet {
 		String memAdd = req.getParameter("memAdd");
 		String memAc = req.getParameter("memAc");
 		String memPw = req.getParameter("memPw");
+		String memPw2 = req.getParameter("memPw2"); //========================================
 
 		List<String> errorMsgs = getErrorMsgs(memName, memUid, memBthStr, memSex, memEmail, memPhone, memTel, memAdd, memAc, memPw);
 
@@ -179,10 +179,11 @@ public class MemberServlet extends HttpServlet {
 		member.setMemAdd(memAdd);
 		member.setMemAc(memAc);
 		member.setMemPw(memPw);
-		if (!errorMsgs.isEmpty()) {
+		if (!errorMsgs.isEmpty() || memPw != memPw2) {
 
+			req.setAttribute("wrong", "密碼與確認密碼不符不符"); // 錯誤訊息
 			req.setAttribute("member", member); // 含有輸入格式錯誤的empVO物件,也存入req
-			RequestDispatcher failureView = req.getRequestDispatcher("/templates/backstage/member/register.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/templates/frontstage/member/register.jsp");
 			failureView.forward(req, res);
 			return;
 		}

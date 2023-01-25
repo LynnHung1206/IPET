@@ -54,7 +54,7 @@
 
 <body>
 	<%@include file="/templates/frontstage/common/header.jsp"%>
-	<a id=msg style="z-index: 999" href="customer-service.html"><img
+	<a id=msg style="z-index: 999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img
 		alt=""
 		src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"

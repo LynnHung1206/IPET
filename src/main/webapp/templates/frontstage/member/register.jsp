@@ -5,7 +5,7 @@
 <%@ page import="com.web.member.model.entity.*"%>
 
 <%
-Member memberVO = (Member) request.getAttribute("memberVO");
+Member member = (Member) request.getAttribute("member");
 %>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -40,13 +40,11 @@ Member memberVO = (Member) request.getAttribute("memberVO");
 #memberdata {
 	margin: auto;
 }
+
 </style>
-<!-- <script> -->
-// 	function enter() {
-// 		alert("新增成功");
-// 	}
-</script>
+
 <style type="text/css">
+
 input#allMember {
 	background-color: lightgray;
 	border: none;
@@ -81,7 +79,7 @@ input#allMember, #search:hover {
 
 <body>
 	<%@include file="/templates/frontstage/common/header.jsp"%>
-	<a id=msg style="z-index: 999" href="customer-service.html"><img
+	<a id=msg style="z-index: 999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img
 		alt=""
 		src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
@@ -101,7 +99,6 @@ input#allMember, #search:hover {
 			<div class="row">
 				<div class="col-lg-7 col-md-12 ml-auto mr-auto">
 					<div class="login-register-wrapper">
-					
 						<div class="login-register-tab-list nav">
 							<a class="active" href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">
 								<h4>會員登入</h4>
@@ -124,15 +121,15 @@ input#allMember, #search:hover {
 							<!-- Content Header (Page header) -->
 							<section class="content-header">
 								<div class="container-fluid">
-									<!-- 新增員工資料 -->
 									<div id="newMember">
+									
 										<form
 											action="${pageContext.request.contextPath}/ipet-back/member/getAllList"
 											method="post">
 											<table id="memberdata">
 												<tr>
 													<td><label>姓名:</label></td>
-													<td><input type="text" name="memName"
+													<td><input type="text" name="memName" value="<%= (member==null)? "" : member.getMemName()%>"
 														pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" autofocus
 														required></td>
 												</tr>
@@ -143,41 +140,41 @@ input#allMember, #search:hover {
 												</tr>
 												<tr>
 													<td><label>身分證字號:</label></td>
-													<td><input type="text" name="memUid" required></td>
+													<td><input type="text" name="memUid" value="<%= (member==null)? "" : member.getMemUid()%>" pattern="[/^[A-Z]\d{9}$/]" required></td>
 												</tr>
 												<tr>
 													<td><label>生日:</label></td>
-													<td><input type="date" name="memBth" required></td>
+													<td><input type="date" name="memBth" value="<%= (member==null)? "" : member.getMemBth()%>" required></td>
 												</tr>
 												<tr>
 													<td><label>性別:</label></td>
-													<td><select name="memSex">
+													<td><select name="memSex" style="height: 45px; background-color: #ECEFF8;text-indent: 1em;">
 															<option value="男"
-																${(memberVO.memSex=="男")? 'selected':'' }>男
+																${(member.memSex=="男")? 'selected':'' }>男
 															<option value="女"
-																${(memberVO.memSex=="女")? 'selected':'' }>女
+																${(member.memSex=="女")? 'selected':'' }>女
 													</select></td>
 												</tr>
 												<tr>
 													<td><label>Email:</label></td>
-													<td><input type="email" name="memEmail" required></td>
+													<td><input type="email" name="memEmail" value="<%= (member==null)? "" : member.getMemEmail()%>" pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" required></td>
 												</tr>
 												<tr>
 													<td><label>手機:</label></td>
-													<td><input type="tel" name="memPhone" required></td>
+													<td><input type="tel" name="memPhone" pattern="[/^09[0-9]{8}$/]" value="<%= (member==null)? "" : member.getMemPhone()%>" required></td>
 												</tr>
 												<tr>
 													<td><label>市內電話:</label></td>
-													<td><input type="tel" name="memTel" required></td>
+													<td><input type="tel" name="memTel" pattern="[/^0[0-9]{8}$/]" value="<%= (member==null)? "" : member.getMemTel()%>" required></td>
 												</tr>
 												<tr>
 													<td><label>地址:</label></td>
-													<td><input type="text" name="memAdd" required></td>
+													<td><input type="text" name="memAdd" value="<%= (member==null)? "" : member.getMemAdd()%>" required></td>
 												</tr>
 												<tr>
 													<td><label>帳號:</label></td>
 													<td><input type="text" name="memAc"
-														pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" required></td>
+														pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" value="<%= (member==null)? "" : member.getMemAc()%>" required></td>
 												</tr>
 												<tr>
 													<td></td>
@@ -187,7 +184,16 @@ input#allMember, #search:hover {
 
 												<tr>
 													<td><label>密碼:</label></td>
-													<td><input type="password" name="memPw" required></td>
+													<td><input type="password" name="memPw"  required></td>
+												</tr>
+												
+												<tr>
+													<td><label>確認密碼:</label></td>
+													<td><input type="password" name="memPw2" required></td>
+												</tr>
+												<tr>
+													<td><label></label></td>
+													<td><h1 style="color: red;font-size: 10px;">${wrong}</h1></td>
 												</tr>
 
 												<tr>
@@ -197,13 +203,12 @@ input#allMember, #search:hover {
 												</tr>
 											</table>
 										</form>
-<%-- 										<div style="text-align:center; margin-top: 20px"><a href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">已有帳號? 會員登入</a></div> --%>
 									</div>
 									<div class="row mb-2">
 										<script>
 											const dateControl = document
 													.querySelector('input[type="date"]');
-											dateControl.value = '1980-01-01';
+											dateControl.value = '1990-01-01';
 										</script>
 									</div>
 								</div>
