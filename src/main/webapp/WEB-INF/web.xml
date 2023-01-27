@@ -8,6 +8,15 @@
 		<welcome-file>index.html</welcome-file>
 
 	</welcome-file-list>
+	
+		<servlet>
+		<servlet-name>NameServlet</servlet-name>
+		<servlet-class>com.web.chat.controller.NameServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NameServlet</servlet-name>
+		<url-pattern>/chat.do</url-pattern>
+	</servlet-mapping>
 
 	<error-page>
 		<error-code>404</error-code>
