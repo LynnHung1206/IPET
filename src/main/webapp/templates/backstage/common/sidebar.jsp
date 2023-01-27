@@ -460,9 +460,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/templates/backstage/customerservice/index.jsp" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>線上客服(施工中)</p>
+                <p>線上客服</p>
               </a>
             </li>
           </ul>

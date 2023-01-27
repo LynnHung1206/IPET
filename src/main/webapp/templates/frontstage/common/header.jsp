@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -106,12 +107,16 @@
 									style="width: 200px; padding-top: 30px;">
 									<ul>
 										<c:if test="${!empty member}">
-											<li><a href="<c:url value='/member/myAccount' />">會員中心</a></li>
-											<li><a href="<c:url value='/member/logout' />">登出</a></li>
+											<li><a href="<c:url value='/templates/backstage/member/memberList.jsp' />">會員資料修改</a></li>
+											<li><a href="<c:url value='/templates/backstage/pet/petList.jsp' />">寵物資料管理</a></li>
+											<li><a href="<c:url value='#' />">商城訂單查詢</a></li>
+											<li><a href="<c:url value='#' />">美容預約查詢</a></li>
+											<li><a href="<c:url value='#' />">住宿預約查詢</a></li>
+											<li><a href="<c:url value='#' />">會員登出</a></li>
 										</c:if>
 										<c:if test="${empty member}">
-											<li><a href="<c:url value='/member/login' />">登入</a></li>
-											<li><a href="<c:url value='/member/register' />">註冊</a></li>
+											<li><a href="<c:url value='/ipet-back/member/toLogin' />">會員登入</a></li>
+											<li><a href="<c:url value='/templates/frontstage/member/register.jsp' />">會員註冊</a></li>
 										</c:if>
 									</ul>
 								</div>

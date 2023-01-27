@@ -41,7 +41,7 @@
 </head>
 <body>
 <%@include file="/templates/frontstage/common/header.jsp"%>
-    <a id=msg style="z-index:999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
+    <a id=msg style="z-index:999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/index.jsp"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
     <div class="slider-area">
         <div class="slider-active owl-dot-style owl-carousel">
             <div class="single-slider pt-100 pb-100 yellow-bg">

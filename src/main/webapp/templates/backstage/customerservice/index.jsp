@@ -68,7 +68,7 @@ html, body {
 		<form id="myForm" action="<%=request.getContextPath()%>/chat.do"
 			method="POST">
 			<input id="userName" name="userName" class="text-field" type="text"
-				readonly="readonly" value="訪客" /> <input type="submit" id="send"
+				readonly="readonly" value="客服人員" /> <input type="submit" id="send"
 				class="button" value="進入" />
 		</form>
 	</div>

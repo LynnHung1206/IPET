@@ -44,6 +44,9 @@ public class MemberServlet extends HttpServlet {
 		if ("/ipet-back/member/toLogin".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
 		}
+//		if ("/ipet-back/member/toEdit".equals(path)) {
+//			req.getRequestDispatcher("/templates/frontstage/member/update.jsp").forward(req, res);
+//		}
 
 		if ("/ipet-back/member/getAllList".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/member/memberList.jsp").forward(req, res);
@@ -104,6 +107,18 @@ public class MemberServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
+//		if ("/ipet-back/member/toEdit".equals(path)) {
+//			Integer memId = Integer.valueOf(req.getParameter("memId"));
+//			MemberService memberSvc = new MemberService();
+//
+//			Member member = memberSvc.getMember(memId);
+//			
+//			req.setAttribute("member", member);
+//			
+//			String url = "/templates/backstage/member/update.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
+//		}
 		
 	}
 	
@@ -144,7 +159,7 @@ public class MemberServlet extends HttpServlet {
 		MemberService memberSvc = new MemberService();
 		memberSvc.updateMember(member);
 //			轉交
-		String url = "/templates/frontstage/member/memberList.jsp";
+		String url = "/templates/backstage/member/memberList.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 	}
