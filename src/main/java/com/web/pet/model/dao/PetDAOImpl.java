@@ -50,4 +50,12 @@ public class PetDAOImpl implements PetDAO {
 		return  session.createQuery(hql,Pet.class)
 				.setParameter("petSize",petSize).list();
 	}
+
+	@Override
+	public List<Pet> getByMemId(int memId) {
+		Session session = getSession();
+		String hql = "FROM Pet WHERE memId = :memId"; 
+		return session.createQuery(hql,Pet.class)
+				.setParameter("memId",memId).list();
+	}
 }

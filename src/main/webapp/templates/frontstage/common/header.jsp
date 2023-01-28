@@ -107,8 +107,8 @@
 									style="width: 200px; padding-top: 30px;">
 									<ul>
 										<c:if test="${!empty member}">
-											<li><a href="<c:url value='/templates/backstage/member/memberList.jsp' />">會員資料修改</a></li>
-											<li><a href="<c:url value='/templates/backstage/pet/petList.jsp' />">寵物資料管理</a></li>
+											<li><a href="<c:url value='/ipet-back/member/edit' />">會員資料修改</a></li>
+											<li><a href="<c:url value='/ipet-back/member/listPet' />">寵物資料管理</a></li>
 											<li><a href="<c:url value='#' />">商城訂單查詢</a></li>
 											<li><a href="<c:url value='#' />">美容預約查詢</a></li>
 											<li><a href="<c:url value='#' />">住宿預約查詢</a></li>

@@ -5,7 +5,7 @@
 <%@ page import="com.web.member.model.entity.*"%>
 
 <%
-Member member = (Member) request.getAttribute("member");
+Member member = (Member) session.getAttribute("member");
 %>
 
 <!DOCTYPE html>
@@ -74,7 +74,7 @@ Member member = (Member) request.getAttribute("member");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/member/edit" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-back/member/toEdit" method="post">
 						
 							<table id="memberdata">
 								<tr>

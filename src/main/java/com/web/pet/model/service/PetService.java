@@ -30,6 +30,10 @@ public class PetService {
 		Pet petVO = dao.getById(petId);
 		return petVO;
 	}
+	public List<Pet> getPetByMemId(int memId) {
+		List<Pet> petList = dao.getByMemId(memId);
+		return petList;
+	}
 	
 	public List<Pet> getAll() {
 		return dao.getAll();

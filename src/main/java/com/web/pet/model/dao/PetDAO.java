@@ -9,4 +9,5 @@ public interface PetDAO extends CoreDAO<Pet,Integer> {
 
 	public Pet update(Pet Pet);
 	public List<Pet> getAll();
+	public List<Pet> getByMemId(int memId);
 }

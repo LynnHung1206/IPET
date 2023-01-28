@@ -59,7 +59,7 @@ public class PetServlet extends HttpServlet {
 //			req.setAttribute("member", member);
 			req.setAttribute("pet", pet);
 			
-			String url = "/templates/backstage/pet/update.jsp";
+			String url = "/templates/frontstage/member/petUpdate.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -70,6 +70,7 @@ public class PetServlet extends HttpServlet {
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("update");
 		String memIdStr = req.getParameter("memId");
 		String petName = req.getParameter("petName");
 		String petVarId = req.getParameter("petVarId");
@@ -78,7 +79,7 @@ public class PetServlet extends HttpServlet {
 		String petBirthStr = req.getParameter("petBirth");
 		String petStatusStr = req.getParameter("petStatus");
 		String petIdStr = req.getParameter("petId");
-		System.out.println(petBirthStr);
+		System.out.println(memIdStr+petBirthStr+petGen);
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
 		Integer petStatus = Integer.valueOf(petStatusStr);
 		Integer petId = Integer.valueOf(petIdStr.toString().trim());
@@ -93,21 +94,15 @@ public class PetServlet extends HttpServlet {
 		pet.setPetGen(petGen);
 		pet.setPetBirth(petBirth);
 		pet.setPetStatus(petStatus);
-
+		System.out.println(petVarId);
 		PetService petSvc = new PetService();
 		petSvc.updatePet(pet);
 		
-//		Member member = new Member();
-//		member.setPetId(petId);
-//		member.setAdminID(adminid);
-//		MemberService memberSvc = new MemberService();
-//		adminSvc.update(admin);
-//		System.out.println("admin.getAdminID:"+admin.getAdminID());
-//		System.out.println("admin.getStaffID:"+admin.getStaffID());
 //			轉交
-		String url = "/templates/backstage/pet/petList.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url);
-		successView.forward(req, res);
+		String url = "/ipet-back/member/listPet";
+		res.sendRedirect(req.getContextPath() + url);
+		//		RequestDispatcher successView = req.(url);
+		//successView.forward(req, res);
 	}
 
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -119,7 +114,6 @@ public class PetServlet extends HttpServlet {
 		String petGen = req.getParameter("petGen");
 		String petBirthStr = req.getParameter("petBirth");
 		String petStatusStr = req.getParameter("petStatus");
-		System.out.println(petStatusStr);
 		List<String> errorMsgs = getErrorMsgs(memIdStr, petName, petVarId, petSize, petGen, petBirthStr);
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
 		Integer memId = Integer.valueOf(memIdStr);

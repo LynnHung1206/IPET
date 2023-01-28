@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +17,14 @@ import javax.servlet.http.HttpSession;
 
 import com.web.member.model.entity.Member;
 import com.web.member.model.service.MemberService;
+import com.web.pet.model.entity.Pet;
+import com.web.pet.model.service.PetService;
 
 
 
 
-@WebServlet({ "/ipet-back/member/allMemberList", "/ipet-back/member/edit", "/ipet-back/member/addNew",
-		"/ipet-back/member/getAllList","/ipet-back/member/login","/ipet-back/member/toLogin" })
+@WebServlet({ "/ipet-back/member/allMemberList", "/ipet-back/member/edit", "/ipet-back/member/addNew","/ipet-back/member/listPet",
+		"/ipet-back/member/getAllList","/ipet-back/member/login","/ipet-back/member/toLogin" , "/ipet-back/member/toEdit"})
 public class MemberServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -30,6 +33,7 @@ public class MemberServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String path = req.getServletPath();
+		System.out.println(path);
 		if ("/ipet-back/member/allMemberList".equals(path)) {
 			MemberService memberSvc = new MemberService();
 			List<Member> list = memberSvc.getAll();
@@ -44,9 +48,20 @@ public class MemberServlet extends HttpServlet {
 		if ("/ipet-back/member/toLogin".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
 		}
-//		if ("/ipet-back/member/toEdit".equals(path)) {
-//			req.getRequestDispatcher("/templates/frontstage/member/update.jsp").forward(req, res);
-//		}
+		if ("/ipet-back/member/edit".equals(path)) {
+			req.getRequestDispatcher("/templates/frontstage/member/update.jsp").forward(req, res);
+		}
+		if ("/ipet-back/member/toEdit".equals(path)) {
+			req.getRequestDispatcher("/templates/frontstage/index.jsp").forward(req, res);
+		}
+		if ("/ipet-back/member/listPet".equals(path)) {
+			PetService petSvc = new PetService();
+			HttpSession session = req.getSession();
+			Member member = (Member) session.getAttribute("member");
+			List<Pet> petList =  petSvc.getPetByMemId(member.getMemId());
+			req.setAttribute("petList",petList );
+			req.getRequestDispatcher("/templates/frontstage/member/petList.jsp").forward(req, res);
+		}
 
 		if ("/ipet-back/member/getAllList".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/member/memberList.jsp").forward(req, res);
@@ -65,6 +80,9 @@ public class MemberServlet extends HttpServlet {
 		
 		if ("update".equals(action)) {
 			update(req, res);
+		}
+		if ("updatefront".equals(action)) {
+			updatefront(req, res);
 		}
 		
 		if ("updateTemp".equals(action)) {
@@ -107,18 +125,6 @@ public class MemberServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-//		if ("/ipet-back/member/toEdit".equals(path)) {
-//			Integer memId = Integer.valueOf(req.getParameter("memId"));
-//			MemberService memberSvc = new MemberService();
-//
-//			Member member = memberSvc.getMember(memId);
-//			
-//			req.setAttribute("member", member);
-//			
-//			String url = "/templates/backstage/member/update.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url);
-//			successView.forward(req, res);
-//		}
 		
 	}
 	
@@ -160,6 +166,47 @@ public class MemberServlet extends HttpServlet {
 		memberSvc.updateMember(member);
 //			轉交
 		String url = "/templates/backstage/member/memberList.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url);
+		successView.forward(req, res);
+	}
+//=================================================update=======================================================
+	
+	private void updatefront(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String memName = req.getParameter("memName");
+		String memUid = req.getParameter("memUid");
+		String memBthStr = req.getParameter("memBth");
+		String memSex = req.getParameter("memSex");
+		String memEmail = req.getParameter("memEmail");
+		String memPhone = req.getParameter("memPhone");
+		String memTel = req.getParameter("memTel");
+		String memAdd = req.getParameter("memAdd");
+		String memAc = req.getParameter("memAc");
+		String memPw = req.getParameter("memPw");
+		String memStatusStr = req.getParameter("memStatus");
+		String memIdStr = req.getParameter("memId");
+		java.sql.Date memBth = Date.valueOf(memBthStr);
+		
+		Integer memStatus = Integer.valueOf(memStatusStr);
+		Integer memId = Integer.valueOf(memIdStr.toString().trim());
+		
+		Member member = new Member();
+		member.setMemId(memId);
+		member.setMemName(memName);
+		member.setMemUid(memUid);
+		member.setMemBth(memBth);
+		member.setMemSex(memSex);
+		member.setMemEmail(memEmail);
+		member.setMemPhone(memPhone);
+		member.setMemTel(memTel);
+		member.setMemAdd(memAdd);
+		member.setMemAc(memAc);
+		member.setMemPw(memPw);
+		member.setMemStatus(memStatus);
+		
+		MemberService memberSvc = new MemberService();
+		memberSvc.updateMember(member);
+//			轉交
+		String url = "/templates/frontstage/index.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, res);
 	}
