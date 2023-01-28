@@ -32,7 +32,7 @@ public class PetServlet extends HttpServlet {
 			req.getRequestDispatcher("/templates/backstage/pet/petList.jsp").forward(req, res);
 		}
 		if ("/ipet-back/pet/addNew".equals(path)) {
-			req.getRequestDispatcher("/templates/backstage/pet/register.jsp").forward(req, res);
+			req.getRequestDispatcher("/templates/frontstage/member/petAddNew.jsp").forward(req, res);
 		}
 		if("/ipet-back/pet/getAllList".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/pet/petList.jsp").forward(req, res);
@@ -70,7 +70,6 @@ public class PetServlet extends HttpServlet {
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("update");
 		String memIdStr = req.getParameter("memId");
 		String petName = req.getParameter("petName");
 		String petVarId = req.getParameter("petVarId");
@@ -79,7 +78,6 @@ public class PetServlet extends HttpServlet {
 		String petBirthStr = req.getParameter("petBirth");
 		String petStatusStr = req.getParameter("petStatus");
 		String petIdStr = req.getParameter("petId");
-		System.out.println(memIdStr+petBirthStr+petGen);
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
 		Integer petStatus = Integer.valueOf(petStatusStr);
 		Integer petId = Integer.valueOf(petIdStr.toString().trim());
@@ -94,7 +92,6 @@ public class PetServlet extends HttpServlet {
 		pet.setPetGen(petGen);
 		pet.setPetBirth(petBirth);
 		pet.setPetStatus(petStatus);
-		System.out.println(petVarId);
 		PetService petSvc = new PetService();
 		petSvc.updatePet(pet);
 		
@@ -106,21 +103,18 @@ public class PetServlet extends HttpServlet {
 	}
 
 	private void insert(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		System.out.println("有進來");
-		String memIdStr = req.getParameter("memId");
 		String petName = req.getParameter("petName");
 		String petVarId = req.getParameter("petVarId");
 		String petSize = req.getParameter("petSize");
 		String petGen = req.getParameter("petGen");
 		String petBirthStr = req.getParameter("petBirth");
 		String petStatusStr = req.getParameter("petStatus");
-		List<String> errorMsgs = getErrorMsgs(memIdStr, petName, petVarId, petSize, petGen, petBirthStr);
+		List<String> errorMsgs = getErrorMsgs( petName, petVarId, petSize, petGen, petBirthStr);
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
-		Integer memId = Integer.valueOf(memIdStr);
 		Integer petStatus = Integer.valueOf(petStatusStr);
 
 		Pet pet = new Pet();
-		pet.setMemId(memId);
+		pet.setMemId(((Member)req.getSession().getAttribute("member")).getMemId());
 		pet.setPetName(petName);
 		pet.setPetVarId(petVarId);
 		pet.setPetSize(petSize);
@@ -130,7 +124,7 @@ public class PetServlet extends HttpServlet {
 
 		if (!errorMsgs.isEmpty()) {
 			req.setAttribute("pet", pet); // 含有輸入格式錯誤的empVO物件,也存入req
-			RequestDispatcher failureView = req.getRequestDispatcher("/templates/backstage/pet/register.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/templates/frontstage/member/petAddNew.jsp");
 			failureView.forward(req, res);
 			return;
 		}
@@ -143,12 +137,14 @@ public class PetServlet extends HttpServlet {
 //		Member member = memberSvc.addPetOnMember(memberInt, staffid);
 		
 //			轉交
-		String url = "/templates/backstage/pet/petList.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url);
-		successView.forward(req, res);
+		String url = "/ipet-back/member/listPet";
+		res.sendRedirect(req.getContextPath() + url);
+//		String url = "/templates/backstage/pet/petList.jsp";
+//		RequestDispatcher successView = req.getRequestDispatcher(url);
+//		successView.forward(req, res);
 	}
 
-	private List<String> getErrorMsgs(String memIdStr, String petName, String petVarId, String petSize,
+	private List<String> getErrorMsgs( String petName, String petVarId, String petSize,
 			String petGen, String petBirthStr) {
 		List<String> errorMsgs = new LinkedList<String>();
 		String petNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";

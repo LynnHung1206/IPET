@@ -95,7 +95,7 @@ Member member = (Member) session.getAttribute("member");
 					
 						<form action="${pageContext.request.contextPath}/ipet-back/member/toEdit" method="post">
 						
-							<table id="memberdata">
+							<table id="memberdata" align="center">
 								<tr>
 									<td><label>姓名:</label></td>
 									<td><input type="text" name="memName"
@@ -152,16 +152,16 @@ Member member = (Member) session.getAttribute("member");
 									<jsp:useBean id="memberSvc" scope="page"
 										class="com.web.member.model.service.MemberService" />
 									<td><label>狀態:</label></td>
-									<td><select name="memStatus">
+									<td><select name="memStatus" style="background-color: #ECEFF8;height: 45px;">
 											<option value="0" ${member.getMemStatus() == 0 ?'selected':''}>正常</option>
 											<option value="1" ${member.getMemStatus() == 1 ?'selected':''}>停權</option>
 									</select></td>
 								</tr>
 								<tr>
-									<td><input type="hidden" name="action" value="updatefront">
+									<td><input type="hidden" name="action" value="updatefront" style="background-color: lightgary;">
 										<input type="hidden" name="memId"
 										value="<%=member.getMemId()%> "></td>
-									<td><input type="submit" value="送出修改" onclick="enter()"></td>
+									<td><input type="submit" value="送出修改" onclick="enter()" style="background-color: lightgary;"></td>
 								</tr>
 
 

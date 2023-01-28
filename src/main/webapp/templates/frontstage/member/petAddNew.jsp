@@ -1,5 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.web.pet.model.entity.*"%>
+
+<%
+Pet petVO = (Pet) request.getAttribute("petVO");
+%>
 
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -21,6 +28,7 @@ table {
 	height: 200px;
 	margin: auto;
 }
+
 
 #msg {
 	width: 50px;
@@ -69,7 +77,7 @@ table {
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
 			<div class="breadcrumb-content text-center">
-				<h2>寵物資料管理</h2>
+				<h2>新增寵物</h2>
 				<ul>
 					<li><a href="index.html">home</a></li>
 					<li class="active">Pet Profile</li>
@@ -83,53 +91,65 @@ table {
 				<div class="col-lg-7 col-md-12 ml-auto mr-auto">
 					<div class="login-register-wrapper"
 						style="margin: 0 auto; text-align: center;">
-						<form
-							action="${pageContext.request.contextPath}/ipet-back/pet/addNew">
-							<input id="addNew" type="submit" value="新增寵物" style="width: 300px;">
-						</form>
-						<table>
-							<tr>
-								<!-- 								<th>寵物編號</th> -->
-								<!-- 								<th>會員編號</th> -->
-								<th>寵物名字</th>
-								<th>品種</th>
-								<th>寵物體型</th>
-								<th>性別</th>
-								<th>寵物生日</th>
-								<th>寵物狀態</th>
-								<!-- 									<td>權限</td> -->
-								<th></th>
-							</tr>
 
-							<c:forEach var="petVO" items="${petList}">
-
-								<tr>
-									<%-- 									<td>${petVO.petId}</td> --%>
-									<%-- 									<td>${petVO.memId}</td> --%>
-									<td>${petVO.petName}</td>
-									<td>${petVO.petVarId}</td>
-									<td>${petVO.petSize}</td>
-									<td>${petVO.petGen}</td>
-									<td>${petVO.petBirth}</td>
-									<td>${petVO.petStatus != 0 ? "正常" : "過世"}</td>
-									<%-- 									<td><jsp:useBean id="adminFuncSvc" scope="page" --%>
-									<%-- 											class="com.web.admin.model.service.AdminFuncService" /> <c:forEach --%>
-									<%-- 											var="adminFunc" items="${admin}"> --%>
-									<%-- 													${AdminFunc.getName()}			 --%>
-									<%-- 										</c:forEach> --%>
-									<!-- 										</td> -->
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/ipet-back/pet/edit"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="修改"> <input type="hidden"
-												name="petId" value="${petVO.getPetId()}"> <input
-												type="hidden" name="action" value="updateTemp">
-										</FORM>
-									</td>
-								</tr>
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請修正以下錯誤:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
 							</c:forEach>
-						</table>
+						</ul>
+					</c:if>
+					
+						<form
+							action="${pageContext.request.contextPath}/ipet-back/pet/allPetList"
+							method="post">
+							<table id="petdata">
+								<tr>
+									<td><label>寵物名字:</label></td>
+									<td><input type="text" name="petName"
+										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" autofocus
+										required></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><span style="font-size: 10px;"><i>只能是中、英文字母、數字和_
+												, 且長度必需在2到10之間</i></span></td>
+								</tr>
+								<tr>
+									<td><label>品種:</label></td>
+									<td><input type="text" name="petVarId" ></td>
+								</tr>
+								<tr>
+									<td><label>寵物體型:</label></td>
+									<td><select name="petSize" style="background-color: #ECEFF8;height: 45px;" required>
+											<option value="" disabled selected>請選擇</option>
+											<option value="小型犬">小型犬(體重10公斤以下)</option>
+											<option value="中型犬">中型犬(體重11~25公斤)</option>
+											<option value="大型犬">大型犬(體重26公斤以上)</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td><label>性別:</label></td>
+									<td>
+									<label for="boy"><input type="radio" name="petGen" id="boy" value="男" checked>男</label> 
+									<label for="girl"><input type="radio" name="petGen" id="girl" value="女">女</label></td>
+								</tr>
+								<tr>
+									<td><label>寵物生日:</label></td>
+									<td><input type="date" name="petBirth" ></td>
+								</tr>
+								<tr>
+									<td><label>狀態:</label></td>
+									<td><input type="text" name="petStatus" value="1" readonly ></td>
+								</tr>
+								<tr>
+									<td><input type="hidden" name="action" value="insert"></td>
+									<td><input type="submit" value="送出" onclick="enter()"></td>
+								</tr>
+							</table>
+						</form>
 					</div>
 				</div>
 			</div>
