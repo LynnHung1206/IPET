@@ -74,7 +74,7 @@ Member member = (Member) session.getAttribute("member");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/member/toEdit" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-back/member/edit" method="post">
 						
 							<table id="memberdata">
 								<tr>

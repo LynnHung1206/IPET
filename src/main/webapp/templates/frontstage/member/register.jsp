@@ -22,20 +22,6 @@ Member member = (Member) request.getAttribute("member");
 
 <!-- all css here -->
 <style type="text/css" media="screen">
-#msg {
-	width: 50px;
-	height: 50px;
-	position: fixed;
-	right: 50px;
-	bottom: 50px;
-	opacity: 0.5;
-
-	/* 整個標籤透明度0-1 */
-}
-
-#msg:hover {
-	opacity: 1;
-}
 
 #memberdata {
 	margin: auto;
@@ -79,9 +65,6 @@ input#allMember, #search:hover {
 
 <body>
 	<%@include file="/templates/frontstage/common/header.jsp"%>
-	<a id=msg style="z-index: 999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img
-		alt=""
-		src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
@@ -165,7 +148,7 @@ input#allMember, #search:hover {
 												</tr>
 												<tr>
 													<td><label>市內電話:</label></td>
-													<td><input type="tel" name="memTel" pattern="[/^0[0-9]{8}$/]" value="<%= (member==null)? "" : member.getMemTel()%>" required></td>
+													<td><input type="tel" name="memTel" pattern="[/^0[0-9]{8}$/]" value="<%= (member==null)? "" : member.getMemTel()%>" ></td>
 												</tr>
 												<tr>
 													<td><label>地址:</label></td>

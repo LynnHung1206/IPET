@@ -13,23 +13,6 @@
 <link rel="shortcut icon" type="image/x-icon"
 	href="${pageContext.request.contextPath}/static/frontstage/img/favicon.png">
 
-<!-- all css here -->
-<style type="text/css" media="screen">
-#msg {
-	width: 50px;
-	height: 50px;
-	position: fixed;
-	right: 50px;
-	bottom: 50px;
-	opacity: 0.5;
-
-	/* 整個標籤透明度0-1 */
-}
-
-#msg:hover {
-	opacity: 1;
-}
-</style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/frontstage/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -54,9 +37,6 @@
 
 <body>
 	<%@include file="/templates/frontstage/common/header.jsp"%>
-	<a id=msg style="z-index: 999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img
-		alt=""
-		src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
@@ -74,11 +54,13 @@
 			<div class="row">
 				<div class="col-lg-7 col-md-12 ml-auto mr-auto">
 					<div class="login-register-wrapper">
-					
+
 						<div class="login-register-tab-list nav">
-							<a class="active" href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">
+							<a class="active"
+								href="${pageContext.request.contextPath}/templates/frontstage/member/login.jsp">
 								<h4>會員登入</h4>
-							</a> <a href="${pageContext.request.contextPath}/templates/frontstage/member/register.jsp">
+							</a> <a
+								href="${pageContext.request.contextPath}/templates/frontstage/member/register.jsp">
 								<h4>會員註冊</h4>
 							</a>
 						</div>
@@ -86,36 +68,37 @@
 							<div id="lg1" class="tab-pane active">
 								<div class="login-form-container">
 									<div class="login-register-form">
-									<h1 style="color: red;font-size: 20px;">${wrong}</h1>
-									<form method="post" action="${pageContext.request.contextPath}/ipet-back/member/login">
-										<div>
-											<input type="text" class="form-control" placeholder="帳號"
-												id="memAc" name="memAc" required>
-											<div class="input-group-append">
-												<div class="input-group-text">
-													<span class="fas fa-envelope"></span>
+										<h1 style="color: red; font-size: 20px;">${wrong}</h1>
+										<form method="post"
+											action="${pageContext.request.contextPath}/ipet-back/member/login">
+											<div>
+												<input type="text" class="form-control" placeholder="帳號"
+													id="memAc" name="memAc" required>
+												<div class="input-group-append">
+													<div class="input-group-text">
+														<span class="fas fa-envelope"></span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div>
-											<input type="password" class="form-control" placeholder="密碼"
-												id="memPw" name="memPw" required>
-											<div class="input-group-append">
-												<div class="input-group-text">
-													<span class="fas fa-lock"></span>
+											<div>
+												<input type="password" class="form-control" placeholder="密碼"
+													id="memPw" name="memPw" required>
+												<div class="input-group-append">
+													<div class="input-group-text">
+														<span class="fas fa-lock"></span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div id="errMsg" class="error" style="color: red"></div>
-										<div class="row">
-											<!-- /.col -->
-											<div class="col-4" style="margin: auto;">
-												<button type="submit" class="btn btn-primary btn-block"
-													id="btnlogin">Sign In</button>
+											<div id="errMsg" class="error" style="color: red"></div>
+											<div class="row">
+												<!-- /.col -->
+												<div class="col-4" style="margin: auto;">
+													<button type="submit" class="btn btn-primary btn-block"
+														id="btnlogin">Sign In</button>
+												</div>
+												<!-- /.col -->
 											</div>
-											<!-- /.col -->
-										</div>
-									</form>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -152,31 +135,30 @@
 	<script
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
 	<script>
-	
-// 	const account = document.querySelector('#memAc');
-// 	const password = document.querySelector('#memPw');
-// 	const btnLogin = document.querySelector('#btnLogin');
-	
-// 	btnLogin.addEventListener('click',function(){
-// 		fetch('${pageContext.request.contextPath}/ipet-back/member/login', {
-// 			method: 'POST',
-// 			header: {
-// 				'Content-Type': 'application/json' //當作是瀏覽器上的副檔名
-// 			},
-// 			body: JSON.stringify({ 
-// 				memAc: account.value,
-// 				memPw: password.value
-// 			})
-// 		})
-// 		.then(resp => resp.json())
-// 		.then(body => {
-// // 			alert(body.result);
-// 			if(body.result){
-// 				location = '${pageContext.request.contextPath}/templates/frontstage/index.jsp';
-// 			}
-// 		});
-// 	});
-</script>
+		// 	const account = document.querySelector('#memAc');
+		// 	const password = document.querySelector('#memPw');
+		// 	const btnLogin = document.querySelector('#btnLogin');
+
+		// 	btnLogin.addEventListener('click',function(){
+		// 		fetch('${pageContext.request.contextPath}/ipet-back/member/login', {
+		// 			method: 'POST',
+		// 			header: {
+		// 				'Content-Type': 'application/json' //當作是瀏覽器上的副檔名
+		// 			},
+		// 			body: JSON.stringify({ 
+		// 				memAc: account.value,
+		// 				memPw: password.value
+		// 			})
+		// 		})
+		// 		.then(resp => resp.json())
+		// 		.then(body => {
+		// // 			alert(body.result);
+		// 			if(body.result){
+		// 				location = '${pageContext.request.contextPath}/templates/frontstage/index.jsp';
+		// 			}
+		// 		});
+		// 	});
+	</script>
 </body>
 
 </html>

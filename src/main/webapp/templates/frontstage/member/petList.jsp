@@ -22,20 +22,6 @@ table {
 	margin: auto;
 }
 
-#msg {
-	width: 50px;
-	height: 50px;
-	position: fixed;
-	right: 50px;
-	bottom: 50px;
-	opacity: 0.5;
-
-	/* 整個標籤透明度0-1 */
-}
-
-#msg:hover {
-	opacity: 1;
-}
 </style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/frontstage/css/bootstrap.min.css">
@@ -61,10 +47,6 @@ table {
 
 <body>
 	<%@include file="/templates/frontstage/common/header.jsp"%>
-	<a id=msg style="z-index: 999"
-		href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img
-		alt=""
-		src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">

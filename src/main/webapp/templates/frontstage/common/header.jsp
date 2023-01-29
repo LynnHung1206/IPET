@@ -7,7 +7,22 @@
 
 <head>
 </head>
+<style type="text/css" media="screen">
+        #msg {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            right: 50px;
+            bottom: 50px;
+            opacity: 0.5;
 
+            /* 整個標籤透明度0-1 */
+        }
+
+        #msg:hover {
+            opacity: 1;
+        }
+    </style>
 <body>
 	<header class="header-area">
 		<div class="header-top theme-bg">
@@ -112,7 +127,7 @@
 											<li><a href="<c:url value='#' />">商城訂單查詢</a></li>
 											<li><a href="<c:url value='#' />">美容預約查詢</a></li>
 											<li><a href="<c:url value='#' />">住宿預約查詢</a></li>
-											<li><a href="<c:url value='#' />">會員登出</a></li>
+											<li><a href="<c:url value='/ipet-front/member/loginOut' />">會員登出</a></li>
 										</c:if>
 										<c:if test="${empty member}">
 											<li><a href="<c:url value='/ipet-back/member/toLogin' />">會員登入</a></li>
@@ -182,5 +197,6 @@
 			</div>
 		</div>
 	</header>
+	 <a id=msg style="z-index:999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/index.jsp"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 </body>
 </html>

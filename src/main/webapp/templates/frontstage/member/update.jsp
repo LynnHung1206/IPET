@@ -21,23 +21,6 @@ Member member = (Member) session.getAttribute("member");
 <link rel="shortcut icon" type="image/x-icon"
 	href="${pageContext.request.contextPath}/static/frontstage/img/favicon.png">
 
-<!-- all css here -->
-<style type="text/css" media="screen">
-#msg {
-	width: 50px;
-	height: 50px;
-	position: fixed;
-	right: 50px;
-	bottom: 50px;
-	opacity: 0.5;
-
-	/* 整個標籤透明度0-1 */
-}
-
-#msg:hover {
-	opacity: 1;
-}
-</style>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/frontstage/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -62,9 +45,6 @@ Member member = (Member) session.getAttribute("member");
 
 <body>
 	<%@include file="/templates/frontstage/common/header.jsp"%>
-	<a id=msg style="z-index: 999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/customer-service.jsp"><img
-		alt=""
-		src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
@@ -136,7 +116,7 @@ Member member = (Member) session.getAttribute("member");
 								<tr>
 									<td><label>地址:</label></td>
 									<td><input type="text" name="memAdd"
-										value="<%=member.getMemAdd()%>" readonly></td>
+										value="<%=member.getMemAdd()%>" ></td>
 								</tr>
 								<tr>
 									<td><label>帳號:</label></td>

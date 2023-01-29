@@ -24,7 +24,7 @@ import com.web.pet.model.service.PetService;
 
 
 @WebServlet({ "/ipet-back/member/allMemberList", "/ipet-back/member/edit", "/ipet-back/member/addNew","/ipet-back/member/listPet",
-		"/ipet-back/member/getAllList","/ipet-back/member/login","/ipet-back/member/toLogin" , "/ipet-back/member/toEdit"})
+		"/ipet-back/member/getAllList","/ipet-back/member/login","/ipet-back/member/toLogin" , "/ipet-back/member/toEdit","/ipet-front/member/loginOut"})
 public class MemberServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -33,7 +33,6 @@ public class MemberServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String path = req.getServletPath();
-		System.out.println(path);
 		if ("/ipet-back/member/allMemberList".equals(path)) {
 			MemberService memberSvc = new MemberService();
 			List<Member> list = memberSvc.getAll();
@@ -48,12 +47,20 @@ public class MemberServlet extends HttpServlet {
 		if ("/ipet-back/member/toLogin".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
 		}
-		if ("/ipet-back/member/edit".equals(path)) {
-			req.getRequestDispatcher("/templates/frontstage/member/update.jsp").forward(req, res);
+		
+		if ("/ipet-front/member/loginOut".equals(path)) {
+			req.getSession().invalidate();
+			req.getRequestDispatcher("/templates/frontstage/index.jsp").forward(req, res);
 		}
+		
+		if ("/ipet-back/member/edit".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/member/update.jsp").forward(req, res);
+		}
+		
 		if ("/ipet-back/member/toEdit".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/index.jsp").forward(req, res);
 		}
+		
 		if ("/ipet-back/member/listPet".equals(path)) {
 			PetService petSvc = new PetService();
 			HttpSession session = req.getSession();
@@ -92,7 +99,7 @@ public class MemberServlet extends HttpServlet {
 			Member member = memberSvc.getMember(memId);
 			
 			req.setAttribute("member", member);
-			
+			System.out.println(member);
 			String url = "/templates/backstage/member/update.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -112,7 +119,6 @@ public class MemberServlet extends HttpServlet {
 			}
 			MemberService memberSvc = new MemberService();
 			Member member = memberSvc.login(memAc,memPw);
-			System.out.println(member);
 			if (member == null) {
 				req.setAttribute("wrong", "帳號或密碼有誤");
 				String url = "/templates/frontstage/member/login.jsp";
@@ -226,7 +232,7 @@ public class MemberServlet extends HttpServlet {
 		String memPw = req.getParameter("memPw");
 		String memPw2 = req.getParameter("memPw2"); //========================================
 
-		List<String> errorMsgs = getErrorMsgs(memName, memUid, memBthStr, memSex, memEmail, memPhone, memTel, memAdd, memAc, memPw);
+//		List<String> errorMsgs = getErrorMsgs(memName, memUid, memBthStr, memSex, memEmail, memPhone, memTel, memAdd, memAc, memPw);
 
 		java.sql.Date memBth = Date.valueOf(memBthStr);//將字串轉成sql.Date
 
@@ -241,78 +247,79 @@ public class MemberServlet extends HttpServlet {
 		member.setMemAdd(memAdd);
 		member.setMemAc(memAc);
 		member.setMemPw(memPw);
-		if (!errorMsgs.isEmpty() || memPw != memPw2) {
-
-			req.setAttribute("wrong", "密碼與確認密碼不符不符"); // 錯誤訊息
-			req.setAttribute("member", member); // 含有輸入格式錯誤的empVO物件,也存入req
-			RequestDispatcher failureView = req.getRequestDispatcher("/templates/frontstage/member/register.jsp");
-			failureView.forward(req, res);
+		if (memPw.equals( memPw2 )) {
+			MemberService memberSvc = new MemberService();
+			int memId = memberSvc.addMember(member);
+//				轉交
+			String url = "/templates/frontstage/member/login.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			return;
 		}
-
-		MemberService memberSvc = new MemberService();
-		int memId = memberSvc.addMember(member);
-
-//			轉交
-		String url = "/templates/backstage/member/memberList.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url);
-		successView.forward(req, res);
-	}
-
-	private List<String> getErrorMsgs(String memName, String memUid, String memBthStr, String memSex, String memEmail, String memPhone,
-			String memTel, String memAdd, String memAc, String memPw) { 
-		List<String> errorMsgs = new LinkedList<String>();
-		String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-		if (memName == null || memName.trim().length() == 0) {
-			errorMsgs.add("員工姓名: 請勿空白");
-		} else if (!memName.trim().matches(memNameReg)) {
-			errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-		}
-
-		if (memUid == null || memUid.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		}
-
-		try {
-			java.sql.Date memBth = Date.valueOf(memBthStr);
-		} catch (IllegalArgumentException e) {
-			errorMsgs.add("請輸入日期!");
-		}
-
-		if (memSex == null || memSex.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		}
-
-		if (memEmail == null || memEmail.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		}
-
-		if (memPhone == null || memPhone.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		} else if (memPhone.trim().length() != 10) {
-			errorMsgs.add("手機號碼錯誤");
-		}
 		
-		if (memTel == null || memTel.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		} else if (memTel.trim().length() != 9) {
-			errorMsgs.add("手機號碼錯誤");
-		}		
-
-		if (memAdd == null || memAdd.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		}
-
-		if (memAc == null || memAc.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-
-		if (memPw == null || memPw.trim().length() == 0) {
-			errorMsgs.add("請勿空白");
-		} 
-
-			return errorMsgs;
-		}
-		return errorMsgs;
+		req.setAttribute("wrong", "密碼與確認密碼不符"); // 錯誤訊息
+		req.setAttribute("member", member); // 含有輸入格式錯誤的empVO物件,也存入req
+		RequestDispatcher failureView = req.getRequestDispatcher("/templates/frontstage/member/register.jsp");
+		failureView.forward(req, res);
+		return;
+		
+		
 	}
+
+//	private List<String> getErrorMsgs(String memName, String memUid, String memBthStr, String memSex, String memEmail, String memPhone,
+//			String memTel, String memAdd, String memAc, String memPw) { 
+//		List<String> errorMsgs = new LinkedList<String>();
+//		String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+//		if (memName == null || memName.trim().length() == 0) {
+//			errorMsgs.add("員工姓名: 請勿空白");
+//		} else if (!memName.trim().matches(memNameReg)) {
+//			errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+//		}
+//
+//		if (memUid == null || memUid.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		}
+//
+//		try {
+//			java.sql.Date memBth = Date.valueOf(memBthStr);
+//		} catch (IllegalArgumentException e) {
+//			errorMsgs.add("請輸入日期!");
+//		}
+//
+//		if (memSex == null || memSex.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		}
+//
+//		if (memEmail == null || memEmail.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		}
+//
+//		if (memPhone == null || memPhone.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		} else if (memPhone.trim().length() != 10) {
+//			errorMsgs.add("手機號碼錯誤");
+//		}
+//		
+//		if (memTel == null || memTel.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		} else if (memTel.trim().length() != 9) {
+//			errorMsgs.add("手機號碼錯誤");
+//		}		
+//
+//		if (memAdd == null || memAdd.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		}
+//
+//		if (memAc == null || memAc.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//
+//		if (memPw == null || memPw.trim().length() == 0) {
+//			errorMsgs.add("請勿空白");
+//		} 
+//
+//			return errorMsgs;
+//		}
+//		return errorMsgs;
+//	}
 
 }

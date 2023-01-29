@@ -45,7 +45,7 @@ pageContext.setAttribute("list", list);
 <style type="text/css">
 table, th, td {
 	border: 1px solid lightgray;
- 	border-collapse: collapse; 
+	border-collapse: collapse;
 	text-align: center;
 }
 
@@ -83,7 +83,7 @@ td {
 		<div class="container">
 			<h4 class="contact-title" style="text-align: center;">常見Q&A整理</h4>
 			<div class="col-12" style="margin: 0 auto;">
-				<table  style="margin: 0 auto;width: 75%; ">
+				<table style="margin: 0 auto; width: 75%;">
 					<tr>
 						<th>常見問題編號</th>
 						<th>常見問題標題</th>
@@ -109,42 +109,42 @@ td {
 
 				</div>
 			</div>
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-12"> -->
-<!-- 					<div class="contact-message-wrapper"> -->
-<!-- 						<h4 class="contact-title" style="text-align: center;">即時線上客服</h4> -->
-<!-- 						<div class="contact-message"> -->
-<!-- 							<form id="contact-form" -->
-<%-- 								action="${pageContext.request.contextPath}/static/frontstage/mail.php" --%>
-<!-- 								method="post"> -->
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-lg-12"> -->
-<!-- 										<div class="contact-form-style"> -->
-<!-- 											<div -->
-<!-- 												style="width: 100%; height: 250px; border: 1px solid darkgray; overflow: auto; margin: 10px auto;"> -->
-<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
-<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
-<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
-<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
-<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-lg-12"> -->
-<!-- 										<div class="contact-form-style mb-20"> -->
-<!-- 											<input name="subject" placeholder="請輸入內容" type="text"> -->
-<!-- 											<button class="submit btn-style" type="submit" -->
-<!-- 												style="float: right">發送訊息</button> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
+			<!-- 			<div class="row"> -->
+			<!-- 				<div class="col-12"> -->
+			<!-- 					<div class="contact-message-wrapper"> -->
+			<!-- 						<h4 class="contact-title" style="text-align: center;">即時線上客服</h4> -->
+			<!-- 						<div class="contact-message"> -->
+			<!-- 							<form id="contact-form" -->
+			<%-- 								action="${pageContext.request.contextPath}/static/frontstage/mail.php" --%>
+			<!-- 								method="post"> -->
+			<!-- 								<div class="row"> -->
+			<!-- 									<div class="col-lg-12"> -->
+			<!-- 										<div class="contact-form-style"> -->
+			<!-- 											<div -->
+			<!-- 												style="width: 100%; height: 250px; border: 1px solid darkgray; overflow: auto; margin: 10px auto;"> -->
+			<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
+			<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
+			<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
+			<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
+			<!-- 												這是聊天室窗<br> 這是聊天室窗<br> 這是聊天室窗<br> -->
+			<!-- 											</div> -->
+			<!-- 										</div> -->
+			<!-- 									</div> -->
+			<!-- 									<div class="col-lg-12"> -->
+			<!-- 										<div class="contact-form-style mb-20"> -->
+			<!-- 											<input name="subject" placeholder="請輸入內容" type="text"> -->
+			<!-- 											<button class="submit btn-style" type="submit" -->
+			<!-- 												style="float: right">發送訊息</button> -->
+			<!-- 										</div> -->
+			<!-- 									</div> -->
 
-<!-- 								</div> -->
-<!-- 							</form> -->
-<!-- 							<p class="form-messege"></p> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
+			<!-- 								</div> -->
+			<!-- 							</form> -->
+			<!-- 							<p class="form-messege"></p> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
 		</div>
 	</div>
 	<%@include file="/templates/frontstage/common/footer.jsp"%>

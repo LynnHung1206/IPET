@@ -11,23 +11,6 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/static/frontstage/img/favicon.png">
 
-    <!-- all css here -->
-    <style type="text/css" media="screen">
-        #msg {
-            width: 50px;
-            height: 50px;
-            position: fixed;
-            right: 50px;
-            bottom: 50px;
-            opacity: 0.5;
-
-            /* 整個標籤透明度0-1 */
-        }
-
-        #msg:hover {
-            opacity: 1;
-        }
-    </style>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/animate.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/simple-line-icons.css">
@@ -41,7 +24,6 @@
 </head>
 <body>
 <%@include file="/templates/frontstage/common/header.jsp"%>
-    <a id=msg style="z-index:999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/index.jsp"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
     <div class="slider-area">
         <div class="slider-active owl-dot-style owl-carousel">
             <div class="single-slider pt-100 pb-100 yellow-bg">
