@@ -112,10 +112,7 @@
 									<div class="product-width col-lg-6 col-xl-4 col-md-6 col-sm-6">
 										<div class="product-wrapper mb-10">
 											<div class="product-img">
-												<a href="detail?prodID=${product.prodID}">
-													<img
-													src="showImg?prodID=${product.prodID}" />
-												</a>
+												<img src="<%=request.getContextPath()%>/ipet-front/prod/DBGifReaderFront?prodID=${product.prodID}">
 											</div>
 											<div class="product-content content_cust">
 												<h4>

@@ -5,17 +5,28 @@
 <%
 Product prodVO = (Product) request.getAttribute("prodVO");
 %>
-<!-- line 100 -->
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>商品資料新增 - addEmp.jsp</title>
-
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
+<!-- IonIcons -->
+<link rel="stylesheet"
+	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
 	text-align: center;
+	margin-left: 260px;
 }
 
 table#table-1 h4 {
@@ -45,77 +56,104 @@ table, th, td {
 th, td {
 	padding: 1px;
 }
+
+h4 {
+	margin-left: 260px;
+}
+
+[name="form1"] {
+	margin-left: 260px;
+}
 </style>
 
 </head>
 <body bgcolor='white'>
+	<div class="wrapper">
+		<!--  Navbar -->
+		<%@ include file="/templates/backstage/common/navbar.jsp"%>
+		<!-- /.navbar -->
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>商品資料新增 - addProd.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="select_page.jsp"><img
-						src="${pageContext.request.contextPath}/prod/images/acc123.jpg"
-						width="100" height="100" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+		<!-- 左邊選單區 Main Sidebar Container -->
+		<%@ include file="/templates/backstage/common/sidebar.jsp"%>
+		<!-- /.aside -->
 
-	<h3>資料新增:</h3>
+		<!-- 中間頁面 Content Wrapper. Contains page content -->
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-
-	<FORM METHOD="post"
-		ACTION="${pageContext.request.contextPath}/ipet-back/prod/addOneProd"
-		name="form1" enctype="multipart/form-data">
-		<table>
+		<table id="table-1">
 			<tr>
-				<td>商品名稱:</td>
-				<td><input type="TEXT" name="prodName" size="45"
-					value="<%=(prodVO == null) ? "小狗餅乾" : prodVO.getProdName()%>" /></td>
+				<td>
+					<h3>商品資料新增 - addProd.jsp</h3>
+				</td>
+				
 			</tr>
-			<tr>
-				<td>價格:</td>
-				<td><input type="TEXT" name="prodPrice" size="45"
-					value="<%=(prodVO == null) ? "300" : prodVO.getProdPrice()%>" /></td>
-			</tr>
-			<tr>
-				<td>商品描述:</td>
-				<td><input type="TEXT" name="prodDescription" size="45"
-					value="<%=(prodVO == null) ? "這是一個商品描述" : prodVO.getProdDescription()%>" /></td>
-			</tr>
-
-
-
-			<jsp:useBean id="prodTypeSvc" scope="page"
-				class="com.web.product.model.service.ProductTypeServiceBack" />
-			<tr>
-				<td>類別:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="typeID">
-						<c:forEach var="prodTypeVO" items="${prodTypeSvc.all}">
-							<option value="${prodTypeVO.typeID}"
-								${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
-						</c:forEach>
-				</select></td>
-			</tr>
-
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="file" name="imgFile" value="上傳圖片" accept="image/*" /> <input
-			type="submit" value="送出新增">
-	</FORM>
+
+		<h4>資料新增:</h4>
+
+		<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+
+		<FORM METHOD="post"
+			ACTION="${pageContext.request.contextPath}/ipet-back/prod/addOneProd"
+			name="form1" enctype="multipart/form-data">
+			<table>
+				<tr>
+					<td>商品名稱:</td>
+					<td><input type="TEXT" name="prodName" size="45"
+						value="<%=(prodVO == null) ? "小狗餅乾" : prodVO.getProdName()%>" /></td>
+				</tr>
+				<tr>
+					<td>價格:</td>
+					<td><input type="TEXT" name="prodPrice" size="45"
+						value="<%=(prodVO == null) ? "300" : prodVO.getProdPrice()%>" /></td>
+				</tr>
+				<tr>
+					<td>商品描述:</td>
+					<td><input type="TEXT" name="prodDescription" size="45"
+						value="<%=(prodVO == null) ? "這是一個商品描述" : prodVO.getProdDescription()%>" /></td>
+				</tr>
+
+
+
+				<jsp:useBean id="prodTypeSvc" scope="page"
+					class="com.web.product.model.service.ProductTypeServiceBack" />
+				<tr>
+					<td>類別:<font color=red><b>*</b></font></td>
+					<td><select size="1" name="typeID">
+							<c:forEach var="prodTypeVO" items="${prodTypeSvc.all}">
+								<option value="${prodTypeVO.typeID}"
+									${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
+							</c:forEach>
+					</select></td>
+				</tr>
+
+			</table>
+			<br> <input type="hidden" name="action" value="insert">
+			<input type="file" name="imgFile" value="上傳圖片" accept="image/*" /> <input
+				type="submit" value="送出新增">
+		</FORM>
+		<%@ include file="/templates/backstage/common/footer.jsp"%>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- REQUIRED SCRIPTS -->
+
+	<!-- jQuery -->
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/jquery/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE -->
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
 
 </body>
 

@@ -16,7 +16,7 @@ pageContext.setAttribute("list", list);
 <html>
 
 <head>
-<title>商城後台: listAllProd.jsp</title>
+<title>嚙課佗蕭嚙諉品嚙踝蕭嚙� - listAllProd.jsp</title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome Icons -->
@@ -108,7 +108,7 @@ th, td {
 		<table id="table-1">
 			<tr>
 				<td>
-					<h3>商城後台: listAllProd.jsp</h3>
+					<h3>嚙課佗蕭嚙諉品嚙踝蕭嚙� - listAllProd.jsp</h3>
 
 				</td>
 			</tr>
@@ -121,16 +121,16 @@ th, td {
 
 		<table>
 			<tr>
-				<th class="no-wrap">商品編號</th>
-				<th class="no-wrap">商品名稱</th>
-				<th class="no-wrap">價格</th>
-				<th>商品描述</th>
-				<th class="no-wrap">上架時間</th>
-				<th class="no-wrap">狀態</th>
-				<th class="no-wrap">類別</th>
-				<th>圖片</th>
-				<th>修改</th>
-				<th>刪除</th>
+				<th class="no-wrap">嚙諉品嚙編嚙踝蕭</th>
+				<th class="no-wrap">嚙諉品嚙磕嚙踝蕭</th>
+				<th class="no-wrap">嚙踝蕭嚙踝蕭</th>
+				<th>嚙諉品嚙緙嚙緲</th>
+				<th class="no-wrap">嚙編嚙磕嚙褕塚蕭</th>
+				<th class="no-wrap">嚙磕嚙稼嚙踝蕭嚙璀</th>
+				<th class="no-wrap">嚙踝蕭嚙瞌</th>
+				<th>嚙誕歹蕭</th>
+				<th>嚙論改蕭</th>
+				<th>嚙磋嚙踝蕭</th>
 			</tr>
 
 
@@ -148,8 +148,8 @@ th, td {
 					<td>${prodVO.prodDescription}</td>
 					<td class="no-wrap">${prodVO.addedTime}</td>
 					<td><c:choose>
-							<c:when test="${prodVO.prodStatus == 0}">上架中</c:when>
-							<c:otherwise>下架中</c:otherwise>
+							<c:when test="${prodVO.prodStatus == 0}">嚙磕嚙稼嚙踝蕭</c:when>
+							<c:otherwise>嚙磊嚙稼嚙踝蕭</c:otherwise>
 						</c:choose></td>
 					<td class="no-wrap">${prodVO.productType.typeName}</td>
 					<td><img
@@ -160,7 +160,7 @@ th, td {
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/ipet-back/prod/getOneForUpdate"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="嚙論改蕭"> <input type="hidden"
 								name="prodID" value="${prodVO.prodID}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -169,7 +169,7 @@ th, td {
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/ipet-back/prod/delete"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
+							<input type="submit" value="嚙磋嚙踝蕭"> <input type="hidden"
 								name="prodID" value="${prodVO.prodID}"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>

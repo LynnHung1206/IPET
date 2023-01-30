@@ -73,18 +73,20 @@ public class ProductServiceBack {
 //		List<ProductImg> alist = new ArrayList<ProductImg>();
 //		alist.add(prodIMG);
 		
+		product.setUpdateImg(productImg);
+		
 		dao.updateWithProd_IMG(product, productImg);
 		return product;
 	}
 
-//	public Prod_IMGVO upload(byte[] imgFile, Integer prodID) {
-//		Prod_IMGVO prod_IMGVO = new Prod_IMGVO();
-//
-//		prod_IMGVO.setImg_file(imgFile);
-//		prod_IMGVO.setProd_id(prodID);
-//		dao1.insert(prod_IMGVO);
-//		return prod_IMGVO;
-//	}
+	public ProductImg upload(byte[] imgFile, Integer prodID) {
+		ProductImg prod_IMGVO = new ProductImg();
+
+		prod_IMGVO.setImgFile(imgFile);
+		prod_IMGVO.setProdID(prodID);
+		dao1.insert(prod_IMGVO);
+		return prod_IMGVO;
+	}
 
 	public Product addProdAndFile(String prodname, Integer price, String prodDescription, Integer typeID,
 			byte[] imgFile) {
