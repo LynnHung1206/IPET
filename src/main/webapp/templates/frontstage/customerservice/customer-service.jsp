@@ -61,11 +61,13 @@ td {
 
 details span {
 	color: green;
+	font-size: 20px;
 }
 
 details summary {
 	color: darkgreen;
 	font-weight: bold;
+	font-size: 20px;
 }
 </style>
 <script

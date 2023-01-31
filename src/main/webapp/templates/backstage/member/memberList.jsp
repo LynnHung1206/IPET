@@ -41,15 +41,17 @@ table, th, td {
 	border: 1px solid white;
 	border-collapse: collapse;
 	text-align: center;
+	width: max;
+	height: 50px;
 }
 
 th{
-	background-color: green;
+	background-color: lightgray;
 	text-align: center;
 }
 
 td{
-	background-color: lightgreen;
+	background-color: white;
 }
 
 input#addNew {
@@ -91,12 +93,12 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-					<form
-						action="${pageContext.request.contextPath}/ipet-back/member/addNew">
-						<input id="addNew" type="submit" value="新增會員">
-					</form>
+<!-- 					<form -->
+<%-- 						action="${pageContext.request.contextPath}/ipet-back/member/addNew"> --%>
+<!-- 						<input id="addNew" type="submit" value="新增會員"> -->
+<!-- 					</form> -->
 					<div class="row mb-2">
-						<table>
+						<table align="center" style="width: 100%;">
 							<tr>
 								<th>會員編號</th>
 								<th>會員姓名</th>

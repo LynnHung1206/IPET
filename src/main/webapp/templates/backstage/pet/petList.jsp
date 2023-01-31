@@ -43,15 +43,16 @@ table, th, td {
 	border: 1px solid white;
 	border-collapse: collapse;
 	text-align: center;
+	height: 50px;
 }
 
 th{
-	background-color: green;
+	background-color: lightgray;
 	text-align: center;
 }
 
 td{
-	background-color: lightgreen;
+	background-color: white;
 }
 
 input#addNew {
@@ -93,12 +94,12 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-					<form
-						action="${pageContext.request.contextPath}/ipet-back/pet/addNew">
-						<input id="addNew" type="submit" value="新增寵物">
-					</form>
+<!-- 					<form -->
+<%-- 						action="${pageContext.request.contextPath}/ipet-back/pet/addNew"> --%>
+<!-- 						<input id="addNew" type="submit" value="新增寵物"> -->
+<!-- 					</form> -->
 					<div class="row mb-2">
-						<table>
+						<table align="center" style="width: 100%;height: 50px;">
 							<tr>
 								<th>寵物編號</th>
 								<th>會員編號</th>

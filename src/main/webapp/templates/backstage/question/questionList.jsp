@@ -36,15 +36,16 @@ table, th, td {
 	border: 1px solid white;
 	border-collapse: collapse;
 	text-align: center;
+	height: 50px;
 }
 
 th{
-	background-color: green;
+	background-color: lightgray;
 	text-align: center;
 }
 
 td{
-	background-color: lightgreen;
+	background-color: white;
 }
 
 input#addNew {
@@ -91,7 +92,7 @@ input#addNew:hover, #search:hover {
 						<input id="addNew" type="submit" value="新增常見問題">
 					</form>
 					<div class="row mb-2">
-						<table>
+						<table style="width: 100%;height: 50px;">
 							<tr>
 								<th>常見問題編號</th>
 								<th>常見問題標題</th>
