@@ -36,6 +36,7 @@
 		<mapping class="com.web.product.model.entity.Product" />
 		<mapping class="com.web.product.model.entity.ProductImg" />
 		<mapping class="com.web.product.model.entity.ProductType" />
+		<mapping class="com.web.roomDiscount.model.entity.Discount" />
 		
 	</session-factory>
 </hibernate-configuration>

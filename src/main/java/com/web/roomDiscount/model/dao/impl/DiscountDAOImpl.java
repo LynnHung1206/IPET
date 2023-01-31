@@ -2,7 +2,7 @@ package com.web.roomDiscount.model.dao.impl;
 
 import java.util.List;
 import com.web.roomDiscount.model.dao.DiscountDAO;
-import com.web.roomDiscount.model.entites.Discount;
+import com.web.roomDiscount.model.entity.Discount;
 
 public class DiscountDAOImpl implements DiscountDAO{
 	
@@ -23,7 +23,7 @@ public class DiscountDAOImpl implements DiscountDAO{
 	
 	@Override
 	public List<Discount> getAll(){
-		final String hql = "FROM Discount ORDER BY roomDiscountId";
+		final String hql = "FROM Discount";
 		return getSession().createQuery(hql, Discount.class).list();
 	}
 	

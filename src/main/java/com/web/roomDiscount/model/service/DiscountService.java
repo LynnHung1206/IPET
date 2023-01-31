@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import com.web.roomDiscount.model.dao.DiscountDAO;
 import com.web.roomDiscount.model.dao.impl.DiscountDAOImpl;
-import com.web.roomDiscount.model.entites.Discount;
+import com.web.roomDiscount.model.entity.Discount;
 
 public class DiscountService {
 	private DiscountDAO dao;

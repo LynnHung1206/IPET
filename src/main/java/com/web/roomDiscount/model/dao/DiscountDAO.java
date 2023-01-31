@@ -4,7 +4,7 @@ package com.web.roomDiscount.model.dao;
 import java.util.List;
 
 import com.core.model.dao.CoreDAO;
-import com.web.roomDiscount.model.entites.Discount;
+import com.web.roomDiscount.model.entity.Discount;
 public interface DiscountDAO extends CoreDAO<Discount, Integer>{
 
 	Integer deleteById(Integer discountId);
