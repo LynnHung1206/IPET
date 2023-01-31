@@ -54,7 +54,7 @@ public class MemberServlet extends HttpServlet {
 		}
 		
 		if ("/ipet-back/member/edit".equals(path)) {
-			req.getRequestDispatcher("/templates/backstage/member/update.jsp").forward(req, res);
+			req.getRequestDispatcher("/templates/frontstage/member/update.jsp").forward(req, res);
 		}
 		
 		if ("/ipet-back/member/toEdit".equals(path)) {
@@ -100,7 +100,6 @@ public class MemberServlet extends HttpServlet {
 			Member member = memberSvc.getMember(memId);
 			
 			req.setAttribute("updateMember", member);
-			System.out.println(member);
 			String url = "/templates/backstage/member/update.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);

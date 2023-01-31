@@ -159,10 +159,10 @@ public class PetServlet extends HttpServlet {
 		String petSize = req.getParameter("petSize");
 		String petGen = req.getParameter("petGen");
 		String petBirthStr = req.getParameter("petBirth");
-		String petStatusStr = req.getParameter("petStatus");
+//		String petStatusStr = req.getParameter("petStatus");
 		List<String> errorMsgs = getErrorMsgs(petName, petVarId, petSize, petGen, petBirthStr);
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
-		Integer petStatus = Integer.valueOf(petStatusStr);
+//		Integer petStatus = Integer.valueOf(petStatusStr);
 
 		Pet pet = new Pet();
 		pet.setMemId(((Member) req.getSession().getAttribute("member")).getMemId());
@@ -171,7 +171,7 @@ public class PetServlet extends HttpServlet {
 		pet.setPetSize(petSize);
 		pet.setPetGen(petGen);
 		pet.setPetBirth(petBirth);
-		pet.setPetStatus(petStatus);
+		pet.setPetStatus(1);
 
 		if (!errorMsgs.isEmpty()) {
 			req.setAttribute("pet", pet); // 含有輸入格式錯誤的empVO物件,也存入req

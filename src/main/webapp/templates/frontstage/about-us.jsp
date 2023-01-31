@@ -42,7 +42,6 @@
 
 <body>
     <%@include file="/templates/frontstage/common/header.jsp"%>
-    <a id=msg style="z-index:999" href="customer-service.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
     <div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
         <div class="container">
             <div class="breadcrumb-content text-center">

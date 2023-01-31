@@ -121,10 +121,10 @@ table {
 									<td><label>寵物生日:</label></td>
 									<td><input type="date" name="petBirth" ></td>
 								</tr>
-								<tr>
-									<td><label>狀態:</label></td>
-									<td><input type="text" name="petStatus" value="1" readonly ></td>
-								</tr>
+<!-- 								<tr> -->
+<!-- 									<td><label>狀態:</label></td> -->
+<!-- 									<td><input type="text" name="petStatus" value="1" readonly ></td> -->
+<!-- 								</tr> -->
 								<tr>
 									<td><input type="hidden" name="action" value="insert"></td>
 									<td><input type="submit" value="送出" onclick="enter()"></td>
