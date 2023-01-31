@@ -133,11 +133,11 @@ input#addNew:hover, #search:hover {
 <!-- 										</td> -->
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/ipet-back/pet/edit"
+											ACTION="<%=request.getContextPath()%>/ipet-back/pet/editPet"
 											style="margin-bottom: 0px;">
 											<input type="submit" value="修改"> <input type="hidden"
 												name="petId" value="${petVO.getPetId()}"> <input
-												type="hidden" name="action" value="updateTemp">
+												type="hidden" name="action" value="updatePet">
 										</FORM>
 									</td>
 								</tr>

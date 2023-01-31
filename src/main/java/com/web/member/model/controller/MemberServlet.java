@@ -88,6 +88,7 @@ public class MemberServlet extends HttpServlet {
 		if ("update".equals(action)) {
 			update(req, res);
 		}
+		
 		if ("updatefront".equals(action)) {
 			updatefront(req, res);
 		}
@@ -98,7 +99,7 @@ public class MemberServlet extends HttpServlet {
 
 			Member member = memberSvc.getMember(memId);
 			
-			req.setAttribute("member", member);
+			req.setAttribute("updateMember", member);
 			System.out.println(member);
 			String url = "/templates/backstage/member/update.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);

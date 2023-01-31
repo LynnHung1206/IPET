@@ -43,7 +43,7 @@
 <body>
     <%@include file="/templates/frontstage/common/header.jsp"%>
     <a id=msg style="z-index:999" href="customer-service.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
-    <div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(assets/img/banner/banner-2.jpg);">
+    <div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
         <div class="container">
             <div class="breadcrumb-content text-center">
                 <h2>關於我們</h2>
@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="about-us-img pr-30 wow fadeInLeft">
-                        <img alt="" src="assets/img/banner/banner-3.png">
+                        <img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/banner/banner-3.png">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 d-flex align-items-center">
@@ -96,7 +96,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-1.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-1.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -123,7 +123,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-2.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-2.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -150,7 +150,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-3.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-3.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -177,7 +177,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-4.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-4.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -210,7 +210,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-1.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-1.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -237,7 +237,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-2.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-2.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -264,7 +264,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-3.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-3.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">
@@ -291,7 +291,7 @@
                     <div class="team-wrapper mb-30">
                         <div class="team-img">
                             <a href="#">
-                                <img src="assets/img/team/team-4.jpg" alt="">
+                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-4.jpg" alt="">
                             </a>
                             <div class="team-social">
                                 <a href="#">

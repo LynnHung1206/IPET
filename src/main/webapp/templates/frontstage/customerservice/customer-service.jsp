@@ -59,7 +59,14 @@ td {
 	background-color: white;
 }
 
+details span {
+	color: green;
+}
 
+details summary {
+	color: darkgreen;
+	font-weight: bold;
+}
 </style>
 <script
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -85,10 +92,10 @@ td {
 			<div class="col-12" style="margin: 0 auto;">
 				<table style="margin: 0 auto; width: 75%;">
 					<tr>
-						<th>常見問題編號</th>
-						<th>常見問題標題</th>
-						<th>常見問題內容</th>
-						<th>新增時間</th>
+						<!-- 						<th>常見問題編號</th> -->
+						<th>Title</th>
+						<!-- 						<th>常見問題內容</th> -->
+						<!-- 						<th>新增時間</th> -->
 					</tr>
 
 					<%@ include file="page1.file"%>
@@ -96,10 +103,16 @@ td {
 						end="<%=pageIndex+rowsPerPage-1%>">
 
 						<tr>
-							<td>${questionVO.quesId}</td>
-							<td>${questionVO.quesTitle}</td>
-							<td>${questionVO.quesText}</td>
-							<td>${questionVO.quesTime}</td>
+							<%-- 							<td>${questionVO.quesId}</td> --%>
+							<%-- 							<td>${questionVO.quesTitle}</td> --%>
+							<%-- 							<td>${questionVO.quesText}</td> --%>
+							<td><details>
+									<summary>${questionVO.quesTitle}</summary>
+									<br>
+									<span>${questionVO.quesText}</span>
+								</details></td>
+							<%-- 							<td>${questionVO.quesTime}</td> --%>
+
 						</tr>
 					</c:forEach>
 				</table>

@@ -144,7 +144,7 @@ public class Member extends Core{
 	@Override
 	public String toString() {
 		
-		return "name="+memName+"/"+"id="+memUid+"/"+"bth="+memBth+"/"+"sex="+memSex+"/"+"email="+memEmail+"/"
+		return "name="+memName+"/"+"uid="+memUid+"/"+"bth="+memBth+"/"+"sex="+memSex+"/"+"email="+memEmail+"/"
 				+"phone="+memPhone+"/"+"tel="+memTel+"/"+"add="+memAdd+"/"+"ac="+memAc+"/"+"Pw="+memPw+"/"+"status="+memStatus;
 	}
 }

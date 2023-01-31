@@ -5,7 +5,7 @@
 <%@ page import="com.web.pet.model.entity.*"%>
 
 <%
-Pet pet = (Pet) request.getAttribute("pet");
+Pet pet = (Pet) request.getAttribute("updatePet");
 %>
 
 <!DOCTYPE html>
@@ -74,7 +74,7 @@ Pet pet = (Pet) request.getAttribute("pet");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/pet/edit" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-back/pet/editPetFinal" method="post">
 						
 							<table id="petdata">
 								<tr>
@@ -130,7 +130,7 @@ Pet pet = (Pet) request.getAttribute("pet");
 								</tr>
 								
 								<tr>
-									<td><input type="hidden" name="action" value="update">
+									<td><input type="hidden" name="action" value="updateFinal">
 										<input type="hidden" name="petId"
 										value="<%=pet.getPetId()%> "></td>
 									<td><input type="submit" value="送出修改" onclick="enter()"></td>

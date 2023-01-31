@@ -5,7 +5,7 @@
 <%@ page import="com.web.member.model.entity.*"%>
 
 <%
-Member member = (Member) session.getAttribute("member");
+Member member = (Member) request.getAttribute("updateMember");
 %>
 
 <!DOCTYPE html>
