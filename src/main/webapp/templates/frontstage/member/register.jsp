@@ -123,7 +123,7 @@ input#allMember, #search:hover {
 												</tr>
 												<tr>
 													<td><label>身分證字號:</label></td>
-													<td><input type="text" name="memUid" value="<%= (member==null)? "" : member.getMemUid()%>" pattern="[/^[A-Z]\d{9}$/]" required></td>
+													<td><input type="text" name="memUid" value="<%= (member==null)? "" : member.getMemUid()%>" pattern="^[A-Z]{1}[1-2]{1}[0-9]{8}$" required></td>
 												</tr>
 												<tr>
 													<td><label>生日:</label></td>
@@ -147,7 +147,7 @@ input#allMember, #search:hover {
 													<td><input type="tel" name="memPhone" pattern="[/^09[0-9]{8}$/]" value="<%= (member==null)? "" : member.getMemPhone()%>" required></td>
 												</tr>
 												<tr>
-													<td><label>市內電話:</label></td>
+													<td><label>室內電話:</label></td>
 													<td><input type="tel" name="memTel" pattern="[/^0[0-9]{8}$/]" value="<%= (member==null)? "" : member.getMemTel()%>" ></td>
 												</tr>
 												<tr>

@@ -97,7 +97,7 @@ input#addNew:hover, #search:hover {
 								<th>常見問題編號</th>
 								<th>常見問題標題</th>
 								<th>常見問題內容</th>
-								<th>新增時間</th>
+<!-- 								<th>新增時間</th> -->
 								<!-- 									<td>權限</td> -->
 								<th></th>
 							</tr>
@@ -110,7 +110,7 @@ input#addNew:hover, #search:hover {
 									<td>${questionVO.quesId}</td>
 									<td>${questionVO.quesTitle}</td>
 									<td>${questionVO.quesText}</td>
-									<td>${questionVO.quesTime}</td>
+<%-- 									<td>${questionVO.quesTime}</td> --%>
 
 <%-- 									<td><jsp:useBean id="adminFuncSvc" scope="page" --%>
 <%-- 											class="com.web.admin.model.service.AdminFuncService" /> <c:forEach --%>

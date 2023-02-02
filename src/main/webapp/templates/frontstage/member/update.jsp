@@ -109,7 +109,7 @@ Member member = (Member) session.getAttribute("member");
 										value="<%=member.getMemPhone()%>"  required></td>
 								</tr>
 								<tr>
-									<td><label>市內電話:</label></td>
+									<td><label>室內電話:</label></td>
 									<td><input type="tel" name="memTel"
 										value="${member.getMemTel() == null?'':member.getMemTel()}" ></td>
 								</tr>
@@ -131,11 +131,9 @@ Member member = (Member) session.getAttribute("member");
 								<tr>
 									<jsp:useBean id="memberSvc" scope="page"
 										class="com.web.member.model.service.MemberService" />
-									<td><label>狀態:</label></td>
-									<td><select name="memStatus" style="background-color: #ECEFF8;height: 45px;">
-											<option value="0" ${member.getMemStatus() == 0 ?'selected':''}>正常</option>
-											<option value="1" ${member.getMemStatus() == 1 ?'selected':''}>停權</option>
-									</select></td>
+									<td><label></label></td>
+									<td><input type="hidden" name="memStatus"
+										value="<%=member.getMemStatus()%>" readonly required></td>
 								</tr>
 								<tr>
 									<td><input type="hidden" name="action" value="updatefront" style="background-color: lightgary;">

@@ -119,7 +119,7 @@ details summary {
 					</c:forEach>
 				</table>
 
-				<div style="text-align: center;">
+				<div >
 					<%@ include file="page2.file"%>
 
 				</div>

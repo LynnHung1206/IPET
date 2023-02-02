@@ -100,7 +100,7 @@ table {
 								</tr>
 								<tr>
 									<td><label>品種:</label></td>
-									<td><input type="text" name="petVarId" ></td>
+									<td><input type="text" name="petVarId" pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}" required></td>
 								</tr>
 								<tr>
 									<td><label>寵物體型:</label></td>

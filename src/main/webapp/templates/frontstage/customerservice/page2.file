@@ -20,11 +20,7 @@
 <b>共<font color=orange><%=rowNumber%></font>筆</b>
   <%if (pageNumber>1) {%>
     <FORM METHOD="post" style="display:inline" ACTION="<%=request.getRequestURI()%>">   
-       <b style="font-size:10px;">至</b><select size="1" name="whichPage">
-         <%for (int i=1; i<=pageNumber; i++){%>
-            <option value="<%=i%>">第<%=i%>頁
-         <%}%> 
+       <b style="font-size:10px;"></b><select size="1" name="whichPage">
        </select>
-       <input type="submit" id="search" value="搜尋" style=" background-color: pink; border-radius:5px;border:none; color:white" >  
     </FORM>
   <%}%>

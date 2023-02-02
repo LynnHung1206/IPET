@@ -81,7 +81,7 @@ Member member = (Member) request.getAttribute("updateMember");
 									<td><label>姓名:</label></td>
 									<td><input type="text" name="memName"
 										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}"
-										value="<%=member.getMemName()%>"  required></td>
+										value="<%=member.getMemName()%>" readonly required></td>
 								</tr>
 
 								<tr>
@@ -102,17 +102,17 @@ Member member = (Member) request.getAttribute("updateMember");
 								<tr>
 									<td><label>Email:</label></td>
 									<td><input type="email" name="memEmail"
-										value="<%=member.getMemEmail()%>"  required></td>
+										value="<%=member.getMemEmail()%>" readonly required></td>
 								</tr>
 								<tr>
 									<td><label>手機:</label></td>
 									<td><input type="tel" name="memPhone"
-										value="<%=member.getMemPhone()%>"  required></td>
+										value="<%=member.getMemPhone()%>" readonly required></td>
 								</tr>
 								<tr>
 									<td><label>市內電話:</label></td>
 									<td><input type="tel" name="memTel"
-										value="${member.getMemTel() == null?'':member.getMemTel()}" ></td>
+										value="${member.getMemTel() == null?'':member.getMemTel()}" readonly></td>
 								</tr>
 								<tr>
 									<td><label>地址:</label></td>
@@ -127,7 +127,7 @@ Member member = (Member) request.getAttribute("updateMember");
 								<tr>
 									<td><label>密碼:</label></td>
 									<td><input type="password" name="memPw"
-										value="<%=member.getMemPw()%>" required></td>
+										value="<%=member.getMemPw()%>" required readonly></td>
 								</tr>
 								<tr>
 									<jsp:useBean id="memberSvc" scope="page"

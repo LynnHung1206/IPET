@@ -89,8 +89,8 @@ table {
 						
 							<table id="petdata">
 								<tr>
-									<td><label>會員ID:</label></td>
-									<td><input type="text" name="memId"
+									<td><label></label></td>
+									<td><input type="hidden" name="memId"
 										value="<%=pet.getMemId()%>" readonly required></td>
 								</tr>
 								
@@ -109,13 +109,13 @@ table {
 			
 								<tr>
 									<td><label>品種:</label></td>
-									<td><input type="text" name="petVarId"
-										value="<%=pet.getPetVarId()%>"></td>
+									<td><input type="text" name="petVarId" pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}"
+										value="<%=pet.getPetVarId()%>" required></td>
 								</tr>
 								
 								<tr>
 									<td><label>寵物體型:</label></td>
-									<td><select name="petSize">
+									<td><select name="petSize" style="background-color: #eceff8; height: 45px;">
 											<option value="小型犬" ${pet.getPetSize() == "小型犬" ?'selected':''}>小型犬(體重10公斤以下)</option>
 											<option value="中型犬" ${pet.getPetSize() == "中型犬" ?'selected':''}>中型犬(體重11~25公斤)</option>
 											<option value="大型犬" ${pet.getPetSize() == "大型犬" ?'selected':''}>大型犬(體重26公斤以上)</option>
@@ -134,7 +134,7 @@ table {
 								</tr>
 								<tr>
 									<td><label>狀態:</label></td>
-									<td><select name="petStatus">
+									<td><select name="petStatus" style="background-color: #eceff8; height: 45px;">
 											<option value="0" ${pet.getPetStatus() == 0 ?'selected':''}>過世</option>
 											<option value="1" ${pet.getPetStatus() == 1 ?'selected':''}>正常</option>
 									</select></td>

@@ -99,7 +99,7 @@ input#allQuestion:hover, #search:hover {
 								
 								<tr>
 									<td><label>常見問題內容:</label></td>
-									<td><input type="text" name="quesText" ></td>
+									<td><input type="text" name="quesText" required></td>
 								</tr>
 <!-- 								<tr> -->
 <!-- 									<td><label></label></td> -->

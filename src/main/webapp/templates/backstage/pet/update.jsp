@@ -87,7 +87,7 @@ Pet pet = (Pet) request.getAttribute("updatePet");
 									<td><label>寵物姓名:</label></td>
 									<td><input type="text" name="petName"
 										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}"
-										value="<%=pet.getPetName()%>"  required></td>
+										value="<%=pet.getPetName()%>" readonly required></td>
 								</tr>
 								
 								<tr>
@@ -98,17 +98,19 @@ Pet pet = (Pet) request.getAttribute("updatePet");
 			
 								<tr>
 									<td><label>品種:</label></td>
-									<td><input type="text" name="petVarId"
+									<td><input type="text" name="petVarId" readonly
 										value="<%=pet.getPetVarId()%>"></td>
 								</tr>
 								
 								<tr>
 									<td><label>寵物體型:</label></td>
-									<td><select name="petSize">
-											<option value="小型犬" ${pet.getPetSize() == "小型犬" ?'selected':''}>小型犬(體重10公斤以下)</option>
-											<option value="中型犬" ${pet.getPetSize() == "中型犬" ?'selected':''}>中型犬(體重11~25公斤)</option>
-											<option value="大型犬" ${pet.getPetSize() == "大型犬" ?'selected':''}>大型犬(體重26公斤以上)</option>
-									</select></td>
+									<td><input type="text" name="petSize" readonly
+										value="<%=pet.getPetSize()%>"></td>
+<!-- 									<td><select name="petSize"> -->
+<%-- 											<option value="小型犬" ${pet.getPetSize() == "小型犬" ?'selected':''}>小型犬(體重10公斤以下)</option> --%>
+<%-- 											<option value="中型犬" ${pet.getPetSize() == "中型犬" ?'selected':''}>中型犬(體重11~25公斤)</option> --%>
+<%-- 											<option value="大型犬" ${pet.getPetSize() == "大型犬" ?'selected':''}>大型犬(體重26公斤以上)</option> --%>
+<!-- 									</select></td> -->
 								</tr>
 								
 								<tr>
@@ -119,7 +121,7 @@ Pet pet = (Pet) request.getAttribute("updatePet");
 								<tr>
 									<td><label>寵物生日:</label></td>
 									<td><input type="date" name="petBirth"
-										value="<%=pet.getPetBirth()%>"  required></td>
+										value="<%=pet.getPetBirth()%>" readonly required></td>
 								</tr>
 								<tr>
 									<td><label>狀態:</label></td>
