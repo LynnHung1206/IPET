@@ -20,7 +20,7 @@ public class OrderMaster  {
 	private Integer memID;
 	@Column(name = "order_sum")
 	private Integer orderSum;
-	@Column(name = "order_date")
+	@Column(name = "order_date", insertable = false)
 	private Date orderDate;
 	@Column(name = "order_status")
 	private Integer orderStatus;
