@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import com.core.util.HibernateUtil;
 import com.web.order.model.dao.MasterDAO;
+import com.web.order.model.entities.OrderDetail;
 import com.web.order.model.entities.OrderMaster;
 
 public class MasterDAOImpl implements MasterDAO {
@@ -62,5 +63,7 @@ public class MasterDAOImpl implements MasterDAO {
 		return getSession().createQuery(hql,OrderMaster.class).list();
 	}
 
+	
+		
 	
 }

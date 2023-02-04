@@ -1,12 +1,16 @@
 package com.web.order.model.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +26,7 @@ public class OrderMaster  {
 	private Integer orderSum;
 	@Column(name = "order_date", insertable = false)
 	private Date orderDate;
-	@Column(name = "order_status")
+	@Column(name = "order_status", insertable = false)
 	private Integer orderStatus;
 	@Column(name = "order_rec_name")
 	private String orderRecName;
@@ -30,6 +34,10 @@ public class OrderMaster  {
 	private String orderRecPhone;
 	@Column(name = "order_rec_address")
 	private String orderRecAddress;
+	
+	@OneToMany
+	@JoinColumn(name = "order_id", referencedColumnName = "order_id")
+	private List<OrderDetail> orderDetails;
 	
 	public OrderMaster() {
 		
