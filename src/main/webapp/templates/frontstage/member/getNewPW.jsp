@@ -9,37 +9,6 @@
 <title>IPET - Pet Food eCommerce Bootstrap4 Template</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style type="text/css" media="screen">
-.button {
-	background-color: lightgray;
-	width: 70px;
-	margin: 20px 0;
-	justify-content: center;
-	display: flex;
-}
-
-.text-field {
-	background-color: lightgray;
-	width: 150px;
-	margin: 20px 0;
-	justify-content: center;
-	display: flex;
-	background-color: white;
-	font-weight: bolder;
-	text-align: center;
-}
-#myForm{
-/* 	border: 1px solid pink; */
-	padding: 50px;
-	background-color: pink;
-	width: 750px;
-	margin: 20px auto;
-	justify-content: center;
-	display: flex;
-}
-</style>
-
 <!-- Favicon -->
 <link rel="shortcut icon" type="image/x-icon"
 	href="${pageContext.request.contextPath}/static/frontstage/img/favicon.png">
@@ -72,27 +41,59 @@
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
 			<div class="breadcrumb-content text-center">
-				<h2>IPET線上客服</h2>
 				<ul>
 					<li><a href="index.html">home</a></li>
-					<li class="active">IPET CustomerService</li>
+					<li class="active">忘記密碼</li>
 				</ul>
 			</div>
 		</div>
 	</div>
-	<div style="margin: 50px auto;">
-
-				<h1 align="center" ">歡迎使用IPET線上客服</h1>
-		<form id="myForm" action="<%=request.getContextPath()%>/chat.do"
-			method="POST">
-			<input id="userName" name="userName" class="text-field" type="text"
-				readonly="readonly" 
-				value="${member.getMemName() == null?'訪客':member.getMemName()}" />
-			<input type="submit" id="send" class="button" value="進入" autofocus="autofocus" />
-		</form>
-
+	<div class="login-register-area pt-95 pb-100">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7 col-md-12 ml-auto mr-auto">
+					<div class="login-register-wrapper">
+						<div class="tab-content">
+							<div id="lg1" class="tab-pane active">
+								<div class="login-form-container">
+									<div class="login-register-form">
+									<h1 style="color: red; font-size: 20px;">${wrong}</h1>
+										<form method="post"
+											action="${pageContext.request.contextPath}/ipet-back/member/getNewPW">
+											<div>
+												<input type="text" class="form-control" placeholder="請輸入驗證碼"
+													id="randomNum" name="randomNum" required>
+												<input type="hidden" class="form-control" placeholder="請輸入驗證碼"
+													id="memId" name="memId" required value="${changePWMemId}">
+												<div class="input-group-append">
+													<div class="input-group-text">
+														<span class="fas fa-envelope"></span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<!-- /.col -->
+												<div class="col-4" style="margin: auto;">
+													<button type="submit" class="btn btn-primary btn-block"
+														id="getNewPW">確認</button>
+<!-- 														=================================== -->
+												</div>
+												<!-- /.col -->
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<%@include file="/templates/frontstage/common/footer.jsp"%>
+
+
+
 
 	<!-- all js here -->
 	<script
@@ -115,22 +116,31 @@
 		src="${pageContext.request.contextPath}/static/frontstage/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
+	<script>
+		// 	const account = document.querySelector('#memAc');
+		// 	const password = document.querySelector('#memPw');
+		// 	const btnLogin = document.querySelector('#btnLogin');
 
+		// 	btnLogin.addEventListener('click',function(){
+		// 		fetch('${pageContext.request.contextPath}/ipet-back/member/login', {
+		// 			method: 'POST',
+		// 			header: {
+		// 				'Content-Type': 'application/json' //當作是瀏覽器上的副檔名
+		// 			},
+		// 			body: JSON.stringify({ 
+		// 				memAc: account.value,
+		// 				memPw: password.value
+		// 			})
+		// 		})
+		// 		.then(resp => resp.json())
+		// 		.then(body => {
+		// // 			alert(body.result);
+		// 			if(body.result){
+		// 				location = '${pageContext.request.contextPath}/templates/frontstage/index.jsp';
+		// 			}
+		// 		});
+		// 	});
+	</script>
 </body>
-<script>
-	var inputUserName = document.getElementById("userName");
-	inputUserName.focus();
-
-	function sendName() {
-		var userName = inputUserName.value.trim();
-		if (userName === "") {
-			alert("Input a user name");
-			inputUserName.focus();
-			return;
-		} else {
-			document.getElementById("myForm").submit();
-		}
-	}
-</script>
 
 </html>

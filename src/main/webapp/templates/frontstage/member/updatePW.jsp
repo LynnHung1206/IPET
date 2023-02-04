@@ -5,7 +5,7 @@
 <%@ page import="com.web.member.model.entity.*"%>
 
 <%
-Member member = (Member) session.getAttribute("member");
+Member member = (Member) request.getAttribute("getNewPWMember");
 %>
 
 <!doctype html>
@@ -49,10 +49,10 @@ Member member = (Member) session.getAttribute("member");
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
 			<div class="breadcrumb-content text-center">
-				<h2>會員資料修改</h2>
+				<h2>密碼修改</h2>
 				<ul>
 					<li><a href="index.html">home</a></li>
-					<li class="active">Member Profile</li>
+					<li class="active">Change Password</li>
 				</ul>
 			</div>
 		</div>
@@ -73,59 +73,50 @@ Member member = (Member) session.getAttribute("member");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/member/toEdit" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-back/member/toEditPW" method="post">
 						
 							<table id="memberdata" align="center">
 								<tr>
-									<td><label>姓名:</label></td>
-									<td><input type="text" name="memName"
+									<td><input type="hidden" name="memName"
 										pattern="[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}"
 										value="<%=member.getMemName()%>"  required></td>
 								</tr>
 
 								<tr>
-									<td><label>身分證字號:</label></td>
-									<td><input type="text" name="memUid"
+									<td><input type="hidden" name="memUid"
 										value="<%=member.getMemUid()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td><label>生日:</label></td>
-									<td><input type="date" name="memBth"
+									<td><input type="hidden" name="memBth"
 										value="<%=member.getMemBth()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td>性別:</td>
-									<td><input type="text" name="memSex"
+									<td><input type="hidden" name="memSex"
 										value="<%=member.getMemSex()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td><label>Email:</label></td>
-									<td><input type="email" name="memEmail"
+									<td><input type="hidden" name="memEmail"
 										value="<%=member.getMemEmail()%>"  required></td>
 								</tr>
 								<tr>
-									<td><label>手機:</label></td>
-									<td><input type="tel" name="memPhone"
+									<td><input type="hidden" name="memPhone"
 										value="<%=member.getMemPhone()%>"  required></td>
 								</tr>
 								<tr>
-									<td><label>室內電話:</label></td>
-									<td><input type="tel" name="memTel"
+									<td><input type="hidden" name="memTel"
 										value="${member.getMemTel() == null?'':member.getMemTel()}" ></td>
 								</tr>
 								<tr>
-									<td><label>地址:</label></td>
-									<td><input type="text" name="memAdd"
+									<td><input type="hidden" name="memAdd"
 										value="<%=member.getMemAdd()%>" ></td>
 								</tr>
 								<tr>
-									<td><label>帳號:</label></td>
-									<td><input type="text" name="memAc"
+									<td><input type="hidden" name="memAc"
 										value="<%=member.getMemAc()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td><label>密碼:</label></td>
-									<td><input type="hidden" name="memPw"
+									<td><label>請輸入密碼:</label></td>
+									<td><input type="text" name="memPw"
 										value="<%=member.getMemPw()%>" required></td>
 								</tr>
 								<tr>
@@ -136,10 +127,10 @@ Member member = (Member) session.getAttribute("member");
 										value="<%=member.getMemStatus()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td><input type="hidden" name="action" value="updatefront" style="background-color: lightgary;">
+									<td><input type="hidden" name="action" value="updatePW" style="background-color: lightgary;">
 										<input type="hidden" name="memId"
 										value="<%=member.getMemId()%> "></td>
-									<td><input type="submit" value="送出修改" onclick="enter()" style="background-color: lightgary;"></td>
+									<td><input type="submit" value="送出修改" onclick="enter()" style="background-color: gary;"></td>
 								</tr>
 
 							</table>
