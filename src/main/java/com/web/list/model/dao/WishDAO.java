@@ -15,9 +15,9 @@ public interface WishDAO extends CoreDAO<WishList, Integer> {
 	
 	public void insert(WishList wishList,WishListPK wishListPK);
 	
-	public void remove(WishList wishList,WishListPK wishListPK);
+	public void remove(WishListPK wishListPK);
 	
-	public WishListPK selectOne(WishList wishList,WishListPK wishListPK);
+	public WishList selectOne(WishListPK wishListPK);
 	
 	public List<WishList> selectAll(WishList wishList);
 }

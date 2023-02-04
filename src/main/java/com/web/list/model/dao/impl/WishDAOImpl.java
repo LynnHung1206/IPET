@@ -24,7 +24,6 @@ public class WishDAOImpl implements WishDAO {
 		WishListPK wishListPK = new WishListPK();
 		wishListPK.setMemID(wishList.getWishListPK().getMemID());
 		wishListPK.setProdID(wishList.getWishListPK().getProdID());
-		 
 		 wishList.setWishListPK(wishListPK);
 		 session.save(wishList);
 
@@ -51,24 +50,28 @@ public class WishDAOImpl implements WishDAO {
 	@Override
 	public void insert(WishList wishList, WishListPK wishListPK) {
 		Session session = getSession();
+		wishList.setCount(1); //這裡先暫時這樣設
 		 wishList.setWishListPK(wishListPK);
 		 session.save(wishList);
-	
+		 
+		 
 		
 	}
 	@Override
-	public void remove(WishList wishList, WishListPK wishListPK) {
+	public void remove(WishListPK wishListPK) {
 		Session session = getSession();
+		session.clear();
+		WishList wishList = new WishList();
 		 wishList.setWishListPK(wishListPK);
 		 session.delete(wishList);
-
+		
 	}
 	
 	@Override
-	public WishListPK selectOne(WishList wishList,WishListPK wishListPK) {
+	public WishList selectOne(WishListPK wishListPK) {
 		Session session = getSession();
 		WishList oldwishList = session.get(WishList.class, wishListPK);
-		return oldwishList.getWishListPK();
+		return oldwishList;
 	}
 	
 	@Override
@@ -106,16 +109,17 @@ public class WishDAOImpl implements WishDAO {
 //		session.close();
 //		==============================================================
 		// 新增單筆商品
-//		session.beginTransaction();
-//		WishList wishList = new WishList();
-//		WishListPK pk = new WishListPK();
-//		 pk.setMemID(1);
-//		 pk.setProdID(9);
-//		 
-//		 wishList.setWishListPK(pk);
-//		 session.save(wishList);
-//		 session.getTransaction().commit();
-//		 session.close();
+		session.beginTransaction();
+		WishList wishList = new WishList();
+		WishListPK pk = new WishListPK();
+		 pk.setMemID(1);
+		 pk.setProdID(6);
+		 wishList.setCount(1);
+		 
+		 wishList.setWishListPK(pk);
+		 session.save(wishList);
+		 session.getTransaction().commit();
+		 session.close();
 //		==============================================================
 		//刪除單筆商品
 //		session.beginTransaction();
@@ -156,7 +160,7 @@ public class WishDAOImpl implements WishDAO {
 //		wishListPK.setMemID(1);
 //		wishListPK.setProdID(1);
 //		wishList.setWishListPK(wishListPK);
-//		dao.selectOne(wishList,wishListPK);
+//		dao.selectOne(wishListPK);
 		
 		//DAO查詢測試全部
 //		WishList wishList = new WishList();

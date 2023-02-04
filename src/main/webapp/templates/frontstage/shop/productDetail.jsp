@@ -52,6 +52,22 @@ pageContext.setAttribute("product", product);
 	justify-content: center;
 	align-items: center;
 }
+
+#wish i {
+    color: white;
+}
+
+#wish i.clicked {
+    color: red;
+}
+
+#cart i {
+    color: white;
+}
+
+#cart i.clicked {
+    color: red;
+}
 </style>
 </head>
 
@@ -103,7 +119,7 @@ pageContext.setAttribute("product", product);
 							<label>數量:</label>
 							<div class="cart-plus-minus">
 								<input class="cart-plus-minus-box" type="text" name="qtybutton"
-									value="0">
+									value="1">
 							</div>
 						</div>
 						<div class="product-list-action">
@@ -166,23 +182,8 @@ pageContext.setAttribute("product", product);
 <script>
 		const contextPath = "<%=request.getContextPath()%>";
 		
-		$("#wish").data("clicked", false);
-		
 		$("#wish").click(function(e) {
 		    e.preventDefault();
-		    if ($(this).data("clicked")) {
-		        $.post(
-		            contextPath + "/ipet-front/prod/fromProductDetailWish", {
-		                action:"remove",
-		                prodID: ${product.prodID},
-		                memID:1
-		            },
-		            function(data) {
-		                // 回應
-		            }
-		        );
-		        $(this).find("i").css("color", "white");
-		    } else {
 		        $.post(
 		            contextPath + "/ipet-front/prod/fromProductDetailWish", {
 		                action:"add",
@@ -192,48 +193,37 @@ pageContext.setAttribute("product", product);
 		            function(data) {
 		                // 回應
 		            }
+		            
 		        );
-		        $(this).find("i").css("color", "red");
-		    }
-		    $(this).data("clicked", !$(this).data("clicked"));
+		        $(this).find("i").toggleClass("clicked");
+		    
 		});
 		
-    </script>
-
-<script>
-    
-    $("#cart").data("clicked", false);
-	
-	$("#cart").click(function(e) {
-	    e.preventDefault();
-	    if ($(this).data("clicked")) {
-	        $.post(
-	            contextPath + "/ipet-front/prod/fromProductDetailCart", {
-	                action:"remove",
-	                prodID: ${product.prodID},
-	                memID:1
-	            },
-	            function(data) {
-	                // 回應
-	            }
-	        );
-	        $(this).find("i").css("color", "white");
-	    } else {
-	        $.post(
-	            contextPath + "/ipet-front/prod/fromProductDetailCart", {
-	                action:"add",
-	                prodID: ${product.prodID},
-	                memID:1
-	            },
-	            function(data) {
-	                // 回應
-	            }
-	        );
-	        $(this).find("i").css("color", "red");
-	    }
-	    $(this).data("clicked", !$(this).data("clicked"));
-	});
-    
+		let sum = 0;
+		let count = $(".count-style");
+		count.text(sum);
+		
+		$("#cart").click(function(e) {
+		    e.preventDefault();
+		        $.post(
+		            contextPath + "/ipet-front/prod/fromProductDetailCart", {
+		                action:"add2",
+		                prodID: ${product.prodID},
+		                memID:1
+		            },
+		            function(data) {
+		                // 回應
+		            }
+		            
+		        );
+// 		        sum++;
+// 		        count.text(sum);
+		        $(this).find("i").toggleClass("clicked");
+		    
+		});
+		
+		
+		
     </script>
 
 </html>
