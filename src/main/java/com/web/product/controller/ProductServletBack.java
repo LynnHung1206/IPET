@@ -17,14 +17,15 @@ import javax.servlet.http.Part;
 
 import com.web.product.model.entity.Product;
 import com.web.product.model.entity.ProductImg;
+import com.web.product.model.entity.ProductType;
 import com.web.product.model.service.ProductImgServiceBack;
 import com.web.product.model.service.ProductServiceBack;
 
-
-
-@WebServlet({"/ipet-back/prod/listOneProd","/ipet-back/prod/getOneForUpdate","/ipet-back/prod/delete","/ipet-back/prod/updateProdInput","/ipet-back/prod/addOneProd"})
+@WebServlet({ "/ipet-back/prod/listOneProd", "/ipet-back/prod/getOneForUpdate", "/ipet-back/prod/delete",
+		"/ipet-back/prod/updateProdInput", "/ipet-back/prod/addOneProd", "/ipet-back/prod/listAllProd1",
+		"/ipet-back/prod/addOneProd1", "/ipet-back/prod/select_page1" })
 @MultipartConfig(location = "C:\\CGA_105_WebApp\\eclipse_WTP_workspace1")
-public class ProductServletBack extends HttpServlet{
+public class ProductServletBack extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,9 +35,27 @@ public class ProductServletBack extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-		String action = request.getParameter("action");
+//		===============================轉換backindex用===============================
+		String path = request.getServletPath();
+		if ("/ipet-back/prod/listAllProd1".equalsIgnoreCase(path)) {
+			RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/listAllProd.jsp");
+			failureView.forward(request, response);
+		}
 
-		System.out.println(action);
+		if ("/ipet-back/prod/addOneProd1".equalsIgnoreCase(path)) {
+			RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/addProd.jsp");
+			failureView.forward(request, response);
+		}
+
+		if ("/ipet-back/prod/select_page1".equalsIgnoreCase(path)) {
+			RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
+			failureView.forward(request, response);
+		}
+//		===============================轉換backindex用===============================
+		
+//		===============================原先JSP===============================
+		String action = request.getParameter("action");
+		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -51,7 +70,8 @@ public class ProductServletBack extends HttpServlet{
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
+				RequestDispatcher failureView = request
+						.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
 				failureView.forward(request, response);
 				return;// 程式中斷
 			}
@@ -64,7 +84,8 @@ public class ProductServletBack extends HttpServlet{
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
+				RequestDispatcher failureView = request
+						.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
 				failureView.forward(request, response);
 				return;//// 程式中斷
 			}
@@ -77,7 +98,8 @@ public class ProductServletBack extends HttpServlet{
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
+				RequestDispatcher failureView = request
+						.getRequestDispatcher("/templates/backstage/prod/select_page.jsp");
 				failureView.forward(request, response);
 				return;// 程式中斷
 			}
@@ -125,22 +147,20 @@ public class ProductServletBack extends HttpServlet{
 			prodVO.setProdPrice(prodPrice);
 			prodVO.setProdDescription(prodDescription);
 			prodVO.setTypeID(typeID);
-			
-			//接收圖片參數
+
+			// 接收圖片參數
 			Part part = request.getPart("imgFile");
-			
-			
-			//將圖片轉為byte陣列
+
+			// 將圖片轉為byte陣列
 			InputStream in = part.getInputStream();
 			byte[] imgFile = new byte[in.available()];
 			if (imgFile.length == 0) {
 				in = getServletContext().getResourceAsStream("/static/backstage/img/nopic.jpg");
 				imgFile = new byte[in.available()];
 			}
-				
-				in.read(imgFile);
-				in.close();
-		
+
+			in.read(imgFile);
+			in.close();
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -149,10 +169,10 @@ public class ProductServletBack extends HttpServlet{
 				failureView.forward(request, response);
 				return;
 			}
-			
+
 			/*************************** 2.開始新增資料 ***************************************/
 			ProductServiceBack prodSvc = new ProductServiceBack();
-			prodVO = prodSvc.addProdAndFile(prodName, prodPrice, prodDescription, typeID,imgFile);
+			prodVO = prodSvc.addProdAndFile(prodName, prodPrice, prodDescription, typeID, imgFile);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/templates/backstage/prod/listAllProd.jsp";
@@ -247,7 +267,6 @@ public class ProductServletBack extends HttpServlet{
 				typeID = 0;
 				errorMsgs.add("商品類別請填數字.");
 			}
-			
 
 			Product prodVO = new Product();
 
@@ -255,35 +274,39 @@ public class ProductServletBack extends HttpServlet{
 			prodVO.setProdName(prodName);
 			prodVO.setProdPrice(prodPrice);
 			prodVO.setProdDescription(prodDescription);
+			prodVO.setTypeID(typeID);
 			prodVO.setProdStatus(prodStatus);
 			prodVO.setTypeID(typeID);
-			
-			//接收圖片參數
+
+			// 接收圖片參數
 			Part part = request.getPart("imgFile");
-			
-			
-			//將圖片轉為byte陣列
+
+			// 將圖片轉為byte陣列
 			InputStream in = part.getInputStream();
 			byte[] imgFile = new byte[in.available()];
 			if (imgFile.length == 0) {
 				ProductServiceBack prodSvc1 = new ProductServiceBack();
-				imgFile =prodSvc1.getOneProdIMG(prodID).getImgFile();
+				imgFile = prodSvc1.getOneProdIMG(prodID).getImgFile();
 			}
-				
+
 			in.read(imgFile);
 			in.close();
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				request.setAttribute("prodVO", prodVO); // 含有輸入格式錯誤的ProdVO物件,也存入req
-				RequestDispatcher failureView = request.getRequestDispatcher("/templates/backstage/prod/update_prod_input.jsp");
+				RequestDispatcher failureView = request
+						.getRequestDispatcher("/templates/backstage/prod/update_prod_input.jsp");
 				failureView.forward(request, response);
 				return; // 程式中斷
 			}
 
 			/*************************** 2.開始修改資料 *****************************************/
+
 			ProductServiceBack prodSvc = new ProductServiceBack();
-			prodVO = prodSvc.updateProd(prodID, prodName, prodPrice, prodDescription, prodStatus, typeID,imgFile);
+			prodVO = prodSvc.updateProd(prodID, prodName, prodPrice, prodDescription, prodStatus, typeID, imgFile);
+
+	
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			request.setAttribute("prodVO", prodVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -291,31 +314,8 @@ public class ProductServletBack extends HttpServlet{
 			RequestDispatcher successView = request.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(request, response);
 		}
-		if ("upload_img".equals(action)) {// 來自update_prod_input.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			request.setAttribute("errorMsgs", errorMsgs);
-
-			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer prodID = Integer.valueOf(request.getParameter("prodID").trim());
-
-			Part part = request.getPart("imgFile");
-
-			InputStream in = part.getInputStream();
-			byte[] imgFile = new byte[in.available()];
-			in.read(imgFile);
-			in.close();
-
-			ProductServiceBack prodSvc = new ProductServiceBack();
-//			prodSvc.upload(imgFile, prodID);
-
-			String url = "/templates/backstage/prod/listAllProd.jsp";
-			RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(request, response);
-
-		}
+		
+//		===============================原先JSP===============================
 	}
 
 	public static byte[] getPictureByteArray(String path) throws IOException {

@@ -34,7 +34,8 @@ public class ProductImgDAOImpBack implements ProductImgDAO {
 
 	@Override
 	public void insert(ProductImg prod_IMGVO) {
-		// TODO Auto-generated method stub
+		Session session = getSession();
+		session.save(prod_IMGVO);
 		
 	}
 

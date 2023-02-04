@@ -49,9 +49,15 @@
 		<mapping class="com.web.product.model.entity.ProductType" />
 		<mapping class="com.web.list.model.entities.CartList" />
 		<mapping class="com.web.list.model.entities.WishList" />
+
 		<mapping class="com.web.order.model.entities.OrderDetail" />
 		<mapping class="com.web.order.model.entities.OrderMaster" />
 		<mapping class="com.web.order.model.entities.OrderReturn" />
+
+		<mapping class="com.web.order.model.entities.OrderMaster" />
+		<mapping class="com.web.order.model.entities.OrderReturn" />
+		<mapping class="com.web.order.model.entities.OrderDetail" />
+
 
 	</session-factory>
 </hibernate-configuration>

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.core.model.entities.Core;
 
@@ -56,6 +57,9 @@ public class Product extends Core {
 
 	@OneToMany(mappedBy = "product")
 	private List<ProductImg> productImgs ;
+	
+	@Transient
+	private ProductImg updateImg; //修改商品圖片用
 
 
 	@Override
@@ -145,5 +149,17 @@ public class Product extends Core {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+	public ProductImg getUpdateImg() {
+		return updateImg;
+	}
+
+
+	public void setUpdateImg(ProductImg updateImg) {
+		this.updateImg = updateImg;
+	}
+	
+	
 
 }
