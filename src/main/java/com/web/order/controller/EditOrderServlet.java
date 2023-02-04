@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.web.order.model.entities.OrderMaster;
 import com.web.order.model.services.imp.OrderServiceImp;
 
-@WebServlet("/templates/backstage/prod/edit")
+@WebServlet("/ipet-back/prod/edit")
 public class EditOrderServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -63,6 +63,6 @@ public class EditOrderServlet extends HttpServlet{
 		OrderServiceImp orderServiceImp = new OrderServiceImp();
 		orderServiceImp.updateOrderMaster(orderMaster);
 		System.out.println("go to serviceImp");
-		resp.sendRedirect(req.getContextPath() + "/templates/backstage/prod/orderMange.jsp");
+		resp.sendRedirect(req.getContextPath() + "/ipet-back/prod/orderMange");
 	}
 }
