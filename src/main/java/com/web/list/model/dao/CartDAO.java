@@ -15,9 +15,9 @@ public interface CartDAO extends CoreDAO<CartList, Integer> {
 	
 	public void insert(CartList cartList,CartListPK cartListPK);
 	
-	public void remove(CartList cartList,CartListPK cartListPK);
+	public void remove(CartListPK cartListPK);
 	
-	public CartListPK selectOne(CartList cartList,CartListPK cartListPK);
+	public CartList selectOne(CartListPK cartListPK);
 	
 	public List<CartList> selectAll(CartList cartList);
 	

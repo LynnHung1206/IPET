@@ -16,14 +16,35 @@ import com.web.product.model.entity.Product;
 @Table(name = "cart_list", catalog = "ipetdb")
 public class CartList {
 	
+	@Column(name="count" )
+	private Integer count;
+	
+	@Column(name="total")
+	private Integer total;
+	
 	@EmbeddedId
 	private CartListPK cartListPK;
 	
+
 	@ManyToOne
     @JoinColumn(name = "prod_id", insertable = false, updatable = false)
 	private Product product;
 	
-	
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 
 	public CartListPK getCartListPK() {
 		return cartListPK;

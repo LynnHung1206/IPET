@@ -81,12 +81,12 @@ pageContext.setAttribute("list", list);
 										<th>價錢</th>
 										<th>數量</th>
 										<th>小記</th>
-										<th>新增至購物車</th>
+										<th>刪除商品</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="cartVO" items="${list}">
-										<tr>
+										<tr id="btn${cartVO.product.prodID}">
 											<td class="product-thumbnail"><a href="#"><img
 													src="<%=request.getContextPath()%>/ipet-back/prod/DBGifReader?prodID=${cartVO.product.prodID}"
 													alt="" /></a></td>
@@ -96,12 +96,13 @@ pageContext.setAttribute("list", list);
 											<td class="product-quantity">
 												<div class="cart-plus-minus">
 													<input class="cart-plus-minus-box" type="text"
-														name="qtybutton" value="02" />
+														name="qtybutton" value="${cartVO.count}" />
 												</div>
 											</td>
-											<td class="product-subtotal">$110.00</td>
-											<td class="product-wishlist-cart"><a href="#">新增至購物車</a>
-											</td>
+											<td class="product-subtotal">${cartVO.total}</td>
+											<td class="product-wishlist-cart"><a href="#" onclick="deleteID(${cartVO.product.prodID})" >刪除商品</a>
+											
+											
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -136,5 +137,20 @@ pageContext.setAttribute("list", list);
 	<script
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
 </body>
+<script>
+const contextPath = "<%=request.getContextPath()%>";
+
+function deleteID(id){
+	$.post(
+            contextPath + "/ipet-front/prod/fromProductDetailCart", {
+                action:"remove",
+                prodID: id,
+                memID:1
+            },
+        );
+	document.querySelector("#btn" + id).remove();
+}
+
+</script>
 
 </html>

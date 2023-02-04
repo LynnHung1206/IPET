@@ -104,7 +104,7 @@
                             <div class="header-cart same-style">
                                 <button class="icon-cart">
                                     <i class="icon-handbag"></i>
-                                    <span class="count-style">02</span>
+                                    <span class="count-style">0</span>
                                 </button>
                                 <div class="shopping-cart-content">
 <!--                                     <ul> -->
@@ -142,7 +142,7 @@
                                     <div class="shopping-cart-btn">
                                         <a href="cart.jsp">查看購物車</a>
                                         <a href="wishList.jsp">查看我的最愛</a>
-                                        <a href="checkout.html">結帳去</a>
+                                        <a href="checkout.jsp">結帳去</a>
                                     </div>
                                 </div>
                             </div>

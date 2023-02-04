@@ -81,27 +81,33 @@ pageContext.setAttribute("list", list);
 										<th>價錢</th>
 										<th>數量</th>
 										<th>小記</th>
-										<th>新增至購物車</th>
+										<th>刪除收藏</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="wishVO" items="${list}">
-										<tr>
+
+										<tr id="btn${wishVO.product.prodID}">
 											<td class="product-thumbnail"><a href="#"><img
 													src="<%=request.getContextPath()%>/ipet-back/prod/DBGifReader?prodID=${wishVO.product.prodID}"
 													alt="" /></a></td>
 											<td class="product-name"><a href="#">${wishVO.product.prodName}</a></td>
-											<td class="product-price-cart"><span class="amount">z${wishVO.product.prodPrice}</span>
+											<td class="product-price-cart"><span class="amount">${wishVO.product.prodPrice}</span>
 											</td>
 											<td class="product-quantity">
 												<div class="cart-plus-minus">
 													<input class="cart-plus-minus-box" type="text"
-														name="qtybutton" value="02" />
+														name="qtybutton" value="${wishVO.count}"
+														id="qty${wishVO.product.prodID}"
+														 />
 												</div>
 											</td>
-											<td class="product-subtotal">$110.00</td>
-											<td class="product-wishlist-cart"><a href="#">新增至購物車</a>
+											<td class="product-subtotal" id="total${wishVO.product.prodID}">${wishVO.product.prodPrice * wishVO.count}</td>
+											<td class="product-wishlist-cart"><a href="#" onclick="deleteID(${wishVO.product.prodID})">刪除</a>
 											</td>
+
+											<td><button type="button" class="delete-btn"
+													onclick="addCartID(${wishVO.product.prodID})">購物車</button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -136,5 +142,33 @@ pageContext.setAttribute("list", list);
 	<script
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
 </body>
+<script>
+const contextPath = "<%=request.getContextPath()%>";
+
+    function deleteID(id){
+    	$.post(
+	            contextPath + "/ipet-front/prod/fromProductDetailWish", {
+	                action:"remove",
+	                prodID: id,
+	                memID:1
+	            },
+	        );
+    	document.querySelector("#btn" + id).remove();
+    }
+
+    function addCartID(id){
+    	$.post(
+	            contextPath + "/ipet-front/prod/addToCart", {
+	                action:"addFromWish",
+	                prodID: id,
+	                memID:1,
+	                count:parseInt(document.querySelector(`#qty` + id).value),
+	                total:parseInt(document.querySelector(`#total` + id).innerText)
+	            },
+	        );
+    	
+    }
+
+</script>
 
 </html>

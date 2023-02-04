@@ -42,17 +42,17 @@ public class WishService {
 	};
 	
 	public void removeOneProd(Integer memId,Integer prodID) {
-		WishList wishList = new WishList();
+//		WishList wishList = new WishList();
 		WishListPK wishListPK = new WishListPK();
 		wishListPK.setMemID(memId);
 		wishListPK.setProdID(prodID);
-		wishList.setWishListPK(wishListPK);
+//		wishList.setWishListPK(wishListPK);
 		
-		dao.remove(wishList, wishListPK);
+		dao.remove(wishListPK);
 	};
 	
-	public WishListPK selectOne(WishList wishList,WishListPK wishListPK) {
-		return dao.selectOne(wishList, wishListPK);
+	public WishList selectOne(WishListPK wishListPK) {
+		return dao.selectOne(wishListPK);
 	};
 	
 	public List<WishList> getAll(WishList wishList){

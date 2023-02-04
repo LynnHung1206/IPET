@@ -130,11 +130,11 @@ th, td {
 					<td><input type="TEXT" name="prodStatus" size="45"
 						value="<%=prodVO.getProdStatus()%>" /></td>
 				</tr>
-				<tr>
+			
 				<jsp:useBean id="prodTypeSvc" scope="page"
 					class="com.web.product.model.service.ProductTypeServiceBack" />
 
-				</tr>
+				
 				<tr>
 					<td>Ãþ§O:<font color=red><b>*</b></font></td>
 					<td><select size="1" name="typeID">

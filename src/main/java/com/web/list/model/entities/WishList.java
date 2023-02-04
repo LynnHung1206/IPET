@@ -10,6 +10,13 @@ import com.web.product.model.entity.Product;
 @Entity
 @Table(name = "wish_list", catalog = "ipetdb")
 public class WishList {
+	
+	@Column(name="count")
+	private Integer count;
+	
+	@Column(name="total")
+	private Integer total;
+	
 	@EmbeddedId
 	private WishListPK wishListPK;
 	
@@ -26,6 +33,7 @@ public class WishList {
 		this.product = product;
 	}
 	
+
 	public WishList() {
 		
 	}
@@ -39,6 +47,21 @@ public class WishList {
 		this.wishListPK = wishListPK;
 	}
 
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 
 	@Embeddable
 	public static class WishListPK implements Serializable {

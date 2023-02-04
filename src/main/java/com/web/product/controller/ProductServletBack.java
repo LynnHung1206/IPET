@@ -213,6 +213,7 @@ public class ProductServletBack extends HttpServlet {
 			/*************************** 2.開始查詢資料 ****************************************/
 			ProductServiceBack prodSvc = new ProductServiceBack();
 			Product prodVO = prodSvc.getOneProd(prodID);
+			
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			request.setAttribute("prodVO", prodVO); // 資料庫取出的ProdVO物件,存入req
@@ -267,6 +268,9 @@ public class ProductServletBack extends HttpServlet {
 				typeID = 0;
 				errorMsgs.add("商品類別請填數字.");
 			}
+			
+			ProductType productType = new ProductType();
+			productType.setTypeID(typeID);
 
 			Product prodVO = new Product();
 
@@ -276,7 +280,7 @@ public class ProductServletBack extends HttpServlet {
 			prodVO.setProdDescription(prodDescription);
 			prodVO.setTypeID(typeID);
 			prodVO.setProdStatus(prodStatus);
-			prodVO.setTypeID(typeID);
+			prodVO.setProductType(productType); // 問題在這裡
 
 			// 接收圖片參數
 			Part part = request.getPart("imgFile");

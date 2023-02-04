@@ -34,28 +34,44 @@ public class CartService {
 //		return dao.getAll();
 //	}
 	
-	public void addOneProd(Integer memId,Integer prodID) {
+	public void addOneProd(Integer memId,Integer prodID,Integer count, Integer total) {
 		CartList cartList = new CartList();
+		cartList.setCount(count);
+		cartList.setTotal(total);
 		CartListPK cartListPK = new CartListPK();
 		cartListPK.setMemID(memId);
 		cartListPK.setProdID(prodID);
+		
 		
 		cartList.setCartListPK(cartListPK);
 		dao.insert(cartList, cartListPK);
+		
 	};
 	
-	public void removeOneProd(Integer memId,Integer prodID) {
+	public void addOneProd2(Integer memId,Integer prodID) {
 		CartList cartList = new CartList();
 		CartListPK cartListPK = new CartListPK();
 		cartListPK.setMemID(memId);
 		cartListPK.setProdID(prodID);
-		cartList.setCartListPK(cartListPK);
 		
-		dao.remove(cartList, cartListPK);
+		
+		cartList.setCartListPK(cartListPK);
+		dao.insert(cartList, cartListPK);
+		
 	};
 	
-	public CartListPK selectOne(CartList cartList,CartListPK cartListPK) {
-		return dao.selectOne(cartList, cartListPK);
+	public void removeOneProd(Integer memId,Integer prodID) {
+//		CartList cartList = new CartList();
+		CartListPK cartListPK = new CartListPK();
+		cartListPK.setMemID(memId);
+		cartListPK.setProdID(prodID);
+//		cartList.setCartListPK(cartListPK);
+		
+		dao.remove(cartListPK);
+	};
+	
+	public CartList selectOne(CartListPK cartListPK) {
+		return dao.selectOne(cartListPK);
 	};
 	
 	public List<CartList> getAll(CartList cartList){
