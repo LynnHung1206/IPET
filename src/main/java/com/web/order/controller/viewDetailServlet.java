@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.web.order.model.entities.OrderDetail;
 import com.web.order.model.services.imp.OrderServiceImp;
 
-@WebServlet("/ipet-back/prod/detail")
+@WebServlet({"/ipet-back/prod/detail", "/templates/frontstage/shop/orderDetail"})
 public class viewDetailServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,15 @@ public class viewDetailServlet extends HttpServlet{
 			req.setAttribute("detailList", detailList);
 			req.setAttribute("openDetailModal", openDetailModal);
 			
-			RequestDispatcher successView = req.getRequestDispatcher("/templates/backstage/prod/orderMange.jsp");
+			String url;
+			System.out.println(req.getServletPath().indexOf("shop"));
+			if(req.getServletPath().indexOf("shop") != -1) {
+				url = "/templates/frontstage/shop/viewOrder.jsp";
+			} else {
+				url = "/templates/backstage/prod/orderMange.jsp";
+			}
+			
+			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, resp);
 			
 		}

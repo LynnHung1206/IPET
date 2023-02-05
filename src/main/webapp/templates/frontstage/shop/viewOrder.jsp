@@ -1,13 +1,20 @@
-<%@page import="com.web.order.model.entities.OrderMaster"%>
-<%@page import="com.web.order.model.services.imp.OrderServiceImp"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.web.product.model.entity.Product"%>
+<%@ page import="com.web.product.model.service.imp.ProductServiceFrontImp"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.web.order.model.entities.OrderMaster"%>
+<%@ page import="com.web.order.model.services.imp.OrderServiceImp"%>
 
 <% 
 	OrderServiceImp orderServiceImp = new OrderServiceImp();
-
+	List<OrderMaster> OrderMasterList = orderServiceImp.findOrderMasterBymemID(1);
+	pageContext.setAttribute("OrderMasterList", OrderMasterList);
 	
-	
+	ProductServiceFrontImp productServiceFrontImp = new ProductServiceFrontImp();
+	List<Product> productList = productServiceFrontImp.findAllProduct();
+	pageContext.setAttribute("productList", productList);
 %>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -21,7 +28,7 @@
 
 	<!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/static/frontstage/img/favicon.png">
-
+	
 	<!-- all css here -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/animate.css">
@@ -45,7 +52,7 @@
     <script src="${pageContext.request.contextPath}/static/frontstage/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/plugins.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
-	
+
 	<!-- Font Awesome Icons -->
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
 	
@@ -138,21 +145,30 @@
                       								<td>取消訂單</td>
                     							</tr>
                   							</thead>
-                  								<tr>
-                      								<td>訂單編號</td>
-                      								<td>會員編號</td>
-                      								<td>訂單日期</td>
-                      								<td>金額</td>
-                      								<td hidden>訂單狀態</td>
-                      								<td>訂單狀態</td>
-                     								<td>收件人姓名</td>
-                      								<td>收件人電話</td>
-                      								<td>收件人地址</td>
-                      								<td><i class="fas fa-sharp fa-solid fa-eye"></i></td>
-                      								<td>cancel</td>
-                    							</tr>
+                  								
                   							<tbody>
-                  							
+                  								<c:forEach var="orderMaster" items="${OrderMasterList}">
+                  									
+                  								<tr>
+                      								<td>${orderMaster.orderID}</td>
+                      								<td>${orderMaster.memID}</td>
+                      								<td><fmt:formatDate value="${orderMaster.orderDate}" pattern="yyyy-MM-dd"/></td>
+                      								<td>${orderMaster.orderSum}</td>
+                      								<td class="orderStatus" hidden>${orderMaster.orderStatus}</td>
+                      								<td></td>
+                     								<td>${orderMaster.orderRecName}</td>
+                      								<td>${orderMaster.orderRecPhone}</td>
+                      								<td>${orderMaster.orderRecAddress}</td>
+                      								<td><a href="orderDetail?orderID=${orderMaster.orderID}"><i class="fas fa-sharp fa-solid fa-eye"></i></a></td>
+                      								<td>
+                      									<form action="cancel" method="post">
+                      										<input type="hidden" name="orderID" value="${orderMaster.orderID}">
+                      										<button type="submit" class="btn btn-danger">取消</button>
+                      									</form>
+                      								</td>
+                      								
+                    							</tr>
+                    							</c:forEach>
                   							</tbody>
                 						</table>
              						</div>
@@ -168,11 +184,101 @@
     			</section>
   			<!-- /.content -->
 			</div>
+			
+  <!-- order detail modal -->
+  <c:if test="${openDetailModal != null}">
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">訂單編號: ${detailList[0].orderID}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          
+          <div class="card-body">
+            <div class="modal-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td>產品編號</td>
+                    <td>產品名稱</td>
+              		<td>數量</td>
+              		<td>單價</td>
+              		<td>小計</td>
+            	  </tr>
+          		</thead>
+          		
+          		<tbody>
+          		  <c:forEach var="detail" items="${detailList}">
+            	    <tr>
+              		  <td>${detail.prodID}</td>
+              		  <c:forEach var="product" items="${productList}">
+                	    <c:if test="${detail.prodID == product.prodID}">
+                  	  	  <td>${product.prodName}</td>
+                		</c:if>
+              		  </c:forEach>
+              		  <td>${detail.detailQuantity}</td>
+              		  <td>${detail.detailPrice}</td>            
+              		  <td><fmt:formatNumber type="number" value="${detail.detailQuantity*detail.detailPrice}"/></td> 
+            		</tr>
+          		  </c:forEach> 
+          		</tbody>
+        	  </table>
+      		</div>
+      	  </div>
+      
+      	  <div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      	  </div>
+    	</div>
+  	  </div>
+  	</div>
+  
+    <script>
+  	  $('#orderDetailModal').modal('show');
+    </script>
+  </c:if>
+  
 		</div>
 	</div>
 
 	<!-- footer -->
 	<%@include file="/templates/frontstage/common/footer.jsp"%>
+
+<script>
+  $('.orderStatus').each(function(){
+	  if($(this).text() == 0){
+		 $(this).next().append('待出貨');
+		 $(this).next().css({
+             'color': 'white',
+             'background-color': '#E4E88B'
+         });
+	  } else if($(this).text() == 1) {
+		  $(this).next().append('已出貨');
+		  $(this).next().css({
+	             'color': 'white',
+	             'background-color': '#8D97FF'
+	      });
+		  $(this).parent().find('button').attr('disabled', '');
+	  } else if($(this).text() == 2) {
+		  $(this).next().append('訂單結案');
+		  $(this).next().css({
+	             'color': 'white',
+	             'background-color': '#9C9CA0'
+	      });
+		  $(this).parent().find('button').attr('disabled', '');
+	  } else if($(this).text() == 3) {
+		  $(this).next().append('取消訂單');
+		  $(this).next().css({
+	             'color': 'white',
+	             'background-color': '#EF5A5D'
+	      });
+		  $(this).parent().find('button').attr('disabled', '');
+	  }
+  });
+</script>
 
 </body>
 
