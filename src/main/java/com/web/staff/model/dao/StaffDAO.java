@@ -12,4 +12,5 @@ public interface StaffDAO extends CoreDAO<Staff,Integer> {
 	public List<Staff> getStaffByPosi(String posi);
 	public Staff getByAcAndPw(Staff staff);
 	public boolean getAc(String ac);
+	public Integer acActive(String ac) ;
 }

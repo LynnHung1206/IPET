@@ -16,15 +16,14 @@ public class StaffService {
 
 	int id = 0;
 
-	public int addStaff(Staff staffVO) {
-		id = dao.add(staffVO);
+	public int addStaff(Staff staff) {
+		id = dao.add(staff);
 		return id;
 	}
 	
 	public Staff updateStaff(Staff staffVO) {
 		return dao.update(staffVO);
 	}
-	
 	
 	public Staff getStaff(int id) {
 		Staff staffVO = dao.getById(id);
@@ -38,7 +37,6 @@ public class StaffService {
 	public boolean findAc(String ac) {
 		return dao.getAc(ac);
 	}
-	
 	
 	public Staff login(Staff staff) {
 		String account = staff.getAc();
@@ -68,4 +66,7 @@ public class StaffService {
 		return staff;
 	}
 
+	public Integer acAcactive(String ac) {
+		return dao.acActive(ac);
+	}
 }

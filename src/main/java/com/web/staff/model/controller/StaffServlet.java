@@ -19,7 +19,7 @@ import com.web.staff.model.entity.Staff;
 import com.web.staff.model.service.StaffService;
 
 @WebServlet({ "/ipet-back/staff/allStaffList", "/ipet-back/staff/edit", "/ipet-back/staff/addNew",
-		"/ipet-back/staff/getAllList", "/ipet-back/staff/checkAc" })
+		"/ipet-back/staff/getAllList", "/ipet-back/staff/checkAc", "/ipet-back/staff/checkStatus" })
 public class StaffServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -47,6 +47,7 @@ public class StaffServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String path = req.getServletPath();
 
+		System.out.println("經過這裡");
 		// insert
 		if ("insert".equals(action)) {
 			insert(req, res);
@@ -73,10 +74,17 @@ public class StaffServlet extends HttpServlet {
 			StaffService staffSvc = new StaffService();
 			Staff staff = new Staff();
 			staff.setAc(req.getParameter("account"));
-			
-			staffSvc.findAc(staff.getAc());
-			
+
 			res.getWriter().print(staffSvc.findAc(staff.getAc()));
+		}
+		if ("/ipet-back/staff/checkStatus".equals(path)) {
+			StaffService staffSvc = new StaffService();
+			Staff staff = new Staff();
+			staff.setAc(req.getParameter("account"));
+
+			System.out.println("status=" + staffSvc.acAcactive(staff.getAc()));
+
+			res.getWriter().print(staffSvc.acAcactive(staff.getAc()));
 		}
 	}
 
@@ -95,7 +103,6 @@ public class StaffServlet extends HttpServlet {
 		Integer status = Integer.valueOf(req.getParameter("status").trim());
 		Integer id = Integer.valueOf(req.getParameter("staffId").toString().trim());
 
-		
 		Integer adminid = Integer.valueOf(req.getParameter("admin").trim());
 
 		Staff staff = new Staff();
