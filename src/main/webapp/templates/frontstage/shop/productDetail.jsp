@@ -54,19 +54,19 @@ pageContext.setAttribute("product", product);
 }
 
 #wish i {
-    color: white;
+	color: white;
 }
 
 #wish i.clicked {
-    color: red;
+	color: red;
 }
 
 #cart i {
-    color: white;
+	color: white;
 }
 
 #cart i.clicked {
-    color: red;
+	color: red;
 }
 </style>
 </head>
@@ -97,7 +97,8 @@ pageContext.setAttribute("product", product);
 				<!-- product image -->
 				<div class="col-lg-6 col-md-6 img-location">
 					<div class="img-location">
-						<img src="<%=request.getContextPath()%>/ipet-front/prod/DBGifReaderFront?prodID=${product.prodID}">
+						<img
+							src="<%=request.getContextPath()%>/ipet-front/prod/DBGifReaderFront?prodID=${product.prodID}">
 					</div>
 				</div>
 
@@ -119,7 +120,7 @@ pageContext.setAttribute("product", product);
 							<label>數量:</label>
 							<div class="cart-plus-minus">
 								<input class="cart-plus-minus-box" type="text" name="qtybutton"
-									value="1">
+									value="1" id="qty">
 							</div>
 						</div>
 						<div class="product-list-action">
@@ -177,11 +178,11 @@ pageContext.setAttribute("product", product);
 	<script
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
 
+
 </body>
 
-<script>
-		const contextPath = "<%=request.getContextPath()%>";
-		
+<script>		
+
 		$("#wish").click(function(e) {
 		    e.preventDefault();
 		        $.post(
@@ -196,28 +197,27 @@ pageContext.setAttribute("product", product);
 		            
 		        );
 		        $(this).find("i").toggleClass("clicked");
-		    
+			    
 		});
 		
-		let sum = 0;
-		let count = $(".count-style");
-		count.text(sum);
 		
 		$("#cart").click(function(e) {
+			let count = document.querySelector(`#qty`).value;
 		    e.preventDefault();
 		        $.post(
 		            contextPath + "/ipet-front/prod/fromProductDetailCart", {
-		                action:"add2",
+		                action:"add",
 		                prodID: ${product.prodID},
-		                memID:1
+		                memID:1,
+		                count:parseInt(document.querySelector(`#qty`).value),
+		                total:${product.prodPrice} * count,
 		            },
 		            function(data) {
 		                // 回應
 		            }
 		            
 		        );
-// 		        sum++;
-// 		        count.text(sum);
+
 		        $(this).find("i").toggleClass("clicked");
 		    
 		});

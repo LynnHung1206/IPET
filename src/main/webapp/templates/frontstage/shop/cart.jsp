@@ -138,7 +138,6 @@ pageContext.setAttribute("list", list);
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
 </body>
 <script>
-const contextPath = "<%=request.getContextPath()%>";
 
 function deleteID(id){
 	$.post(

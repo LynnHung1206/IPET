@@ -47,6 +47,10 @@ pageContext.setAttribute("list", list);
 	href="${pageContext.request.contextPath}/static/frontstage/css/responsive.css" />
 <script
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
+
+<style>
+
+</style>
 </head>
 
 <body>
@@ -82,6 +86,7 @@ pageContext.setAttribute("list", list);
 										<th>數量</th>
 										<th>小記</th>
 										<th>刪除收藏</th>
+										<th>加入購物車</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -105,10 +110,11 @@ pageContext.setAttribute("list", list);
 											<td class="product-subtotal" id="total${wishVO.product.prodID}">${wishVO.product.prodPrice * wishVO.count}</td>
 											<td class="product-wishlist-cart"><a href="#" onclick="deleteID(${wishVO.product.prodID})">刪除</a>
 											</td>
+											
+											<td class="product-wishlist-cart"><a href="#" onclick="addCartID(${wishVO.product.prodID})">加入購物車</a>
+											</td>
 
-											<td><button type="button" class="delete-btn"
-													onclick="addCartID(${wishVO.product.prodID})">購物車</button></td>
-										</tr>
+
 									</c:forEach>
 								</tbody>
 							</table>
@@ -143,7 +149,7 @@ pageContext.setAttribute("list", list);
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
 </body>
 <script>
-const contextPath = "<%=request.getContextPath()%>";
+
 
     function deleteID(id){
     	$.post(
