@@ -95,9 +95,15 @@
 												<div class="col-4" style="margin: auto;">
 													<button type="submit" class="btn btn-primary btn-block"
 														id="btnlogin">Sign In</button>
+													
 												</div>
+												
 												<!-- /.col -->
 											</div>
+											<div style="text-align: right;">
+												<a
+														href="${pageContext.request.contextPath}/ipet-front/member/forgetPW">忘記密碼?</a>
+												</div>
 										</form>
 									</div>
 								</div>

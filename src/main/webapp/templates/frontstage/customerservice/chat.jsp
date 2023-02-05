@@ -17,8 +17,8 @@
 	<div class="panel input-area">
 		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
 		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+<!-- 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" />  -->
+<!-- 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" /> -->
 	</div>
 </body>
 <script>

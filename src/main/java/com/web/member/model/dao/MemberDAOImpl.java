@@ -76,6 +76,19 @@ public class MemberDAOImpl implements MemberDAO{
 		}
 				
 	}
+	@Override
+	public Member getByMemAc(String memAc) {
+		Session session = getSession();
+		String hql = "FROM Member WHERE memAc = :memAc";
+		try {
+			return session.createQuery(hql,Member.class)
+					.setParameter("memAc", memAc).getSingleResult();
+			
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+	}
 	
 //	public static void main(String[] args) {
 //		MemberDAOImpl xx = new MemberDAOImpl();
