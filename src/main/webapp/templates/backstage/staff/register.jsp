@@ -165,7 +165,7 @@ input#allStaff:hover, #search:hover {
 								</tr>
 								<tr>
 									<jsp:useBean id="adminFuncSvc" scope="page"
-										class="com.web.admin.model.service.AdminFuncService" />
+										class="com.web.admin.model.service.impl.AdminFuncServiceImpl" />
 									<td><label>權限:</label></td>
 									<td><c:forEach var="adminFunc"
 											items="${adminFuncSvc.getAll()}">

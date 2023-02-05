@@ -1,10 +1,12 @@
-package com.web.staff.model.dao;
+package com.web.staff.model.dao.impl;
 
 import java.util.*;
 
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
+
+import com.web.staff.model.dao.StaffDAO;
 import com.web.staff.model.entity.Staff;
 
 public class StaffDAOImpl implements StaffDAO {
@@ -82,7 +84,6 @@ public class StaffDAOImpl implements StaffDAO {
 		}
 	}
 
-	
 	@Override
 	public Integer acActive(String ac) {
 		Session session = getSession();

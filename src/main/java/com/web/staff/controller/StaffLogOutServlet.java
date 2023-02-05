@@ -1,4 +1,4 @@
-package com.web.staff.model.controller;
+package com.web.staff.controller;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.web.staff.model.controller;
+package com.web.staff.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.web.staff.model.entity.Staff;
 import com.web.staff.model.service.StaffService;
+import com.web.staff.model.service.impl.StaffServiceImpl;
 
 @WebServlet("/ipet-back/login")
 public class StaffLoginServlet extends HttpServlet {
@@ -33,7 +34,7 @@ public class StaffLoginServlet extends HttpServlet {
 			turnToJson(resp, staff);
 			return;
 		}
-		StaffService staffSvc = new StaffService();
+		StaffService staffSvc = new StaffServiceImpl();
 		staff = staffSvc.login(staff);
 		if (staff.isSuccessful()) {
 			if (req.getSession(false) != null) {

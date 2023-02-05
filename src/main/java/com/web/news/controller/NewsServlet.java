@@ -1,4 +1,4 @@
-package com.web.news.model.controller;
+package com.web.news.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.news.model.entity.News;
 import com.web.news.model.service.NewsService;
+import com.web.news.model.service.impl.NewsServiceImpl;
 
 @WebServlet({ "/ipet-back/news/addNew", "/ipet-back/news/getAllList","/ipet-back/news/addNewNews","/ipet-back/news/editNews","/ipet-front/news/allNews","/ipet-front/news/deleteNews" })
 public class NewsServlet extends HttpServlet {
@@ -48,7 +49,7 @@ public class NewsServlet extends HttpServlet {
 			News news = new News();
 			news.setTitle(title);
 			news.setText(text);
-			NewsService newsSvc = new NewsService();
+			NewsService newsSvc = new NewsServiceImpl();
 			newsSvc.add(news);
 			turnToGson(req);
 			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
@@ -65,7 +66,7 @@ public class NewsServlet extends HttpServlet {
 			news.setId(id);
 			news.setTitle(title);
 			news.setText(text);
-			NewsService newsSvc = new NewsService();
+			NewsService newsSvc = new NewsServiceImpl();
 			newsSvc.update(news);
 			
 			turnToGson(req);
@@ -76,7 +77,7 @@ public class NewsServlet extends HttpServlet {
 		if("/ipet-front/news/deleteNews".equals(path)) {
 			String idStr = req.getParameter("newsId");
 			Integer id = Integer.valueOf(idStr);
-			NewsService newsSvc = new NewsService();
+			NewsService newsSvc = new NewsServiceImpl();
 			newsSvc.delete(id);
 			turnToGson(req);
 			req.getRequestDispatcher("/templates/backstage/news/allNews.jsp").forward(req, res);
@@ -86,7 +87,7 @@ public class NewsServlet extends HttpServlet {
 		
 	}
 	public void turnToGson(HttpServletRequest req) {
-		NewsService newsSvc = new NewsService();
+		NewsService newsSvc = new NewsServiceImpl();
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.serializeNulls()
 				.setDateFormat("yyyy-MM-dd")
