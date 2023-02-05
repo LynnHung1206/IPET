@@ -58,6 +58,8 @@ public class AppointmentDetail extends Core {
     private Integer svcId;
     @Transient
     private String svcName;
+    @Transient
+    private String svcContent;
     @Column(name = "SALE_ID")
     private Integer saleId;
     @Transient
@@ -70,10 +72,11 @@ public class AppointmentDetail extends Core {
     public AppointmentDetail() {
     }
 
-    public AppointmentDetail(Integer apmId, Integer svcId, String svcName, Integer saleId, String saleName, Integer svcPrice, Integer salePrice) {
+    public AppointmentDetail(Integer apmId, Integer svcId, String svcName, String svcContent, Integer saleId, String saleName, Integer svcPrice, Integer salePrice) {
         this.apmId = apmId;
         this.svcId = svcId;
         this.svcName = svcName;
+        this.svcContent = svcContent;
         this.saleId = saleId;
         this.saleName = saleName;
         this.svcPrice = svcPrice;
@@ -116,8 +119,16 @@ public class AppointmentDetail extends Core {
     public void setSvcName(String svcName) {
         this.svcName = svcName;
     }
+    
+    public String getSvcContent() {
+		return svcContent;
+	}
 
-    public Integer getSaleId() {
+	public void setSvcContent(String svcContent) {
+		this.svcContent = svcContent;
+	}
+
+	public Integer getSaleId() {
         return saleId;
     }
 

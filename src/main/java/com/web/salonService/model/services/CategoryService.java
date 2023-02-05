@@ -1,10 +1,10 @@
 package com.web.salonService.model.services;
 
 import java.util.List;
+
 import com.web.salonService.model.dao.CategoryDAO;
 import com.web.salonService.model.dao.impl.CategoryDAOImpl;
 import com.web.salonService.model.entities.Category;
-import com.web.salonService.model.entities.Service;
 
 public class CategoryService {
 	private CategoryDAO dao;
@@ -53,7 +53,4 @@ public class CategoryService {
 		return dao.getAll();
 	}
 	
-	public List<Service> finSvcByCat(Integer catId){
-		return dao.findSvcByCatId(catId);
-	}
 }

@@ -47,10 +47,10 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="blog-wrapper mb-30 gray-bg">
                                 <div class="blog-img hover-effect">
-                                    <a href="blog-details.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-4.jpg"></a>
+                                    <a href="${pageContext.request.contextPath}/ipet-front/salon/service"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-4.jpg"></a>
                                 </div>
                                 <div class="blog-content">
-                                    <h4><a href="#">基礎美容</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/ipet-front/salon/service">基礎美容</a></h4>
                                     <div class="blog-meta">
                                         <ul>
                                             <li><b>價格範圍:</b> <span>NT$750 - $1200 (依體型而定)</span></li>

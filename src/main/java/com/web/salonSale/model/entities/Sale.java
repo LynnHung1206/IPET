@@ -29,6 +29,11 @@ public class Sale extends Core{
 	@Column(name = "END_TIME")
 	private Timestamp endTime;
 	
+	@Transient
+	private String saleStatus;
+	
+	@Transient
+	private SaleDetail[] saleDetails;
 	
 	public Sale(Integer saleId, String saleName, String salContent, Timestamp startTime, Timestamp endTime) {
 		this.saleId = saleId;
@@ -76,6 +81,22 @@ public class Sale extends Core{
 	}
 	public void setEndTime(Timestamp endTime) {
 		this.endTime = endTime;
+	}
+	
+	public String getSaleStatus() {
+		return saleStatus;
+	}
+
+	public void setSaleStatus(String saleStatus) {
+		this.saleStatus = saleStatus;
+	}
+
+	public SaleDetail[] getSaleDetails() {
+		return saleDetails;
+	}
+
+	public void setSaleDetails(SaleDetail[] saleDetails) {
+		this.saleDetails = saleDetails;
 	}
 
 	@Override

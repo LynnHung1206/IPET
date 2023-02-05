@@ -9,12 +9,6 @@
 <%@ page import="java.util.*"%>
 
 <%
-ServiceService svcsvc = new ServiceService();
-List<Service> svclist = svcsvc.selectAll();
-pageContext.setAttribute("svclist", svclist);
-%>
-
-<%
 CategoryService catsvc = new CategoryService();
 List<Category> catlist = catsvc.selectAll();
 pageContext.setAttribute("catlist", catlist);
@@ -282,7 +276,7 @@ pageContext.setAttribute("catlist", catlist);
 						</div>
 					</div>
 							<div class="AGrid2">
-								<input type="reset" class="search-submit clear" value="清除">
+								<input type="reset" class="search-submit clear" value="清空">
 								<span></span>
 								<input type="submit" class="search-submit" value="查詢">
 							</div>
@@ -301,7 +295,7 @@ pageContext.setAttribute("catlist", catlist);
 								<table id="example2" class="table table-bordered table-hover">
 									<thead>
 										<tr>
-											<th>服務編號</th>
+											<th style="width: 90px;">服務編號</th>
 											<th>服務名稱</th>
 											<th>服務類別</th>
 											<th>寵物種類</th>
@@ -398,19 +392,39 @@ pageContext.setAttribute("catlist", catlist);
 	    	        "contentType": false,
 				},
 				"columns" : [
-		            { data: "svcId", responsivePriority: 1, className: "svcId" },
-		            { data: "svcName", responsivePriority: 2, className: "svcName" },
-		            { data: "catName", responsivePriority: 6, className: "catName" },
-		            { data: "typeName", responsivePriority: 3, className: "typeName" },
-		            { data: "svcPrice", responsivePriority: 4, className: "svcPrice" },
-		            { data: "svcStatusName", responsivePriority: 7, className: "svcStatusName" },
-		            { data: null,
-		            	defaultContent: `<i class="nav-icon fas fa-solid fa-pen"></i>`,
+		            { data: "svcId", responsivePriority: 1 },
+		            { data: "svcName", responsivePriority: 2 },
+		            { data: "catName", responsivePriority: 6 },
+		            { data: "typeName", responsivePriority: 3 },
+		            { data: "svcPrice", 
+		            	render: DataTable.render.number(',', null, 0, '$ '),
+		            	responsivePriority: 4 },
+		            { data: "svcStatusName", responsivePriority: 7 },
+		            { data: "svcId",
+		            	render: function(data, type){
+		            		return `
+			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService">
+									<input type="hidden" name="svcId" value=` + data + `>
+									<label><i class="nav-icon fas fa-solid fa-pen"></i>
+										<input type="submit" style="display: none;">
+									</label>
+								</form>
+		            		`;
+		            	},
 		            	responsivePriority: 5,
 		            },
-		            { data: null,
-		            	defaultContent: `<i class="nav-icon fas fa-solid fa-trash"></i>`,
-		            	responsivePriority: 8,
+		            { data: "svcId",
+		            	render: function(data, type){
+		            		return `
+			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService">
+									<input type="hidden" name="svcId" value=` + data + `>
+									<label><i class="nav-icon fas fa-solid fa-trash"></i>
+										<input type="submit" style="display: none;">
+									</label>
+								</form>
+		            		`;
+		            	},
+		            	responsivePriority: 5,
 		            }
 		        ],
 				language: {
@@ -437,36 +451,6 @@ pageContext.setAttribute("catlist", catlist);
 		      	 e.preventDefault();
 		    	 myTable.ajax.reload();
 		    });
-			
-			let svcList = `
-				<c:forEach var="svcVO" items="${svclist}">
-				<tr>
-					<td>${svcVO.svcId}</td>
-					<td>${svcVO.svcName}</td>
-					<td>${svcVO.categoryVO.catName}</td>
-					<td>${svcVO.petTypeVO.typeName}</td>
-					<td>${svcVO.svcPrice}</td>
-					<c:if test="${svcVO.svcStatus == 1}" var="true">
-						<td>未上架</td>
-					</c:if>
-					<c:if test="${svcVO.svcStatus == 0}" var="true">
-						<td>上架中</td>
-					</c:if>
-					<td>
-						<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService" style="margin-bottom: 0px;">
-							<input type="submit" value="修改">
-							<input type="hidden" name="svcId" value="${svcVO.svcId}">														
-						</form>
-					</td>
-					<td>
-						<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService" style="margin-bottom: 0px;">
-							<input type="submit" value="刪除">
-							<input type="hidden" name="svcId" value="${svcVO.svcId}">														
-						</form>
-					</td>
-				</tr>
-			</c:forEach>			
-			`;
 			
 			/*===================== 彈出視窗 ==========================*/
 			const mainModal = document.getElementById("mainModal");

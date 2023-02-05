@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
+
 import com.web.salonService.model.dao.ServiceDAO;
 import com.web.salonService.model.entities.Service;
 
@@ -53,6 +56,14 @@ public class ServiceDAOImpl implements ServiceDAO {
 	public List<Service> getAll() {
 		final String hql = "FROM Service ORDER BY svcId";
 		return getSession().createQuery(hql, Service.class).list();
+	}
+	
+	@Override
+	public List<Service> findSvcByCatId(Integer catId){
+		final String hql = "FROM Service WHERE catId = :catId ORDER BY svcId";
+		return getSession().createQuery(hql, Service.class)
+				.setParameter("catId", catId)
+				.list();
 	}
 
 	@Override

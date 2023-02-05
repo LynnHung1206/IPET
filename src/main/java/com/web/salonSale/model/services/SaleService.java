@@ -1,12 +1,15 @@
 package com.web.salonSale.model.services;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
 import com.web.salonSale.model.dao.SaleDAO;
 import com.web.salonSale.model.dao.SaleDetailDAO;
 import com.web.salonSale.model.dao.impl.SaleDAOImpl;
 import com.web.salonSale.model.dao.impl.SaleDetailDAOImpl;
 import com.web.salonSale.model.entities.Sale;
+import com.web.salonSale.model.entities.SaleDetail;
 
 public class SaleService {
 	private SaleDAO saleDAO;
@@ -87,22 +90,50 @@ public class SaleService {
 	}
 	
 	public Sale getOneSale(Integer saleId) {
-		return saleDAO.getById(saleId);
+		List<Sale> sales = new ArrayList<Sale>();
+		sales.add(saleDAO.getById(saleId));
+		return enterInformations(sales).get(0);
 	}
 	
 	public List<Sale> selectAll(){
-		return saleDAO.getAll();
+		List<Sale> sales = saleDAO.getAll();
+		return enterInformations(sales);
 	}
 	
 	public List<Sale> findNotYetStartSale(){
-		return saleDAO.findNotYetStartSale();
+		List<Sale> sales = saleDAO.findNotYetStartSale();
+		return enterInformations(sales);
 	}
 	
 	public List<Sale> findOnSale(){
-		return saleDAO.findOnSale();
+		List<Sale> sales = saleDAO.findOnSale();
+		return enterInformations(sales);
 	}
 	
 	public List<Sale> findEndedSale(){
-		return saleDAO.findEndedSale();
+		List<Sale> sales = saleDAO.findEndedSale();
+		return enterInformations(sales);
+	}
+	
+	private List<Sale> enterInformations(List<Sale> sales){
+		for (Sale sale : sales) {
+			
+			//優惠狀態
+			long now = System.currentTimeMillis();
+			long startTime = sale.getStartTime().getTime();
+			long endTime = sale.getEndTime().getTime();
+			if(endTime < now) {
+				sale.setSaleStatus("已結束");
+			}else if (startTime <= now && endTime >= now) {
+				sale.setSaleStatus("優惠中");
+			}else if (startTime > now) {
+				sale.setSaleStatus("未開始");
+			}
+			
+			//優惠詳情
+			List<SaleDetail> saleDetails = saleDetailDAO.findSvcsById(sale.getSaleId());
+			sale.setSaleDetails(saleDetails.toArray(SaleDetail[]::new));
+		}
+		return sales;
 	}
 }

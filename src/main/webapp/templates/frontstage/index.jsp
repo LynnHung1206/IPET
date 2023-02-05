@@ -63,12 +63,14 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <div class="single-food-category cate-padding-2 text-center mb-30">
+                    <a href="<c:url value='/ipet-front/salon/salonCategory' />">
                         <div class="single-food-hover-2">
                             <img src="${pageContext.request.contextPath}/static/frontstage/img/product/product-2.jpg" alt="">
                         </div>
                         <div class="single-food-content">
                             <h3>寵物美容</h3>
                         </div>
+                    </a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
