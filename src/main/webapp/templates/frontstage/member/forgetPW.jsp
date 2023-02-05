@@ -41,6 +41,7 @@
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
 			<div class="breadcrumb-content text-center">
+			<h2>忘記密碼</h2>
 				<ul>
 					<li><a href="index.html">home</a></li>
 					<li class="active">忘記密碼</li>

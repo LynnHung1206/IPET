@@ -115,7 +115,7 @@ Member member = (Member) request.getAttribute("getNewPWMember");
 										value="<%=member.getMemAc()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td><label>請輸入密碼:</label></td>
+									<td><label>請輸入新密碼:</label></td>
 									<td><input type="text" name="memPw"
 										value="<%=member.getMemPw()%>" required></td>
 								</tr>
