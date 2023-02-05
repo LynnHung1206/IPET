@@ -13,6 +13,12 @@ import com.web.order.model.entities.OrderMaster;
 public class MasterDAOImpl implements MasterDAO {
 
 	@Override
+	public List<OrderMaster> getBymemID(Integer memID) {
+		String hql = "FROM OrderMaster Where memID = :memID";
+		return getSession().createQuery(hql, OrderMaster.class).setParameter("memID", memID).list();
+	}
+	
+	@Override
 	public OrderMaster getById(Integer orderID) {
 		return getSession().get(OrderMaster.class, orderID);
 	}

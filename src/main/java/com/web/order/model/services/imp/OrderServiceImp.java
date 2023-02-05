@@ -29,6 +29,10 @@ public class OrderServiceImp implements OrderService{
 		return masterDAO.getAll();
 	}
 	
+	public List<OrderMaster> findOrderMasterBymemID(Integer memID){
+		return masterDAO.getBymemID(memID);
+	}
+	
 	public OrderMaster findOrderMaster(Integer orderID) {
 		return masterDAO.getById(orderID);
 	}
