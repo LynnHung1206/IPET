@@ -28,7 +28,15 @@
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
-	
+	#showImg {
+		position: absolute;
+		top: 0;
+		width: 100px;
+		height: 100px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+	}
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -125,7 +133,7 @@
 								<label class="svc_picture_label input-shadow">
 									<input type="file" id="add-img" accept="image/*" style="display: none;" name="svcImg">
 									<i class="nav-icon fas fa-regular fa-image" id="aPictureImg"></i>
-									<img id="showImg">
+									<div id="showImg"></div>
 								</label>
 							</div>
 							<div id="summernoteFather">
@@ -463,7 +471,7 @@
 	  
       /*===================== 匯入圖片檔案時預覽 ==========================*/
       $(document).on("change", "#add-img", function (){
-          $("#showImg").attr("src", URL.createObjectURL(event.target.files[0]));
+    	  $("#showImg").css("background-image", "url(" + URL.createObjectURL(event.target.files[0]) + ")");
       });
       
     });

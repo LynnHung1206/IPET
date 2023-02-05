@@ -54,6 +54,9 @@
 		top: 0;
 		width: 100px;
 		height: 100px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
 	}
 	
 	/* ================== 寵物體型 ==================*/

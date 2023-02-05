@@ -54,6 +54,15 @@ public class AppointmentImp implements AppointmentDAO {
                 .setParameter("schID", schID)
                 .getResultList().stream().findFirst().orElse(null); // in order to get null if we do not find data (getsingleresult will throw exception)
     }
+    
+    @Override
+    public List<Appointment> findAppointByMemId(Integer memID) {
+    	Session session = getSession();
+    	String hql = "FROM Appointment WHERE memID = :memID";
+    	return session.createQuery(hql, Appointment.class)
+    			.setParameter("memID", memID)
+    			.list();
+    }
 
     @Override
     public List<Appointment> findAppointByStatus(Integer status) {

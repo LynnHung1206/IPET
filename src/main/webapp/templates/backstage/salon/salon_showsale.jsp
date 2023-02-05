@@ -157,7 +157,7 @@
 	</c:forEach>
 </c:if>
 
-	<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
+	<a href="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">新增優惠</a>
 	  <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -168,7 +168,7 @@
                   <input type="submit" class="card-change on" value="優惠總覽" id="apm">
                   <input type="submit" class="card-change" value="優惠中" id="apm0">
                   <input type="submit" class="card-change" value="未開始" id="apm1">
-                  <input type="submit" class="card-change" value="已完成" id="apm2">
+                  <input type="submit" class="card-change" value="已結束" id="apm2">
                 </form>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -184,56 +184,6 @@
                         <th>刪除</th>
                       </tr>
                     </thead>
-                    <tbody>
-                    
-                    <%
-					SaleService saleSvc = new SaleService();
-					List<Sale> saleList = saleSvc.selectAll();
-					pageContext.setAttribute("saleList", saleList);
-					
-					long now = System.currentTimeMillis();
-					
-					for(Sale sale : saleList){
-							String endTimeStr = sale.getEndTime().toString();
-							int endSpaceStr = endTimeStr.indexOf(" ") + 1;
-							String endDate = endTimeStr.substring(0, endSpaceStr);
-							String endTime = endTimeStr.substring(endSpaceStr, endTimeStr.indexOf("."));
-							
-							String startTimeStr = sale.getStartTime().toString();
-							int startSpaceStr = startTimeStr.indexOf(" ") + 1;
-							String startDate = startTimeStr.substring(0, startSpaceStr);
-							String startTime = startTimeStr.substring(startSpaceStr, startTimeStr.indexOf("."));
-					%>
-					</tr>
-					  <td><%=sale.getSaleId() %></td>
-					  <td><%=sale.getSaleName() %><div style="font-size: 10px; margin-top: 10px;"><%=sale.getSalContent() %></div></td>
-					  <td><div><%=startDate %></div><div><%=startTime %></div></td>
-					  <td><div><%=endDate %></div><div><%=endTime %></div></td>
-					<%
-						if(sale.getEndTime().getTime() < now){
-					%><td>已結束</td><%
-						}else if(sale.getStartTime().getTime() < now && sale.getEndTime().getTime() > now){
-					%><td>優惠中</td><%
-						}else if(sale.getStartTime().getTime() > now){
-					%><td>未開始</td><%
-						}%>
-					  <td>
-						<!--	<i class="nav-icon fas fa-solid fa-pen"></i> -->
-								<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService" style="margin-bottom: 0px;">
-									<input type="submit" value="修改">
-									<input type="hidden" name="saleId" value="${saleVO.saleId}">				
-								</form>
-							</td>
-							<td>
-								<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService" style="margin-bottom: 0px;">
-									<input type="submit" value="刪除">
-									<input type="hidden" name="saleId" value="${saleVO.saleId}">				
-								</form>
-							</td>
-						</tr>
-					<%
-					}%>
-                    </tbody>
                     <tfoot>
                     </tfoot>
                   </table>
@@ -288,6 +238,8 @@
 	<script>
     $(function () {
       $("#Mynavbar").load("../../navbar_pages.html");
+      
+		console.log(${sales});
     })
   </script>
 
@@ -301,15 +253,89 @@
 	<script>
     $(function () {
     	
-    	$('#example2').DataTable({
+    	const datatable = $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,
             "ordering": true,
-            "info": true,
+            "info": false,
             "autoWidth": false,
             "responsive": true,
+            "data": ${sales},
+            "columns" : [
+	            { data: "saleId", responsivePriority: 1 },
+	            { data: null,
+	            	render: function(data, type){
+	            		return data.saleName + `<div style="font-size: 10px; margin-top: 10px;">` + data.salContent + `</div>`;
+	            	},
+	            	responsivePriority: 2
+	            },
+	            { data: "startTime", 
+	            	render: function(data, type){
+	            		const string = data.toString();
+	            		const startSpaceStr = string.indexOf("-");
+	            		const startDate = string.substring(0, startSpaceStr);
+	            		const startTime = string.substring(startSpaceStr + 1);
+	            		return startDate + `<br>` + startTime;
+	            	},
+	            	responsivePriority: 5
+	            },
+	            { data: "endTime", 
+	            	render: function(data, type){
+	            		const string = data.toString();
+	            		const startSpaceStr = string.indexOf("-");
+	            		const startDate = string.substring(0, startSpaceStr);
+	            		const startTime = string.substring(startSpaceStr + 1);
+	            		return startDate + `<br>` + startTime;
+	            	},
+	            	responsivePriority: 4
+	            },
+	            { data: "saleStatus", responsivePriority: 3 },
+	            { data: "saleId",
+	            	render: function(data, type){
+	            		return `
+		            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/editSale">
+								<input type="hidden" name="saleId" value=` + data + `>
+								<label><i class="nav-icon fas fa-solid fa-pen"></i>
+									<input type="submit" style="display: none;">
+								</label>
+							</form>
+	            		`;
+	            	},
+	            	responsivePriority: 6
+	            },
+	            { data: "saleId",
+	            	render: function(data, type){
+	            		return `
+		            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/deleteSale">
+								<input type="hidden" name="saleId" value=` + data + `>
+								<label><i class="nav-icon fas fa-solid fa-trash"></i>
+									<input type="submit" style="display: none;">
+								</label>
+							</form>
+	            		`;
+	            	},
+	            	responsivePriority: 7
+	            }
+	        ],
+			language: {
+		           "sProcessing": "查詢中...",
+		           "sLengthMenu": "顯示 _MENU_ 項服務",
+		           "sZeroRecords": "查無資料",
+		           "sInfoPostFix": "",
+		           "sUrl": "",
+		           "sEmptyTable": "尚未新增服務",
+		           "sLoadingRecords": "載入中...",
+		           "sInfoThousands": ",",
+		           "oPaginate": {
+		               "sFirst": "第一頁",
+		               "sPrevious": "上一頁",
+		               "sNext": "下一頁",
+		               "sLast": "最後一頁"
+		           },
+		     }
           });
+    	
     	/*===================== 彈出視窗 ==========================*/
 		const mainModal = document.getElementById("mainModal");
 
@@ -319,220 +345,14 @@
 // 			document.body.style.overflow = "hidden";
 // 		});
     	
-      /*===================== 點擊 card-header 開關 ==========================*/
-
-      $(".card-header").click(function () {
-        $(this).next().slideToggle();
-        const i = $(this).find("i");
-        if (i.hasClass("fa-minus")) {
-          i.removeClass("fa-minus").addClass("fa-plus");
-        } else if (i.hasClass("fa-plus")) {
-          i.removeClass("fa-plus").addClass("fa-minus");
-        }
-      });
-
-      /*===================== 點擊 鉛筆 更改價格 ==========================*/
-      let priceValue;
-
-      $(document).on("click", ".fa-pen", function () {
-        //變換成圖示+輸入框
-        const td4 = $(this).parent();
-        const ok = $("<button>").text("修改").addClass("button-style short ok")
-        const cancel = $("<button>").text("取消").addClass("button-style short red cancel");
-        priceValue = td4.prev().text();
-        const updatePrice = `<input type="number" value="` + priceValue + `" min="0" max="999999999" class="updatePrice">`;
-        td4.prev().html(updatePrice);
-        td4.next().html(cancel);
-        td4.html(ok);
-      });
-
-      // 確定修改
-      $(document).on("click", ".ok", function () {
-        const ok = $(this).parent();
-        const uppriceNum = ok.prev().children().val();
-        if(uppriceNum === "0" || uppriceNum.match(/[-]/)){
-          alert("服務價格不可小於或等於0！");
-          return;
-        }
-        const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
-        const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
-        ok.prev().html(uppriceNum);
-        ok.next().html(faTrash);
-        ok.html(faPen);
-      });
-
-      //取消修改
-      $(document).on("click", ".cancel", function () {
-        const cancel = $(this).parent();
-        const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
-        const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
-        const pricesubling = cancel.prev().prev();
-        pricesubling.html(priceValue);
-        cancel.prev().html(faPen);
-        cancel.html(faTrash);
-      });
-
-      /*============== 點擊 垃圾桶 刪除價格，並回覆對應checkbox的可選狀態 ===================*/
-      $(document).on("click", ".fa-trash", function () {
-    	const thisPetId = $(this).parent().next().text();
-    	const thisPetTypeId = $(`#pet-type` + thisPetId);
-    	thisPetTypeId.attr("disabled", false);
-    	thisPetTypeId.next().css("color","#212529");
-        $(this).parentsUntil("tbody").remove();
-      });
-
-      /*===================== Summernote ==========================*/
-      $("#summernote").summernote();
-      
-      /*===================== 點擊 大中小標籤 換犬種 ==========================*/
-	  $("#pet-size").change(function () {
-	        if($("#pet-size :selected").text() === "大型犬"){
-	        	$("#showBigDog").removeClass("cantSee");
-	        	$("#showMediumDog").addClass("cantSee");
-	        	$("#showSmallDog").addClass("cantSee");
-	        }else if($("#pet-size :selected").text() === "中型犬"){
-	        	$("#showBigDog").addClass("cantSee");
-	        	$("#showMediumDog").removeClass("cantSee");
-	        	$("#showSmallDog").addClass("cantSee");
-	        }else if($("#pet-size :selected").text() === "小型犬"){
-	        	$("#showBigDog").addClass("cantSee");
-	        	$("#showMediumDog").addClass("cantSee");
-	        	$("#showSmallDog").removeClass("cantSee");
-	        }
-	  });
-      
-	  /*===================== 點擊 新增價格按鈕 新增瀏覽服務單價 ==========================*/
-	  
-	  //點擊新增價格按鈕 
-	  $("#addService").click(function(){
-		  
-		  //備用
-		  // alert($("#svc_category_id").val());
-		  // alert($("#svc_name").val());
-		  //alert($("#add-img").files[0]);
-		  // alert($("#summernote").val());
-		  // alert($("#enterPrice").val());
-		  
-		  const enterPrice = $("#enterPrice").val();
-		  const aTypeLength = $(".aType").length;
-		  //判斷是否有輸入正確價格
-		  if(!enterPrice){
-			  alert("請輸入服務單價");
-			  return;
-		  }
-		  if(enterPrice <= 0){
-			  alert("金額不可小於等於零！");
-			  return;
-		  }
-		  //判斷checkbox是否選取，若是，append into tbody
-		  for(let i = 0; i < aTypeLength; i++){
-			const aTypeNum = $(".aType").eq(i);
-		  	if(aTypeNum.prop("checked")){
-          	$("#showList").append(`
-		      <tr class="beSentTr">
-		        <td>` + aTypeNum.next().next().val() + `</td>
-		        <td>` + aTypeNum.next().text() + `</td>
-		        <td class="beSentPrice">` + enterPrice + `</td>
-		        <td><i class="nav-icon fas fa-solid fa-pen"></i></td>
-		        <td><i class="nav-icon fas fa-solid fa-trash"></i></td>
-		        <td style="display: none;" class="beSentTypeId">` + aTypeNum.val() + `</td>
-		      </tr>
-	      	`);
-          	//關閉選過的checkedbox可選狀態、清空金額輸入框
-          	aTypeNum.prop("checked", false).attr("disabled", true);
-          	aTypeNum.next().css("color","#9da2a6");
-          	$("#enterPrice").val("");
-		    }
-		  }
-	  });
-	  
-	  /*===================== 點擊 新增服務按鈕 新增單項服務 ==========================*/
-//       $("#submitAll").click(function(){
-//     	  const addListLength = $(".addList").length;
-//     	  let str = "[";
-//     	  for(let i = 0; i < addListLength; i++){
-//     		  const addList = $(".addList").eq(i).text();
-//     		  if(i === (addListLength - 1)){
-//     			  str += addList;
-//     		  }else{
-//     		  str += addList + ",";
-//     		  }
-//     	  }
-//     	  str += "]";
-//     	  $("#allTypeAndPrice").val(str);
-//       });
-	  
-      /*===================== 匯入圖片檔案時預覽 ==========================*/
-      $(document).on("change", "#add-img", function (){
-          $("#showImg").attr("src", URL.createObjectURL(event.target.files[0]));
-      });
-      
-    });
-    
-    
-    /*===================== 送出新增資訊到後台 ==========================*/
-    const form = document.querySelector("#addSvcForm");
-    
-    form.addEventListener("submit", (e) =>{
-    	e.preventDefault();
-    	
-    	//迴圈存入金額和品種物件
-	  	 let priceAndTypeArray = [];
-	  	 const beSentTrLength = $(".beSentTr").length;
-	  	 for(let i = 0; i< beSentTrLength; i++){
-	  		priceAndTypeArray.push({
-	  			typeId : $(".beSentTypeId").eq(i).text(),
-	  			svcPrice : $(".beSentPrice").eq(i).text()
-	  		});
-	  	 }
-	  	 
-    	 let formData = new FormData(form);
-    	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
-    	 
-    	 $.ajax({
-    	        url:"${pageContext.request.contextPath}/ipet-back/service/addService",
-    	        type : "POST",
-    	        data : formData,
-    	        cache: false,
-    	        processData: false,
-    	        contentType: false,
-    	        success : function(data) {
-    	        	showSwal("success-message");
-    	        },error: function(data) {
-    	        	showSwal("something-Wrong");
-    	        }
-    	    })
-    });
-    
-//    	 for(item of formData){
-//    		 console.log(item[0], item[1], item[3], item[4]);
-//    	 }
-    
-      /*===================== 新增成功提示 ==========================*/
-    (function($) {
-    	  showSwal = function(type) {
-    	    "use strict";
-    	     if (type === "success-message") {
-    	    	 swal({
-    	    	        title: '新增成功!',
-    	    	        type: 'success',
-     	    		  	showConfirmButton: false,
-     	    		  	timer: 2000
-    	    	      }, function(){
-    	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/service/allService");
-    	    	      })
-    	    }else if (type === "something-Wrong"){
-    	    	swal({
-	    	        title: "OOPS！送出失敗:(",
-	    	        text: "請重新嘗試或聯繫客服人員協助處理",
-	    	        type: 'question',
- 	    		  	showConfirmButton: true,
-	    	      })
-    	    } 
-    	  }
-
-    	})(jQuery);
-    	    	
+		$("tbody tr").click(function() {
+    			/*========== 顯示預約詳細 =============*/
+				const OneApm = datatable.row(this).data();
+    			console.log(OneApm);
+    	});
+	
+    })
+		
   </script>
 </body>
 </html>

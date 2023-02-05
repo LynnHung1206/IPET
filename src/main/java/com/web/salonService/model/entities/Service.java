@@ -41,6 +41,9 @@ public class Service extends Core {
 	@Column(name = "SVC_PRICE")
 	private Integer svcPrice;
 	
+	@Transient
+    private Integer salePrice;
+	
 	@Column(name = "SVC_STATUS")
 	private Integer svcStatus;
 	
@@ -140,6 +143,14 @@ public class Service extends Core {
 
 	public void setSvcPrice(Integer svcPrice) {
 		this.svcPrice = svcPrice;
+	}
+
+	public Integer getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Integer salePrice) {
+		this.salePrice = salePrice;
 	}
 
 	public Integer getSvcStatus() {

@@ -67,6 +67,16 @@ pageContext.setAttribute("catlist", catlist);
 		font-size: 16px
 	}
 	
+	#showImg {
+		position: absolute;
+		top: 0;
+		width: 100px;
+		height: 100px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+	}
+	
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -134,11 +144,11 @@ pageContext.setAttribute("catlist", catlist);
 								<input type="text" id="svc_name" class="form-control input-shadow" value="${param.svcName}" name="svcName">
 								<div>
 									<div class="choice-title c3">服務圖片</div>
-								<label class="svc_picture_label input-shadow">
-									<input type="file" id="add-img" accept="image/*" style="display: none;" name="svcImg">
-									<i class="nav-icon fas fa-regular fa-image" id="aPictureImg"></i>
-									<img id="showImg">
-								</label>	
+									<label class="svc_picture_label input-shadow">
+										<input type="file" id="add-img" accept="image/*" style="display: none;" name="svcImg">
+										<i class="nav-icon fas fa-regular fa-image" id="aPictureImg"></i>
+										<div id="showImg" style="background-image: url(${pageContext.request.contextPath}/ipet-back/service/showOldSvcImg?svcId=${param.svcId}"></div>
+									</label>	
 								</div>
 								<div id="summernoteFather">
 									<label for="svc_img">服務描述</label>
@@ -350,6 +360,11 @@ pageContext.setAttribute("catlist", catlist);
 					}
 				}
 			});
+			
+			/*===================== 匯入圖片檔案時預覽 ==========================*/
+			$(document).on("change", "#add-img", function (){
+				$("#showImg").css("background-image", "url(" + URL.createObjectURL(event.target.files[0]) + ")");
+		      });
 
 		});
 	</script>

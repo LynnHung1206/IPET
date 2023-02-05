@@ -197,6 +197,12 @@ public class AppointServicesImp implements AppointServices {
         appoint.add(appointmentDAO.getById(id));
         return integrateAppointments(appoint).get(0);
     }
+    
+    @Override
+    public List<Appointment> findAppointByMemId(Integer memID){
+    	List<Appointment> appoints = appointmentDAO.findAppointByMemId(memID);
+    	return integrateAppointments(appoints);
+    }
 
     @Override
     public List<Appointment> findAppointBasedOnStatus(Integer status) {
@@ -228,6 +234,7 @@ public class AppointServicesImp implements AppointServices {
                 Integer svcID = detail.getSvcId();
                 Integer saleID = detail.getSaleId();
                 detail.setSvcName(serviceDAO.getById(svcID).getSvcName());
+                detail.setSvcContent(serviceDAO.getById(svcID).getSvcContent());
                 detail.setSaleName(saleDAO.getById(saleID).getSaleName());
             }
 
