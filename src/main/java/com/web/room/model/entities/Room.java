@@ -3,17 +3,20 @@ package com.web.room.model.entities;
 import java.io.Serial;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import com.core.model.entities.Core;
+import com.web.member.model.entity.Member;
+import com.web.member.model.service.*;
+import com.web.pet.model.entity.Pet;
+import com.web.pet.model.service.*;
+import com.web.room.model.RoomStatus;
+import com.web.roomType.model.entities.RoomType;
+import com.web.roomType.model.service.RoomTypeService;
 
 
 @Entity
-@Table(name = "Room" ,catalog = "ipetdb")
-public class Room {
+@Table(name = "ROOM" ,catalog = "ipetdb")
+public class Room extends Core{
 	@Serial
 	private static final long serialVersionUID = 1L;
 	
@@ -25,31 +28,26 @@ public class Room {
 	@Column(name = "ROOM_TYPE_ID")
 	private Integer roomTypeId;
 	
-	@Column(name = "PET_ID")
-	private Integer petId;
+	@Transient
+	private String roomTypeName;
 	
-	@Column(name = "MEM_ID")
-	private Integer memId;
 	
 	@Column (name = "ROOM_CHECK_STATUS")
-	private Integer roomCheckStatus;
+	private RoomStatus roomCheckStatus;
 	
 	@Column (name =  "ROOM_SALE_STATUS")
 	private Integer roomSaleStatus;
 	
-	public Room(Integer roomId, Integer roomTypeId, Integer petId,Integer memId, Integer roomCheckStatus, Integer roomSaleStatus) {
+	
+	public Room(Integer roomId, Integer roomTypeId, RoomStatus roomCheckStatus, Integer roomSaleStatus) {
 		this.roomId=roomId;
 		this.roomTypeId=roomTypeId;
-		this.petId=petId;
-		this.memId=memId;
 		this.roomCheckStatus=roomCheckStatus;
 		this.roomSaleStatus=roomSaleStatus;
 	}
 	
-	public Room(Integer roomTypeId, Integer petId,Integer memId, Integer roomCheckStatus, Integer roomSaleStatus) {
+	public Room(Integer roomTypeId, RoomStatus roomCheckStatus, Integer roomSaleStatus) {
 		this.roomTypeId=roomTypeId;
-		this.petId=petId;
-		this.memId=memId;
 		this.roomCheckStatus=roomCheckStatus;
 		this.roomSaleStatus=roomSaleStatus;
 	}
@@ -67,34 +65,34 @@ public class Room {
 	public Integer getRoomTypeId() {
 		return roomTypeId;
 	}
-
+	
 	public void setRoomTypeId(Integer roomTypeId) {
 		this.roomTypeId = roomTypeId;
 	}
+	
+	
 
-	public Integer getPetId() {
-		return petId;
+	public String getRoomTypeName() {
+		return roomTypeName;
 	}
 
-	public void setPetId(Integer petId) {
-		this.petId = petId;
+	public void setRoomTypeName(String roomTypeName) {
+		this.roomTypeName = roomTypeName;
 	}
 
-	public Integer getMemId() {
-		return memId;
-	}
+	
 
-	public void setMemId(Integer memId) {
-		this.memId = memId;
-	}
+	
 
-	public Integer getRoomCheckStatus() {
+	public RoomStatus getRoomCheckStatus() {
 		return roomCheckStatus;
 	}
 
-	public void setRoomCheckStatus(Integer roomCheckStatus) {
+	public void setRoomCheckStatus(RoomStatus roomCheckStatus) {
 		this.roomCheckStatus = roomCheckStatus;
 	}
+	
+	
 
 	public Integer getRoomSaleStatus() {
 		return roomSaleStatus;
@@ -103,6 +101,16 @@ public class Room {
 	public void setRoomSaleStatus(Integer roomSaleStatus) {
 		this.roomSaleStatus = roomSaleStatus;
 	}
+	
+	
+	
+	//for join roomTypeId to RoomTypeVO
+	public RoomType getRoomTypeVO() {
+		RoomTypeService roomTypeSvc = new RoomTypeService();
+		RoomType roomType = roomTypeSvc.getOneRoomType(roomTypeId);
+		return roomType;
+	}
+	
 	
 	
 	@Override

@@ -1,6 +1,11 @@
 package com.web.room.model.service;
 
+
 import java.util.List;
+
+import javax.persistence.criteria.From;
+
+import com.web.room.model.RoomStatus;
 import com.web.room.model.dao.RoomDAO;
 import com.web.room.model.dao.impl.RoomDAOImpl;
 import com.web.room.model.entities.Room;
@@ -12,28 +17,24 @@ public class RoomService {
 		dao = new RoomDAOImpl();
 	}
 	
-	public Room addRoom(Integer roomTypeId, Integer petId, Integer memId, Integer roomCheckStatus, Integer roomSaleStatus) {
+	public Room addRoom(Integer roomTypeId, Integer roomCheckStatus, Integer roomSaleStatus) {
 		
 		Room room = new Room();
 		
 		room.setRoomTypeId(roomTypeId);
-		room.setPetId(petId);
-		room.setMemId(memId);
-		room.setRoomCheckStatus(roomCheckStatus);
+		room.setRoomCheckStatus(RoomStatus.from(roomCheckStatus));
 		room.setRoomSaleStatus(roomSaleStatus);
 		dao.add(room);
 		
 		return room;
 	}
 	
-	public Room updateRoom(Integer roomId ,Integer roomTypeId, Integer petId, Integer memId, Integer roomCheckStatus, Integer roomSaleStatus) {
+	public Room updateRoom(Integer roomId ,Integer roomTypeId, Integer roomCheckStatus, Integer roomSaleStatus) {
 		Room room = new Room();
 		
 		room.setRoomId(roomId);
 		room.setRoomTypeId(roomTypeId);
-		room.setPetId(petId);
-		room.setMemId(memId);
-		room.setRoomCheckStatus(roomCheckStatus);
+		room.setRoomCheckStatus(RoomStatus.from(roomCheckStatus));
 		room.setRoomSaleStatus(roomSaleStatus);
 		dao.add(room);
 		

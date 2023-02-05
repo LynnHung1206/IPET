@@ -1,9 +1,10 @@
 package com.web.room.model.dao.impl;
 
-import java.util.List;
 
+import java.util.List;
 import com.web.room.model.dao.RoomDAO;
 import com.web.room.model.entities.Room;
+
 
 
 public class RoomDAOImpl implements RoomDAO{
@@ -25,7 +26,7 @@ public class RoomDAOImpl implements RoomDAO{
 	
 	@Override
 	public List<Room> getAll(){
-		final String hql = "FROM ROOM ORDER BY roomId" ;
+		final String hql = "FROM Room" ;
 		return getSession().createQuery(hql, Room.class).list();
 	}
 
@@ -33,4 +34,5 @@ public class RoomDAOImpl implements RoomDAO{
 	public Room getById(Integer roomId) {
 		return getSession().get(Room.class, roomId);
 	}
+	
 }
