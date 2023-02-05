@@ -14,8 +14,8 @@
 		<!-- <property name="hibernate.connection.password">0000</property> -->
 
 		<!-- 這裡的 jdbc/javaFramework 對應到 content.xml 的 Resource name="jdbc/IPETDB" -->
-<!-- 		<property name="hibernate.connection.datasource">java:comp/env/jdbc/IPETDB</property> -->
-<!-- 		<property name="hibernate.current_session_context_class">thread</property> -->
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/IPETDB</property>
+		<property name="hibernate.current_session_context_class">thread</property>
 
 		<!-- ask Hibernate to Scan this class -->
 		<mapping class="com.web.appoint.model.entities.Appointment" />

@@ -47,4 +47,8 @@ public class OrderServiceImp implements OrderService{
 		masterDAO.update(orderMaster);
 		System.out.println("go to daoImp");
 	}
+	
+	public void addOrder(OrderMaster orderMaster, List<OrderDetail> orderDetails) {
+		masterDAO.addWithOrderDetail(orderMaster, orderDetails);
+	}
 }

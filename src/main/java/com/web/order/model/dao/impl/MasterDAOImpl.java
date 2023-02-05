@@ -63,7 +63,16 @@ public class MasterDAOImpl implements MasterDAO {
 		return getSession().createQuery(hql,OrderMaster.class).list();
 	}
 
-	
+	@Override
+	public void addWithOrderDetail(OrderMaster orderMaster, List<OrderDetail> orderDetails) {
 		
-	
+		Session session = getSession();
+		
+		session.persist(orderMaster);
+			
+		for(OrderDetail od : orderDetails) {
+			od.setOrderID(orderMaster.getOrderID());
+			session.persist(od);
+		}	
+	}
 }
