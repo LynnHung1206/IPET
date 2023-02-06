@@ -81,7 +81,7 @@ input#allStaff:hover, #search:hover {
 			<section class="content-header">
 				<div class="container-fluid">
 					<form
-						action="${pageContext.request.contextPath}/ipet-back/staff/getAllList">
+						action="${pageContext.request.contextPath}/ipet-back/staff/allStaffList">
 						<input id="allStaff" type="submit" value="員工列表">
 					</form>
 
@@ -170,7 +170,7 @@ input#allStaff:hover, #search:hover {
 									<td><c:forEach var="adminFunc"
 											items="${adminFuncSvc.getAll()}">
 											<label for="${adminFunc.getId()}" style="font-size: 10px;"><input
-												type="radio" name="admin" id="${adminFunc.getId()}"
+												type="radio" name="admin" id="${adminFunc.getId()} required"
 												value="${adminFunc.getId()} ">
 												${adminFunc.getName()}</label>
 										</c:forEach></td>
