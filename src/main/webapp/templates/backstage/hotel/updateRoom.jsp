@@ -105,7 +105,7 @@ input#addNew:hover, #search:hover {
 						method="post">
 						<table id="discountdata">
 							<tr>
-								<td>房間編號:</td>
+								<td><label>房間編號:</label></td>
 								<td>${roomVO.roomId}</td>
 							</tr>
 							<tr>
@@ -121,15 +121,15 @@ input#addNew:hover, #search:hover {
 								<td><label>房間狀態:</label></td>
 								<td><select name="roomCheckStatus">
 										<option value="0"
-											${room.getroomCheckStatus() == 0 ?'selected':''}>空房</option>
+											${room.getroomCheckStatus() == 0 ?'selected':''}>空房
 										<option value="1"
-											${room.getroomCheckStatus() == 1 ?'selected':''}>已預約</option>
+											${room.getroomCheckStatus() == 1 ?'selected':''}>已預約
 										<option value="2"
-											${room.getroomCheckStatus() == 2 ?'selected':''}>已入住</option>
+											${room.getroomCheckStatus() == 2 ?'selected':''}>已入住
 								</select></td>
 							</tr>
 							<tr>
-								<td>上下架狀態:</td>
+								<td><label>上下架狀態:</label></td>
 								<td><select name="roomSaleStatus" >
 										<option value="0"
 											${room.getroomSaleStatus() == 0 ?'selected':''}>上架</option>
@@ -171,5 +171,9 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		$("p:contains(房間管理)").closest("li").addClass("menu-open");
+		$("p:contains(房間列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

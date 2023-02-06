@@ -145,6 +145,9 @@ body tag options:
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
 	<!-- sidebar menu Class -->
-
+	<script>
+		$("p:contains(住宿優惠管理)").closest("li").addClass("menu-open");
+		$("p:contains(優惠列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

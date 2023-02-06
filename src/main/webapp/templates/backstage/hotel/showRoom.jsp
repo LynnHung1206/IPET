@@ -42,8 +42,6 @@ table, th, td {
 	text-align: center;
 }
 
-
-
 input#addNew {
 	background-color: lightgray;
 	border: none;
@@ -83,7 +81,7 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-					<h3>房間瀏覽</h3>
+					<h3>房間列表</h3>
 					<form
 						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoom">
 						<input id="addNew" type="submit" value="新增房間">
@@ -100,8 +98,8 @@ input#addNew:hover, #search:hover {
 									<th>刪除</th>
 								</tr>
 								<%@ include file="page1.file"%>
-								<c:forEach var="roomVO" items="${list}"
-									begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+								<c:forEach var="roomVO" items="${list}" begin="<%=pageIndex%>"
+									end="<%=pageIndex+rowsPerPage-1%>">
 
 									<tr>
 										<td>${roomVO.roomId}</td>
@@ -113,16 +111,15 @@ input#addNew:hover, #search:hover {
 												ACTION="${pageContext.request.contextPath}/ipet-back/hotel/editRoom"
 												style="margin-bottom: 0px;">
 												<input type="submit" value="修改"> <input
-													type="hidden" name="roomId"
-													value="${roomVO.roomId}">
+													type="hidden" name="roomId" value="${roomVO.roomId}">
 											</form>
 										</td>
 										<td>
 											<form METHOD="post"
 												ACTION="${pageContext.request.contextPath}/ipet-back/hotel/deleteRoom"
 												style="margin-bottom: 0px;">
-												<input type="submit" value="刪除">
-												<input type="hidden" name="roomId" value="${roomVO.roomId}">
+												<input type="submit" value="刪除"> <input
+													type="hidden" name="roomId" value="${roomVO.roomId}">
 											</form>
 										</td>
 								</c:forEach>
@@ -159,5 +156,10 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<!-- sidebar menu Class -->
+	<script>
+		$("p:contains(房間管理)").closest("li").addClass("menu-open");
+		$("p:contains(房間列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

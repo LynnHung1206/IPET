@@ -87,9 +87,12 @@ input#addNew:hover, #search:hover {
 						method="post" >
 						<table id="roomdata">
 								<tr>
-									<td>房型編號</td>
-									<td><input type="TEXT" name="roomTypeId" size="45"
-										value="<%=(room == null) ? 1 : room.getRoomTypeId()%>" /></td>
+									<td>房型</td>
+									<td><select name="roomTypeId">
+											<option value="1" ${room.getroomTypeId() == 1 ?'selected':''}>小型犬房</option>
+											<option value="2" ${room.getroomTypeId() == 2 ?'selected':''}>中型犬房</option>
+											<option value="3" ${room.getroomTypeId() == 3 ?'selected':''}>大型犬房</option>
+									</select></td>
 								</tr>
 								<tr>
 									<td>房間狀態</td>
@@ -139,5 +142,9 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		$("p:contains(房間管理)").closest("li").addClass("menu-open");
+		$("p:contains(房間列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

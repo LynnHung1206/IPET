@@ -69,7 +69,7 @@ pageContext.setAttribute("list", list);
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-				<h3>優惠列表</h3>
+					<h3>優惠列表</h3>
 					<form
 						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoomDiscount">
 						<input id="addNew" type="submit" value="新增優惠">
@@ -112,8 +112,9 @@ pageContext.setAttribute("list", list);
 											<form METHOD="post"
 												ACTION="${pageContext.request.contextPath}/ipet-back/hotel/deleteRoomDiscount"
 												style="margin-bottom: 0px;">
-												<input type="submit" value="刪除">
-												<input type="hidden" name="discountId" value="${discountVO.discountId}">
+												<input type="submit" value="刪除"> <input
+													type="hidden" name="discountId"
+													value="${discountVO.discountId}">
 											</form>
 										</td>
 								</c:forEach>
@@ -150,5 +151,10 @@ pageContext.setAttribute("list", list);
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<!-- sidebar menu Class -->
+	<script>
+		$("p:contains(住宿優惠管理)").closest("li").addClass("menu-open");
+		$("p:contains(優惠列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>
