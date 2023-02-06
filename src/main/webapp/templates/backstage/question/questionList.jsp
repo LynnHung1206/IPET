@@ -163,5 +163,9 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+		<script>
+		$("p:contains(客服管理)").closest("li").addClass("menu-open");
+		$("p:contains(常見問題列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>
