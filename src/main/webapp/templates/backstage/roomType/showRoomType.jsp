@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.util.*"%>
 <%@ page import="com.web.roomType.model.*"%>
 <%@ page import="com.web.roomType.model.entities.*"%>
 <%@ page import="com.web.roomType.model.service.*"%>
@@ -116,7 +115,7 @@ input#addNew:hover, #search:hover {
 									<td>${roomTypeVO.dogSize}</td>
 									<td>${roomTypeVO.roomTypePrice}</td>
 									<td>${roomTypeVO.roomTypeStatus != 1 ? "正常" : "停權"}</td>
-									<td><img alt="img" src="data:image/jpeg;base64,${couponVO.couponPicURL} "style= "width: 70px"/></td>
+									<td><img alt="img" src="data:image/jpeg;base64,${roomTypeVO.roomTypePhoto} "style= "width: 70px"/></td>
 									<td></td>
 								</tr>
 								</c:forEach>

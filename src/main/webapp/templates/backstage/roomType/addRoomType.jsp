@@ -1,8 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.web.roomType.model.*"%>
+<%@ page import="com.web.roomType.model.entities.*"%>
+<%@ page import="com.web.roomType.model.service.*"%>
+<%@ page import="com.web.roomType.model.dao.*"%>
+<%@ page import="com.web.roomType.model.dao.impl.*"%>
 
-
+<%
+RoomType roomType = (RoomType) request.getAttribute("roomType");
+%>
 
 
 <!DOCTYPE html>
@@ -32,8 +40,6 @@ table, th, td {
 	border-collapse: collapse;
 	text-align: center;
 }
-
-
 
 input#addNew {
 	background-color: lightgray;
@@ -74,7 +80,54 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-					
+				<h3>新增房型</h3>
+					<FORM METHOD="POST" ACTION="hotel.do" name="form1">
+						<table>
+							<tr>
+								<td>房型數量:</td>
+								<td><input type="TEXT" name="roomAmount" size="45"
+									value="<%=(roomType == null) ? 5 : roomType.getRoomAmount()%>" /></td>
+							</tr>
+							<tr>
+								<td>房型名稱:</td>
+								<td><input type="TEXT" name="roomTypeName" size="45"
+									Value="<%=(roomType == null) ? "大狗房" : roomType.getRoomTypeName()%>" /></td>
+							</tr>
+							<tr>
+								<td>寵物體型:</td>
+								<td><select name="roomTypeStatus">
+										<option value="小型犬"
+											${room.getroomTypeStatus() == 0 ?'selected':''}>小型犬</option>
+										<option value="中型犬"
+											${room.getroomTypeStatus() == 1 ?'selected':''}>中型犬</option>
+										<option value="大型犬"
+											${room.getroomTypeStatus() == 1 ?'selected':''}>中型犬</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td>房型說明:</td>
+								<td><textarea name="roomTypeContent" cols="43"><%=(roomType == null) ? "預設文字展示專用" : roomType.getRoomTypeContent()%></textarea></td>
+							</tr>
+							<tr>
+							</tr>
+							<tr>
+								<td>房型價格:</td>
+								<td><input type="TEXT" name="roomTypePrice" size="45"
+									value="<%=(roomType == null) ? 800 : roomType.getRoomTypePrice()%>" /></td>
+							</tr>
+							<tr>
+								<td>上下架狀態:</td>
+								<td><select name="roomSaleStatus">
+										<option value="0"
+											${room.getroomTypeStatus() == 0 ?'selected':''}>上架</option>
+										<option value="1"
+											${room.getroomTypeStatus() == 1 ?'selected':''}>下架</option>
+								</select></td>
+							</tr>
+						</table>
+						<br> <input type="hidden" name="action" value="insert">
+						<input type="submit" value="送出新增">
+					</FORM>
 				</div>
 				<!-- /.container-fluid -->
 			</section>
