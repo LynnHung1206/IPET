@@ -67,7 +67,7 @@ body tag options:
 			<section class="content-header">
 				<div class="container-fluid">
 					<div class="updateRoomDiscount">
-						<h3>資料修改:</h3>
+						<h3>優惠修改</h3>
 						<c:if test="${not empty errorMsgs}">
 							<font style="color: red">請修正以下錯誤:</font>
 							<ul>

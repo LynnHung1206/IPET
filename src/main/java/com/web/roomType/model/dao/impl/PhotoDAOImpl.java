@@ -3,6 +3,8 @@ package com.web.roomType.model.dao.impl;
 import java.util.List;
 
 import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
+import org.hibernate.Session;
+import org.hibernate.engine.jdbc.batch.spi.Batch;
 
 import com.web.roomType.model.dao.PhotoDAO;
 import com.web.roomType.model.entities.Photo;
@@ -12,23 +14,42 @@ import com.web.salonService.model.entities.Service;
 public class PhotoDAOImpl implements PhotoDAO{
 	
 	@Override
-	public Integer add(Photo photo) {
-		getSession().merge(photo);
-		return photo.getRoomTypePhotoId();
+	public Photo.PK add(Photo photo) {
+		Session session = getSession();
+		session.persist(photo);
+		Photo.PK pk = new Photo.PK();
+		pk.roomTypeId =photo.getRoomTypeId();
+		pk.roomTypePhotoId = photo.getRoomTypePhotoId();
+		return pk;
 	}
 	
 	@Override
-	public Integer deleteById(Integer roomTypePhotoId) {
-		Photo photo = new Photo();
-		photo.setRoomTypePhotoId(roomTypePhotoId);
+	public Photo.PK[] addBatch(Photo[] photos) {
+		Session session =getSession();
+		Photo.PK[] pks =new Photo.PK[photos.length];
+		int i =0;
+		for(Photo photo :photos) {
+			session.persist(photo);
+			Photo.PK pk = new Photo.PK();
+			pk.roomTypeId =photo.getRoomTypeId();
+			pk.roomTypePhotoId=photo.getRoomTypePhotoId();
+			pks[i]= pk;
+			i++;
+		}
+		return pks;
+	}
+	@Override
+	public Integer deleteByRoomTypeId(Integer roomTypeId) {
+		Session session =getSession();
+		String hql ="DELETE FROM Photo WHERE roomTypeId = :roomTypeId";
 		
-		getSession().remove(photo);
-		return roomTypePhotoId;
+		return session.createQuery(hql).setParameter("roomTypeId", roomTypeId).executeUpdate();
 	}
 	
 	@Override
-	public Photo getById(Integer roomTypePhotoId) {
-		return getSession().get(Photo.class,roomTypePhotoId);
+	public Photo getById(Photo.PK id) {
+		Session session =getSession();
+		return session.get(Photo.class,id);
 		
 	}
 	
@@ -43,5 +64,12 @@ public class PhotoDAOImpl implements PhotoDAO{
 		return getSession().createQuery(hql, Photo.class)
 				.setParameter("roomTypePhotoId", roomTypePhotoId)
 				.list();
+	}
+
+	@Override
+	public List<Photo> getAllPhotosByRoomTypeId(Integer roomTypeId) {
+		Session session =getSession();
+		String hql ="FROM Photo WHERE roomTypeId = :roomTypeId";
+		return session.createQuery(hql, Photo.class).setParameter("roomTypeId", roomTypeId).list();
 	}
 }

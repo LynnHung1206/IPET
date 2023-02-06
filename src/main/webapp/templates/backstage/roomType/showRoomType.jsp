@@ -1,14 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.web.roomDiscount.model.*"%>
-<%@ page import="com.web.roomDiscount.model.entity.*"%>
-<%@ page import="com.web.roomDiscount.model.service.*"%>
-<%@ page import="com.web.roomDiscount.model.dao.*"%>
-<%@ page import="com.web.roomDiscount.model.dao.impl.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.web.roomType.model.*"%>
+<%@ page import="com.web.roomType.model.entities.*"%>
+<%@ page import="com.web.roomType.model.service.*"%>
+<%@ page import="com.web.roomType.model.dao.*"%>
+<%@ page import="com.web.roomType.model.dao.impl.*"%>
 
 <%
-Discount discount = (Discount) request.getAttribute("discount");
+RoomTypeService roomTypesvc = new RoomTypeService();
+List<RoomType> list = roomTypesvc.selectAll();
+pageContext.setAttribute("list", list);
 %>
 
 
@@ -31,12 +34,6 @@ Discount discount = (Discount) request.getAttribute("discount");
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
-<!-- boostrap -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
 
 
 <style type="text/css">
@@ -46,9 +43,7 @@ table, th, td {
 	text-align: center;
 }
 
-th {
-	text-align: center;
-}
+
 
 input#addNew {
 	background-color: lightgray;
@@ -89,51 +84,47 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-				<h3>新增優惠</h3>
-					<div id="newDiscount">
-						<c:if test="${not empty errorMsgs}">
-							<font style="color: red">請修正以下錯誤:</font>
-							<ul>
-								<c:forEach var="message" items="${errorMsgs}">
-									<li style="color: red">${message}</li>
+					<form
+						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoom">
+						<input id="addNew" type="submit" value="新增房間">
+					</form>
+					<div class="row mb-2">
+						<table id="Room" class="table table-striped table-hover">
+							<thead>
+								<tr>
+								<th>房型編號</th>
+								<th>房型數量</th>
+								<th>房型名稱</th>
+								<th>房型說明</th>
+								<th>寵物體型</th>
+								<th>房型價格</th>
+								<th>上下架狀態</th>
+								<th>圖片</th>
+								<th>修改</th>
+							</tr>
+							
+							
+							<%@ include file="page1.file"%>
+							<c:forEach var="roomTypeVO" items="${list}" begin="<%=pageIndex%>"
+								end="<%=pageIndex+rowsPerPage-1%>"> 
+
+								<tr>
+									<td>${roomTypeVO.roomTypeId}</td>
+									<td>${roomTypeVO.roomAmount}</td>
+									<td>${roomTypeVO.roomTypeName}</td>
+									<td>${roomTypeVO.roomTypeContent}</td>
+									<td>${roomTypeVO.dogSize}</td>
+									<td>${roomTypeVO.roomTypePrice}</td>
+									<td>${roomTypeVO.roomTypeStatus != 1 ? "正常" : "停權"}</td>
+									<td><img alt="img" src="data:image/jpeg;base64,${couponVO.couponPicURL} "style= "width: 70px"/></td>
+									<td></td>
+								</tr>
 								</c:forEach>
-							</ul>
-						</c:if>
-						<form
-							action="${pageContext.request.contextPath}/ipet-back/hotel/addRoomDiscount"
-							method="post">
-							<table id="discountdata">
-								<tr>
-									<td>優惠名稱:</td>
-									<td><input type="TEXT" name="discountName" size="45"
-										value="<%=(discount == null) ? "測試用" : discount.getDiscountName()%>" /></td>
-								</tr>
-								<tr>
-									<td>優惠內容:</td>
-									<td><textarea name="discountContent" cols="43"><%=(discount == null) ? "預設文字展示專用" : discount.getDiscountContent()%></textarea></td>
-								</tr>
-								<tr>
-									<td>優惠折扣:</td>
-									<td><input type="TEXT" name="roomDis" size="45"
-										value="<%=(discount == null) ? 50 : discount.getRoomDis()%>" /></td>
-								</tr>
-								<tr>
-									<td>優惠開始時間:</td>
-									<td><input type="DATE" name="startTime" size="45"
-										value="<%=(discount == null) ? "" : discount.getStartTime()%>" /></td>
-								</tr>
-								<tr>
-									<td>優惠結束時間:</td>
-									<td><input type="DATE" name="endTime" size="45"
-										value="<%=(discount == null) ? "" : discount.getEndTime()%>" /></td>
-								</tr>
-								<tr>
-									<td><input type="hidden" name="action" value="insert"></td>
-									<td><input type="submit" value="送出新增"></td>
-								</tr>
-							</table>
-						</form>
-					</div>
+							</thead>
+						</table>
+						<div class="col-sm-6">
+							<%@ include file="page2.file"%>
+						</div>
 				</div>
 				<!-- /.container-fluid -->
 			</section>

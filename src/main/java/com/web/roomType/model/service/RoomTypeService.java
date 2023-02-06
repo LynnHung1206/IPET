@@ -2,6 +2,7 @@ package com.web.roomType.model.service;
 
 import java.util.List;
 
+import com.web.member.model.entity.Member;
 import com.web.roomType.model.dao.RoomTypeDAO;
 import com.web.roomType.model.dao.impl.RoomTypeDAOImpl;
 import com.web.roomType.model.entities.RoomType;

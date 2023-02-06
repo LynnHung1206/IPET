@@ -83,6 +83,7 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
+					<h3>房間瀏覽</h3>
 					<form
 						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoom">
 						<input id="addNew" type="submit" value="新增房間">

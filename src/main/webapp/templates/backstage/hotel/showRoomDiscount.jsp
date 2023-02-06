@@ -69,6 +69,7 @@ pageContext.setAttribute("list", list);
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
+				<h3>優惠列表</h3>
 					<form
 						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoomDiscount">
 						<input id="addNew" type="submit" value="新增優惠">

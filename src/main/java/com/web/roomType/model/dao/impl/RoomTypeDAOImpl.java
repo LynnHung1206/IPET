@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.web.roomType.model.dao.RoomTypeDAO;
 import com.web.roomType.model.entities.RoomType;
-
+import org.hibernate.Session;
 public class RoomTypeDAOImpl implements RoomTypeDAO{
 	
 	@Override
 	public Integer add(RoomType roomType) {
-		getSession().merge(roomType);
+		Session session = getSession();
+		session.persist(roomType);
 		return roomType.getRoomTypeId();
 	}
 	
@@ -24,12 +25,34 @@ public class RoomTypeDAOImpl implements RoomTypeDAO{
 	
 	@Override
 	public RoomType getById(Integer roomTypeId) {
-		return getSession().get(RoomType.class, roomTypeId);	
+		Session session = getSession();
+		return session.get(RoomType.class, roomTypeId);	
 	}
 	
 	@Override
 	public List<RoomType> getAll(){
-		final String hql = "FROM ROOMTYPE ORDER BY roomTypeId";
-		return getSession().createQuery(hql, RoomType.class).list();
+		Session session = getSession();
+		final String hql = "FROM RoomType";
+		return session.createQuery(hql, RoomType.class).list();
+	}
+
+	@Override
+	public Integer update(RoomType newRoomType) {
+		Session session = getSession();
+		RoomType oldRoomType = session.get(RoomType.class, newRoomType.getRoomTypeId());
+		oldRoomType.setRoomAmount(newRoomType.getRoomAmount());
+		oldRoomType.setRoomTypeName(newRoomType.getRoomTypeName());
+		oldRoomType.setDogSize(newRoomType.getDogSize());
+		oldRoomType.setRoomTypeContent(newRoomType.getRoomTypeContent());
+		oldRoomType.setRoomTypePrice(newRoomType.getRoomTypePrice());
+		oldRoomType.setRoomTypeStatus(newRoomType.getRoomTypeStatus());
+		return newRoomType.getRoomTypeId();
+	}
+	
+	@Override
+	public List<RoomType> findRoomTypeByStatus(Integer status){
+		Session session = getSession();
+		String hql = "FROM RoomType WHERE roomTypeStatus = :status";
+		return session.createQuery(hql,RoomType.class).setParameter("status", status).list();
 	}
 }

@@ -24,26 +24,26 @@ public class PhotoService {
 
 	}
 
-	public Photo updatePhoto(Integer roomTypePhotoId, Integer roomTypeId, byte[] roomTypePhoto) {
-
-		Photo photo = new Photo();
-
-		photo.setRoomTypePhotoId(roomTypePhotoId);
-		photo.setRoomTypeId(roomTypeId);
-		photo.setRoomTypePhoto(roomTypePhoto);
-		dao.add(photo);
-
-		return dao.getById(roomTypeId);
-	}
-
-	public void deletePhoto(Integer roomTypePhotoId) {
-		dao.deleteById(roomTypePhotoId);
-	}
-
-	public Photo getonePhoto(Integer roomTypePhotoId) {
-		return dao.getById(roomTypePhotoId);
-
-	}
+//	public Photo updatePhoto(Integer roomTypePhotoId, Integer roomTypeId, byte[] roomTypePhoto) {
+//
+//		Photo photo = new Photo();
+//
+//		photo.setRoomTypePhotoId(roomTypePhotoId);
+//		photo.setRoomTypeId(roomTypeId);
+//		photo.setRoomTypePhoto(roomTypePhoto);
+//		dao.add(photo);
+//
+//		return dao.getOneByRoomTypeId(roomTypeId);
+//	}
+//
+//	public void deletePhoto(Integer roomTypePhotoId) {
+//		dao.deleteByRoomTypeId(roomTypePhotoId);
+//	}
+//
+//	public Photo getonePhoto(Integer roomTypePhotoId) {
+//		return dao.getById(roomTypePhotoId);
+//
+//	}
 
 	public List<Photo> selectAll() {
 		return dao.getAll();

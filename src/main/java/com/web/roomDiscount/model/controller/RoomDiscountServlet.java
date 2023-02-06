@@ -2,7 +2,6 @@ package com.web.roomDiscount.model.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,9 +27,6 @@ public class RoomDiscountServlet extends HttpServlet {
 		String path = req.getServletPath();
 		if ("/ipet-back/hotel/addRoomDiscount".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/hotel/addRoomDiscount.jsp").forward(req, res);
-		}
-		if ("/ipet-back/hotel/allRoomDiscount".equals(path)) {
-			req.getRequestDispatcher("/templates/backstage/hotel/allRoomDiscount.jsp").forward(req, res);
 		}
 	
 	}
@@ -154,12 +150,12 @@ public class RoomDiscountServlet extends HttpServlet {
 			// 取得優惠折扣
 			Integer roomDis = null;
 			try {
-			roomDis = Integer.valueOf(req.getParameter("roomDis"));
+			roomDis = Integer.valueOf(req.getParameter("roomDis").trim());
 			} catch (NumberFormatException e) {
 				roomDis = 0;
 				errorMsgs.put("roomDis", "優惠價格");
 			}
-			if (roomDis > 200 || roomDis < 49) {
+			if (roomDis > 200 || roomDis < 50) {
 				errorMsgs.put("roomDis", "價格範圍只能是50~200之間");
 			}
 			// 取得優惠開始時間
