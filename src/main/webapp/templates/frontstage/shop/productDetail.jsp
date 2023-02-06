@@ -46,6 +46,7 @@ pageContext.setAttribute("product", product);
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
 
 
+
 <style>
 .img-location {
 	display: flex;

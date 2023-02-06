@@ -47,6 +47,7 @@ pageContext.setAttribute("list", list);
 	href="${pageContext.request.contextPath}/static/frontstage/css/responsive.css" />
 <script
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
 
@@ -160,6 +161,12 @@ pageContext.setAttribute("list", list);
 	            },
 	        );
     	document.querySelector("#btn" + id).remove();
+    	 swal({
+    		    title: "確定要取消收藏嗎?",
+    		    icon: "warning",
+    		    buttons: true,
+    		    dangerMode: true
+    		  });
     }
 
     function addCartID(id){
@@ -172,7 +179,7 @@ pageContext.setAttribute("list", list);
 	                total:parseInt(document.querySelector(`#total` + id).innerText)
 	            },
 	        );
-    	
+    	 swal("成功加入購物車!", "", "success");
     }
 
 </script>

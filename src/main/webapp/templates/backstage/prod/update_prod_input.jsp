@@ -5,71 +5,71 @@
 <%
 Product prodVO = (Product) request.getAttribute("prodVO"); //ProdServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>商品資料修改 - update_pord_input.jsp</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPET 寵物 | 商城專區 | 修改商品</title>
+<!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
 <!-- Font Awesome Icons -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
-<!-- IonIcons -->
+<!-- DataTables -->
 <link rel="stylesheet"
-	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/css/select.bootstrap4.css">
+
+<!-- TODO: 目前先使用 完整css-->
 <!-- Theme style -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
+<!-- childTable style -->
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-	margin-left: 260px;
+.childTable th {
+	background-color: rgb(238, 182, 149, 0.45);
 }
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-	
+.childTable tr:nth-child(even) {
+	background-color: #fffaf082;
 }
 
-h4 {
-	color: blue;
-	display: inline;
-	
+.childTable tr:nth-child(odd) {
+	background-color: #fffffc !important;
 }
-h3{
-margin-left: 260px;
+
+td.details-control {
+	background:
+		url("${pageContext.request.contextPath}/static/backstage/img/more.png")
+		no-repeat center;
+	background-size: 25px;
+	cursor: pointer;
+}
+
+tr.shown td.details-control {
+	background:
+		url("${pageContext.request.contextPath}/static/backstage/img/close.png")
+		no-repeat center;
+	background-size: 20px;
+	cursor: pointer;
 }
 </style>
 
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-	
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-	white-space: nowrap;
-}
-
-th, td {
-	padding: 1px;
-}
-[name="form1"]{
-   margin-left: 260px;
-}
-</style>
 
 </head>
-<body bgcolor='white'>
+
+<body class="hold-transition sidebar-mini">
 	<div class="wrapper">
+
 		<!--  Navbar -->
 		<%@ include file="/templates/backstage/common/navbar.jsp"%>
 		<!-- /.navbar -->
@@ -78,102 +78,256 @@ th, td {
 		<%@ include file="/templates/backstage/common/sidebar.jsp"%>
 		<!-- /.aside -->
 
-		<!-- 中間頁面 Content Wrapper. Contains page content -->
-		<table id="table-1">
-			<tr>
-				<td>
-					<h3>商品資料修改 - update_prod_input.jsp</h3>
-				</td>
-			</tr>
-		</table>
 
-		<h3>資料修改:</h3>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
 
-		<%-- 錯誤表列 --%>
-		<c:if test="${not empty errorMsgs}">
-			<font style="color: red">請修正以下錯誤:</font>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
 
-		<FORM METHOD="post"
-			ACTION="${pageContext.request.contextPath}/ipet-back/prod/updateProdInput"
-			name="form1" enctype="multipart/form-data">
-			<table>
-				<tr>
-					<td>商品編號:<font color=red><b>*</b></font></td>
-					<td><%=prodVO.getProdID()%></td>
-				</tr>
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
 
-				<!-- 這裡代表直接取原本的值跟顯示欄位 -->
-				<tr>
-					<td>商品名稱:</td>
-					<td><input type="TEXT" name="prodName" size="45"
-						value="<%=prodVO.getProdName()%>" /></td>
-				</tr>
-				<tr>
-					<td>價錢:</td>
-					<td><input type="TEXT" name="prodPrice" size="45"
-						value="<%=prodVO.getProdPrice()%>" /></td>
-				</tr>
+						<div class="col-12">
 
-				<tr>
-					<td>商品描述:</td>
-					<td><input type="TEXT" name="prodDescription" size="45"
-						value="<%=prodVO.getProdDescription()%>" /></td>
-				</tr>
-				<tr>
-					<td>上架狀態:</td>
-					<td><input type="TEXT" name="prodStatus" size="45"
-						value="<%=prodVO.getProdStatus()%>" /></td>
-				</tr>
-			
-				<jsp:useBean id="prodTypeSvc" scope="page"
-					class="com.web.product.model.service.ProductTypeServiceBack" />
 
-				
-				<tr>
-					<td>類別:<font color=red><b>*</b></font></td>
-					<td><select size="1" name="typeID">
-							<c:forEach var="prodTypeVO" items="${prodTypeSvc.all}">
-								<option value="${prodTypeVO.typeID}"
-									${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
-							</c:forEach>
-					</select></td>
-				</tr>
+							<%-- 錯誤表列 --%>
+							<c:if test="${not empty errorMsgs}">
+								<font style="color: red">請修正以下錯誤:</font>
+								<ul>
+									<c:forEach var="message" items="${errorMsgs}">
+										<li style="color: red">${message}</li>
+									</c:forEach>
+								</ul>
+							</c:if>
 
-			</table>
-			<input type="file" name="imgFile" value="上傳圖片" accept="image/*" /> <input
-				type="hidden" name="action" value="update"> <input
-				type="hidden" name="prodID" value="<%=prodVO.getProdID()%>">
+							<!-- table -->
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title"></h3>
+								</div>
+								<!-- /.card-header -->
+								<div class="card-body">
+									<FORM METHOD="post"
+										ACTION="${pageContext.request.contextPath}/ipet-back/prod/updateProdInput"
+										name="form1" enctype="multipart/form-data">
+										<table id="reserveTable"
+											class="table table-bordered table-striped  display">
+											<tr>
+												<td>商品編號:<font color=red><b>*</b></font></td>
+												<td><%=prodVO.getProdID()%></td>
+											</tr>
 
-			<input type="submit" value="送出修改">
-		</FORM>
+											<!-- 這裡代表直接取原本的值跟顯示欄位 -->
+											<tr>
+												<td>商品名稱:</td>
+												<td><input type="TEXT" name="prodName" size="45"
+													value="<%=prodVO.getProdName()%>" /></td>
+											</tr>
+											<tr>
+												<td>價錢:</td>
+												<td><input type="TEXT" name="prodPrice" size="45"
+													value="<%=prodVO.getProdPrice()%>" /></td>
+											</tr>
 
-<!-- 			<FORM method="post" action="prod.do" enctype="multipart/form-data"> -->
+											<tr>
+												<td>商品描述:</td>
+												<td><input type="TEXT" name="prodDescription" size="45"
+													value="<%=prodVO.getProdDescription()%>" /></td>
+											</tr>
+											<tr>
+												<td>上架狀態:</td>
+												<td><input type="TEXT" name="prodStatus" size="45"
+													value="<%=prodVO.getProdStatus()%>" /></td>
+											</tr>
 
-<%-- 				<input type="hidden" name="prodID" value="<%=prodVO.getProdID()%>"> --%>
-				
-<!-- 				<input type="hidden" name="action" value="upload_img" /> 	<input -->
-<!-- 					type="file" name="imgFile" /> <input type="submit" value="新增圖片"> -->
-<!-- 			</FORM> -->
+											<jsp:useBean id="prodTypeSvc" scope="page"
+												class="com.web.product.model.service.ProductTypeServiceBack" />
+
+
+											<tr>
+												<td>類別:<font color=red><b>*</b></font></td>
+												<td><select size="1" name="typeID">
+														<c:forEach var="prodTypeVO" items="${prodTypeSvc.all}">
+															<option value="${prodTypeVO.typeID}"
+																${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
+														</c:forEach>
+												</select></td>
+											</tr>
+										</table>
+										<input type="file" name="imgFile" value="上傳圖片"
+											accept="image/*" /> <input type="hidden" name="action"
+											value="update"> <input type="hidden" name="prodID"
+											value="<%=prodVO.getProdID()%>"> <input type="submit"
+											value="送出修改">
+									</FORM>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.table -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content --
+
+
+    <!-- Edit Modal content   -->
+			<div class="modal fade" id="EditModal" data-backdrop="static"
+				data-keyboard="false" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">資料編輯</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<%-- 預約日期 --%>
+								<div class="form-group">
+									<label for="reserveDate-modal-edit" class="col-form-label">預約日期</label>
+									<input type="date" class="form-control"
+										id="reserveDate-modal-edit" readonly>
+								</div>
+								<%-- 預約時段 --%>
+								<div class="form-group">
+									<label for="reservePeriod-modal-edit" class="col-form-label">預約時段</label>
+									<input type="text" id="reservePeriod-modal-edit"
+										class="form-control" readonly>
+								</div>
+								<%-- 預約單狀態 --%>
+								<div class="form-group">
+									<label for="reserveStatus-modal-edit" class="col-form-label">預約單狀態</label>
+									<select id="reserveStatus-modal-edit" class="form-control">
+										<option value="0">已支付訂金</option>
+										<option value="1">已完成預約</option>
+										<option value="2">已取消</option>
+										<option value="3">逾時未到</option>
+									</select>
+								</div>
+
+								<div>
+									<button type="button" class="btn btn-outline-dark"
+										id="searchAvailableJob">查詢可用班表</button>
+								</div>
+								<%-- 班表編號 --%>
+								<div class="form-group">
+									<label for="jobId-modal-edit" class="col-form-label">班表編號</label>
+									<select id="jobId-modal-edit" class="form-control">
+									</select>
+								</div>
+								<%-- 備註 --%>
+								<div>
+									<label for="jobId-modal-edit" class="col-form-label">顧客備註</label>
+									<textarea id="clientNote-modal-edit" class="form-control"></textarea>
+								</div>
+								<div>
+									<p id="editModalMessage"></p>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">離開</button>
+							<button data-toggle="modal"
+								class="btn btn-primary btn-edit-confirm">確認修改</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /. Edit Modal content   -->
+
+			<!-- Edit Confirm Modal content   -->
+			<div class="modal fade" id="EditConfirmModal" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							確認要修改此筆資料? <br>
+							<p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或
+								"逾時未到"，該筆資料後續將無法再被更改。</p>
+							<br>
+							<p id="editConfirmModalMessage"></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">離開</button>
+							<button type="submit"
+								class="btn btn-danger btn-edit-confirm-confirm">確認修改</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.Edit Confirm Modal content   -->
+
 		</div>
-	<!-- ./wrapper -->
+		<!-- /.content-wrapper -->
 
-	<!-- REQUIRED SCRIPTS -->
+		<!-- Main Footer -->
+		<%@ include file="/templates/backstage/common/footer.jsp"%>
+
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+	</div>
+	<!-- ./wrapper -->
 
 	<!-- jQuery -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/plugins/jquery/jquery.min.js"></script>
-	<!-- Bootstrap -->
+	<!-- Bootstrap 4 -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
-</body>
 
+	<!-- DataTables  & Plugins -->
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/jszip/jszip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/pdfmake.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/vfs_fonts.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/js/dataTables.select.js"></script>
+
+	<!-- sidebar menu Class -->
+
+
+</body>
 </html>

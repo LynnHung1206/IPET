@@ -47,6 +47,7 @@ pageContext.setAttribute("list", list);
 	href="${pageContext.request.contextPath}/static/frontstage/css/responsive.css" />
 <script
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -148,6 +149,12 @@ function deleteID(id){
             },
         );
 	document.querySelector("#btn" + id).remove();
+	swal({
+	    title: "確定要刪除該商品嗎?",
+	    icon: "warning",
+	    buttons: true,
+	    dangerMode: true
+	  });
 }
 
 </script>

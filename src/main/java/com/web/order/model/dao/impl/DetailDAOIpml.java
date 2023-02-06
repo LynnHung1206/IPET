@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import com.web.order.model.dao.DetailDAO;
 import com.web.order.model.entities.OrderDetail;
+import com.web.product.model.entity.Product;
 
 public class DetailDAOIpml implements DetailDAO {
 
@@ -47,5 +48,11 @@ public class DetailDAOIpml implements DetailDAO {
 		orderDetail.setProdID(prodID);
 		session.remove(orderDetail);
 		
+	}
+	
+	@Override
+	public List<OrderDetail> getByOrderID(Integer orderID){
+		String hql = "FROM OrderDetail Where orderID = :orderID";
+		return getSession().createQuery(hql, OrderDetail.class).setParameter("orderID", orderID).list();
 	}
 }

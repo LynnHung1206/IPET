@@ -27,6 +27,7 @@ public class VewProductServlet extends HttpServlet{
 		if(req.getParameter("typeID") != null) {
 			
 			Integer typeID = Integer.parseInt((String) req.getParameter("typeID"));
+			System.out.println(typeID);
 			ProductServiceFrontImp prodSvc = new ProductServiceFrontImp();
 			List<Product> list = prodSvc.findSameCategoryProduct(typeID);
 			
