@@ -66,7 +66,7 @@ table {
 					<div class="login-register-wrapper"
 						style="margin: 0 auto; text-align: center;">
 						<form
-							action="${pageContext.request.contextPath}/ipet-back/pet/addNew">
+							action="${pageContext.request.contextPath}/ipet-front/pet/addNew">
 							<input id="addNew" type="submit" value="新增寵物" style="width: 300px;">
 						</form>
 						<table>
@@ -102,7 +102,7 @@ table {
 									<!-- 										</td> -->
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/ipet-back/pet/edit"
+											ACTION="<%=request.getContextPath()%>/ipet-front/pet/edit"
 											style="margin-bottom: 0px;">
 											<input type="submit" value="修改"> <input type="hidden"
 												name="petId" value="${petVO.getPetId()}"> <input

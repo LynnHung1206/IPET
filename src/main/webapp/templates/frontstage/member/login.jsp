@@ -70,7 +70,7 @@
 									<div class="login-register-form">
 										<h1 style="color: red; font-size: 20px;">${wrong}</h1>
 										<form method="post"
-											action="${pageContext.request.contextPath}/ipet-back/member/login">
+											action="${pageContext.request.contextPath}/ipet-front/member/login">
 											<div>
 												<input type="text" class="form-control" placeholder="帳號"
 													id="memAc" name="memAc" required>

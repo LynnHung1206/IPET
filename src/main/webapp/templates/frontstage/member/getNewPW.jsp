@@ -60,7 +60,7 @@
 									<div class="login-register-form">
 										<h1 style="color: red; font-size: 20px;">${wrong}</h1>
 										<form method="post"
-											action="${pageContext.request.contextPath}/ipet-back/member/getNewPW">
+											action="${pageContext.request.contextPath}/ipet-front/member/getNewPW">
 											<div>
 												<input type="text" class="form-control" placeholder="請輸入驗證碼"
 													id="randomNum" name="randomNum" required> <input

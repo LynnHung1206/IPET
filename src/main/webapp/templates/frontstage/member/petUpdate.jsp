@@ -85,12 +85,12 @@ table {
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/pet/edit" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-front/pet/edit" method="post">
 						
 							<table id="petdata">
 								<tr>
 									<td><label></label></td>
-									<td><input type="hidden" name="memId"
+									<td><input type="hidden" name="memsId"
 										value="<%=pet.getMemId()%>" readonly required></td>
 								</tr>
 								

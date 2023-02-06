@@ -73,7 +73,7 @@ Member member = (Member) request.getAttribute("getNewPWMember");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/member/toEditPW" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-front/member/toEditPW" method="post">
 						
 							<table id="memberdata" align="center">
 								<tr>

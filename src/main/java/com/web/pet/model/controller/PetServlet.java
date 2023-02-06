@@ -18,8 +18,8 @@ import com.web.pet.model.service.PetService;
 import com.web.member.model.entity.Member;
 import com.web.member.model.service.MemberService;
 
-@WebServlet({ "/ipet-back/pet/allPetList", "/ipet-back/pet/edit", "/ipet-back/pet/addNew", "/ipet-back/pet/getAllList",
-		"/ipet-back/pet/editPet" , "/ipet-back/pet/editPetFinal"})
+@WebServlet({ "/ipet-front/pet/allPetList", "/ipet-front/pet/edit", "/ipet-front/pet/addNew", "/ipet-back/pet/getAllList",
+		"/ipet-back/pet/editPet" , "/ipet-back/pet/editPetFinal","/ipet-back/pet/allPetList"})
 public class PetServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -32,10 +32,13 @@ public class PetServlet extends HttpServlet {
 			req.setAttribute("list", list);
 			req.getRequestDispatcher("/templates/backstage/pet/petList.jsp").forward(req, res);
 		}
-		if ("/ipet-back/pet/addNew".equals(path)) {
+		if ("/ipet-front/pet/addNew".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/member/petAddNew.jsp").forward(req, res);
 		}
 		if ("/ipet-back/pet/getAllList".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/pet/petList.jsp").forward(req, res);
+		}
+		if ("/ipet-back/pet/allPetList".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/pet/petList.jsp").forward(req, res);
 		}
 
@@ -88,7 +91,8 @@ public class PetServlet extends HttpServlet {
 	}
 
 	private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String memIdStr = req.getParameter("memId");
+		
+		
 		String petName = req.getParameter("petName");
 		String petVarId = req.getParameter("petVarId");
 		String petSize = req.getParameter("petSize");
@@ -99,7 +103,7 @@ public class PetServlet extends HttpServlet {
 		java.sql.Date petBirth = Date.valueOf(petBirthStr);
 		Integer petStatus = Integer.valueOf(petStatusStr);
 		Integer petId = Integer.valueOf(petIdStr.toString().trim());
-		Integer memId = Integer.valueOf(memIdStr.toString().trim());
+		Integer memId = ((Member) req.getSession().getAttribute("member")).getMemId();
 
 		Pet pet = new Pet();
 		pet.setPetId(petId);
@@ -114,7 +118,7 @@ public class PetServlet extends HttpServlet {
 		petSvc.updatePet(pet);
 
 //			轉交
-		String url = "/ipet-back/member/listPet";
+		String url = "/ipet-front/member/listPet";
 		res.sendRedirect(req.getContextPath() + url);
 		// RequestDispatcher successView = req.(url);
 		// successView.forward(req, res);
@@ -187,7 +191,7 @@ public class PetServlet extends HttpServlet {
 //		Member member = memberSvc.addPetOnMember(memberInt, staffid);
 
 //			轉交
-		String url = "/ipet-back/member/listPet";
+		String url = "/ipet-front/member/listPet";
 		res.sendRedirect(req.getContextPath() + url);
 //		String url = "/templates/backstage/pet/petList.jsp";
 //		RequestDispatcher successView = req.getRequestDispatcher(url);

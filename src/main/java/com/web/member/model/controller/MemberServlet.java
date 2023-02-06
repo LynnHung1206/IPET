@@ -20,11 +20,11 @@ import com.web.member.model.service.MemberService;
 import com.web.pet.model.entity.Pet;
 import com.web.pet.model.service.PetService;
 
-@WebServlet({ "/ipet-back/member/allMemberList", "/ipet-back/member/edit", "/ipet-back/member/addNew",
-		"/ipet-back/member/listPet", "/ipet-back/member/getAllList", "/ipet-back/member/login",
-		"/ipet-back/member/toLogin", "/ipet-back/member/toEdit", "/ipet-front/member/loginOut",
-		"/ipet-front/member/forgetPW","/ipet-back/member/changePW","/ipet-back/member/getNewPW",
-		"/ipet-back/member/toEditPW"})
+@WebServlet({ "/ipet-back/member/allMemberList", "/ipet-front/member/edit", "/ipet-back/member/addNew",
+		"/ipet-front/member/listPet", "/ipet-front/member/getAllList", "/ipet-front/member/login",
+		"/ipet-front/member/toLogin", "/ipet-front/member/toEdit", "/ipet-front/member/loginOut",
+		"/ipet-front/member/forgetPW","/ipet-front/member/changePW","/ipet-front/member/getNewPW",
+		"/ipet-front/member/toEditPW", "/ipet-back/member/edit"})
 public class MemberServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +44,7 @@ public class MemberServlet extends HttpServlet {
 			req.getRequestDispatcher("/templates/frontstage/member/register.jsp").forward(req, res);
 		}
 
-		if ("/ipet-back/member/toLogin".equals(path)) {
+		if ("/ipet-front/member/toLogin".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
 		}
 		//=========================================================================
@@ -57,15 +57,18 @@ public class MemberServlet extends HttpServlet {
 			req.getRequestDispatcher("/templates/frontstage/index.jsp").forward(req, res);
 		}
 
-		if ("/ipet-back/member/edit".equals(path)) {
+		if ("/ipet-front/member/edit".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/member/update.jsp").forward(req, res);
 		}
+		if ("/ipet-back/member/edit".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/member/update.jsp").forward(req, res);
+		}
 
-		if ("/ipet-back/member/toEdit".equals(path)) {
+		if ("/ipet-front/member/toEdit".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/index.jsp").forward(req, res);
 		}
 
-		if ("/ipet-back/member/listPet".equals(path)) {
+		if ("/ipet-front/member/listPet".equals(path)) {
 			PetService petSvc = new PetService();
 			HttpSession session = req.getSession();
 			Member member = (Member) session.getAttribute("member");
@@ -76,6 +79,9 @@ public class MemberServlet extends HttpServlet {
 
 		if ("/ipet-back/member/getAllList".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/member/memberList.jsp").forward(req, res);
+		}
+		if ("/ipet-front/member/getAllList".equals(path)) {
+			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
 		}
 
 	}
@@ -96,7 +102,7 @@ public class MemberServlet extends HttpServlet {
 		if ("updatefront".equals(action)) {
 			updatefront(req, res);
 		}
-		if ("/ipet-back/member/toEditPW".equals(path)) {
+		if ("/ipet-front/member/toEditPW".equals(path)) {
 			toEditPW(req, res);
 		}
 
@@ -113,7 +119,7 @@ public class MemberServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		//=============
-		if ("/ipet-back/member/getNewPW".equals(path)) {
+		if ("/ipet-front/member/getNewPW".equals(path)) {
 			String randomNum = req.getParameter("randomNum");
 			if((randomNum).equals("R9JKM5")) {
 				Integer memId = Integer.valueOf(req.getParameter("memId"));
@@ -133,7 +139,7 @@ public class MemberServlet extends HttpServlet {
 		}
 
 //		=============================
-		if ("/ipet-back/member/changePW".equals(path)) {
+		if ("/ipet-front/member/changePW".equals(path)) {
 			String memAc = req.getParameter("memAc");
 			String memEmail = req.getParameter("memEmail");
 			MemberService memberSvc = new MemberService();
@@ -154,7 +160,7 @@ public class MemberServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
-		if ("/ipet-back/member/login".equals(path)) {
+		if ("/ipet-front/member/login".equals(path)) {
 			String memAc = req.getParameter("memAc");
 			String memPw = req.getParameter("memPw");
 			if ((memAc == null || memAc.isEmpty()) || (memPw == null || memPw.isEmpty())) {
