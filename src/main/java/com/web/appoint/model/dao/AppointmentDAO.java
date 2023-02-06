@@ -13,5 +13,6 @@ public interface AppointmentDAO  extends CoreDAO<Appointment, Integer> {
     // we could only update apmStatus, schDate, and Note
     Integer update(Appointment t);
     Appointment findAppointBySchId(Integer schID);
+    List<Appointment> findAppointByMemId(Integer memID);
     List<Appointment> findAppointByStatus(Integer status);
 }

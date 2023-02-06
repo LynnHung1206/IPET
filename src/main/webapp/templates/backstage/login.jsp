@@ -66,12 +66,12 @@ body {
 						</div>
 					</div>
 				</div>
-					<div id="errMsg" class="error" style="color:pink"></div>
+				<div id="errMsg" class="error" style="color: pink"></div>
 				<div class="row">
 					<!-- /.col -->
 					<div class="col-4" style="margin: auto;">
 						<button type="submit" class="btn btn-primary btn-block"
-							id="btnlogin" >Sign In</button>
+							id="btnlogin">Sign In</button>
 					</div>
 					<!-- /.col -->
 				</div>
@@ -125,9 +125,7 @@ btnlogin.addEventListener('click',function(){
           sessionStorage.setItem('name', name);
           location = '${pageContext.request.contextPath}/templates/backstage/back-index.jsp';
         } else {
-//           console.log("經過這裡");
           errMsg.textContent = message;
-          
         }
       });
 	});

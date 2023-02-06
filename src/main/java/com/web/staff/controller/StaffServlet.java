@@ -1,4 +1,4 @@
-package com.web.staff.model.controller;
+package com.web.staff.controller;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.web.admin.model.entities.Admin;
 import com.web.admin.model.service.AdminService;
+import com.web.admin.model.service.impl.AdminServiceImpl;
 import com.web.staff.model.entity.Staff;
 import com.web.staff.model.service.StaffService;
+import com.web.staff.model.service.impl.StaffServiceImpl;
 
 @WebServlet({ "/ipet-back/staff/allStaffList", "/ipet-back/staff/edit", "/ipet-back/staff/addNew",
-		"/ipet-back/staff/getAllList", "/ipet-back/staff/checkAc" })
+		"/ipet-back/staff/getAllList", "/ipet-back/staff/checkAc", "/ipet-back/staff/checkStatus" })
 public class StaffServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,7 @@ public class StaffServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
 		if ("/ipet-back/staff/allStaffList".equals(path)) {
-			StaffService staffSvc = new StaffService();
+			StaffService staffSvc = new StaffServiceImpl();
 			List<Staff> list = staffSvc.getAll();
 			req.setAttribute("list", list);
 			req.getRequestDispatcher("/templates/backstage/staff/staffList.jsp").forward(req, res);
@@ -47,14 +49,15 @@ public class StaffServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String path = req.getServletPath();
 
+		System.out.println("經過這裡");
 		// insert
 		if ("insert".equals(action)) {
 			insert(req, res);
 		}
 		if ("updateTemp".equals(action)) {
 			Integer staffId = Integer.valueOf(req.getParameter("staffId"));
-			StaffService staffSvc = new StaffService();
-			AdminService adminSvc = new AdminService();
+			StaffService staffSvc = new StaffServiceImpl();
+			AdminService adminSvc = new AdminServiceImpl();
 
 			Admin admin = adminSvc.getOneAdminByInt(staffId);
 			Staff staff = staffSvc.getStaff(staffId);
@@ -70,13 +73,20 @@ public class StaffServlet extends HttpServlet {
 			update(req, res);
 		}
 		if ("/ipet-back/staff/checkAc".equals(path)) {
-			StaffService staffSvc = new StaffService();
+			StaffService staffSvc = new StaffServiceImpl();
 			Staff staff = new Staff();
 			staff.setAc(req.getParameter("account"));
-			
-			staffSvc.findAc(staff.getAc());
-			
+
 			res.getWriter().print(staffSvc.findAc(staff.getAc()));
+		}
+		if ("/ipet-back/staff/checkStatus".equals(path)) {
+			StaffService staffSvc = new StaffServiceImpl();
+			Staff staff = new Staff();
+			staff.setAc(req.getParameter("account"));
+
+			System.out.println("status=" + staffSvc.acAcactive(staff.getAc()));
+
+			res.getWriter().print(staffSvc.acAcactive(staff.getAc()));
 		}
 	}
 
@@ -95,7 +105,6 @@ public class StaffServlet extends HttpServlet {
 		Integer status = Integer.valueOf(req.getParameter("status").trim());
 		Integer id = Integer.valueOf(req.getParameter("staffId").toString().trim());
 
-		
 		Integer adminid = Integer.valueOf(req.getParameter("admin").trim());
 
 		Staff staff = new Staff();
@@ -113,13 +122,13 @@ public class StaffServlet extends HttpServlet {
 		staff.setPosi(posi);
 		staff.setStatus(status);
 
-		StaffService staffSvc = new StaffService();
+		StaffService staffSvc = new StaffServiceImpl();
 		staffSvc.updateStaff(staff);
 
 		Admin admin = new Admin();
 		admin.setStaffID(id);
 		admin.setAdminID(adminid);
-		AdminService adminSvc = new AdminService();
+		AdminService adminSvc = new AdminServiceImpl();
 		adminSvc.update(admin);
 //			轉交
 		String url = "/templates/backstage/staff/staffList.jsp";
@@ -167,10 +176,10 @@ public class StaffServlet extends HttpServlet {
 			return;
 		}
 
-		StaffService staffSvc = new StaffService();
+		StaffService staffSvc = new StaffServiceImpl();
 		int staffid = staffSvc.addStaff(staff);
 
-		AdminService adminSvc = new AdminService();
+		AdminService adminSvc = new AdminServiceImpl();
 		Admin admin = adminSvc.addAdminOnStaff(adminInt, staffid);
 
 //			轉交

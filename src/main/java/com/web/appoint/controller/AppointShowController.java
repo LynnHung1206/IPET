@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.web.appoint.model.entities.Appointment;
 import com.web.appoint.model.services.AppointServices;
 import com.web.appoint.model.services.imp.AppointServicesImp;
+import com.web.member.model.entity.Member;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ import java.util.List;
  * @create 2023/1/3 上午 09:39
  */
 
-@WebServlet({"/ipet-back/appoint/appoints", "/ipet-back/appoint/appoints_cancelled", "/ipet-back/appoint/appoints_payed", "/ipet-back/appoint/appoints_finished", "/ipet-back/appoint/appoints_outdated"})
+@WebServlet({"/ipet-back/appoint/appoints", "/ipet-back/appoint/appoints_cancelled", "/ipet-back/appoint/appoints_payed", "/ipet-back/appoint/appoints_finished", "/ipet-back/appoint/appoints_outdated", "/ipet-front/member/salonAppointment"})
 public class AppointShowController extends HttpServlet {
 
     // forward: 預約瀏覽, 已取消預約, 已付費預約, 已完成預約, 逾時預約
@@ -59,7 +60,13 @@ public class AppointShowController extends HttpServlet {
             List<Appointment> allServices = appointDetailServices.findAppointBasedOnStatus(3);
             req.setAttribute("appoints", gson.toJson(allServices));
             req.getRequestDispatcher("/templates/backstage/salon/salonAppointOutdated.jsp").forward(req, resp);
-        }
+            
+        }else if ("/ipet-front/member/salonAppointment".equals(path)) {
+        	Member member = (Member) req.getSession().getAttribute("member");
+			List<Appointment> services = appointDetailServices.findAppointByMemId(member.getMemId());
+			req.setAttribute("appoints", gson.toJson(services));
+			req.getRequestDispatcher("/templates/frontstage/member/salonAppointment.jsp").forward(req, resp);
+		}
     }
 
     @Override

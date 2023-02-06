@@ -1,4 +1,4 @@
-package com.web.admin.model.controller;
+package com.web.admin.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.web.admin.model.entities.AdminFunc;
 import com.web.admin.model.service.AdminFuncService;
-import com.web.admin.model.service.AdminService;
+import com.web.admin.model.service.impl.AdminFuncServiceImpl;
+import com.web.admin.model.service.impl.AdminServiceImpl;
 
 @WebServlet({ "/ipet-back/admin/admin","/ipet-back/admin/addNewAdmin", "/ipet-back/admin/adminEdit" })
 public class AdminFuncServlet extends HttpServlet {
@@ -23,12 +24,6 @@ public class AdminFuncServlet extends HttpServlet {
 		String path = req.getServletPath();
 		if ("/ipet-back/admin/admin".equals(path)) {
 			turnToGson(req,res);
-//			AdminFuncService adminSvc = new AdminFuncService();
-//			Gson gson = new Gson();
-//			List<AdminFunc> allAdmin = adminSvc.getAll();
-//			req.setAttribute("allAdmin", gson.toJson(allAdmin));
-//			
-//			req.getRequestDispatcher("/templates/backstage/admin/adminFunc.jsp").forward(req, res);
 		}
 	}
 
@@ -40,10 +35,9 @@ public class AdminFuncServlet extends HttpServlet {
 			String name = req.getParameter("admin");
 			AdminFunc adminFunc = new AdminFunc();
 			adminFunc.setName(name);
-			AdminFuncService adminSvc = new AdminFuncService();
+			AdminFuncService adminSvc = new AdminFuncServiceImpl();
 			adminSvc.addAdminFunc(adminFunc);
 			turnToGson(req,res);
-//			req.getRequestDispatcher("/templates/backstage/back-index.jsp").forward(req, res);
 			
 		}
 		
@@ -53,7 +47,7 @@ public class AdminFuncServlet extends HttpServlet {
 			AdminFunc adminFunc = new AdminFunc();
 			adminFunc.setId(id);
 			adminFunc.setName(name);
-			AdminFuncService adminFuncSvc = new AdminFuncService();
+			AdminFuncService adminFuncSvc = new AdminFuncServiceImpl();
 			adminFuncSvc.editAdminFunc(adminFunc);
 			
 			turnToGson(req,res);
@@ -61,7 +55,7 @@ public class AdminFuncServlet extends HttpServlet {
 	}
 	
 	public void turnToGson(HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException {
-		AdminFuncService adminSvc = new AdminFuncService();
+		AdminFuncService adminSvc = new AdminFuncServiceImpl();
 		Gson gson = new Gson();
 		List<AdminFunc> allAdmin = adminSvc.getAll();
 		req.setAttribute("allAdmin", gson.toJson(allAdmin));

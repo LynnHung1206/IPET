@@ -2,12 +2,12 @@ package com.web.salonService.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -24,8 +25,17 @@ import com.google.gson.JsonObject;
 import com.web.salonService.model.entities.Service;
 import com.web.salonService.model.services.ServiceService;
 
-@WebServlet({"/ipet-back/service/addService", "/ipet-back/service/allService", 
-	"/ipet-back/service/editService", "/ipet-back/service/updateService", "/ipet-back/service/deleteService"})
+@WebServlet({"/ipet-back/service/addService",
+			 "/ipet-back/service/allService", 
+			 "/ipet-back/service/editService",
+			 "/ipet-back/service/updateService",
+			 "/ipet-back/service/deleteService",
+			 "/ipet-back/service/showOldSvcImg", 
+			 
+			 "/ipet-front/service/showSvcImg", 
+			 "/ipet-front/salon/salonCategory",
+			 "/ipet-front/salon/service"
+			 })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class ServiceServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -33,14 +43,65 @@ public class ServiceServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String path = req.getServletPath();
+		ServiceService serviceService = new ServiceService();
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
+		
+		//後台 - 新增服務
 		if("/ipet-back/service/addService".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/salon/salon_addservice.jsp").forward(req, res);
 		}
+		
+		//後台 - 顯示所有服務
 		if("/ipet-back/service/allService".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/salon/salon_showservice.jsp").forward(req, res);
 		}
 		
+		//後台 - 顯示圖片(若無圖片顯示沒有圖片)
+		if("/ipet-back/service/showOldSvcImg".equals(path)) {
+			showImg(req, res, "/static/frontstage/img/noImage.jpg");
+		}
 		
+		//前台 - 顯示服務類別
+		if("/ipet-front/salon/salonCategory".equals(path)) {
+			req.getRequestDispatcher("/templates/frontstage/salon/salon_category.jsp").forward(req, res);
+		}
+		
+		//前台 - 顯示類別服務
+		if("/ipet-front/salon/service".equals(path)) {
+			String catId = req.getParameter("catId");
+			
+			List<Service> services = serviceService.finSvcByCatId(Integer.parseInt(catId));
+			req.setAttribute("services", gson.toJson(services));
+			req.getRequestDispatcher("/templates/frontstage/salon/salon_category_list.jsp").forward(req, res);
+		}
+		
+		//前台 - 顯示圖片(若無圖片顯示預設圖片)
+		if("/ipet-front/service/showSvcImg".equals(path)) {
+			showImg(req, res, "/static/frontstage/img/product/product-1.jpg");
+		}
+		
+	}
+	
+	private void showImg(HttpServletRequest req, HttpServletResponse res, String url) throws ServletException, IOException {
+		OutputStream out = res.getOutputStream();
+		String svcId = req.getParameter("svcId");
+		ServiceService svcsvc = new ServiceService();
+		Service service = svcsvc.getOneService(Integer.parseInt(svcId));
+		res.setContentType("image/jpg");
+		byte[] svcImg = service.getSvcImg();
+		if(svcImg == null) {
+			InputStream in = getServletContext().getResourceAsStream(url);
+			byte[] b = new byte[in.available()];
+			in.read(b);
+			out.write(b);
+			in.close();
+		}else {
+			out.write(svcImg);
+		}
+		out.close();
 	}
 	
 	@Override

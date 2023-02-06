@@ -1,9 +1,10 @@
-package com.web.news.model.dao;
+package com.web.news.model.dao.impl;
 
 
 import java.util.List;
 import org.hibernate.Session;
 
+import com.web.news.model.dao.NewsDAO;
 import com.web.news.model.entity.News;
 
 public class NewsDAOImpl implements NewsDAO {

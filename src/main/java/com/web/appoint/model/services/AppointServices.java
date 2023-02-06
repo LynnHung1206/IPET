@@ -15,5 +15,6 @@ public interface AppointServices extends CoreService {
     Appointment editAppoint(Appointment appointment);
     List<Appointment> findAllAppoint();
     Appointment findAppointById(Integer id);
+    List<Appointment> findAppointByMemId(Integer memID);
     List<Appointment> findAppointBasedOnStatus(Integer status);
 }

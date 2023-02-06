@@ -2,18 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.web.staff.model.service.*"%>
+<%@ page import="com.web.staff.model.service.impl.*"%>
 <%@ page import="com.web.staff.model.entity.*"%>
 <%@ page import="com.web.admin.model.service.*"%>
 <%@ page import="com.web.admin.model.entities.*"%>
 
 
 <%
-StaffService staffSvc = new StaffService();
+StaffService staffSvc = new StaffServiceImpl();
 List<Staff> list = staffSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 <%
-AdminService adminSvc = new AdminService();
+AdminServiceImpl adminSvc = new AdminServiceImpl();
 List<Admin> adminvo = adminSvc.getAll();
 pageContext.setAttribute("adminvo", adminvo);
 %>

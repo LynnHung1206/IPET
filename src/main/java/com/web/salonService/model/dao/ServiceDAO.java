@@ -13,4 +13,6 @@ public interface ServiceDAO extends CoreDAO<Service, Integer>{
 	Integer[] addBatch(Service[] svcIds);
 
 	List<Service> getAllIf(Map<String, String[]> map);
+	
+	List<Service> findSvcByCatId(Integer catId);
 }

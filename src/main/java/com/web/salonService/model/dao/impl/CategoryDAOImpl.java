@@ -1,9 +1,9 @@
 package com.web.salonService.model.dao.impl;
 
 import java.util.List;
+
 import com.web.salonService.model.dao.CategoryDAO;
 import com.web.salonService.model.entities.Category;
-import com.web.salonService.model.entities.Service;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
@@ -33,12 +33,5 @@ public class CategoryDAOImpl implements CategoryDAO {
 		return getSession().createQuery(hql, Category.class).list();
 	}
 
-	public List<Service> findSvcByCatId(Integer catId){
-		final String hql = "FROM Service WHERE catId = :catId ORDER BY svcId";
-		return getSession().createQuery(hql, Service.class)
-				.setParameter("catId", catId)
-				.list();
-	}
-	
 }
 

@@ -83,9 +83,9 @@
 										<li><a href="shop-page.html">房型參考</a></li>
 										<li><a href="shop-list.html">我要預約</a></li>
 									</ul></li>
-								<li><a href="salon_category.html">美容</a>
+								<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容</a>
 									<ul class="submenu">
-										<li><a href="blog.html">美容作品</a></li>
+										<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容服務</a></li>
 										<li><a href="blog-leftsidebar.html">注意事項</a></li>
 										<li><a href="blog-details.html">我要預約</a></li>
 									</ul></li>
@@ -125,7 +125,7 @@
 											<li><a href="<c:url value='/ipet-back/member/edit' />">會員資料修改</a></li>
 											<li><a href="<c:url value='/ipet-back/member/listPet' />">寵物資料管理</a></li>
 											<li><a href="<c:url value='#' />">商城訂單查詢</a></li>
-											<li><a href="<c:url value='#' />">美容預約查詢</a></li>
+											<li><a href="<c:url value='/ipet-front/member/salonAppointment' />">美容預約查詢</a></li>
 											<li><a href="<c:url value='#' />">住宿預約查詢</a></li>
 											<li><a href="<c:url value='/ipet-front/member/loginOut' />">會員登出</a></li>
 										</c:if>

@@ -1,11 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.web.salonService.model.*"%>
 <%@ page import="com.web.salonService.model.entities.*"%>
 <%@ page import="com.web.salonService.model.services.*"%>
 <%@ page import="com.web.salonService.model.dao.*"%>
 <%@ page import="com.web.salonService.model.dao.impl.*"%>
 <%@ page import="java.util.*"%>
+
+<%
+ServiceService svcsvc = new ServiceService();
+List<Service> svclist = svcsvc.selectAll();
+pageContext.setAttribute("svclist", svclist);
+%>
+
+<%
+CategoryService catsvc = new CategoryService();
+List<Category> catlist = catsvc.selectAll();
+pageContext.setAttribute("catlist", catlist);
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,15 +34,173 @@
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
-	<!-- summernote -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	<!-- daterange picker -->
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/daterangepicker/daterangepicker.css">
-	<!-- addsevice and updateservice css -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
+
 <style>
+
+	.cantSee {
+		display: none !important;
+	}
+	
+	.input-shadow {
+		box-shadow: inset 0 1px 2px rgb(0 0 0/ 8%);
+	}
+	
+	.c3 {
+		margin-top: 1.25rem;
+	}
+	
+	.choice-title {
+		font-weight: 700;
+	/* 	display: inline-block; */
+		margin-bottom: 0.5rem;
+		box-sizing: border-box;
+	}
+	
+	#second-card {
+		margin-top: 28px;
+	}
+	
+	hr {
+		margin-top: 25px;
+		margin-bottom: 20px;
+		border: 2px solid #6c757d;
+	}
+	
+	.button-style {
+		height: 30px;
+		width: 120px;
+		border: 1px solid #ced4da;
+		border-radius: 0.25rem;
+		margin-left: 0.25rem;
+	}
+	
+	.button-style:hover {
+		border: 1px solid #9b9b9b;
+	}
+	
+	.button-style:active {
+		background-color: #cccccc;
+		border: 1px solid #bdbdbd;
+	}
+	
+	/* ================== table區 ==================*/
+	.view-type-price {
+		width: 96%;
+		margin: 19px;
+	}
+	
+	.view-type-price td, th {
+		border: 1px solid #efefef;
+		padding: 12.75px;
+	}
+	
+	.view-type-price thead {
+		background-color: #e7e9eb;
+	}
+	
+	.view-type-price thead th {
+		border-right: 1px solid rgb(209, 211, 212);
+	}
+	
+	.view-type-price tbody tr:hover {
+		background-color: #f3f5f6;
+	}
+	
+	.fa-trash {
+		padding: 0 10px;
+	}
+	
+	.fa-trash:hover {
+		cursor: pointer;
+		color: #ff0000;
+	}
+	
+	.beSentSalePrice {
+		text-align: center;
+		padding-left: 20px;
+	}
+	
+	#money-icon {
+		position: absolute;
+		left: 10px;
+		top: 1px;
+		color: #585858;
+	}
+
+		/* ================== summernote區 ==================*/
+	.note-codable, .card-block {
+		min-height: 170px;
+		padding: 20px !important;
+	}
+	
+	.note-editor.note-frame.card {
+		box-shadow: none;
+	}
+	
+	.note-toolbar.card-header {
+		box-shadow: inset 0 1px 2px rgb(0 0 0/ 8%);
+	}
+	
+	.note-toolbar.card-header, .note-resizebar {
+		background-color: #f3f5f6;
+		padding: 6px 10px 10px 10px;
+	}
+	
+	.note-btn-group.btn-group.note-insert {
+		display: none;
+	}
+	
+	/* ================== 新增服務 按鈕 ==================*/
+	#before-submit {
+		height: 100px;
+	}
+	
+	.service-submit {
+		height: 55px;
+		border: 1px solid #ced4da;
+		border-radius: 0.25rem;
+		margin-top: 10px;
+		width: 100%;
+		background-color: #007bff;
+		color: white;
+		font-weight: 700;
+	}
+	
+	.service-submit:active {
+		transform: scale(0.995);
+	}
+	
+	/* ============ 彈出視窗-Loading =============*/
+	/* 彈出視窗出現時的暗色背景 */
+	#mainModal {
+ 		display: none; 
+		position: fixed;
+		z-index: 9999;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+		box-sizing: border-box;
+	}
+	
+	.d-flex.align-items-center {
+		margin: 20% auto;
+		width: 180px;
+	}
+	
+	#loading-text {
+		color: #f8f9fa;
+		font-size: 16px
+	}
+	
+	/* ======================== 優惠表單 ==========================*/
+
 	.toInline {
 		display: inline-block;
 		width: 48%;
@@ -90,7 +261,6 @@
 		border: 1px solid #888;
 		width: 1000px;
 		height: 87%;
-		border-radius: 0.25rem;
 	}
 	
 	/* 	叉叉 */
@@ -106,6 +276,8 @@
 		cursor: pointer;
 	}
 </style>
+	<!-- summernote -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
 	</head>
 	<body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -128,13 +300,41 @@
 			</div>
 		</div>
 	  <!-- ====================== 彈出視窗 ========================= -->
-	  	<div id="addSaleBox">
-			<div class="main-modal-content">
+	  	<div id="addSaleBox" style="overflow-y: hidden;">
+			<div class="main-modal-content" style="overflow-y: scroll;">
 				<i class="nav-icon fas fa-sharp fa-solid fa-times" id="modalClose"></i>
-				<p>一個施工中的彈出式視窗...</p>
+				
+		<!-- 快速查詢 -->
+				<div style="padding: 35px;">
+				<div style="border-radius: 0.25rem; margin: 20px 0;">
+						<!-- card-body -->
+						<div class="card-body" style="display: none;">
+						</div>
+							<input type="text" id="searchSvc" placeholder="快速查詢..." style="border: 1px solid #d2d2d2; width: 100%; height: 40px; padding-left: 10px;">
+				</div>
+						<!-- /.card-body -->
+				
+			<!-- datatable -->	
+					<table id="example2" class="table table-bordered table-hover">
+						<thead style="background-color: #6c757d; color: white;">
+							<tr>
+								<th></th>
+								<th style="width: 90px;">服務編號</th>
+								<th>服務名稱</th>
+								<th>服務類別</th>
+								<th>寵物種類</th>
+								<th>服務單價</th>
+								<th>狀態</th>
+							</tr>
+						</thead>
+						<tfoot>
+						</tfoot>
+					</table>
+					<input type="button" class="service-submit" value="新增服務" id="submitAll">
+				</div>
 			</div>
 		</div>
-	  
+	  <!-- ====================== /彈出視窗 ========================= -->
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -148,7 +348,7 @@
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容專區</a></li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/salonSale/allSale">優惠管理</a></li>
 								<li class="breadcrumb-item active">新增美容優惠</li>
 							</ol>
 						</div>
@@ -159,7 +359,7 @@
 
 			<!-- Main content1 -->
 			<section class="content">
-				<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/ipet-back/service/addService" id="addSvcForm">
+				<form method="post" enctype="multipart/form-data" id="addSvcForm" action="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">
 					<div class="card card-secondary">
 						<div class="card-header">
 							<h3 class="card-title">新增美容優惠</h3>
@@ -173,9 +373,9 @@
 						<!-- card-body -->
 						<div class="card-body">
 							<div class="toInline">
-								<label for="svc_category_id">優惠名稱</label>
-								<input type="text" id="svc_name" class="form-control input-shadow"
-									placeholder="請輸入優惠名稱" required name="svcName">
+								<label for="saleName">優惠名稱</label>
+								<input type="text" id="saleName" class="form-control input-shadow"
+									placeholder="請輸入優惠名稱" required name="saleName">
 							</div>
 							<div class="toInline toInline-right">
 								<label for="saleTime" style="margin-top: 10px;">優惠時間</label>
@@ -184,19 +384,19 @@
 				                      <span class="input-group-text"><i class="far fa-clock"></i></span>
 				                    </div>
 				                    <input type="text" class="form-control float-right" 
-				                    	id="reservationtime" placeholder="請選擇優惠時間">
+				                    	id="reservationtime" placeholder="請選擇優惠時間" name="saleTime">
 				                </div>
 			                </div>
 							<div id="summernoteFather">
 								<label for="summernote">優惠描述</label>
 								<div>
-									<textarea id="summernote" name="svcContent" required> </textarea>
+									<textarea id="summernote" name="saleContent"></textarea>
 								</div>
 							</div>
 						</div>
 						<!-- /.card-body -->
 				</div>
-				</form>
+			</form>
 			</section>
 			<!-- /.content1 -->
 
@@ -217,14 +417,29 @@
 						<button id="addSaleBtn" class="button-style" style="color: #4a4747; border-color: #4a4747;"><i class="fas fa-thin fa-plus" style="margin-right: 5px;"></i>
 						<span style="font-weight: 700;">新增服務</span></button>
 						
+						<table class="view-type-price c3">
+						<thead>
+							<tr>
+								<th>服務編號</th>
+								<th>服務名稱</th>
+								<th>服務類別</th>
+								<th>寵物種類</th>
+								<th>服務單價</th>
+								<th>優惠價</th>
+								<th>折扣</th>
+								<th>刪除</th>
+							</tr>
+						</thead>
+						<tbody id="showList">
+						</tbody>
+					</table>
 					</div>
-					
+			
 					<!-- /.card-body -->
 				</div>
 				<!-- /.card -->
 				<div id="before-submit">
-					<input type="submit" class="service-submit" value="新增服務"
-						id="submitAll" form="addSvcForm">
+					<input type="submit" class="service-submit" value="新增優惠" form="addSvcForm">
 				</div>
 			</section>
 		</div>
@@ -284,6 +499,55 @@
 	
     $(function () {
     	
+    	const datatable = $('#example2').DataTable({
+    		"dom": "tp",
+            "paging": false,
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": true,
+            "autoWidth": false,
+            "responsive": true,
+            "data": ${services},
+			"columns" : [
+				{ data: "svcId",
+					render: function(data, type){
+	            		return `<input type="checkbox" id="svcId` + data + `"class="chooseSvcId" style="width: 20px; height: 20px;" value=` + data + `>`;
+	            	},
+	            },
+	            { data: "svcId", responsivePriority: 1 },
+	            { data: "svcName", responsivePriority: 2 },
+	            { data: "catName", responsivePriority: 6 },
+	            { data: "typeName", responsivePriority: 3 },
+	            { data: "svcPrice", 
+	            	render: DataTable.render.number(',', null, 0, '$ '),
+	            	responsivePriority: 4 },
+	            { data: "svcStatusName", responsivePriority: 7 },
+	        ],
+			language: {
+		           "sProcessing": "查詢中...",
+		           "sLengthMenu": "顯示 _MENU_ 項服務",
+		           "sZeroRecords": "查無資料",
+		           "sInfo": "顯示第 _START_ 到 _END_ 項服務，共 _TOTAL_ 項",
+		           "sInfoEmpty": "顯示 0 到 0 項服務，共 0 項",
+		           "sInfoPostFix": "",
+		           "sUrl": "",
+		           "sEmptyTable": "尚未新增服務",
+		           "sLoadingRecords": "載入中...",
+		           "sInfoThousands": ",",
+		           "oPaginate": {
+		               "sFirst": "第一頁",
+		               "sPrevious": "上一頁",
+		               "sNext": "下一頁",
+		               "sLast": "最後一頁"
+		           },
+		     }
+		});
+    	
+    	/*===================== 查詢 ==========================*/
+    	$("#searchSvc").on("keyup click", function(){
+    		datatable.search($(this).val()).draw();
+    	});
+    	
     	//Date range picker with time picker => 使用手冊 https://www.daterangepicker.com/
         $('#reservationtime').daterangepicker({
           timePicker: true,
@@ -328,8 +592,14 @@
           }
         });
     	
+        /*===================== 清空查詢 ==========================*/
+		$(document).on("click", ".clear", function(){
+			$("#searchForm").submit();
+			$("#mybtnlabel-left").removeClass("labelOn");
+			$("#mybtnlabel-right").removeClass("labelOn");
+		});
+        
     	/*===================== 彈出視窗 ==========================*/
-		const addSaleBox = document.getElementById("addSaleBox");
 
 		//點擊按鈕時打開彈出視窗
 		$("#addSaleBtn").click(function() {
@@ -362,53 +632,12 @@
         }
       });
 
-      /*===================== 點擊 鉛筆 更改價格 ==========================*/
-      let priceValue;
-
-      $(document).on("click", ".fa-pen", function () {
-        //變換成圖示+輸入框
-        const td4 = $(this).parent();
-        const ok = $("<button>").text("修改").addClass("button-style short ok")
-        const cancel = $("<button>").text("取消").addClass("button-style short red cancel");
-        priceValue = td4.prev().text();
-        const updatePrice = `<input type="number" value="` + priceValue + `" min="0" max="999999999" class="updatePrice">`;
-        td4.prev().html(updatePrice);
-        td4.next().html(cancel);
-        td4.html(ok);
-      });
-
-      // 確定修改
-      $(document).on("click", ".ok", function () {
-        const ok = $(this).parent();
-        const uppriceNum = ok.prev().children().val();
-        if(uppriceNum === "0" || uppriceNum.match(/[-]/)){
-          alert("服務價格不可小於或等於0！");
-          return;
-        }
-        const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
-        const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
-        ok.prev().html(uppriceNum);
-        ok.next().html(faTrash);
-        ok.html(faPen);
-      });
-
-      //取消修改
-      $(document).on("click", ".cancel", function () {
-        const cancel = $(this).parent();
-        const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
-        const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
-        const pricesubling = cancel.prev().prev();
-        pricesubling.html(priceValue);
-        cancel.prev().html(faPen);
-        cancel.html(faTrash);
-      });
 
       /*============== 點擊 垃圾桶 刪除價格，並回覆對應checkbox的可選狀態 ===================*/
       $(document).on("click", ".fa-trash", function () {
-    	const thisPetId = $(this).parent().next().text();
-    	const thisPetTypeId = $(`#pet-type` + thisPetId);
-    	thisPetTypeId.attr("disabled", false);
-    	thisPetTypeId.next().css("color","#212529");
+    	const thisId = $(this).next().text();
+    	const thisSvcId = $(`#svcId` + thisId);
+    	thisSvcId.attr("disabled", false);
         $(this).parentsUntil("tbody").remove();
       });
 
@@ -432,47 +661,105 @@
 	        }
 	  });
       
-	  /*===================== 點擊 新增價格按鈕 新增瀏覽服務單價 ==========================*/
+	  /*===================== 計算金額 ==========================*/
+	    
+	    $(document).on("keyup click", ".saleCount", function (){
+	    	const input = $(this).parent().prev().find(".beSentSalePrice");
+	    	const svcSrice = $(this).parent().prev().prev().text();
+	    	
+	    	//轉換成數字
+	    	const noDot = svcSrice.replace(",","");
+	    	const spaceStr = noDot.indexOf(" ");
+	    	const svcPriceNum = noDot.substring(spaceStr + 1);
+	    	
+	    	const svcSalePrice = $(this).val() * 0.1 * svcPriceNum;
+	    	input.val(Math.floor(svcSalePrice));
+	    });
+	  
+	    $(document).on("keyup click", ".beSentSalePrice", function (){
+	    	const thisValue = $(this).val();
+	    	const svcSrice = $(this).parent().parent().prev().text();
+	    	
+	    	//轉換成數字
+	    	const noDot = svcSrice.replace(",","");
+	    	const spaceStr = noDot.indexOf(" ");
+	    	const svcPriceNum = noDot.substring(spaceStr + 1);
+	    	
+	    	const finalPrice = thisValue / svcPriceNum * 10
+	    	
+	    	const svcSalePrice = finalPrice.toFixed(2);
+	    	
+	    	$(this).parent().parent().next().children().val(svcSalePrice);
+	    });
+      
+	  /*===================== 再次點選 radio 取消選取 ==========================*/
+		const $radios = $('input[type="radio"]');
+
+		$('input[type="radio"]').click(function(){
+		    const $this = $(this);
+		
+		    if ($this.data('checked')) {
+		        this.checked = false;
+		    }
+		    const $otherRadios = $radios.not($this).filter('[name="' + $this.attr('name') + '"]');
+		    $otherRadios.prop('checked', false).data('checked', false);
+		    $this.data('checked', this.checked);
+		})
+		
+		$("#svc-Status1").click(function(){
+			if($(this).data("checked")){
+				$("#mybtnlabel-left").addClass("labelOn");
+				$("#mybtnlabel-right").removeClass("labelOn");
+			}else{
+				$("#mybtnlabel-left").removeClass("labelOn");
+			}
+		});
+		
+		$("#svc-Status2").click(function(){
+			if($(this).data("checked")){
+				$("#mybtnlabel-right").addClass("labelOn");
+				$("#mybtnlabel-left").removeClass("labelOn");
+			}else{
+				$("#mybtnlabel-right").removeClass("labelOn");
+			}
+		});
+		
+	  /*===================== 點擊 新增服務按鈕 新增優惠服務 ==========================*/
 	  
 	  //點擊新增價格按鈕 
-	  $("#addService").click(function(){
+	  $("#submitAll").click(function(){
+		  addSaleBox.style.display = "none";
+		  document.body.style.overflow = "auto";
+		  const svcId = $(".chooseSvcId").length;
 		  
-		  //備用
-		  // alert($("#svc_category_id").val());
-		  // alert($("#svc_name").val());
-		  //alert($("#add-img").files[0]);
-		  // alert($("#summernote").val());
-		  // alert($("#enterPrice").val());
-		  
-		  const enterPrice = $("#enterPrice").val();
-		  const aTypeLength = $(".aType").length;
-		  //判斷是否有輸入正確價格
-		  if(!enterPrice){
-			  alert("請輸入服務單價");
-			  return;
-		  }
-		  if(enterPrice <= 0){
-			  alert("金額不可小於等於零！");
-			  return;
-		  }
 		  //判斷checkbox是否選取，若是，append into tbody
-		  for(let i = 0; i < aTypeLength; i++){
-			const aTypeNum = $(".aType").eq(i);
-		  	if(aTypeNum.prop("checked")){
+		  for(let i = 0; i < svcId; i++){
+			const svcIdNum = $(".chooseSvcId").eq(i).parent();
+		  	if(svcIdNum.children().prop("checked")){
           	$("#showList").append(`
 		      <tr class="beSentTr">
-		        <td>` + aTypeNum.next().next().val() + `</td>
-		        <td>` + aTypeNum.next().text() + `</td>
-		        <td class="beSentPrice">` + enterPrice + `</td>
-		        <td><i class="nav-icon fas fa-solid fa-pen"></i></td>
-		        <td><i class="nav-icon fas fa-solid fa-trash"></i></td>
-		        <td style="display: none;" class="beSentTypeId">` + aTypeNum.val() + `</td>
+		        <td class="beSentSvcId">` + svcIdNum.next().text() + `</td>
+		        <td>` + svcIdNum.next().next().text() + `</td>
+		        <td>` + svcIdNum.next().next().next().text() + `</td>
+		        <td>` + svcIdNum.next().next().next().next().text() + `</td>
+		        <td>` + svcIdNum.next().next().next().next().next().text() + `</td>
+		        <td>
+		        	<div style="position: relative; display: inline-block;">
+						<span id="money-icon">$</span>
+						<input type="number" class="beSentSalePrice" min="0" max="999999999" required>
+					</div>
+				</td>
+		        <td>
+					<input type="number" class="saleCount" min="0" max="10">
+				</td>
+				<td>
+				<i class="nav-icon fas fa-solid fa-trash"></i>
+				<div style="display: none;">` + svcIdNum.next().text() + `</div>
+				</td>
 		      </tr>
 	      	`);
           	//關閉選過的checkedbox可選狀態、清空金額輸入框
-          	aTypeNum.prop("checked", false).attr("disabled", true);
-          	aTypeNum.next().css("color","#9da2a6");
-          	$("#enterPrice").val("");
+          	svcIdNum.children().prop("checked", false).attr("disabled", true);
 		    }
 		  }
 	  });
@@ -508,21 +795,21 @@
     	e.preventDefault();
     	
     	//迴圈存入金額和品種物件
-	  	 let priceAndTypeArray = [];
+	  	 let svcAndSalePrice = [];
 	  	 const beSentTrLength = $(".beSentTr").length;
 	  	 for(let i = 0; i< beSentTrLength; i++){
-	  		priceAndTypeArray.push({
-	  			typeId : $(".beSentTypeId").eq(i).text(),
-	  			svcPrice : $(".beSentPrice").eq(i).text()
+	  		svcAndSalePrice.push({
+	  			svcId : $(".beSentSvcId").eq(i).text(),
+	  			salePrice : $(".beSentSalePrice").eq(i).text()
 	  		});
 	  	 }
 	  	 
 	  	 //資料：formData
     	 let formData = new FormData(form);
-    	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
+    	 formData.append("svcAndSalePrice", JSON.stringify(svcAndSalePrice));
     	 
     	 $.ajax({
-    	        url : "${pageContext.request.contextPath}/ipet-back/service/addService",
+    	        url : "${pageContext.request.contextPath}/ipet-back/salonSale/addSale",
     	        type : "POST",
     	        data : formData,
     	        cache: false,
@@ -552,7 +839,7 @@
      	    		  	showConfirmButton: false,
      	    		  	timer: 1500
     	    	      }, function(){
-    	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/service/allService");
+//     	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/salonSale/allSale");
     	    	      })
     	    }else if (type === "something-Wrong"){
     	    	swal({
@@ -565,7 +852,8 @@
     	  }
 
     	})(jQuery);
-   	
+    	    	
+    
   </script>
 </body>
 </html>
