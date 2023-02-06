@@ -52,7 +52,6 @@ public class StaffLoginServlet extends HttpServlet {
 			session.setAttribute("name", staff.getName());
 			session.setAttribute("id", staff.getId());
 			session.setAttribute("adminId", admin.getAdminID());
-			System.out.println("admin.getAdminID():"+admin.getAdminID());
 		}
 		turnToJson(resp, staff);
 	}
