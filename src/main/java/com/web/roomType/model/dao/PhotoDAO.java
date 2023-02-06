@@ -5,8 +5,7 @@ import java.util.List;
 import com.core.model.dao.CoreDAO;
 import com.web.roomType.model.entities.Photo;
 
-public interface PhotoDAO extends CoreDAO<Photo, Photo.PK>{
-	Photo.PK[] addBatch(Photo[] ts);
-	Integer deleteByRoomTypeId(Integer roomTypeId);
+public interface PhotoDAO extends CoreDAO<Photo, Byte>{
+	Integer deleteById(Integer roomTypePhotoId);
 	List<Photo> getAllPhotosByRoomTypeId(Integer roomTypeId);
 }

@@ -11,20 +11,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.core.model.entities.Core;
-import com.web.roomType.model.service.PhotoService;
-import com.web.salonService.model.entities.PetType;
-import com.web.salonService.model.services.PetTypeService;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+
+
 @Entity
 @Table(name = "ROOM_TYPE", catalog="ipetdb")
 public class RoomType extends Core{
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	@Id

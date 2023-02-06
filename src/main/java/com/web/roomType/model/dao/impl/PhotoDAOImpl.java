@@ -14,7 +14,7 @@ import com.web.salonService.model.entities.Service;
 public class PhotoDAOImpl implements PhotoDAO{
 	
 	@Override
-	public Photo.PK add(Photo photo) {
+	public Photo add(Photo photo) {
 		Session session = getSession();
 		session.persist(photo);
 		Photo.PK pk = new Photo.PK();

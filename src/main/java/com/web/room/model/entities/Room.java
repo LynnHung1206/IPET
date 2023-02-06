@@ -5,10 +5,6 @@ import java.util.Objects;
 
 import javax.persistence.*;
 import com.core.model.entities.Core;
-import com.web.member.model.entity.Member;
-import com.web.member.model.service.*;
-import com.web.pet.model.entity.Pet;
-import com.web.pet.model.service.*;
 import com.web.room.model.RoomStatus;
 import com.web.roomType.model.entities.RoomType;
 import com.web.roomType.model.service.RoomTypeService;
