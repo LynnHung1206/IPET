@@ -329,6 +329,12 @@
 <!-- Main Footer -->
 <%@ include file="/templates/backstage/common/footer.jsp" %>
 
+<!-- Side Bar -->
+<script>
+	$("p:contains(訂單管理)").closest("li").addClass("menu-open");
+	$("p:contains(訂單總覽)").closest("a").addClass("active");
+</script>
+
 <!-- REQUIRED SCRIPTS -->
 <script>
   $('.orderStatus').each(function(){

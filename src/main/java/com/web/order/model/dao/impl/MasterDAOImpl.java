@@ -33,25 +33,13 @@ public class MasterDAOImpl implements MasterDAO {
 	@Override
 	public void update(OrderMaster orderMater) {
 		
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		
-		try {
-			Transaction tx = session.beginTransaction();
-			
-			OrderMaster oldOrderMaster = session.get(OrderMaster.class, orderMater.getOrderID());
-			
-			oldOrderMaster.setOrderSum(orderMater.getOrderSum());
-			oldOrderMaster.setOrderStatus(orderMater.getOrderStatus());
-			oldOrderMaster.setOrderRecAddress(orderMater.getOrderRecAddress());
-			oldOrderMaster.setOrderRecName(orderMater.getOrderRecName());
-			oldOrderMaster.setOrderRecPhone(orderMater.getOrderRecPhone());
-			tx.commit();
-			
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-		}
+		Session session = getSession();
+		OrderMaster oldOrderMaster = session.get(OrderMaster.class, orderMater.getOrderID());
+		oldOrderMaster.setOrderSum(orderMater.getOrderSum());
+		oldOrderMaster.setOrderStatus(orderMater.getOrderStatus());
+		oldOrderMaster.setOrderRecAddress(orderMater.getOrderRecAddress());
+		oldOrderMaster.setOrderRecName(orderMater.getOrderRecName());
+		oldOrderMaster.setOrderRecPhone(orderMater.getOrderRecPhone());
 	}
 
 	@Override
