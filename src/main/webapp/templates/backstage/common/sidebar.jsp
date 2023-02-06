@@ -215,29 +215,23 @@
           </ul>
         </li>
         <li class="nav-item">
-          <!--  TODO: {寵物住宿專區-房務管理} 請修改房務管理的 href  -->
+          <!--  TODO: {寵物住宿專區-房型管理} 請修改房型管理的 href  -->
           <a href="#" class="nav-link">
-            <!--  TODO: {寵物住宿專區-房務管理} 可以修改房務管理的icon，參考網站: font awesome  -->
+            <!--  TODO: {寵物住宿專區-房務管理} 可以修改房型管理的icon，參考網站: font awesome  -->
             <i class="nav-icon fas fa-solid fa-broom"></i>
             <p>
-              房務管理
+              房型管理
               <i class="fas fa-angle-left right"></i>
-              <!--      TODO: {寵物住宿專區-房務管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
+              <!--      TODO: {寵物住宿專區-房型管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
+              <span class="badge badge-info right"></span>
             </p>
           </a>
-          <!--    TODO: {寵物住宿專區-房務管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
+          <!--    TODO: {寵物住宿專區-房型管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目1</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
+                <p>房型列表</p>
               </a>
             </li>
           </ul>
