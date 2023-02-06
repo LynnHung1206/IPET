@@ -569,19 +569,51 @@
             error: function(resp){}
           })
 
+
+
           // 當挑選出助理1後，顯示助理2的可選名單
           $('#ASST_name_1-modal-edit').on("change", function (){
-            if ($('#ASST_name_1-modal-edit').val() === empObjectEdit.job.asstID2.toString()){
-              let asst2HTMLEdit = `<option disabled selected>請選擇</option>`;
+            let asst2HTMLEdit = "";
+            let asstID1 = $('#ASST_name_1-modal-edit').val();
+            let asstID2 = $('#ASST_name_2-modal-edit').val();
+
+            if (asstID1 === asstID2){
+              asst2HTMLEdit = `<option disabled selected>請選擇</option>`;
               $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
-              let asstID1 = $('#ASST_name_1-modal-edit').val();
-              for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
-                if (asstID1 !== empObjectEdit.asstIds[i].toString()) {
+            }
+
+            for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
+              if (asstID1 !== empObjectEdit.asstIds[i].toString()) {
+                if (asstID2 === empObjectEdit.asstIds[i].toString()){
+                  asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]} </option>`
+                }else{
                   asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]} </option>`
                 }
               }
               $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
+            }
+          });
 
+          //  // 當挑選出助理2後，顯示助理1的可選名單
+          $('#ASST_name_2-modal-edit').on("change", function (){
+            let asst1HTMLEdit = "";
+            let asstID1 = $('#ASST_name_1-modal-edit').val();
+            let asstID2 = $('#ASST_name_2-modal-edit').val();
+
+            if (asstID1 === asstID2){
+              asst1HTMLEdit = `<option disabled selected>請選擇</option>`;
+              $('#ASST_name_1-modal-edit').html(asst1HTMLEdit);
+            }
+
+            for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
+              if (asstID2 !== empObjectEdit.asstIds[i].toString()) {
+                if (asstID1 === empObjectEdit.asstIds[i].toString()){
+                  asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]} </option>`
+                }else{
+                  asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]} </option>`
+                }
+              }
+              $('#ASST_name_1-modal-edit').html(asst1HTMLEdit);
             }
           });
 
