@@ -28,6 +28,9 @@ public class RoomDiscountServlet extends HttpServlet {
 		if ("/ipet-back/hotel/addRoomDiscount".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/hotel/addRoomDiscount.jsp").forward(req, res);
 		}
+		if ("/ipet-back/hotel/showRoomDiscount".equals(path)) {
+			req.getRequestDispatcher("/templates/backstage/hotel/showRoomDiscount.jsp").forward(req, res);
+		}
 	
 	}
 

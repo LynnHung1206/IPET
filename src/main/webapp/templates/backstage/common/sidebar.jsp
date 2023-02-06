@@ -257,7 +257,7 @@
           <!--    TODO: {寵物住宿專區-優惠管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="${pageContext.request.contextPath}/ipet-back/hotel/showRoom" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/hotel/showRoomDiscount" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>優惠列表</p>
               </a>
