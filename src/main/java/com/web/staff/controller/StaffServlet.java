@@ -49,7 +49,6 @@ public class StaffServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String path = req.getServletPath();
 
-		System.out.println("經過這裡");
 		// insert
 		if ("insert".equals(action)) {
 			insert(req, res);
