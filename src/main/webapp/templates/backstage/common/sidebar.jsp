@@ -419,7 +419,7 @@
               會員資料管理
               <i class="fas fa-angle-left right"></i>
               <!--      TODO: {會員專區-會員資料管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
+              <span class="badge badge-info right"></span>
             </p>
           </a>
           <!--    TODO: {會員專區-會員資料管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
@@ -448,7 +448,7 @@
               客服管理
               <i class="fas fa-angle-left right"></i>
               <!--      TODO: {客服專區-客服管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
+              <span class="badge badge-info right"></span>
             </p>
           </a>
           <!--    TODO: {客服專區-客服管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
