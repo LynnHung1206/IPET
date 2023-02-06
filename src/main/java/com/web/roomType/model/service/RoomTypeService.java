@@ -14,7 +14,7 @@ public class RoomTypeService {
 		dao = new RoomTypeDAOImpl();
 	}
 	
-	public RoomType addRoomType(Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent, Integer roomTypePrice, Integer roomTypeStatus) {
+	public RoomType addRoomType(Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,Byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
 		
 		RoomType roomType = new RoomType();
 		
@@ -22,6 +22,8 @@ public class RoomTypeService {
 		roomType.setRoomTypeName(roomTypeName);
 		roomType.setDogSize(dogSize);
 		roomType.setRoomTypeContent(roomTypeContent);
+		roomType.setRoomTypePhoto(roomTypePhoto);
+		roomType.setRoomTypePhoto(roomTypePhoto);
 		roomType.setRoomTypePrice(roomTypePrice);
 		roomType.setRoomTypeStatus(roomTypeStatus);
 		
@@ -29,7 +31,7 @@ public class RoomTypeService {
 		return roomType;
 	}
 	
-	public RoomType updateRoomType(Integer roomTypeId, Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent, Integer roomTypePrice, Integer roomTypeStatus) {
+	public RoomType updateRoomType(Integer roomTypeId, Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,Byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
 		
 		RoomType roomType = new RoomType();
 		
@@ -38,6 +40,7 @@ public class RoomTypeService {
 		roomType.setRoomTypeName(roomTypeName);
 		roomType.setDogSize(dogSize);
 		roomType.setRoomTypeContent(roomTypeContent);
+		roomType.setRoomTypePhoto(roomTypePhoto);
 		roomType.setRoomTypePrice(roomTypePrice);
 		roomType.setRoomTypeStatus(roomTypeStatus);
 		

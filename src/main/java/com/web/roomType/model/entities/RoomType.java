@@ -38,38 +38,36 @@ public class RoomType extends Core{
 	@Column(name = "ROOM_TYPE_CONTENT")
 	private String roomTypeContent;
 	
+	@Column(name = "ROOM_TYPE_PHOTO")
+	private Byte[] roomTypePhoto;
+	
 	@Column(name= "ROOM_TYPE_PRICE")
 	private Integer roomTypePrice;
 	
 	@Column(name = "ROOM_TYPE_STATUS")
 	private Integer roomTypeStatus;
-	@Transient
-	private String statusDesc;
-	@Transient
-	private Photo[] photos;
 	
-	public RoomType(Integer roomTypeId, Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent, Integer roomTypePrice, Integer roomTypeStatus, String statusDesc, Photo[] photos) {
+	public RoomType(Integer roomTypeId, Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,Byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
 		this.roomTypeId = roomTypeId;
 		this.roomAmount = roomAmount;
 		this.roomTypeName = roomTypeName;
 		this.dogSize = dogSize;
 		this.roomTypeContent = roomTypeContent;
+		this.roomTypePhoto= roomTypePhoto;
 		this.roomTypePrice = roomTypePrice;
 		this.roomTypeStatus = roomTypeStatus;
-		this.statusDesc = statusDesc;
-		this.photos = photos;
+		
 		
 	}
 	
-	public RoomType(Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent, Integer roomTypePrice, Integer roomTypeStatus, String statusDesc, Photo[] photos) {
+	public RoomType(Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,Byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
 		this.roomAmount = roomAmount;
 		this.roomTypeName = roomTypeName;
 		this.dogSize = dogSize;
 		this.roomTypeContent = roomTypeContent;
+		this.roomTypePhoto= roomTypePhoto;
 		this.roomTypePrice = roomTypePrice;
 		this.roomTypeStatus = roomTypeStatus;
-		this.statusDesc = statusDesc;
-		this.photos = photos;
 	}
 	
 	public RoomType(){}
@@ -107,6 +105,15 @@ public class RoomType extends Core{
 	public void setDogSize(String dogSize) {
 		this.dogSize = dogSize;
 	}
+	
+	
+	public Byte[] getRoomTypePhoto() {
+		return roomTypePhoto;
+	}
+
+	public void setRoomTypePhoto(Byte[] roomTypePhoto) {
+		this.roomTypePhoto = roomTypePhoto;
+	}
 
 	public String getRoomTypeContent() {
 		return roomTypeContent;
@@ -133,26 +140,11 @@ public class RoomType extends Core{
 	}
 	
 	
-	public String getStatusDesc() {
-		return statusDesc;
-	}
-
-	public void setStatusDesc(String statusDesc) {
-		this.statusDesc = statusDesc;
-	}
 	
-	
-	public Photo[] getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(Photo[] photos) {
-		this.photos = photos;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(roomTypeId, roomAmount, roomTypeName, dogSize, roomTypeContent, roomTypePrice, roomTypeStatus, statusDesc, photos);
+		return Objects.hash(roomTypeId, roomAmount, roomTypeName, dogSize, roomTypeContent,roomTypePhoto, roomTypePrice, roomTypeStatus);
 	}
 
 	@Override
@@ -162,7 +154,7 @@ public class RoomType extends Core{
 			return false;
 
 		RoomType that = (RoomType) obj;
-		return roomTypeId.equals(that.roomTypeId) && roomAmount.equals(that.roomAmount) && roomTypeName.equals(that.roomTypeName) && dogSize.equals(that.dogSize) && roomTypeContent.equals(that.roomTypeContent) && roomTypePrice.equals(that.roomTypePrice) && roomTypeStatus.equals(that.roomTypeStatus) && statusDesc.equals(that.statusDesc) && photos.equals(that.photos);
+		return roomTypeId.equals(that.roomTypeId) && roomAmount.equals(that.roomAmount) && roomTypeName.equals(that.roomTypeName) && dogSize.equals(that.dogSize) && roomTypeContent.equals(that.roomTypeContent) && roomTypePhoto.equals(that.roomTypePhoto)&& roomTypePrice.equals(that.roomTypePrice) && roomTypeStatus.equals(that.roomTypeStatus);
 	}
 	
 	
