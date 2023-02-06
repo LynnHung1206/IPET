@@ -5,6 +5,7 @@
 <%@ page import="com.web.staff.model.service.impl.*"%>
 <%@ page import="com.web.staff.model.entity.*"%>
 <%@ page import="com.web.admin.model.service.*"%>
+<%@ page import="com.web.admin.model.service.impl.*"%>
 <%@ page import="com.web.admin.model.entities.*"%>
 
 
@@ -14,7 +15,7 @@ List<Staff> list = staffSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 <%
-AdminServiceImpl adminSvc = new AdminServiceImpl();
+AdminService adminSvc = new AdminServiceImpl();
 List<Admin> adminvo = adminSvc.getAll();
 pageContext.setAttribute("adminvo", adminvo);
 %>

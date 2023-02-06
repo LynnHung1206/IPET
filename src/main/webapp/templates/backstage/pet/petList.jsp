@@ -178,5 +178,9 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+		<script>
+		$("p:contains(會員資料管理)").closest("li").addClass("menu-open");
+		$("p:contains(寵物列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

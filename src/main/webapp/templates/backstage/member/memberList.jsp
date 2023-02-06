@@ -45,12 +45,12 @@ table, th, td {
 	height: 50px;
 }
 
-th{
+th {
 	background-color: lightgray;
 	text-align: center;
 }
 
-td{
+td {
 	background-color: white;
 }
 
@@ -93,10 +93,10 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-<!-- 					<form -->
-<%-- 						action="${pageContext.request.contextPath}/ipet-back/member/addNew"> --%>
-<!-- 						<input id="addNew" type="submit" value="新增會員"> -->
-<!-- 					</form> -->
+					<!-- 					<form -->
+					<%-- 						action="${pageContext.request.contextPath}/ipet-back/member/addNew"> --%>
+					<!-- 						<input id="addNew" type="submit" value="新增會員"> -->
+					<!-- 					</form> -->
 					<div class="row mb-2">
 						<table align="center" style="width: 100%;">
 							<tr>
@@ -111,7 +111,7 @@ input#addNew:hover, #search:hover {
 								<th>地址</th>
 								<th>狀態</th>
 								<th></th>
-<!-- 								<th></th> -->
+								<!-- 								<th></th> -->
 							</tr>
 
 							<%@ include file="page1.file"%>
@@ -138,15 +138,15 @@ input#addNew:hover, #search:hover {
 												type="hidden" name="action" value="updateTemp">
 										</FORM>
 									</td>
-<!-- 									<td> -->
-<!-- 										<FORM METHOD="post" -->
-<%-- 											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew" --%>
-<!-- 											style="margin-bottom: 0px;"> -->
-<!-- 											<input type="submit" value="新增寵物"> <input type="hidden" -->
-<%-- 												name="memId" value="${memberVO.getMemId()}"> <input --%>
-<!-- 												type="hidden" name="action" value="insert"> -->
-<!-- 										</FORM> -->
-<!-- 									</td> -->
+									<!-- 									<td> -->
+									<!-- 										<FORM METHOD="post" -->
+									<%-- 											ACTION="<%=request.getContextPath()%>/ipet-back/pet/addNew" --%>
+									<!-- 											style="margin-bottom: 0px;"> -->
+									<!-- 											<input type="submit" value="新增寵物"> <input type="hidden" -->
+									<%-- 												name="memId" value="${memberVO.getMemId()}"> <input --%>
+									<!-- 												type="hidden" name="action" value="insert"> -->
+									<!-- 										</FORM> -->
+									<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 						</table>
@@ -181,5 +181,10 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		$("p:contains(會員資料管理)").closest("li").addClass("menu-open");
+		$("p:contains(會員列表)").closest("a").addClass("active");
+	</script>
+	
 </body>
 </html>

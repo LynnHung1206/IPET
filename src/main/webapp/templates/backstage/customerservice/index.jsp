@@ -104,5 +104,9 @@ html, body {
 	}
 	
 </script>
+<script>
+		$("p:contains(客服管理)").closest("li").addClass("menu-open");
+		$("p:contains(線上客服)").closest("a").addClass("active");
+	</script>
 
 </html>
