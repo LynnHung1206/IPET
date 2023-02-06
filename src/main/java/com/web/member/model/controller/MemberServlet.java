@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.metamodel.SetAttribute;
 import javax.servlet.RequestDispatcher;
@@ -121,7 +122,9 @@ public class MemberServlet extends HttpServlet {
 		//=============
 		if ("/ipet-front/member/getNewPW".equals(path)) {
 			String randomNum = req.getParameter("randomNum");
-			if((randomNum).equals("R9JKM5")) {
+			String randomNumber = req.getParameter("randomNumber");
+			System.out.println(randomNum+"/"+randomNumber);
+			if((randomNum).equals(randomNumber)) {
 				Integer memId = Integer.valueOf(req.getParameter("memId"));
 				MemberService memberSvc = new MemberService();
 				
@@ -151,10 +154,17 @@ public class MemberServlet extends HttpServlet {
 				successView.forward(req, res);
 			}
 			MemberService memberSVC = new MemberService();
-			
-			memberSVC.sendMail(memEmail, "IPET寵物商城-密碼修改驗證", "您的驗證碼為 : R9JKM5");
+			String randomNumber = "";
+			Random random = new Random();
+			for (int i = 0; i < 6; i++) {
+			    // 生成 0-9 隨機整數
+			    int number = random.nextInt(10);
+			    randomNumber += Integer.toString(number);
+			}
+			memberSVC.sendMail(memEmail, "IPET寵物商城-密碼修改驗證", "您的驗證碼為 : "+randomNumber);
 //			HttpSession session = req.getSession();
 			req.setAttribute("changePWMemId", member.getMemId());
+			req.setAttribute("randomNumber", randomNumber);
 			String url = "/templates/frontstage/member/getNewPW.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);

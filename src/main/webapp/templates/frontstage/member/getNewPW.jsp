@@ -64,8 +64,10 @@
 											<div>
 												<input type="text" class="form-control" placeholder="請輸入驗證碼"
 													id="randomNum" name="randomNum" required> <input
-													type="hidden" class="form-control" placeholder="請輸入驗證碼"
-													id="memId" name="memId" required value="${changePWMemId}">
+													type="hidden" class="form-control" 
+													id="memId" name="memId"  value="${changePWMemId}">
+													<input type="hidden" class="form-control" 
+													id="randomNumber" name="randomNumber" value="${randomNumber}">
 												<div class="input-group-append">
 													<div class="input-group-text">
 														<span class="fas fa-envelope"></span>

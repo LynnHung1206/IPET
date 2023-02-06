@@ -84,238 +84,238 @@
         </div>
     </div>
 
-    <div class="team-ara pt-95 pb-70">
-        <div class="container">
-            <div class="section-title text-center mb-55">
-                <h2>我們的團隊</h2>
-                <p>Tibame CGA105 第一組</p>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-1.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>佳豪</h4>
-                            <span>掃地阿伯</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-2.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>育伶</h4>
-                            <span>董事長</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-3.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>文豪</h4>
-                            <span>總經理</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-4.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>關婷</h4>
-                            <span>美容經理</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="team-ara pt-95 pb-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-1.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>育菁</h4>
-                            <span>美容經理</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-2.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>振豪</h4>
-                            <span>住宿經理</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-3.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>承憲</h4>
-                            <span>商城經理</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="team-wrapper mb-30">
-                        <div class="team-img">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-4.jpg" alt="">
-                            </a>
-                            <div class="team-social">
-                                <a href="#">
-                                    <i class="ti-facebook"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-pinterest"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-twitter-alt"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="ti-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="team-content text-center">
-                            <h4>宏熹</h4>
-                            <span>商城經理</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--     <div class="team-ara pt-95 pb-70"> -->
+<!--         <div class="container"> -->
+<!--             <div class="section-title text-center mb-55"> -->
+<!--                 <h2>我們的團隊</h2> -->
+<!--                 <p>Tibame CGA105 第一組</p> -->
+<!--             </div> -->
+<!--             <div class="row"> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-1.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>佳豪</h4> -->
+<!--                             <span>掃地阿伯</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-2.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>育伶</h4> -->
+<!--                             <span>董事長</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-3.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>文豪</h4> -->
+<!--                             <span>總經理</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-4.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>關婷</h4> -->
+<!--                             <span>美容經理</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
+<!--     <div class="team-ara pt-95 pb-70"> -->
+<!--         <div class="container"> -->
+<!--             <div class="row"> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-1.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>育菁</h4> -->
+<!--                             <span>美容經理</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-2.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>振豪</h4> -->
+<!--                             <span>住宿經理</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-3.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>承憲</h4> -->
+<!--                             <span>商城經理</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6"> -->
+<!--                     <div class="team-wrapper mb-30"> -->
+<!--                         <div class="team-img"> -->
+<!--                             <a href="#"> -->
+<%--                                 <img src="${pageContext.request.contextPath}/static/frontstage/img/team/team-4.jpg" alt=""> --%>
+<!--                             </a> -->
+<!--                             <div class="team-social"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-facebook"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-pinterest"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-twitter-alt"></i> -->
+<!--                                 </a> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="ti-instagram"></i> -->
+<!--                                 </a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="team-content text-center"> -->
+<!--                             <h4>宏熹</h4> -->
+<!--                             <span>商城經理</span> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
 <%@include file="/templates/frontstage/common/footer.jsp"%>
 
 
