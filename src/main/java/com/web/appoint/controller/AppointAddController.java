@@ -50,7 +50,13 @@ public class AppointAddController extends HttpServlet{
         
         //點選"我要預約"前往處
         if ("/ipet-front/salon/addAppointment".equals(path)) {
+        	
         	Member member = (Member) req.getSession().getAttribute("member");
+        	if(member == null) {
+        		req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
+        		return;
+        	}
+        	
         	List<Pet> pets = new PetService().getPetByMemId(member.getMemId());
         	req.setAttribute("pets", pets);
         	
@@ -65,32 +71,30 @@ public class AppointAddController extends HttpServlet{
         
         
         if ("/ECpay".equals(path)) {
-			// 檢查後台: 信用卡收單 - 交易明細 - 查詢
         	// 信用卡測試卡號 : 4311-9522-2222-2222 
         	// 安全碼 : 222
 	        domain = new AllInOne("");
 	        AioCheckOutOneTime obj = new AioCheckOutOneTime();
 
-	        // MerchantTradeNo  : 必填 特店訂單編號 (不可重複，因此需要動態產生)
+	        // 訂單編號
 	        obj.setMerchantTradeNo(new String("salon" + System.currentTimeMillis()));
-	        // MerchantTradeDate  : 必填 特店交易時間 yyyy/MM/dd HH:mm:ss
+	        // 交易時間 yyyy/MM/dd HH:mm:ss
 	        obj.setMerchantTradeDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()));
-	        // TotalAmount  : 必填 交易金額
+	        // 交易金額
 	        obj.setTotalAmount("1900");
-	        // TradeDesc  : 必填 交易描述
+	        // 交易描述
 	        obj.setTradeDesc("Thank you");
-	        // ItemName  : 必填 商品名稱
+	        // 商品名稱
 	        obj.setItemName("Salon Service");
-	        // ReturnURL   : 必填  我用不到所以是隨便填一個英文字
+	        // ReturnURL
 	        obj.setReturnURL("a");
-	        // OrderResultURL   : 選填 消費者完成付費後。重新導向的位置
+	        // 重新導向的位置
 	        obj.setOrderResultURL("http://localhost:8081/CGA105G1/ipet-front/member/salonAppointment");
 	        obj.setNeedExtraPaidInfo("N");
 
 
 	        // 回傳form訂單 並自動將使用者導到 綠界
 	        String form = domain.aioCheckOut(obj, null);
-	        System.out.println(form);
 	        res.setCharacterEncoding("UTF-8");
 	        res.getWriter().print("<html><body>" + form + "</body></html>");
 		}
@@ -102,9 +106,13 @@ public class AppointAddController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
+		GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
 		
 		if("/ipet-front/salon/addAppointment".equals(path)) {
-			res.setContentType("text/text;charset=UTF-8");
+		
 			Map<String,String> errorMsgs = new HashMap<>();
 			
 			/*************1.接收請求參數 - 輸入格式的錯誤處理**********/
@@ -139,7 +147,17 @@ public class AppointAddController extends HttpServlet{
 			
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				res.getWriter().print(new Gson().toJson(errorMsgs));
+				List<Pet> pets = new PetService().getPetByMemId(member.getMemId());
+	        	req.setAttribute("pets", pets);
+	        	
+	        	List<JobSchedule> noAppointmentSchs = new JobScheduleServicesImp().findNoAppointmentSch();
+	        	req.setAttribute("noApmSchs", noAppointmentSchs);
+	        	
+	        	List<Service> allservices = new ServiceService().selectAll();
+	        	req.setAttribute("allservices", gson.toJson(allservices));
+	        	
+				req.setAttribute("errorMsgs", errorMsgs);
+				req.getRequestDispatcher("/templates/frontstage/salon/salon_addAppointment.jsp").forward(req, res);
 				return; //程式中斷
 			}
 			
@@ -171,37 +189,37 @@ public class AppointAddController extends HttpServlet{
 				appointmentDetail.setSalePrice(salePrice);
 			}
 			
-			req.getRequestDispatcher("/ECpay").forward(req, res);
+//			res.sendRedirect("http://localhost:8081/CGA105G1/ECpay");
 			
 //			/*********************3.送至綠界金流付款************************/
 //			// 檢查後台: 信用卡收單 - 交易明細 - 查詢
 //        	// 信用卡測試卡號 : 4311-9522-2222-2222 
 //        	// 安全碼 : 222
-//	        domain = new AllInOne("");
-//	        AioCheckOutOneTime obj = new AioCheckOutOneTime();
-//
-//	        // MerchantTradeNo  : 必填 特店訂單編號 (不可重複，因此需要動態產生)
-//	        obj.setMerchantTradeNo(new String("salon" + System.currentTimeMillis()));
-//	        // MerchantTradeDate  : 必填 特店交易時間 yyyy/MM/dd HH:mm:ss
-//	        obj.setMerchantTradeDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()));
-//	        // TotalAmount  : 必填 交易金額
-//	        obj.setTotalAmount("1900");
-//	        // TradeDesc  : 必填 交易描述
-//	        obj.setTradeDesc("Thank you");
-//	        // ItemName  : 必填 商品名稱
-//	        obj.setItemName("Salon Service");
-//	        // ReturnURL   : 必填  我用不到所以是隨便填一個英文字
-//	        obj.setReturnURL("a");
-//	        // OrderResultURL   : 選填 消費者完成付費後。重新導向的位置
-//	        obj.setOrderResultURL("http://localhost:8081/CGA105G1/ipet-front/news/allNews");
-//	        obj.setNeedExtraPaidInfo("N");
+	        domain = new AllInOne("");
+	        AioCheckOutOneTime obj = new AioCheckOutOneTime();
+
+	        // MerchantTradeNo  : 必填 特店訂單編號 (不可重複，因此需要動態產生)
+	        obj.setMerchantTradeNo(new String("salon" + System.currentTimeMillis()));
+	        // MerchantTradeDate  : 必填 特店交易時間 yyyy/MM/dd HH:mm:ss
+	        obj.setMerchantTradeDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()));
+	        // TotalAmount  : 必填 交易金額
+	        obj.setTotalAmount(String.valueOf(totalPrice));
+	        // TradeDesc  : 必填 交易描述
+	        obj.setTradeDesc("Thank you");
+	        // ItemName  : 必填 商品名稱
+	        obj.setItemName("Salon Service");
+	        // ReturnURL   : 必填  我用不到所以是隨便填一個英文字
+	        obj.setReturnURL("a");
+	        // OrderResultURL   : 選填 消費者完成付費後。重新導向的位置
+	        path="http://localhost:8081/CGA105G1/ipet-front/news/allNews";
+	        obj.setClientBackURL(path);
+	        obj.setNeedExtraPaidInfo("N");
 //
 //
 //	        // 回傳form訂單 並自動將使用者導到 綠界
-//	        String form = domain.aioCheckOut(obj, null);
-//	        System.out.println(form);
-//	        res.setCharacterEncoding("UTF-8");
-//	        res.getWriter().print("<html><body>" + form + "</body></html>");
+	        String form = domain.aioCheckOut(obj, null);
+	        res.setCharacterEncoding("UTF-8");
+	        res.getWriter().print("<html><body>" + form + "</body></html>");
 			 
 //			/*********************4.開始新增資料************************/
 //			AppointServicesImp appointServicesImp = new AppointServicesImp();
