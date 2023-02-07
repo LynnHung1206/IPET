@@ -2,7 +2,6 @@ package com.web.roomType.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -40,24 +39,6 @@ public class RoomTypeServlet extends HttpServlet{
 		
 	}
 	
-	private void roomTypePhoto(HttpServletRequest req, HttpServletResponse res, String url) throws ServletException, IOException {
-		OutputStream out = res.getOutputStream();
-		String roomTypeId = req.getParameter("roomTypeId");
-		RoomTypeService roomTypeSvc = new RoomTypeService();
-		RoomType roomType = roomTypeSvc.getOneRoomType(Integer.parseInt(roomTypeId));
-		res.setContentType("image/jpg");
-		byte[] roomTypePhoto = roomType.getRoomTypePhoto();
-		if(roomTypePhoto == null) {
-			InputStream in = getServletContext().getResourceAsStream(url);
-			byte[] b = new byte[in.available()];
-			in.read(b);
-			out.write(b);
-			in.close();
-		}else {
-			out.write(roomTypePhoto);
-		}
-		out.close();
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
