@@ -229,7 +229,7 @@
           <!--    TODO: {寵物住宿專區-房型管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/roomType/showRoomType" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>房型列表</p>
               </a>

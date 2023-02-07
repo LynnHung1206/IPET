@@ -9,8 +9,7 @@ public class RoomTypeDAOImpl implements RoomTypeDAO{
 	
 	@Override
 	public Integer add(RoomType roomType) {
-		Session session = getSession();
-		session.persist(roomType);
+		getSession().merge(roomType);
 		return roomType.getRoomTypeId();
 	}
 	

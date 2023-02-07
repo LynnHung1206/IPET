@@ -80,8 +80,10 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-				<h3>新增房型</h3>
-					<FORM METHOD="POST" ACTION="hotel.do" name="form1">
+					<h3>新增房型</h3>
+					<FORM METHOD="POST"
+						ACTION="${pageContext.request.contextPath}/ipet-back/roomType/addRoomType"
+						enctype="multipart/form-data">
 						<table>
 							<tr>
 								<td>房型數量:</td>
@@ -94,21 +96,27 @@ input#addNew:hover, #search:hover {
 									Value="<%=(roomType == null) ? "大狗房" : roomType.getRoomTypeName()%>" /></td>
 							</tr>
 							<tr>
-								<td>寵物體型:</td>
-								<td><select name="roomTypeStatus">
-										<option value="小型犬"
-											${room.getroomTypeStatus() == 0 ?'selected':''}>小型犬</option>
-										<option value="中型犬"
-											${room.getroomTypeStatus() == 1 ?'selected':''}>中型犬</option>
-										<option value="大型犬"
-											${room.getroomTypeStatus() == 1 ?'selected':''}>中型犬</option>
-								</select></td>
-							</tr>
-							<tr>
 								<td>房型說明:</td>
 								<td><textarea name="roomTypeContent" cols="43"><%=(roomType == null) ? "預設文字展示專用" : roomType.getRoomTypeContent()%></textarea></td>
 							</tr>
 							<tr>
+								<td>寵物體型:</td>
+								<td><select name="dogSize">
+										<option value="小型犬"
+											${roomType.getDogSize() == "小型犬" ?'selected':''}>小型犬</option>
+										<option value="中型犬"
+											${room.getDogSize() == "中型犬" ?'selected':''}>中型犬</option>
+										<option value="大型犬"
+											${room.getDogSize() == "大型犬" ?'selected':''}>中型犬</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td>房型圖片:</td>
+								<td><div class="input-group mb-3">
+										<input type="file" class="form-control" id="inputGroupFile02"
+											name="roomTypePhoto"> <label class="input-group-text"
+											for="inputGroupFile02">Upload</label>
+									</div></td>
 							</tr>
 							<tr>
 								<td>房型價格:</td>
@@ -117,7 +125,7 @@ input#addNew:hover, #search:hover {
 							</tr>
 							<tr>
 								<td>上下架狀態:</td>
-								<td><select name="roomSaleStatus">
+								<td><select name="roomTypeStatus">
 										<option value="0"
 											${room.getroomTypeStatus() == 0 ?'selected':''}>上架</option>
 										<option value="1"
@@ -155,5 +163,9 @@ input#addNew:hover, #search:hover {
 	<!-- AdminLTE -->
 	<script
 		src="${pageContext.request.contextPath}/static/backstage/js/adminlte.js"></script>
+	<script>
+		$("p:contains(房型管理)").closest("li").addClass("menu-open");
+		$("p:contains(房型列表)").closest("a").addClass("active");
+	</script>
 </body>
 </html>

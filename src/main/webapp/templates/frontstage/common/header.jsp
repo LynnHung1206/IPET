@@ -63,10 +63,7 @@
                                 <li><a href="#">住宿</a>
                                     <ul class="submenu">
                                         <li>
-                                            <a href="">住宿環境</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-page.html">房型參考</a>
+                                            <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/roomIndex.jsp">房型瀏覽</a>
                                         </li>
                                         <li>
                                             <a href="shop-list.html">我要預約</a>
