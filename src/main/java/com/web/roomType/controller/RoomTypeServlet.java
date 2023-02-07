@@ -23,7 +23,7 @@ import com.web.roomType.model.service.RoomTypeService;
 
 
 @WebServlet({"/ipet-back/roomType/allRoomType","/ipet-back/hotel/editRoomType"})
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+//@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class RoomTypeServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
