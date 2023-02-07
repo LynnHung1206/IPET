@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.web.member.model.entity.Member;
+
 @WebFilter({ "/ipet-front/salon/addAppointment" })
 public class frontLoginFilter extends HttpFilter {
 	private static final long serialVersionUID = 1L;
@@ -18,9 +20,9 @@ public class frontLoginFilter extends HttpFilter {
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpSession session = req.getSession();
-		Object memId = session.getAttribute("memId");
-
-		if (memId != null) {
+		Member member = (Member) session.getAttribute("member");
+		
+		if (member.getMemId() != null) {
 			chain.doFilter(req, res);
 		} else {
 			req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
