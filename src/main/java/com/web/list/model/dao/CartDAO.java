@@ -21,5 +21,6 @@ public interface CartDAO extends CoreDAO<CartList, Integer> {
 	
 	public List<CartList> selectAll(CartList cartList);
 	
+	public void remove(Integer memID);
 	
 }

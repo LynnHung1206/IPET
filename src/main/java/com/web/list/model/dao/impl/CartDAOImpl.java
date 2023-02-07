@@ -2,6 +2,8 @@ package com.web.list.model.dao.impl;
 
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
+
 import com.web.list.model.dao.CartDAO;
 import com.web.list.model.entities.CartList;
 import com.web.list.model.entities.CartList.CartListPK;
@@ -82,6 +84,12 @@ public class CartDAOImpl implements CartDAO {
 		List<CartList> cartLists = query.list();
 		
 		return cartLists;
+	}
+
+	@Override
+	public void remove(Integer memID) {
+		String sql = "delete from cart_list where MEM_ID = :memID";
+		getSession().createNativeQuery(sql).setParameter("memID", memID).executeUpdate();
 	}
 
 }

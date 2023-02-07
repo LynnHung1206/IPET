@@ -77,4 +77,8 @@ public class CartService {
 	public List<CartList> getAll(CartList cartList){
 		return dao.selectAll(cartList);
 	};
+	
+	public void removeAllProd(Integer memID) {
+		dao.remove(memID);
+	}
 }

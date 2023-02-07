@@ -32,7 +32,6 @@ public class addOrderServlet extends HttpServlet{
 		CartListPK cartListPK = new CartListPK();
 		
 		Member member = (Member)req.getSession().getAttribute("member");
-		
 		cartListPK.setMemID(member.getMemId());
 		
 		CartList cartList = new CartList();
@@ -51,29 +50,25 @@ public class addOrderServlet extends HttpServlet{
 		OrderMaster orderMaster = new OrderMaster();
 		orderMaster.setMemID(member.getMemId());
 		orderMaster.setOrderSum(orderSum);
-				
 		orderMaster.setOrderRecName(req.getParameter("orderRecName"));
 		orderMaster.setOrderRecPhone(req.getParameter("orderRecPhone"));
 		orderMaster.setOrderRecAddress(req.getParameter("orderRecAddress"));
 		
 		// create orderDetails
 		List<OrderDetail> orderDetails = new ArrayList();
-		
 		for(CartList cartlist : cartLists) {
-			
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setProdID(cartlist.getCartListPK().getProdID());
 			orderDetail.setDetailQuantity(cartlist.getCount());
 			orderDetail.setDetailPrice(cartlist.getProduct().getProdPrice());
-			
 			orderDetails.add(orderDetail);
 		}		
 		
 		OrderServiceImp orderServiceImp = new OrderServiceImp();
 		orderServiceImp.addOrder(orderMaster, orderDetails);
+		cartService.removeAllProd(member.getMemId());
 		
 		RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/orderSuccess.jsp");
 		successView.forward(req, resp);
-		
 	}
 }
