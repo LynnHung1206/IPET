@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="billing-btn">
-                         <button id="returnToShop" type="button"><a href="<%= request.getContextPath() %>/templates/frontstage/shop/shop.jsp">返回首頁</a></button>
+                         <button id="returnToShop" type="button"><a href="${pageContext.request.contextPath}/ipet-front/shop/home">返回首頁</a></button>
                     </div>
                 </div>
             </div>

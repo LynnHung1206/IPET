@@ -115,7 +115,7 @@
 										<c:if test="${!empty member}">
 											<li><a href="<c:url value='/ipet-front/member/edit' />">會員資料修改</a></li>
 											<li><a href="<c:url value='/ipet-front/member/listPet' />">寵物資料管理</a></li>
-											<li><a href="<c:url value='#' />">商城訂單查詢</a></li>
+											<li><a href="<c:url value='/ipet-front/shop/myOrder' />">商城訂單查詢</a></li>
 											<li><a href="<c:url value='/ipet-front/member/salonAppointment' />">美容預約查詢</a></li>
 											<li><a href="<c:url value='#' />">住宿預約查詢</a></li>
 											<li><a href="<c:url value='/ipet-front/member/loginOut' />">會員登出</a></li>

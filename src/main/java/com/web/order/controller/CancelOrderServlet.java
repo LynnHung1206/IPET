@@ -2,6 +2,7 @@ package com.web.order.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.web.order.model.entities.OrderMaster;
 import com.web.order.model.services.imp.OrderServiceImp;
 
-@WebServlet("/templates/frontstage/shop/cancel")
+@WebServlet("/ipet-front/shop/cancel")
 public class CancelOrderServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -25,7 +26,8 @@ public class CancelOrderServlet extends HttpServlet{
 		OrderMaster orderMaster = orderServiceImp.findOrderMaster(Integer.valueOf(req.getParameter("orderID")));
 		orderMaster.setOrderStatus(3);
 		orderServiceImp.updateOrderMaster(orderMaster);
-		
-		resp.sendRedirect(req.getContextPath() + "/templates/frontstage/shop/viewOrder.jsp");
+
+		RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/viewOrder.jsp");
+		successView.forward(req, resp);
 	}
 }

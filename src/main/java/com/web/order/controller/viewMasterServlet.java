@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/ipet-back/prod/orderMange")
+@WebServlet({"/ipet-back/prod/orderMange", "/ipet-front/shop/myOrder"})
 public class viewMasterServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +17,15 @@ public class viewMasterServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		RequestDispatcher successView = req.getRequestDispatcher("/templates/backstage/prod/orderMange.jsp");
+		String url = "";
+		
+		if(req.getServletPath().indexOf("myOrder") != -1) {
+			url = "/templates/frontstage/shop/viewOrder.jsp";
+		} else if(req.getServletPath().indexOf("orderMange") != -1) {
+			url = "/templates/backstage/prod/orderMange.jsp";
+		}
+		
+		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, resp);
 	}
 }

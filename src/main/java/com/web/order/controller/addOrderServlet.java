@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.web.list.model.entities.CartList;
 import com.web.list.model.entities.CartList.CartListPK;
 import com.web.list.model.services.CartService;
+import com.web.member.model.entity.Member;
 import com.web.order.model.entities.OrderDetail;
 import com.web.order.model.entities.OrderMaster;
 import com.web.order.model.services.imp.OrderServiceImp;
 
-@WebServlet("/templates/frontstage/shop/addOrder")
+@WebServlet("/ipet-front/shop/addOrder")
 public class addOrderServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +30,10 @@ public class addOrderServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		
 		CartListPK cartListPK = new CartListPK();
-		cartListPK.setMemID(1);	// 改session.getAttribute
+		
+		Member member = (Member)req.getSession().getAttribute("member");
+		
+		cartListPK.setMemID(member.getMemId());
 		
 		CartList cartList = new CartList();
 		cartList.setCartListPK(cartListPK);
@@ -45,11 +49,9 @@ public class addOrderServlet extends HttpServlet{
 		
 		// create orderMaster
 		OrderMaster orderMaster = new OrderMaster();
-		orderMaster.setMemID(1);	// 改session.getAttribute
+		orderMaster.setMemID(member.getMemId());
 		orderMaster.setOrderSum(orderSum);
-		
-		System.out.println(req.getParameter("orderRecName"));
-		
+				
 		orderMaster.setOrderRecName(req.getParameter("orderRecName"));
 		orderMaster.setOrderRecPhone(req.getParameter("orderRecPhone"));
 		orderMaster.setOrderRecAddress(req.getParameter("orderRecAddress"));
@@ -70,6 +72,8 @@ public class addOrderServlet extends HttpServlet{
 		OrderServiceImp orderServiceImp = new OrderServiceImp();
 		orderServiceImp.addOrder(orderMaster, orderDetails);
 		
-		resp.sendRedirect(req.getContextPath() + "/templates/frontstage/shop/orderSuccess.jsp");
+		RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/orderSuccess.jsp");
+		successView.forward(req, resp);
+		
 	}
 }

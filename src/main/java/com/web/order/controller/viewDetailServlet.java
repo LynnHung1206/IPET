@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.web.order.model.entities.OrderDetail;
 import com.web.order.model.services.imp.OrderServiceImp;
 
-@WebServlet({"/ipet-back/prod/detail", "/templates/frontstage/shop/orderDetail"})
+@WebServlet({"/ipet-back/prod/detail", "/ipet-front/shop/orderDetail"})
 public class viewDetailServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;

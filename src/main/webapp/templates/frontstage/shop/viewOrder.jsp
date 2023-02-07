@@ -1,3 +1,4 @@
+<%@page import="com.web.member.model.entity.Member"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -9,7 +10,8 @@
 
 <% 
 	OrderServiceImp orderServiceImp = new OrderServiceImp();
-	List<OrderMaster> OrderMasterList = orderServiceImp.findOrderMasterBymemID(1);
+	Member member = (Member) request.getSession().getAttribute("member");
+	List<OrderMaster> OrderMasterList = orderServiceImp.findOrderMasterBymemID(member.getMemId());
 	pageContext.setAttribute("OrderMasterList", OrderMasterList);
 	
 	ProductServiceFrontImp productServiceFrontImp = new ProductServiceFrontImp();
@@ -41,18 +43,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/responsive.css">
     <script src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
 	
-	<!-- all js here -->
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/vendor/jquery-1.12.0.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/popper.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/jquery.counterup.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/waypoints.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/elevetezoom.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/ajax-mail.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/plugins.js"></script>
-    <script src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
-
 	<!-- Font Awesome Icons -->
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
 	
@@ -60,34 +50,7 @@
  	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  	
-  	<!-- DataTables  & Plugins -->
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables/jquery.dataTables.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/jszip/jszip.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/pdfmake.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/vfs_fonts.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-	<script>
-    	$(document).ready(function () {
-      		$('#example2').DataTable({
-        		"paging": true,
-        		"lengthChange": false,
-        		"searching": false,
-        		"ordering": true,
-        		"info": true,
-        		"autoWidth": false,
-        		"responsive": true,
-      		});
-    	});
-  	</script>
-  	
+	
   	<style>
   		th,td {
     		text-align: center;
@@ -107,7 +70,7 @@
 			<div class="breadcrumb-content text-center">
 				<h2>Order</h2>
 				<ul>
-					<li><a href="<%= request.getContextPath() %>/templates/frontstage/shop/shop.jsp">home</a></li>
+					<li><a href="${pageContext.request.contextPath}/ipet-front/shop/home">home</a></li>
 					<li class="active">Shop</li>
 				</ul>
 			</div>
@@ -184,7 +147,84 @@
     			</section>
   			<!-- /.content -->
 			</div>
-			
+		</div>
+	</div>
+
+	<!-- footer -->
+	<%@include file="/templates/frontstage/common/footer.jsp"%>
+	
+	<!-- all js here -->
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/vendor/jquery-1.12.0.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/popper.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/jquery.counterup.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/waypoints.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/elevetezoom.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/ajax-mail.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/plugins.js"></script>
+    <script src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
+	
+  	<!-- DataTables  & Plugins -->
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables/jquery.dataTables.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/jszip/jszip.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/pdfmake.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/pdfmake/vfs_fonts.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+	<script>
+    	$(document).ready(function () {
+      		$('#example2').DataTable({
+        		"paging": true,
+        		"lengthChange": false,
+        		"searching": false,
+        		"ordering": true,
+        		"info": true,
+        		"autoWidth": false,
+        		"responsive": true,
+      		});
+    	});
+  	</script>
+	
+	<script>
+  		$('.orderStatus').each(function(){
+	  		if($(this).text() == 0){
+		 		$(this).next().append('待出貨');
+		 		$(this).next().css({
+             		'color': 'white',
+             		'background-color': '#E4E88B'
+         	});
+	  		} else if($(this).text() == 1) {
+		  		$(this).next().append('已出貨');
+		  		$(this).next().css({
+	             	'color': 'white',
+	             	'background-color': '#8D97FF'
+	      		});
+		  		$(this).parent().find('button').attr('disabled', '');
+	  		} else if($(this).text() == 2) {
+		  		$(this).next().append('訂單結案');
+		  		$(this).next().css({
+	             	'color': 'white',
+	             	'background-color': '#9C9CA0'
+	      		});
+		  		$(this).parent().find('button').attr('disabled', '');
+	  		} else if($(this).text() == 3) {
+		  		$(this).next().append('取消訂單');
+		  		$(this).next().css({
+	             	'color': 'white',
+	             	'background-color': '#EF5A5D'
+	      		});
+		  		$(this).parent().find('button').attr('disabled', '');
+	  		}
+  		});
+	</script>
+
   <!-- order detail modal -->
   <c:if test="${openDetailModal != null}">
     <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -240,45 +280,6 @@
   	  $('#orderDetailModal').modal('show');
     </script>
   </c:if>
-  
-		</div>
-	</div>
-
-	<!-- footer -->
-	<%@include file="/templates/frontstage/common/footer.jsp"%>
-
-<script>
-  $('.orderStatus').each(function(){
-	  if($(this).text() == 0){
-		 $(this).next().append('待出貨');
-		 $(this).next().css({
-             'color': 'white',
-             'background-color': '#E4E88B'
-         });
-	  } else if($(this).text() == 1) {
-		  $(this).next().append('已出貨');
-		  $(this).next().css({
-	             'color': 'white',
-	             'background-color': '#8D97FF'
-	      });
-		  $(this).parent().find('button').attr('disabled', '');
-	  } else if($(this).text() == 2) {
-		  $(this).next().append('訂單結案');
-		  $(this).next().css({
-	             'color': 'white',
-	             'background-color': '#9C9CA0'
-	      });
-		  $(this).parent().find('button').attr('disabled', '');
-	  } else if($(this).text() == 3) {
-		  $(this).next().append('取消訂單');
-		  $(this).next().css({
-	             'color': 'white',
-	             'background-color': '#EF5A5D'
-	      });
-		  $(this).parent().find('button').attr('disabled', '');
-	  }
-  });
-</script>
 
 </body>
 
