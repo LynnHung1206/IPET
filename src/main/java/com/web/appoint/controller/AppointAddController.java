@@ -69,37 +69,6 @@ public class AppointAddController extends HttpServlet{
         	req.getRequestDispatcher("/templates/frontstage/salon/salon_addAppointment.jsp").forward(req, res);
         }
         
-        
-        if ("/ECpay".equals(path)) {
-        	// 信用卡測試卡號 : 4311-9522-2222-2222 
-        	// 安全碼 : 222
-	        domain = new AllInOne("");
-	        AioCheckOutOneTime obj = new AioCheckOutOneTime();
-
-	        // 訂單編號
-	        obj.setMerchantTradeNo(new String("salon" + System.currentTimeMillis()));
-	        // 交易時間 yyyy/MM/dd HH:mm:ss
-	        obj.setMerchantTradeDate(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()));
-	        // 交易金額
-	        obj.setTotalAmount("1900");
-	        // 交易描述
-	        obj.setTradeDesc("Thank you");
-	        // 商品名稱
-	        obj.setItemName("Salon Service");
-	        // ReturnURL
-	        obj.setReturnURL("a");
-	        // 重新導向的位置
-	        obj.setOrderResultURL("http://localhost:8081/CGA105G1/ipet-front/member/salonAppointment");
-	        obj.setNeedExtraPaidInfo("N");
-
-
-	        // 回傳form訂單 並自動將使用者導到 綠界
-	        String form = domain.aioCheckOut(obj, null);
-	        res.setCharacterEncoding("UTF-8");
-	        res.getWriter().print("<html><body>" + form + "</body></html>");
-		}
-        
-        
 	}
 	
 	@Override
@@ -189,12 +158,11 @@ public class AppointAddController extends HttpServlet{
 				appointmentDetail.setSalePrice(salePrice);
 			}
 			
-//			res.sendRedirect("http://localhost:8081/CGA105G1/ECpay");
 			
-//			/*********************3.送至綠界金流付款************************/
-//			// 檢查後台: 信用卡收單 - 交易明細 - 查詢
-//        	// 信用卡測試卡號 : 4311-9522-2222-2222 
-//        	// 安全碼 : 222
+			/*********************3.送至綠界金流付款************************/
+			// 檢查後台: 信用卡收單 - 交易明細 - 查詢
+        	// 信用卡測試卡號 : 4311-9522-2222-2222 
+        	// 安全碼 : 222
 	        domain = new AllInOne("");
 	        AioCheckOutOneTime obj = new AioCheckOutOneTime();
 
@@ -211,32 +179,32 @@ public class AppointAddController extends HttpServlet{
 	        // ReturnURL   : 必填  我用不到所以是隨便填一個英文字
 	        obj.setReturnURL("a");
 	        // OrderResultURL   : 選填 消費者完成付費後。重新導向的位置
-	        path="http://localhost:8081/CGA105G1/ipet-front/news/allNews";
+	        path="http://localhost:8081/CGA105G1/ipet-front/member/salonAppointment";
 	        obj.setClientBackURL(path);
 	        obj.setNeedExtraPaidInfo("N");
-//
-//
-//	        // 回傳form訂單 並自動將使用者導到 綠界
+	        
+
+	        // 回傳form訂單 並自動將使用者導到 綠界
 	        String form = domain.aioCheckOut(obj, null);
 	        res.setCharacterEncoding("UTF-8");
 	        res.getWriter().print("<html><body>" + form + "</body></html>");
 			 
-//			/*********************4.開始新增資料************************/
-//			AppointServicesImp appointServicesImp = new AppointServicesImp();
-//			Appointment appointment = new Appointment();
-//			appointment.setMemID(memID);
-//			appointment.setPetID(petID);
-//			appointment.setSchID(schID);
-//			appointment.setCustomerNote(customerNote);
-//			appointment.setTotalPrice(totalPrice);
-//			appointment.setAppointmentDetails(apps);
-//			
-//			Appointment ifError = appointServicesImp.makeAppoint(appointment);
-//			if(ifError.isSuccessful() == false) {
-//				errorMsgs.put("unSuccessful",ifError.getMessage());
-//				res.getWriter().print(new Gson().toJson(errorMsgs));
-//				return; //程式中斷
-//			}
+			/*********************4.開始新增資料************************/
+			AppointServicesImp appointServicesImp = new AppointServicesImp();
+			Appointment appointment = new Appointment();
+			appointment.setMemID(memID);
+			appointment.setPetID(petID);
+			appointment.setSchID(schID);
+			appointment.setCustomerNote(customerNote);
+			appointment.setTotalPrice(totalPrice);
+			appointment.setAppointmentDetails(apps);
+			
+			Appointment ifError = appointServicesImp.makeAppoint(appointment);
+			if(ifError.isSuccessful() == false) {
+				errorMsgs.put("unSuccessful",ifError.getMessage());
+				res.getWriter().print(new Gson().toJson(errorMsgs));
+				return; //程式中斷
+			}
 			
 		}
 		

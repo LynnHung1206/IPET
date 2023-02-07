@@ -66,45 +66,41 @@
       /* border-bottom: 3px solid #007bff; */
     }
 
-    /* ================== 彈出視窗 ====================*/
-    /* 彈出視窗出現時的暗色背景 */
-    #mainModal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgb(0, 0, 0);
-      background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    /* 彈出視窗本人 */
-    .main-modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    /* 叉叉(X) */
-    #modalClose {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      text-align: right;
-    }
-
-    #modalClose:hover,
-    #modalClose:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
+   /* ============ 彈出視窗-優惠選擇服務 =============*/
+	#addSaleBox {
+/*  		display: none;  */
+		position: fixed;
+		z-index: 9998;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+		box-sizing: border-box;
+	}
+	
+	/* 	 彈出視窗本人 */
+	.main-modal-content {
+		background-color: #fafafa;
+		margin: 3% auto;
+		border: 1px solid #888;
+		width: 1000px;
+		height: 87%;
+	}
+	
+	/* 	叉叉 */
+	#modalClose {
+		float: right;
+	    font-size: 22px;
+	    padding: 5px;
+	    margin: 15px 25px;
+	    color: #939393;
+	}
+	
+	#modalClose:hover {
+		cursor: pointer;
+	}
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -118,16 +114,42 @@
 	  <%@ include file="/templates/backstage/common/sidebar.jsp" %>
 	  <!-- /.aside -->
 	  
-	  <!-- ================== 彈出視窗 ==================== -->
-		<div id="mainModal">
-			<div class="main-modal-content">
-				<div class="d-flex align-items-center">
-					 <strong id="loading-text">正在新增服務...</strong>
-					 <div class="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
+	  <!-- ====================== 彈出視窗 ========================= -->
+	  	<div id="addSaleBox" style="overflow-y: hidden;">
+			<div class="main-modal-content" style="overflow-y: scroll;">
+				<i class="nav-icon fas fa-sharp fa-solid fa-times" id="modalClose"></i>
+				
+		<!-- 快速查詢 -->
+				<div style="padding: 35px;">
+				<div style="border-radius: 0.25rem; margin: 20px 0;">
+						<!-- card-body -->
+						<div class="card-body" style="display: none;">
+						</div>
+							<input type="text" id="searchSvc" placeholder="快速查詢..." style="border: 1px solid #d2d2d2; width: 100%; height: 40px; padding-left: 10px;">
+				</div>
+						<!-- /.card-body -->
+				
+			<!-- datatable -->	
+					<table id="example" class="table table-bordered table-hover">
+						<thead style="background-color: #6c757d; color: white;">
+							<tr>
+								<th></th>
+								<th style="width: 90px;">服務編號</th>
+								<th>服務名稱</th>
+								<th>服務類別</th>
+								<th>寵物種類</th>
+								<th>服務單價</th>
+								<th>狀態</th>
+							</tr>
+						</thead>
+						<tfoot>
+						</tfoot>
+					</table>
+					<input type="button" class="service-submit" value="新增服務" id="submitAll">
 				</div>
 			</div>
 		</div>
-	  <!-- ================== 彈出視窗 end ==================== -->
+	  <!-- ====================== /彈出視窗 ========================= -->
 	  
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
