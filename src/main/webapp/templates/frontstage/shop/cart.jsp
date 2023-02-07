@@ -1,3 +1,4 @@
+<%@page import="com.web.member.model.entity.Member"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.web.list.model.services.CartService"%>
@@ -6,14 +7,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
+Member member = (Member) request.getSession().getAttribute("member");
+
 CartListPK cartListPK = new CartListPK(); //預設傳入memID=1
-cartListPK.setMemID(1);
+cartListPK.setMemID(member.getMemId());
 CartList cartList = new CartList();
 cartList.setCartListPK(cartListPK);
 
 CartService cartSvc = new CartService(); //直接列出memId=1的所有收藏 之後再調整
 List<CartList> list = cartSvc.getAll(cartList);
 pageContext.setAttribute("list", list);
+
 %>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
@@ -51,6 +55,7 @@ pageContext.setAttribute("list", list);
 </head>
 
 <body>
+${member.getMemId()}
 	<%@include file="/templates/frontstage/common/header.jsp"%>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
 		style="
