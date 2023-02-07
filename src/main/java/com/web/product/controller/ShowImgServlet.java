@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.web.product.model.service.imp.ProductServiceFrontImp;
 
-@WebServlet("/templates/frontstage/shop/showImg")
+@WebServlet("/ipet-front/shop/showImg")
 public class ShowImgServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
