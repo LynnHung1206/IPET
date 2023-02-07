@@ -22,48 +22,47 @@ public class VewProductServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		req.setCharacterEncoding("UTF-8");
+		String url = "";
 		
-//		search by category
+		// search by category
 		if(req.getParameter("typeID") != null) {
 			
 			Integer typeID = Integer.parseInt((String) req.getParameter("typeID"));
-			System.out.println(typeID);
 			ProductServiceFrontImp prodSvc = new ProductServiceFrontImp();
 			List<Product> list = prodSvc.findSameCategoryProduct(typeID);
 			
 			req.setAttribute("list", list);
-			RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/searchByCategory.jsp");
-			successView.forward(req, resp);
-			return;
+			url = "/templates/frontstage/shop/searchByCategory.jsp";
 		}
 		
-//		search by keyword
+		// search by keyword
 		if(req.getParameter("keyword") != null) {
 			
 			String keyword = req.getParameter("keyword");
 			ProductServiceFrontImp prodSvc = new ProductServiceFrontImp();
 			List<Product> list = prodSvc.findSpecifiedProduct(keyword);
-			System.out.println(list.size());
+			
 			req.setAttribute("list", list);
-			RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/searchByKeyword.jsp");
-			successView.forward(req, resp);
-			return;
+			url = "/templates/frontstage/shop/searchByKeyword.jsp";
 		}
 		
-//		view product detail
+		// view product detail
 		if(req.getParameter("prodID") != null) {
 			
 			Integer prodID = Integer.parseInt(req.getParameter("prodID"));
 			ProductServiceFrontImp prodSvc = new ProductServiceFrontImp();
 			Product product = prodSvc.getSpecifiedProduct(prodID);
+			
 			req.setAttribute("product", product);
-			RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/productDetail.jsp");
-			successView.forward(req, resp);
-			return;
+			url = "/templates/frontstage/shop/productDetail.jsp";
 		}
 		
 		// go to shop Home
-		RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/shop.jsp");
+		if(url.equals("")) {
+			url = "/templates/frontstage/shop/shop.jsp";
+		}
+		
+		RequestDispatcher successView = req.getRequestDispatcher(url);
 		successView.forward(req, resp);
 	}
 }
