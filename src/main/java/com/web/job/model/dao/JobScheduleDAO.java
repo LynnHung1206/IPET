@@ -2,6 +2,7 @@ package com.web.job.model.dao;
 
 import com.core.model.dao.CoreDAO;
 import com.web.job.model.entities.JobSchedule;
+import com.web.salonService.model.entities.Service;
 
 import java.sql.Date;
 import java.util.List;
@@ -19,5 +20,5 @@ public interface JobScheduleDAO extends CoreDAO<JobSchedule, Integer> {
     Set<Integer> getEmpsByDatePeriod(Date date, String period);
     Set<Integer> getEmpsByDatePeriod(Date date, String period, Integer excludedschID);
     Set<Object> findIllegalDatesToAddJobs(Integer groomerId, Integer asstId1, Integer asstId2, String period);
-
+    Set<Object> findNoApmSchNumber();
 }

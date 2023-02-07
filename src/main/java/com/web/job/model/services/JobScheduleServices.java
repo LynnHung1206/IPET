@@ -20,4 +20,5 @@ public interface JobScheduleServices extends CoreService {
     Set<Object> findIllegalDatesToAddJobs(Integer groomerId, Integer asstId1, Integer asstId2, String period);
     List<JobSchedule> findAvailableJobsToAddAppoint();
     List<Staff> findSalonStaff(String position);
+    List<JobSchedule> findNoAppointmentSch();
 }

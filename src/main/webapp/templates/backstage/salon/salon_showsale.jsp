@@ -164,12 +164,12 @@
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <form class="card-header">
-                  <input type="submit" class="card-change on" value="優惠總覽" id="apm">
-                  <input type="submit" class="card-change" value="優惠中" id="apm0">
-                  <input type="submit" class="card-change" value="未開始" id="apm1">
-                  <input type="submit" class="card-change" value="已結束" id="apm2">
-                </form>
+                <div class="card-header">
+                  <button class="card-change on" value="優惠總覽" id="apm">優惠總覽</button>
+                  <button class="card-change" value="優惠中" id="apm0">優惠中</button>
+                  <button class="card-change" value="未開始" id="apm1">未開始</button>
+                  <button class="card-change" value="已結束" id="apm2">已結束</button>
+                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
@@ -180,8 +180,6 @@
                         <th>優惠開始時間</th>
                         <th>優惠結束時間</th>
                         <th>狀態</th>
-                        <th>修改</th>
-                        <th>刪除</th>
                       </tr>
                     </thead>
                     <tfoot>
@@ -254,11 +252,10 @@
     $(function () {
     	
     	const datatable = $('#example2').DataTable({
+    		"dom": "tp",
             "paging": true,
             "lengthChange": false,
-            "searching": false,
             "ordering": true,
-            "info": false,
             "autoWidth": false,
             "responsive": true,
             "data": ${sales},
@@ -290,30 +287,41 @@
 	            	},
 	            	responsivePriority: 4
 	            },
-	            { data: "saleStatus", responsivePriority: 3 },
-	            { data: "saleId",
+	            { data: "saleStatus", 
+	            	responsivePriority: 3,
+	            	className: "saleStatus"
+	            },
+	            { data: null,
 	            	render: function(data, type){
-	            		return `
-		            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/editSale">
-								<input type="hidden" name="saleId" value=` + data + `>
-								<label><i class="nav-icon fas fa-solid fa-pen"></i>
-									<input type="submit" style="display: none;">
-								</label>
-							</form>
-	            		`;
+	            		if(data.saleStatus === "未開始" || data.saleStatus === "優惠中"){
+		            		return `
+			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/editSale">
+									<input type="hidden" name="saleId" value=` + data.saleId + `>
+									<label><i class="nav-icon fas fa-solid fa-pen"></i>
+										<input type="submit" style="display: none;">
+									</label>
+								</form>
+		            		`;
+	            		}else if(data.saleStatus === "已結束"){
+	            			return null;
+	            		}
 	            	},
 	            	responsivePriority: 6
 	            },
-	            { data: "saleId",
+	            { data: null,
 	            	render: function(data, type){
-	            		return `
-		            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/deleteSale">
-								<input type="hidden" name="saleId" value=` + data + `>
-								<label><i class="nav-icon fas fa-solid fa-trash"></i>
-									<input type="submit" style="display: none;">
-								</label>
-							</form>
-	            		`;
+	            		if(data.saleStatus === "未開始"){
+	            			return `
+			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/deleteSale">
+									<input type="hidden" name="saleId" value=` + data.saleId + `>
+									<label><i class="nav-icon fas fa-solid fa-trash"></i>
+										<input type="submit" style="display: none;">
+									</label>
+								</form>
+	            			`;
+	            		}else if(data.saleStatus === "已結束" || data.saleStatus === "優惠中"){
+	            			return null;
+	            		}
 	            	},
 	            	responsivePriority: 7
 	            }
@@ -335,6 +343,30 @@
 		           },
 		     }
           });
+    	
+    	/*===================== 切換狀態 ==========================*/
+    	
+    	$(document).on("click", "#apm", function(){
+    		datatable.columns(".saleStatus").search("").draw();
+    	});
+    	
+    	$(document).on("click", "#apm0", function(){
+    		datatable.columns(".saleStatus").search("優惠中").draw();
+    	});
+    	
+    	$(document).on("click", "#apm1", function(){
+    		datatable.columns(".saleStatus").search("未開始").draw();
+    	});
+    	
+    	$(document).on("click", "#apm2", function(){
+    		datatable.columns(".saleStatus").search("已結束").draw();
+    	});
+    	
+    	/*===================== 預約導覽列變色 ==========================*/
+    	$(".card-change").on("click", function () {
+            $(".card-header").children("*").removeClass("on");
+            $(this).addClass("on");
+        });
     	
     	/*===================== 彈出視窗 ==========================*/
 		const mainModal = document.getElementById("mainModal");

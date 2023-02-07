@@ -35,7 +35,7 @@
                     <li class="active">美容服務</li>
                 </ul>
                 <p></p>
-                <a class="btn-style" href="#">我要預約</a>
+                <a class="btn-style" href="<c:url value='/ipet-front/salon/addAppointment' />">我要預約</a>
             </div>
         </div>
     </div>
@@ -47,10 +47,10 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="blog-wrapper mb-30 gray-bg">
                                 <div class="blog-img hover-effect">
-                                    <a href="${pageContext.request.contextPath}/ipet-front/salon/service"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-4.jpg"></a>
+                                    <a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=1"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-4.jpg"></a>
                                 </div>
                                 <div class="blog-content">
-                                    <h4><a href="${pageContext.request.contextPath}/ipet-front/salon/service">基礎美容</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=1">基礎美容</a></h4>
                                     <div class="blog-meta">
                                         <ul>
                                             <li><b>價格範圍:</b> <span>NT$750 - $1200 (依體型而定)</span></li>
@@ -62,10 +62,10 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="blog-wrapper mb-30 gray-bg">
                                 <div class="blog-img hover-effect">
-                                    <a href="blog-details.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-5.jpg"></a>
+                                    <a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=2"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-5.jpg"></a>
                                 </div>
                                 <div class="blog-content">
-                                    <h4><a href="blog-details.html">造型美容</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=2">造型美容</a></h4>
                                     <div class="blog-meta">
                                         <ul>
                                             <li><b>價格範圍:</b> <span>NT$1500 - $3500 (依體型而定)</span></li>
@@ -77,10 +77,10 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="blog-wrapper mb-30 gray-bg">
                                 <div class="blog-img hover-effect">
-                                    <a href="blog-details.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-6.jpg"></a>
+                                    <a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=3"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-6.jpg"></a>
                                 </div>
                                 <div class="blog-content">
-                                    <h4><a href="blog-details.html">頂級SPA</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=3">頂級SPA</a></h4>
                                     <div class="blog-meta">
                                         <ul>
                                             <li><b>價格範圍:</b> <span>NT$4000 - $5000 (依體型而定)</span></li>
@@ -92,10 +92,10 @@
                         <div class="col-lg-4 col-md-12">
                             <div class="blog-wrapper mb-30 gray-bg">
                                 <div class="blog-img hover-effect">
-                                    <a href="blog-details.html"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-7.jpg"></a>
+                                    <a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=4"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/blog/blog-7.jpg"></a>
                                 </div>
                                 <div class="blog-content">
-                                    <h4><a href="blog-details.html">深層護理</a></h4>
+                                    <h4><a href="${pageContext.request.contextPath}/ipet-front/salon/service?catId=4">深層護理</a></h4>
                                     <div class="blog-meta">
                                         <ul>
                                             <li>價格範圍: <span>NT$4500 - $6000 (依體型而定)</span></li>

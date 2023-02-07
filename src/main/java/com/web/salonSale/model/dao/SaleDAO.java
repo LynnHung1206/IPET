@@ -7,6 +7,8 @@ import com.web.salonSale.model.entities.Sale;
 
 public interface SaleDAO extends CoreDAO<Sale, Integer>{
 	
+	Integer upadate(Sale sale);
+	
 	Integer deleteById(Integer saleId);
 	
 	//查詢尚未開始的優惠

@@ -147,4 +147,16 @@ public class JobScheduleImp implements JobScheduleDAO {
         Session session = getSession();
         return session.get(JobSchedule.class, id);
     }
+
+	@Override
+	public Set<Object> findNoApmSchNumber() {
+		//查詢沒有被預約的班表編號
+		Session session = getSession();
+		String sql = "SELECT sch.sch_id FROM salon_schedule sch \n "
+				+ "LEFT JOIN salon_appointment apm ON sch.sch_id = apm.sch_id \n "
+				+ "WHERE sch_date >= now() and apm_id IS NULL;";
+		List<Object> list = session.createNativeQuery(sql).list();
+		
+		return new HashSet<>(list);
+	}
 }

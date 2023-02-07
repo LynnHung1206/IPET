@@ -1,24 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.web.salonService.model.*"%>
-<%@ page import="com.web.salonService.model.entities.*"%>
-<%@ page import="com.web.salonService.model.services.*"%>
-<%@ page import="com.web.salonService.model.dao.*"%>
-<%@ page import="com.web.salonService.model.dao.impl.*"%>
-<%@ page import="java.util.*"%>
 
-<%
-ServiceService svcsvc = new ServiceService();
-List<Service> svclist = svcsvc.selectAll();
-pageContext.setAttribute("svclist", svclist);
-%>
-
-<%
-CategoryService catsvc = new CategoryService();
-List<Category> catlist = catsvc.selectAll();
-pageContext.setAttribute("catlist", catlist);
-%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +15,10 @@ pageContext.setAttribute("catlist", catlist);
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/fontawesome-free/css/all.css">
 	<!-- IonIcons -->
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- summernote -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	<!-- Theme style -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -292,7 +279,7 @@ pageContext.setAttribute("catlist", catlist);
 	  
 	  <!-- ================== 新增時的loading畫面 ==================== -->
 		<div id="mainModal">
-			<div class="main-modal-content">
+			<div>
 				<div class="d-flex align-items-center">
 					 <strong id="loading-text">正在新增服務...</strong>
 					 <div class="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
@@ -375,10 +362,10 @@ pageContext.setAttribute("catlist", catlist);
 							<div class="toInline">
 								<label for="saleName">優惠名稱</label>
 								<input type="text" id="saleName" class="form-control input-shadow"
-									placeholder="請輸入優惠名稱" required name="saleName">
+									placeholder="請輸入優惠名稱" required name="saleName" value="測試用名稱">
 							</div>
 							<div class="toInline toInline-right">
-								<label for="saleTime" style="margin-top: 10px;">優惠時間</label>
+								<label for="reservationtime" style="margin-top: 10px;">優惠時間</label>
 								<div class="input-group">
 				                    <div class="input-group-prepend">
 				                      <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -390,7 +377,7 @@ pageContext.setAttribute("catlist", catlist);
 							<div id="summernoteFather">
 								<label for="summernote">優惠描述</label>
 								<div>
-									<textarea id="summernote" name="saleContent"></textarea>
+									<textarea id="summernote" name="saleContent">測試優惠描述</textarea>
 								</div>
 							</div>
 						</div>
@@ -476,11 +463,11 @@ pageContext.setAttribute("catlist", catlist);
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+	<!-- Summernote -->
+	<script src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 	<!-- date-range-picker -->
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/moment/moment.min.js"></script>
   	<script src="${pageContext.request.contextPath}/static/backstage/plugins/daterangepicker/daterangepicker.js"></script>
-	<!-- Summernote -->
-	<script src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 	<!-- Navbar script-->
 	<script>
     $(function () {
@@ -557,7 +544,7 @@ pageContext.setAttribute("catlist", catlist);
           minDate: moment().add(0.5, 'hours'),
           "opens": "left",
           "locale": {
-            "format": "YYYY/MM/DD hh:mm:ss",
+            "format": "YYYY/MM/DD HH:mm:ss",
             "separator": " - ",
             "applyLabel": "選擇",
             "cancelLabel": "取消",
@@ -592,13 +579,6 @@ pageContext.setAttribute("catlist", catlist);
           }
         });
     	
-        /*===================== 清空查詢 ==========================*/
-		$(document).on("click", ".clear", function(){
-			$("#searchForm").submit();
-			$("#mybtnlabel-left").removeClass("labelOn");
-			$("#mybtnlabel-right").removeClass("labelOn");
-		});
-        
     	/*===================== 彈出視窗 ==========================*/
 
 		//點擊按鈕時打開彈出視窗
@@ -644,23 +624,6 @@ pageContext.setAttribute("catlist", catlist);
       /*===================== Summernote ==========================*/
       $("#summernote").summernote();
       
-      /*===================== 點擊 大中小標籤 換犬種 ==========================*/
-	  $("#pet-size").change(function () {
-	        if($("#pet-size :selected").text() === "大型犬"){
-	        	$("#showBigDog").removeClass("cantSee");
-	        	$("#showMediumDog").addClass("cantSee");
-	        	$("#showSmallDog").addClass("cantSee");
-	        }else if($("#pet-size :selected").text() === "中型犬"){
-	        	$("#showBigDog").addClass("cantSee");
-	        	$("#showMediumDog").removeClass("cantSee");
-	        	$("#showSmallDog").addClass("cantSee");
-	        }else if($("#pet-size :selected").text() === "小型犬"){
-	        	$("#showBigDog").addClass("cantSee");
-	        	$("#showMediumDog").addClass("cantSee");
-	        	$("#showSmallDog").removeClass("cantSee");
-	        }
-	  });
-      
 	  /*===================== 計算金額 ==========================*/
 	    
 	    $(document).on("keyup click", ".saleCount", function (){
@@ -692,38 +655,6 @@ pageContext.setAttribute("catlist", catlist);
 	    	$(this).parent().parent().next().children().val(svcSalePrice);
 	    });
       
-	  /*===================== 再次點選 radio 取消選取 ==========================*/
-		const $radios = $('input[type="radio"]');
-
-		$('input[type="radio"]').click(function(){
-		    const $this = $(this);
-		
-		    if ($this.data('checked')) {
-		        this.checked = false;
-		    }
-		    const $otherRadios = $radios.not($this).filter('[name="' + $this.attr('name') + '"]');
-		    $otherRadios.prop('checked', false).data('checked', false);
-		    $this.data('checked', this.checked);
-		})
-		
-		$("#svc-Status1").click(function(){
-			if($(this).data("checked")){
-				$("#mybtnlabel-left").addClass("labelOn");
-				$("#mybtnlabel-right").removeClass("labelOn");
-			}else{
-				$("#mybtnlabel-left").removeClass("labelOn");
-			}
-		});
-		
-		$("#svc-Status2").click(function(){
-			if($(this).data("checked")){
-				$("#mybtnlabel-right").addClass("labelOn");
-				$("#mybtnlabel-left").removeClass("labelOn");
-			}else{
-				$("#mybtnlabel-right").removeClass("labelOn");
-			}
-		});
-		
 	  /*===================== 點擊 新增服務按鈕 新增優惠服務 ==========================*/
 	  
 	  //點擊新增價格按鈕 
@@ -758,77 +689,64 @@ pageContext.setAttribute("catlist", catlist);
 				</td>
 		      </tr>
 	      	`);
-          	//關閉選過的checkedbox可選狀態、清空金額輸入框
+          	//關閉選過的checkedbox可選狀態
           	svcIdNum.children().prop("checked", false).attr("disabled", true);
 		    }
 		  }
 	  });
 	  
-	  /*===================== 點擊 新增服務按鈕 新增單項服務 ==========================*/
-//       $("#submitAll").click(function(){
-//     	  const addListLength = $(".addList").length;
-//     	  let str = "[";
-//     	  for(let i = 0; i < addListLength; i++){
-//     		  const addList = $(".addList").eq(i).text();
-//     		  if(i === (addListLength - 1)){
-//     			  str += addList;
-//     		  }else{
-//     		  str += addList + ",";
-//     		  }
-//     	  }
-//     	  str += "]";
-//     	  $("#allTypeAndPrice").val(str);
-//       });
-	  
-      /*===================== 匯入圖片檔案時預覽 ==========================*/
-      $(document).on("change", "#add-img", function (){
-          $("#showImg").attr("src", URL.createObjectURL(event.target.files[0]));
-      });
       
+	    /*===================== 送出新增資訊到後台 ==========================*/
+	    
+	    let formData;
+	    
+	    $(document).on("submit", "#addSvcForm", function (e){
+	    	e.preventDefault();
+	    	
+	    	//迴圈存入金額和品種物件
+		  	 let svcAndSalePrice = [];
+		  	 const beSentTrLength = $(".beSentTr").length;
+		  	 for(let i = 0; i< beSentTrLength; i++){
+		  		svcAndSalePrice.push({
+		  			svcId : $(".beSentSvcId").eq(i).text(),
+		  			salePrice : $(".beSentSalePrice").eq(i).val()
+		  		});
+		  	 }
+		  	 
+		  	 //資料：formData
+	    	 formData = new FormData(this);
+	    	 formData.append("svcAndSalePrice", JSON.stringify(svcAndSalePrice));
+	    	 
+	    	 $.ajax({
+	    	        url : "${pageContext.request.contextPath}/ipet-back/salonSale/addSale",
+	    	        type : "POST",
+	    	        data : formData,
+	    	        cache: false,
+	    	        processData: false,
+	    	        contentType: false,
+	    	        beforeSend: function(){
+	    	        	$("#mainModal").css("display","block");
+	    	        },
+	    	        success : function(response) {
+	    	        	$("#mainModal").css("display","none");
+	    	        	if(!response){
+		    	        	showSwal("success-message");
+	    	        	}else {
+		    	        	const res = JSON.parse(response);
+	    	 				console.log(res);
+	    	        	}
+						console.log(errorMsgs);
+	    	        },error: function(response) {
+	    	        	showSwal("something-Wrong");
+						alert("something-Wrong");
+	    	        }
+	    	    });
+	    });
+	    
+	    
     });
     
-    
-    /*===================== 送出新增資訊到後台 ==========================*/
-    const form = document.querySelector("#addSvcForm");
-    
-    form.addEventListener("submit", (e) =>{
-    	e.preventDefault();
-    	
-    	//迴圈存入金額和品種物件
-	  	 let svcAndSalePrice = [];
-	  	 const beSentTrLength = $(".beSentTr").length;
-	  	 for(let i = 0; i< beSentTrLength; i++){
-	  		svcAndSalePrice.push({
-	  			svcId : $(".beSentSvcId").eq(i).text(),
-	  			salePrice : $(".beSentSalePrice").eq(i).text()
-	  		});
-	  	 }
-	  	 
-	  	 //資料：formData
-    	 let formData = new FormData(form);
-    	 formData.append("svcAndSalePrice", JSON.stringify(svcAndSalePrice));
-    	 
-    	 $.ajax({
-    	        url : "${pageContext.request.contextPath}/ipet-back/salonSale/addSale",
-    	        type : "POST",
-    	        data : formData,
-    	        cache: false,
-    	        processData: false,
-    	        contentType: false,
-    	        beforeSend: function(){
-    	        	$("#mainModal").css("display","block");
-    	        },
-    	        success : function(data) {
-    	        	$("#mainModal").css("display","none");
-    	        	showSwal("success-message");
-    	        },error: function(data) {
-    	        	showSwal("something-Wrong");
-    	        }
-    	    })
-    });
-    
-    
-      /*===================== 新增成功提示 ==========================*/
+    /*===================== 新增成功提示 ==========================*/
     (function($) {
     	  showSwal = function(type) {
     	    "use strict";
@@ -839,13 +757,13 @@ pageContext.setAttribute("catlist", catlist);
      	    		  	showConfirmButton: false,
      	    		  	timer: 1500
     	    	      }, function(){
-//     	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/salonSale/allSale");
+    	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/salonSale/allSale");
     	    	      })
     	    }else if (type === "something-Wrong"){
     	    	swal({
 	    	        title: "OOPS！Something's Wrong:(",
 	    	        text: "請再次嘗試或聯繫客服人員協助處理",
-	    	        type: 'question',
+	    	        type: 'info',
  	    		  	showConfirmButton: true,
 	    	      })
     	    } 

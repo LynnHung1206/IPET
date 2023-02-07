@@ -372,7 +372,7 @@
 	                                <div class="product-img" style="background-image: url(${pageContext.request.contextPath}/ipet-front/service/showSvcImg?svcId=` + data.svcId + `);"></div>
 	                                <div class="product-list-content">
 	                                    <h4 class="inline-block-h4"><a title="Quick View" data-toggle="modal"
-	                                            data-target="#exampleModal" href="#">` + data.svcName + `</a></h4>
+	                                            data-target="#exampleModal" href="<c:url value='/ipet-front/salon/addAppointment' />">` + data.svcName + `</a></h4>
 	                                    <span class="pet-style-label">` + data.typeName + `</span>
 	                                    <p>` + data.svcContent + `</p>
 	                                    <div class="product-price">
@@ -382,7 +382,7 @@
 						            	</div>
 		                                <div class="product-list-action">
 		                                    <div class="product-list-action-left">
-		                                        <a class="addtocart-btn" title="Add to cart" href="#"><i
+		                                        <a class="addtocart-btn" title="Add to cart" href="<c:url value='/ipet-front/salon/addAppointment' />"><i
 		                                                class="ion-bag"></i> 我要預約</a>
 		                                    </div>
 		                                </div>

@@ -52,22 +52,22 @@ public class ServiceServlet extends HttpServlet{
 		//後台 - 新增服務
 		if("/ipet-back/service/addService".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/salon/salon_addservice.jsp").forward(req, res);
-		}
+		}else
 		
 		//後台 - 顯示所有服務
 		if("/ipet-back/service/allService".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/salon/salon_showservice.jsp").forward(req, res);
-		}
+		}else
 		
 		//後台 - 顯示圖片(若無圖片顯示沒有圖片)
 		if("/ipet-back/service/showOldSvcImg".equals(path)) {
 			showImg(req, res, "/static/frontstage/img/noImage.jpg");
-		}
+		}else
 		
 		//前台 - 顯示服務類別
 		if("/ipet-front/salon/salonCategory".equals(path)) {
 			req.getRequestDispatcher("/templates/frontstage/salon/salon_category.jsp").forward(req, res);
-		}
+		}else
 		
 		//前台 - 顯示類別服務
 		if("/ipet-front/salon/service".equals(path)) {
@@ -76,7 +76,7 @@ public class ServiceServlet extends HttpServlet{
 			List<Service> services = serviceService.finSvcByCatId(Integer.parseInt(catId));
 			req.setAttribute("services", gson.toJson(services));
 			req.getRequestDispatcher("/templates/frontstage/salon/salon_category_list.jsp").forward(req, res);
-		}
+		}else
 		
 		//前台 - 顯示圖片(若無圖片顯示預設圖片)
 		if("/ipet-front/service/showSvcImg".equals(path)) {

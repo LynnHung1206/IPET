@@ -65,7 +65,7 @@ public class SaleService {
 		}
 		
 		//開始更改
-		saleDAO.add(sale);
+		saleDAO.upadate(sale);
 		return sale;
 	}
 	

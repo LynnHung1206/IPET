@@ -170,4 +170,14 @@ public class JobScheduleServicesImp implements JobScheduleServices {
         }
         return all;
     }
+
+	@Override
+	public List<JobSchedule> findNoAppointmentSch() {
+		Set<Object> schIds = jobScheduleDAO.findNoApmSchNumber();
+		List<JobSchedule> list = new ArrayList<>();
+		for(Object schId : schIds) {
+			list.add(jobScheduleDAO.getById((Integer)schId));
+		}
+		return list;
+	}
 }

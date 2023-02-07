@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +27,12 @@ import com.web.salonSale.model.services.SaleService;
 import com.web.salonService.model.entities.Service;
 import com.web.salonService.model.services.ServiceService;
 
-@WebServlet({"/ipet-back/salonSale/addSale", "/ipet-back/salonSale/allSale", 
-	"/ipet-back/salonSale/editSale", "/ipet-back/salonSale/updateSale", "/ipet-back/salonSale/deleteSale"})
+@WebServlet({"/ipet-back/salonSale/addSale", 
+			 "/ipet-back/salonSale/allSale", 
+			 "/ipet-back/salonSale/editSale", 
+			 "/ipet-back/salonSale/updateSale", 
+			 "/ipet-back/salonSale/deleteSale"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class SaleServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
@@ -44,12 +49,14 @@ public class SaleServlet extends HttpServlet{
 			List<Sale> sales = saleService.selectAll();
 			req.setAttribute("sales", gson.toJson(sales));
 			req.getRequestDispatcher("/templates/backstage/salon/salon_showsale.jsp").forward(req, res);
-		}
+		}else
+			
 		if("/ipet-back/salonSale/addSale".equals(path)) {
 			List<Service> services = new ServiceService().selectAll();
 			req.setAttribute("services", gson.toJson(services));
 			req.getRequestDispatcher("/templates/backstage/salon/salon_addsale.jsp").forward(req, res);
 		}
+		
 	}
 	
 	@Override
@@ -74,7 +81,10 @@ public class SaleServlet extends HttpServlet{
 			
 			/*=========================== 取得時間 =============================*/
 			String saleTime = req.getParameter("saleTime");
-			//2023/02/05 05:54:43 - 2023/02/05 11:59:59
+			if(saleTime == null || saleTime.trim().length() == 0) {
+				errorMsgs.put("saleTime", "請填寫優惠時間");
+			}
+			//格式範例：2023/02/05 05:54:43 - 2023/02/05 11:59:59
 			int compartIndex = saleTime.indexOf("-");
 			
 			//startTime
@@ -102,21 +112,19 @@ public class SaleServlet extends HttpServlet{
 			//處理字串>服務ID與優惠價格
 			String svcAndSalePrice = req.getParameter("svcAndSalePrice");
 			JsonArray jsonArray = null;
-			if(svcAndSalePrice.equals("[]")) {
-				errorMsgs.put("svcAndSalePrice","請選擇服務與價格");
-			}else {
-				try {
-					Gson gson = new Gson();
-					jsonArray = gson.fromJson(svcAndSalePrice, JsonArray.class);
-					for (JsonElement element : jsonArray) {
-						JsonObject obj = element.getAsJsonObject();
-						obj.get("svcId").getAsInt();
-						obj.get("salePrice").getAsInt();
-					}
-				} catch (Exception e) {
-					errorMsgs.put("typeAndPrice","請輸入正確服務與價格");
+			
+			try {
+				Gson gson = new Gson();
+				jsonArray = gson.fromJson(svcAndSalePrice, JsonArray.class);
+				for (JsonElement element : jsonArray) {
+					JsonObject obj = element.getAsJsonObject();
+					obj.get("svcId").getAsInt();
+					obj.get("salePrice").getAsInt();
 				}
+			} catch (Exception e) {
+				errorMsgs.put("typeAndPrice","請輸入正確服務與價格");
 			}
+			
 			
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -129,7 +137,8 @@ public class SaleServlet extends HttpServlet{
 			//新增優惠
 			SaleService saleService = new SaleService();
 			Sale sale = saleService.addSale(saleName, saleContent, startTime, endTime);
-			System.out.println("新增一筆優惠，優惠ID(saleId)：" + sale.getSaleId());
+			int saleId = sale.getSaleId();
+			System.out.println("新增一筆優惠，優惠ID(saleId)：" + saleId);
 			
 			//新增優惠詳情
 			Gson gson = new Gson();
@@ -138,12 +147,18 @@ public class SaleServlet extends HttpServlet{
 			int svcId;
 			int salePrice;
 			
+			int count = 0;
+			
 			for (JsonElement element : jsonArray) {
 				JsonObject obj = element.getAsJsonObject();
 				svcId = obj.get("svcId").getAsInt();
 				salePrice = obj.get("salePrice").getAsInt();
-				saleDetailService.addOrUpdateSaleDetail(sale.getSaleId(), svcId, salePrice);
+				saleDetailService.addOrUpdateSaleDetail(saleId, svcId, salePrice);
+				
+				System.out.println("新增一筆優惠細項，優惠ID(saleId)：" + saleId + "，服務ID(svcId)：" + svcId);
+				count++;
 			}
+			System.out.println("共新增" + count + "筆優惠細項\n==============================");
 		}
 		
 		// 來自salon_showsale.jsp的修改項目請求
@@ -158,15 +173,121 @@ public class SaleServlet extends HttpServlet{
 				/***************************2.開始查詢資料****************************************/
 				SaleService saleService = new SaleService();
 				Sale sale = saleService.getOneSale(saleId);
+				List<Service> services = new ServiceService().selectAll();
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				
+				GsonBuilder builder = new GsonBuilder();
+				Gson gson = builder.serializeNulls().create();
+				req.setAttribute("services", gson.toJson(services));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				String param = "?saleId=" + sale.getSaleId() + 
 						       "&saleName=" + sale.getSaleName() + 
 						       "&saleContent=" + sale.getSalContent() + 
-						       "&startTime=" + sale.getStartTime() + 
-						       "&endTime=" + sale.getEndTime();
+						       "&saleStatus=" + sale.getSaleStatus() +
+						       "&startTime=" + sdf.format(sale.getStartTime()) + 
+						       "&endTime=" + sdf.format(sale.getEndTime());
 			
 				req.getRequestDispatcher("/templates/backstage/salon/salon_updatesale.jsp"+param).forward(req, res);
+		}
+		
+		//來自salon_updatesale.jsp的update請求
+		if("/ipet-back/salonSale/updateSale".equals(path)) {
+			res.setContentType("text/text;charset=UTF-8");
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			/*************1.接收請求參數 - 輸入格式的錯誤處理**********/
+			//取得優惠名稱
+			String saleName = req.getParameter("saleName");
+			if (saleName == null || saleName.trim().length() == 0) {
+				errorMsgs.put("saleName","請填寫優惠名稱");
+			}
+			
+			//取得優惠描述
+			String saleContent = req.getParameter("saleContent").trim();
+			
+			/*=========================== 取得時間 =============================*/
+			String saleTime = req.getParameter("saleTime");
+			if(saleTime == null || saleTime.trim().length() == 0) {
+				errorMsgs.put("saleTime", "請填寫優惠時間");
+			}
+			//格式範例：2023/02/05 05:54:43 - 2023/02/05 11:59:59
+			int compartIndex = saleTime.indexOf("-");
+			
+			//startTime
+			String startTimeStr = saleTime.substring(0, compartIndex - 1);
+			Date startDate = null;
+			try {
+				startDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(startTimeStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			Timestamp startTime = new Timestamp(startDate.getTime());
+
+			//endTime
+			String endTimeStr = saleTime.substring(compartIndex + 2);
+			Date endDate = null;
+			try {
+				endDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(endTimeStr);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			Timestamp endTime = new Timestamp(endDate.getTime());
+			
+			/*=========================== /取得時間 =============================*/
+			
+			//處理字串>服務ID與優惠價格
+			String svcAndSalePrice = req.getParameter("svcAndSalePrice");
+			JsonArray jsonArray = null;
+			
+			try {
+				Gson gson = new Gson();
+				jsonArray = gson.fromJson(svcAndSalePrice, JsonArray.class);
+				for (JsonElement element : jsonArray) {
+					JsonObject obj = element.getAsJsonObject();
+					obj.get("svcId").getAsInt();
+					obj.get("salePrice").getAsInt();
+				}
+			} catch (Exception e) {
+				errorMsgs.put("typeAndPrice","請輸入正確服務與價格");
+			}
+			
+			
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				res.getWriter().print(new Gson().toJson(errorMsgs));
+				return; //程式中斷
+			}
+			
+			/*********************2.開始新增資料************************/
+			
+			//新增優惠
+			SaleService saleService = new SaleService();
+			Sale sale = saleService.addSale(saleName, saleContent, startTime, endTime);
+			int saleId = sale.getSaleId();
+			System.out.println("新增一筆優惠，優惠ID(saleId)：" + saleId);
+			
+			//新增優惠詳情
+			Gson gson = new Gson();
+			jsonArray = gson.fromJson(svcAndSalePrice, JsonArray.class);
+			SaleDetailService saleDetailService = new SaleDetailService();
+			int svcId;
+			int salePrice;
+			
+			int count = 0;
+			
+			for (JsonElement element : jsonArray) {
+				JsonObject obj = element.getAsJsonObject();
+				svcId = obj.get("svcId").getAsInt();
+				salePrice = obj.get("salePrice").getAsInt();
+				saleDetailService.addOrUpdateSaleDetail(saleId, svcId, salePrice);
+				
+				System.out.println("新增一筆優惠細項，優惠ID(saleId)：" + saleId + "，服務ID(svcId)：" + svcId);
+				count++;
+			}
+			System.out.println("共新增" + count + "筆優惠細項\n==============================");
 		}
 	}
 	//限制更動的開始時間只能比現在時間晚，否則更新失敗

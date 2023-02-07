@@ -518,7 +518,7 @@
     	        	showSwal("something-Wrong");
 					alert("something-Wrong");
     	        }
-    	    })
+    	 });
     });
     
     

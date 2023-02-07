@@ -93,7 +93,7 @@ public class ServiceService {
 		for (Service service : services) {
 			
 			service.setCatName(service.getCategoryVO().getCatName());
-			service.setTypeName(service.getPetTypeVO().getTypeName());
+			service.setTypeName(service.getPetTypeVO().getTypeName());			service.setPetSize(service.getPetTypeVO().getPetSize());
 			
 			Integer svcStatus = service.getSvcStatus();
 			String svcStatusName = "";
@@ -104,6 +104,7 @@ public class ServiceService {
 			}
 			service.setSvcStatusName(svcStatusName);
 			
+			//將優惠價格設為服務價格
 			service.setSalePrice(service.getSvcPrice());
 			
 			//新增優惠價格
@@ -112,6 +113,7 @@ public class ServiceService {
 				//若正在優惠中，儲存優惠價格
 				if(saleDetail.getSvcId() == service.getSvcId()) {
 					service.setSalePrice(saleDetail.getSalePrice());
+					service.setSaleId(saleDetail.getSaleId());
 				}
 			}
 			
