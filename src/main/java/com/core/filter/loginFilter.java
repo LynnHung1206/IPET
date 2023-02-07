@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter({"/ipet-back/staff/*","/ipet-back/news/*","/ipet-back/appoint/*","/ipet-back/job/*"})
+@WebFilter({"/ipet-back/staff/*","/ipet-back/news/*","/ipet-back/appoint/*","/ipet-back/job/*","/ipet-back/member/*","/ipet-back/question/*","/ipet-back/pet/*"})
 public class loginFilter  extends HttpFilter  {
 	private static final long serialVersionUID = 1L;
 	
