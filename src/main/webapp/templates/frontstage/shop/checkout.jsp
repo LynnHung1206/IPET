@@ -4,10 +4,13 @@
 <%@ page import="com.web.list.model.entities.CartList"%>
 <%@ page import="com.web.list.model.entities.CartList.CartListPK"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="com.web.member.model.entity.Member"%>
 
 <%
+Member member = (Member) request.getSession().getAttribute("member");
+
 CartListPK cartListPK = new CartListPK(); //預設傳入memID=1
-cartListPK.setMemID(1);
+cartListPK.setMemID(member.getMemId());
 CartList cartList = new CartList();
 cartList.setCartListPK(cartListPK);
 

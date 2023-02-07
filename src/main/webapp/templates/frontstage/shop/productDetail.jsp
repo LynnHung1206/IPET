@@ -1,10 +1,12 @@
 ﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.web.product.model.entity.Product"%>
+<%@page import="com.web.member.model.entity.Member"%>
 
 
 
 <%
+Member member = (Member) request.getSession().getAttribute("member");
 Product product = (Product) request.getAttribute("product");
 pageContext.setAttribute("product", product);
 %>
@@ -189,7 +191,7 @@ pageContext.setAttribute("product", product);
 		            contextPath + "/ipet-front/prod/fromProductDetailWish", {
 		                action:"add",
 		                prodID: ${product.prodID},
-		                memID:1
+		                memID:${member.memId}
 		            },
 		            function(data) {
 		                // 回應
@@ -208,7 +210,7 @@ pageContext.setAttribute("product", product);
 		            contextPath + "/ipet-front/prod/fromProductDetailCart", {
 		                action:"add",
 		                prodID: ${product.prodID},
-		                memID:1,
+		                memID: ${member.memId},
 		                count:parseInt(document.querySelector(`#qty`).value),
 		                total:${product.prodPrice} * count,
 		            },

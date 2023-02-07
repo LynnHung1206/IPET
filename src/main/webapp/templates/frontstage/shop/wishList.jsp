@@ -1,3 +1,4 @@
+<%@page import="com.web.member.model.entity.Member"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.web.list.model.services.WishService"%>
@@ -6,12 +7,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-WishListPK wishListPK = new WishListPK(); //預設傳入memID=1
-wishListPK.setMemID(1);
+Member member = (Member) request.getSession().getAttribute("member");
+
+WishListPK wishListPK = new WishListPK(); 
+wishListPK.setMemID(member.getMemId());
 WishList wishList = new WishList();
 wishList.setWishListPK(wishListPK);
 
-WishService wishSvc = new WishService(); //直接列出memId=1的所有收藏 之後再調整
+WishService wishSvc = new WishService(); 
 List<WishList> list = wishSvc.getAll(wishList);
 pageContext.setAttribute("list", list);
 %>
@@ -157,7 +160,7 @@ pageContext.setAttribute("list", list);
 	            contextPath + "/ipet-front/prod/fromProductDetailWish", {
 	                action:"remove",
 	                prodID: id,
-	                memID:1
+	                memID:${member.memId}
 	            },
 	        );
     	document.querySelector("#btn" + id).remove();
@@ -174,7 +177,7 @@ pageContext.setAttribute("list", list);
 	            contextPath + "/ipet-front/prod/addToCart", {
 	                action:"addFromWish",
 	                prodID: id,
-	                memID:1,
+	                memID:${member.memId},
 	                count:parseInt(document.querySelector(`#qty` + id).value),
 	                total:parseInt(document.querySelector(`#total` + id).innerText)
 	            },

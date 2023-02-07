@@ -55,7 +55,6 @@ pageContext.setAttribute("list", list);
 </head>
 
 <body>
-${member.getMemId()}
 	<%@include file="/templates/frontstage/common/header.jsp"%>
 	<div class="breadcrumb-area pt-95 pb-95 bg-img"
 		style="
@@ -150,7 +149,7 @@ function deleteID(id){
             contextPath + "/ipet-front/prod/fromProductDetailCart", {
                 action:"remove",
                 prodID: id,
-                memID:1
+                memID:${member.memId},
             },
         );
 	document.querySelector("#btn" + id).remove();

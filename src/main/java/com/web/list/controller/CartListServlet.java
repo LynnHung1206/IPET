@@ -12,6 +12,7 @@ import com.web.list.model.entities.CartList;
 import com.web.list.model.entities.CartList.CartListPK;
 import com.web.list.model.services.CartService;
 import com.web.list.model.services.WishService;
+import com.web.member.model.entity.Member;
 
 @WebServlet({ "/ipet-front/prod/fromProductDetailCart", "/ipet-front/prod/addToCart", "/ipet-front/prod/header" })
 public class CartListServlet extends HttpServlet {
@@ -89,8 +90,13 @@ public class CartListServlet extends HttpServlet {
 		}
 		if ("head".equals(action)) {
 			CartListPK cartListPK = new CartListPK();
-			cartListPK.setMemID(1);
-
+			
+			Member member = (Member) request.getSession().getAttribute("member");
+			if(member.getMemId()!=null) {
+				cartListPK.setMemID(member.getMemId());
+			}else {
+				cartListPK.setMemID(1);
+			}
 			CartList cartList = new CartList();
 			cartList.setCartListPK(cartListPK);
 
