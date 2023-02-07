@@ -16,11 +16,7 @@
               driverClassName="com.mysql.cj.jdbc.Driver"
               jdbcUrl="jdbc:mysql://localhost:3306/IPETDB"
               username="root"
-<<<<<<< HEAD
               password="0000"
-=======
-              password="6960"
->>>>>>> bdd33404a2a78d1f091899e1b1a7e09cd8a2e17d
               factory="com.zaxxer.hikari.HikariJNDIFactory"
               minimumIdle="5"
               maximumPoolSize="10"
