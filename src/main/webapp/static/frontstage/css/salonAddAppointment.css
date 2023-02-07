@@ -1,0 +1,205 @@
+	li.active {
+        padding-right: 0;
+    }
+
+     /* ============ 預約明細 =============*/
+	.showAppointDetail {
+		padding: 35px 45px 45px;
+		background-color: white;
+	}
+	
+	.ApmDetailHeader {
+		font-weight: 700;
+	}
+	
+	.ApmDetailHeader div {
+		display: inline-block;
+	}
+	
+	.floatR {
+		float: right;
+		color: #7e4c4f;
+		margin-right: 20px;
+	}
+	
+	.myHr {
+		margin: 12px 0;
+		border: 1px solid #ddd;
+	}
+	
+	.wayL {
+		margin-left: 30px;
+	}
+	
+	#Apmtime {
+		margin-left: 5px;
+		background-color: #7e4c4f;
+		color: white;
+		padding: 0 6px;
+	}
+	
+	.product-img {
+		width: 100px;
+		height: 100px;
+		background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        display: inline-block;
+	}
+	
+	.svcBlock div{
+		display: inline-block;
+		vertical-align: top;
+	}
+
+
+	
+	.svcBlock-info {
+		margin-left: 20px;
+		height: 100px;
+		width: calc(100% - 240px);
+	}
+	
+	.svcBlock-info h5{
+		display: inline-block;
+		font-weight: 700;
+		margin-top: 25px;
+	}
+	
+	.svcBlock-info span {
+		background-color: #fffacf;
+		padding: 4px 10px;
+		margin-left: 10px;
+	}
+	
+	.svcBlock-info div{
+		margin-top: 3px;
+	}
+	
+	.floatRB {
+		float:right;
+ 		margin: 44px 0;
+ 		margin: 35px 20px 0 0;
+	}
+	
+	.floatRB div{
+		text-align: right;
+		display: block;
+	}
+	
+	.deleteLine {
+		text-decoration:line-through;
+	}
+	
+	.svcBlock-salePrice {
+		color: #f51515;
+		font-weight: 500;
+	}
+	
+	.svcBlock-noSalePrice {
+		margin-top: 7px;
+	}
+	
+	.alignR {
+		text-align: right;
+	}
+	
+	.highlight {
+		background-color: #fffacf;
+		padding: 5px 9px;
+		margin-right: 10px;
+		font-weight: 500;
+	}
+	
+	.svcBlock-totalPrice {
+		margin-left: 50%;
+		font-weight: 700;
+		display: inline-block;
+	}
+	
+	.alignR.inline {
+		display: inline-block;
+		float: right;
+		margin-right: 13px;
+	}
+	
+	.svcBlock div.toBlock {
+		display: block;
+	}
+
+    /* ============ 預約資料選擇 =============*/
+
+    .choicesvcName {
+        font-size: 1.1rem; 
+        font-weight: 700;
+    }
+
+    .col-12.middle span{
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .col-12.middle span.choicePrice{
+        display: inline-block;
+        text-align: center;
+        letter-spacing: 3px;
+        position: relative;
+        bottom: 10px;
+    } 
+
+    .middle input {
+        height: 20px; 
+        width: 20px; 
+        position: relative; 
+        top: -10px;
+    }
+
+    .middle label {
+        display: inline-block; 
+        padding-left: 15px;
+    }
+
+    .selectStyle {
+        margin: 0 15px 20px; 
+        border: 1px solid #bebebe; 
+        height: 40px; 
+        border-radius: 0.25rem; 
+        text-align: center; 
+        font-size: 1.01rem;
+    }
+
+    .selectStyle.system {
+        margin: 0;
+    }
+
+    textarea {
+        background-color: white;
+    }
+
+    input, textarea:focus, textarea{
+        border: 1px solid #bebebe !important;
+        border-radius: 0.25rem;
+    }
+    
+    .billing-information-wrapper {
+        border-radius: 0 0 0.25rem 0.25rem;
+        border: 1px solid #dcdcdc !important;
+        padding-top: 40px;
+        height: 415px;
+    }
+
+    .billing-information-wrapper.choiceSvc {
+        overflow-y: auto; 
+        width: 100vh;
+    }
+
+    .block-header {
+        background-color: #7e4c4f;
+        padding: 20px; border-radius: 0.25rem 0.25rem 0 0;
+    }
+
+    .block-header h4 {
+        text-align: center; 
+        margin-bottom: 0; 
+        color: white;
+    }

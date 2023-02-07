@@ -1,6 +1,15 @@
 package com.web.appoint.controller;
 
 
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.appoint.model.entities.Appointment;
@@ -8,21 +17,20 @@ import com.web.appoint.model.services.AppointServices;
 import com.web.appoint.model.services.imp.AppointServicesImp;
 import com.web.member.model.entity.Member;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-
 
 /**
  * @author Yu-Jing
  * @create 2023/1/3 上午 09:39
  */
 
-@WebServlet({"/ipet-back/appoint/appoints", "/ipet-back/appoint/appoints_cancelled", "/ipet-back/appoint/appoints_payed", "/ipet-back/appoint/appoints_finished", "/ipet-back/appoint/appoints_outdated", "/ipet-front/member/salonAppointment"})
+@WebServlet({"/ipet-back/appoint/appoints", 
+			 "/ipet-back/appoint/appoints_cancelled", 
+			 "/ipet-back/appoint/appoints_payed", 
+			 "/ipet-back/appoint/appoints_finished", 
+			 "/ipet-back/appoint/appoints_outdated", 
+			 
+			 "/ipet-front/member/salonAppointment"
+			})
 public class AppointShowController extends HttpServlet {
 
     // forward: 預約瀏覽, 已取消預約, 已付費預約, 已完成預約, 逾時預約
@@ -66,7 +74,9 @@ public class AppointShowController extends HttpServlet {
 			List<Appointment> services = appointDetailServices.findAppointByMemId(member.getMemId());
 			req.setAttribute("appoints", gson.toJson(services));
 			req.getRequestDispatcher("/templates/frontstage/member/salonAppointment.jsp").forward(req, resp);
-		}
+		
+        }
+        
     }
 
     @Override

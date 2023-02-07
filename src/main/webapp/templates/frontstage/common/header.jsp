@@ -86,8 +86,8 @@
 								<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容</a>
 									<ul class="submenu">
 										<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容服務</a></li>
-										<li><a href="blog-leftsidebar.html">注意事項</a></li>
-										<li><a href="blog-details.html">我要預約</a></li>
+<!-- 										<li><a href="blog-leftsidebar.html">注意事項</a></li> -->
+										<li><a href="<c:url value='/ipet-front/salon/addAppointment' />">我要預約</a></li>
 									</ul></li>
 								<li><a href="${pageContext.request.contextPath}/templates/frontstage/about-us.jsp">關於我們</a></li>
 								</ul>

@@ -38,8 +38,14 @@ public class Service extends Core {
 	@Transient
     private String typeName;
 	
+	@Transient
+    private String petSize;
+	
 	@Column(name = "SVC_PRICE")
 	private Integer svcPrice;
+	
+	@Transient
+    private Integer saleId;
 	
 	@Transient
     private Integer salePrice;
@@ -136,6 +142,14 @@ public class Service extends Core {
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
 	}
+	
+	public String getPetSize() {
+		return petSize;
+	}
+
+	public void setPetSize(String petSize) {
+		this.petSize = petSize;
+	}
 
 	public Integer getSvcPrice() {
 		return svcPrice;
@@ -143,6 +157,14 @@ public class Service extends Core {
 
 	public void setSvcPrice(Integer svcPrice) {
 		this.svcPrice = svcPrice;
+	}
+	
+	public Integer getSaleId() {
+		return saleId;
+	}
+
+	public void setSaleId(Integer saleId) {
+		this.saleId = saleId;
 	}
 
 	public Integer getSalePrice() {

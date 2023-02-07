@@ -8,10 +8,17 @@ public class SaleDAOImpl implements SaleDAO{
 	
 	@Override
 	public Integer add(Sale sale) {
-		getSession().merge(sale);
+		getSession().persist(sale);
+		getSession().flush();
 		return sale.getSaleId();
 	}
 
+	@Override
+	public Integer upadate(Sale sale) {
+		getSession().save(sale);
+		return sale.getSaleId();
+	}
+	
 	@Override
 	public Integer deleteById(Integer saleId) {
 		Sale sale = new Sale();

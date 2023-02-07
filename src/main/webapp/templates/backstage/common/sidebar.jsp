@@ -361,22 +361,20 @@
             <p>
               服務項目管理
               <i class="fas fa-angle-left right"></i>
-              <!--      TODO: {寵物美容專區-服務項目管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
             </p>
           </a>
           <!--    TODO: {寵物美容專區-服務項目管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/service/allService" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目1</p>
+                <p>服務總覽</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/service/addService" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
+                <p>新增服務</p>
               </a>
             </li>
           </ul>
@@ -389,22 +387,20 @@
             <p>
               美容優惠管理
               <i class="fas fa-angle-left right"></i>
-              <!--      TODO: {寵物美容專區-優惠管理} 請評估是否有要顯示未讀訊息數量，暫時顯示 999         -->
-              <span class="badge badge-info right">999</span>
             </p>
           </a>
           <!--    TODO: {寵物美容專區-優惠管理} 請評估是否要有子項目，需要的話請於按照  <li class="nav-item">... </li> 進行新增  -->
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/salonSale/allSale" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目1</p>
+                <p>優惠總覽</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="${pageContext.request.contextPath}/ipet-back/salonSale/addSale" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>項目2</p>
+                <p>新增優惠</p>
               </a>
             </li>
           </ul>
