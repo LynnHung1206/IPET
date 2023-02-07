@@ -8,19 +8,19 @@ import com.web.product.model.entity.ProductType;
 public class ProductTypeDAOImp implements ProductTypeDAO{
 
 	@Override
-	public List<ProductTypeDAO> getAll() {
+	public List<ProductType> getAll() {
 		
 		return null;
 	}
 
 	@Override
-	public ProductTypeDAO getById(Integer id) {
+	public ProductType getById(Integer id) {
 		
 		return null;
 	}
 
 	@Override
-	public Integer add(ProductTypeDAO t) {
+	public Integer add(ProductType t) {
 		
 		return null;
 	}

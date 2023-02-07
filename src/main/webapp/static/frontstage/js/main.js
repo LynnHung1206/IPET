@@ -65,14 +65,22 @@
         if ($button.text() === "+") {
             var newVal = parseFloat(oldValue) + 1;
         } else {
-            // Don't allow decrementing below zero
-            if (oldValue > 0) {
+            // Don't allow decrementing below 1
+            if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
             } else {
                 newVal = 1;
             }
-        }
+        }       
         $button.parent().find("input").val(newVal);
+        const sum_td = $button.parent().parent().parent().find(".product-subtotal");
+        let sum = 0;
+        if (newVal !== 0){
+			 sum = sum_td.text() / parseInt(oldValue) * newVal;
+		} else {
+			sum = sum_td.text() / parseInt(oldValue) * 1;
+		}        
+        sum_td.text(sum);
     });
     
     /*---------------------
