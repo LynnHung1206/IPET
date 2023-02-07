@@ -39,7 +39,7 @@ public class RoomType extends Core{
 	private String roomTypeContent;
 	
 	@Column(name = "ROOM_TYPE_PHOTO")
-	private Byte[] roomTypePhoto;
+	private byte[] roomTypePhoto;
 	
 	@Column(name= "ROOM_TYPE_PRICE")
 	private Integer roomTypePrice;
@@ -47,7 +47,7 @@ public class RoomType extends Core{
 	@Column(name = "ROOM_TYPE_STATUS")
 	private Integer roomTypeStatus;
 	
-	public RoomType(Integer roomTypeId, Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,Byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
+	public RoomType(Integer roomTypeId, Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
 		this.roomTypeId = roomTypeId;
 		this.roomAmount = roomAmount;
 		this.roomTypeName = roomTypeName;
@@ -60,7 +60,7 @@ public class RoomType extends Core{
 		
 	}
 	
-	public RoomType(Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,Byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
+	public RoomType(Integer roomAmount, String roomTypeName, String dogSize, String roomTypeContent,byte[] roomTypePhoto, Integer roomTypePrice, Integer roomTypeStatus) {
 		this.roomAmount = roomAmount;
 		this.roomTypeName = roomTypeName;
 		this.dogSize = dogSize;
@@ -107,11 +107,11 @@ public class RoomType extends Core{
 	}
 	
 	
-	public Byte[] getRoomTypePhoto() {
+	public byte[] getRoomTypePhoto() {
 		return roomTypePhoto;
 	}
 
-	public void setRoomTypePhoto(Byte[] roomTypePhoto) {
+	public void setRoomTypePhoto(byte[] roomTypePhoto) {
 		this.roomTypePhoto = roomTypePhoto;
 	}
 

@@ -13,31 +13,31 @@ import com.web.salonService.model.entities.Service;
 
 public class PhotoDAOImpl implements PhotoDAO{
 	
-	@Override
-	public Photo add(Photo photo) {
-		Session session = getSession();
-		session.persist(photo);
-		Photo.PK pk = new Photo.PK();
-		pk.roomTypeId =photo.getRoomTypeId();
-		pk.roomTypePhotoId = photo.getRoomTypePhotoId();
-		return pk;
-	}
-	
-	@Override
-	public Photo.PK[] addBatch(Photo[] photos) {
-		Session session =getSession();
-		Photo.PK[] pks =new Photo.PK[photos.length];
-		int i =0;
-		for(Photo photo :photos) {
-			session.persist(photo);
-			Photo.PK pk = new Photo.PK();
-			pk.roomTypeId =photo.getRoomTypeId();
-			pk.roomTypePhotoId=photo.getRoomTypePhotoId();
-			pks[i]= pk;
-			i++;
-		}
-		return pks;
-	}
+//	@Override
+//	public Photo add(Photo photo) {
+//		Session session = getSession();
+//		session.persist(photo);
+//		Photo.PK pk = new Photo.PK();
+//		pk.roomTypeId =photo.getRoomTypeId();
+//		pk.roomTypePhotoId = photo.getRoomTypePhotoId();
+//		return pk;
+//	}
+//	
+//	@Override
+//	public Photo.PK[] addBatch(Photo[] photos) {
+//		Session session =getSession();
+//		Photo.PK[] pks =new Photo.PK[photos.length];
+//		int i =0;
+//		for(Photo photo :photos) {
+//			session.persist(photo);
+//			Photo.PK pk = new Photo.PK();
+//			pk.roomTypeId =photo.getRoomTypeId();
+//			pk.roomTypePhotoId=photo.getRoomTypePhotoId();
+//			pks[i]= pk;
+//			i++;
+//		}
+//		return pks;
+//	}
 	@Override
 	public Integer deleteByRoomTypeId(Integer roomTypeId) {
 		Session session =getSession();
