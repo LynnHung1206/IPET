@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.web.product.model.entity.Product;
 import com.web.product.model.service.imp.ProductServiceFrontImp;
 
-@WebServlet({"/templates/frontstage/shop/category", "/templates/frontstage/shop/search", "/templates/frontstage/shop/detail"})
+@WebServlet({"/ipet-front/shop/home","/ipet-front/shop/category", "/ipet-front/shop/search", "/ipet-front/shop/detail"})
 public class VewProductServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -34,6 +34,7 @@ public class VewProductServlet extends HttpServlet{
 			req.setAttribute("list", list);
 			RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/searchByCategory.jsp");
 			successView.forward(req, resp);
+			return;
 		}
 		
 //		search by keyword
@@ -46,6 +47,7 @@ public class VewProductServlet extends HttpServlet{
 			req.setAttribute("list", list);
 			RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/searchByKeyword.jsp");
 			successView.forward(req, resp);
+			return;
 		}
 		
 //		view product detail
@@ -57,6 +59,11 @@ public class VewProductServlet extends HttpServlet{
 			req.setAttribute("product", product);
 			RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/productDetail.jsp");
 			successView.forward(req, resp);
+			return;
 		}
+		
+		// go to shop Home
+		RequestDispatcher successView = req.getRequestDispatcher("/templates/frontstage/shop/shop.jsp");
+		successView.forward(req, resp);
 	}
 }

@@ -53,19 +53,21 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="single-food-category cate-padding-1 text-center mb-30">
-                        <div class="single-food-hover-2">
-                            <img src="${pageContext.request.contextPath}/static/frontstage/img/product/product-1.jpg" alt="">
-                        </div>
-                        <div class="single-food-content">
-                            <h3>寵物商城</h3>
-                        </div>
+                        <a href="${pageContext.request.contextPath}/ipet-front/shop/home">
+                        	<div class="single-food-hover-2">
+                            	<img src="${pageContext.request.contextPath}/static/frontstage/img/product/shop.jpg" alt="">
+                        	</div>
+                        	<div class="single-food-content">
+                            	<h3>寵物商城</h3>
+                        	</div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <div class="single-food-category cate-padding-2 text-center mb-30">
                     <a href="<c:url value='/ipet-front/salon/salonCategory' />">
                         <div class="single-food-hover-2">
-                            <img src="${pageContext.request.contextPath}/static/frontstage/img/product/product-2.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/static/frontstage/img/product/salon.jpg" alt="">
                         </div>
                         <div class="single-food-content">
                             <h3>寵物美容</h3>
@@ -76,7 +78,7 @@
                 <div class="col-lg-4 col-md-4">
                     <div class="single-food-category cate-padding-3 text-center mb-30">
                         <div class="single-food-hover-2">
-                            <img src="${pageContext.request.contextPath}/static/frontstage/img/product/product-3.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/static/frontstage/img/product/hotel.jpg" alt="">
                         </div>
                         <div class="single-food-content">
                             <h3>寵物住宿</h3>
@@ -86,7 +88,7 @@
             </div>
         </div>
     </div>
-<button class="btn" >1111111111</button>
+
 <%@include file="/templates/frontstage/common/footer.jsp"%>
     
    

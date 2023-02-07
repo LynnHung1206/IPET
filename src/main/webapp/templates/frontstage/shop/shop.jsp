@@ -58,7 +58,7 @@
 			<div class="breadcrumb-content text-center">
 				<h2>Shop</h2>
 				<ul>
-					<li><a href="<%= request.getContextPath() %>/templates/frontstage/shop/shop.jsp">home</a></li>
+					<li><a href="<%= request.getContextPath() %>/ipet-front/shop/home">home</a></li>
 					<li class="active">Shop</li>
 				</ul>
 			</div>
@@ -112,7 +112,9 @@
 									<div class="product-width col-lg-6 col-xl-4 col-md-6 col-sm-6">
 										<div class="product-wrapper mb-10">
 											<div class="product-img">
-												<img src="<%=request.getContextPath()%>/ipet-front/prod/DBGifReaderFront?prodID=${product.prodID}">
+												<a href="detail?prodID=${product.prodID}">
+													<img src="<%=request.getContextPath()%>/ipet-front/prod/DBGifReaderFront?prodID=${product.prodID}">
+												</a>
 											</div>
 											<div class="product-content content_cust">
 												<h4>

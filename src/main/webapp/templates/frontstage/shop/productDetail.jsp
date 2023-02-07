@@ -83,8 +83,7 @@ pageContext.setAttribute("product", product);
 			<div class="breadcrumb-content text-center">
 				<h2>Product Detail</h2>
 				<ul>
-					<li><a
-						href="<%=request.getContextPath()%>/templates/frontstage/shop/shop.jsp">home</a></li>
+					<li><a href="<%= request.getContextPath() %>/ipet-front/shop/home">home</a></li>
 					<li class="active">Shop</li>
 				</ul>
 			</div>
