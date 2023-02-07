@@ -52,7 +52,7 @@ td.details-control {
             background: url('../resources/details_close.png') no-repeat center center; */
 /* } */
 .addSth {
-	transform: translateX(50%);
+/* 	transform: translateX(50%); */
 }
 </style>
 </head>

@@ -73,7 +73,7 @@ Member member = (Member) request.getAttribute("getNewPWMember");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/member/toEditPW" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-front/member/toEditPW" method="post">
 						
 							<table id="memberdata" align="center">
 								<tr>
@@ -115,7 +115,7 @@ Member member = (Member) request.getAttribute("getNewPWMember");
 										value="<%=member.getMemAc()%>" readonly required></td>
 								</tr>
 								<tr>
-									<td><label>請輸入密碼:</label></td>
+									<td><label>請輸入新密碼:</label></td>
 									<td><input type="text" name="memPw"
 										value="<%=member.getMemPw()%>" required></td>
 								</tr>

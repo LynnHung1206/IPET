@@ -41,6 +41,7 @@
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
 			<div class="breadcrumb-content text-center">
+				<h2>忘記密碼</h2>
 				<ul>
 					<li><a href="index.html">home</a></li>
 					<li class="active">忘記密碼</li>
@@ -57,14 +58,16 @@
 							<div id="lg1" class="tab-pane active">
 								<div class="login-form-container">
 									<div class="login-register-form">
-									<h1 style="color: red; font-size: 20px;">${wrong}</h1>
+										<h1 style="color: red; font-size: 20px;">${wrong}</h1>
 										<form method="post"
-											action="${pageContext.request.contextPath}/ipet-back/member/getNewPW">
+											action="${pageContext.request.contextPath}/ipet-front/member/getNewPW">
 											<div>
 												<input type="text" class="form-control" placeholder="請輸入驗證碼"
-													id="randomNum" name="randomNum" required>
-												<input type="hidden" class="form-control" placeholder="請輸入驗證碼"
-													id="memId" name="memId" required value="${changePWMemId}">
+													id="randomNum" name="randomNum" required> <input
+													type="hidden" class="form-control" 
+													id="memId" name="memId"  value="${changePWMemId}">
+													<input type="hidden" class="form-control" 
+													id="randomNumber" name="randomNumber" value="${randomNumber}">
 												<div class="input-group-append">
 													<div class="input-group-text">
 														<span class="fas fa-envelope"></span>
@@ -76,7 +79,7 @@
 												<div class="col-4" style="margin: auto;">
 													<button type="submit" class="btn btn-primary btn-block"
 														id="getNewPW">確認</button>
-<!-- 														=================================== -->
+													<!-- 														=================================== -->
 												</div>
 												<!-- /.col -->
 											</div>

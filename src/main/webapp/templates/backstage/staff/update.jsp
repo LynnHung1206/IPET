@@ -156,7 +156,7 @@ Admin admin = (Admin) request.getAttribute("admin");
 								</select></td>
 							<tr>
 								<jsp:useBean id="staffSvc" scope="page"
-									class="com.web.staff.model.service.StaffService" />
+									class="com.web.staff.model.service.impl.StaffServiceImpl" />
 								<td><label>狀態:</label></td>
 								<td><select name="status">
 										<option value="0" ${staff.getStatus() == 0 ?'selected':''}>在職</option>
@@ -165,7 +165,7 @@ Admin admin = (Admin) request.getAttribute("admin");
 							</tr>
 							<tr>
 								<jsp:useBean id="adminFuncSvc" scope="page"
-									class="com.web.admin.model.service.AdminFuncService" />
+									class="com.web.admin.model.service.impl.AdminFuncServiceImpl" />
 								<td><label>權限:</label></td>
 								<td><c:forEach var="adminFunc"
 										items="${adminFuncSvc.getAll()}">

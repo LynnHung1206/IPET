@@ -84,7 +84,7 @@ table {
 					</c:if>
 					
 						<form
-							action="${pageContext.request.contextPath}/ipet-back/pet/allPetList"
+							action="${pageContext.request.contextPath}/ipet-front/pet/allPetList"
 							method="post">
 							<table id="petdata">
 								<tr>

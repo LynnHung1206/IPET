@@ -107,7 +107,7 @@ input#allMember, #search:hover {
 									<div id="newMember">
 									
 										<form
-											action="${pageContext.request.contextPath}/ipet-back/member/getAllList"
+											action="${pageContext.request.contextPath}/ipet-front/member/getAllList"
 											method="post">
 											<table id="memberdata">
 												<tr>

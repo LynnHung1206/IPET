@@ -569,19 +569,51 @@
             error: function(resp){}
           })
 
+
+
           // 當挑選出助理1後，顯示助理2的可選名單
           $('#ASST_name_1-modal-edit').on("change", function (){
-            if ($('#ASST_name_1-modal-edit').val() === empObjectEdit.job.asstID2.toString()){
-              let asst2HTMLEdit = `<option disabled selected>請選擇</option>`;
+            let asst2HTMLEdit = "";
+            let asstID1 = $('#ASST_name_1-modal-edit').val();
+            let asstID2 = $('#ASST_name_2-modal-edit').val();
+
+            if (asstID1 === asstID2){
+              asst2HTMLEdit = `<option disabled selected>請選擇</option>`;
               $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
-              let asstID1 = $('#ASST_name_1-modal-edit').val();
-              for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
-                if (asstID1 !== empObjectEdit.asstIds[i].toString()) {
+            }
+
+            for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
+              if (asstID1 !== empObjectEdit.asstIds[i].toString()) {
+                if (asstID2 === empObjectEdit.asstIds[i].toString()){
+                  asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]} </option>`
+                }else{
                   asst2HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]} </option>`
                 }
               }
               $('#ASST_name_2-modal-edit').html(asst2HTMLEdit);
+            }
+          });
 
+          //  // 當挑選出助理2後，顯示助理1的可選名單
+          $('#ASST_name_2-modal-edit').on("change", function (){
+            let asst1HTMLEdit = "";
+            let asstID1 = $('#ASST_name_1-modal-edit').val();
+            let asstID2 = $('#ASST_name_2-modal-edit').val();
+
+            if (asstID1 === asstID2){
+              asst1HTMLEdit = `<option disabled selected>請選擇</option>`;
+              $('#ASST_name_1-modal-edit').html(asst1HTMLEdit);
+            }
+
+            for (let i = 0; i < empObjectEdit.asstIds.length; i ++) {
+              if (asstID2 !== empObjectEdit.asstIds[i].toString()) {
+                if (asstID1 === empObjectEdit.asstIds[i].toString()){
+                  asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}" selected> \${empObjectEdit.asstNames[i]} </option>`
+                }else{
+                  asst1HTMLEdit += `<option value="\${empObjectEdit.asstIds[i]}"> \${empObjectEdit.asstNames[i]} </option>`
+                }
+              }
+              $('#ASST_name_1-modal-edit').html(asst1HTMLEdit);
             }
           });
 
@@ -640,6 +672,10 @@
         <!-- Add data from modal -->
         let empObjectAdd;
         let period = [];
+        <!-- 用於修正 multdatepicker 會出現 missing instance data for this datepicker -->
+        let tempDatepicker = {
+          datepicker_fun: $.datepicker._selectDate
+        };
         $('.row-add').on('click', function (){
           // send the request to server, and get the emp
           $.ajax({
@@ -730,16 +766,22 @@
 
                   // https://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/issues/67
                   <!-- 解決 MultiDatePicker 閃爍問題並處理需點兩次才可關閉的問題 -->
-                  $.datepicker._selectDateOverload = $.datepicker._selectDate;
-                  $.datepicker._selectDate = function(id, dateStr) {
+                  $.datepicker._selectDateOverload = tempDatepicker.datepicker_fun;
+                  $.datepicker._selectDate = function (id, dateStr) {
                     var target = $(id);
                     var inst = this._getInst(target[0]);
-                    inst.inline = true;
-                    $.datepicker._selectDateOverload(id, dateStr);
-                    inst.inline = false;
-                    target[0].multiDatesPicker.changed = false;
+                    if (target[0].multiDatesPicker != null) {
+                      inst.inline = true;
+                      $.datepicker._selectDateOverload(id, dateStr);
+                      inst.inline = false;
+                      target[0].multiDatesPicker.changed = false;
+                    } else {
+                      $.datepicker._selectDateOverload(id, dateStr);
+                      target.multiDatesPicker.changed = false;
+                    }
                     this._updateDatepicker(inst);
                   };
+
                   <!-- /.解決 MultiDatePicker 閃爍問題並處理需點兩次才可關閉的問題 -->
                   $('#schDate-modal-add').removeAttr("disabled");
                 }else{
@@ -756,15 +798,15 @@
 
         // 美容師與助理的欄位若是變動 需要再按一次 查詢日期
         $('#ASST_name_2-modal-add').on("change", function (){
-          $('#schDate-modal-add').prop("disabled", true);
+          $('#schDate-modal-add').val("").prop("disabled", true);
         })
         $('#GROOMER_name-modal-add').on("change", function (){
-          $('#schDate-modal-add').prop("disabled", true);
+          $('#schDate-modal-add').val("").prop("disabled", true);
         })
 
         // 時段欄位若是變動 需要再按一次查詢日期
         $(".jobPeriod-add").on("change", function (){
-          $('#schDate-modal-add').prop("disabled", true);
+          $('#schDate-modal-add').val("").prop("disabled", true);
         })
 
 

@@ -6,7 +6,7 @@ import com.web.job.model.entities.JobSchedule;
 import com.web.job.model.services.JobScheduleServices;
 import com.web.job.model.services.imp.JobScheduleServicesImp;
 import com.web.staff.model.entity.Staff;
-import com.web.staff.model.service.StaffService;
+import com.web.staff.model.service.impl.StaffServiceImpl;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -2,18 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.web.staff.model.service.*"%>
+<%@ page import="com.web.staff.model.service.impl.*"%>
 <%@ page import="com.web.staff.model.entity.*"%>
 <%@ page import="com.web.admin.model.service.*"%>
+<%@ page import="com.web.admin.model.service.impl.*"%>
 <%@ page import="com.web.admin.model.entities.*"%>
 
 
 <%
-StaffService staffSvc = new StaffService();
+StaffService staffSvc = new StaffServiceImpl();
 List<Staff> list = staffSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
 <%
-AdminService adminSvc = new AdminService();
+AdminService adminSvc = new AdminServiceImpl();
 List<Admin> adminvo = adminSvc.getAll();
 pageContext.setAttribute("adminvo", adminvo);
 %>
@@ -97,7 +99,7 @@ input#addNew:hover, #search:hover {
 							<tr>
 								<td>員工編號</td>
 								<td>員工姓名</td>
-								<td>身份證字號</td>
+<!-- 								<td>身份證字號</td> -->
 								<td>生日</td>
 								<td>性別</td>
 								<td>信箱</td>
@@ -116,7 +118,7 @@ input#addNew:hover, #search:hover {
 								<tr>
 									<td>${staffVO.id}</td>
 									<td>${staffVO.name}</td>
-									<td>${staffVO.uid}</td>
+<%-- 									<td>${staffVO.uid}</td> --%>
 									<td>${staffVO.bth}</td>
 									<td>${staffVO.sex}</td>
 									<td>${staffVO.email}</td>

@@ -73,7 +73,7 @@ Member member = (Member) session.getAttribute("member");
 						</ul>
 					</c:if>
 					
-						<form action="${pageContext.request.contextPath}/ipet-back/member/toEdit" method="post">
+						<form action="${pageContext.request.contextPath}/ipet-front/member/toEdit" method="post">
 						
 							<table id="memberdata" align="center">
 								<tr>
@@ -125,7 +125,7 @@ Member member = (Member) session.getAttribute("member");
 								</tr>
 								<tr>
 									<td><label>密碼:</label></td>
-									<td><input type="hidden" name="memPw"
+									<td><input type="password" name="memPw"
 										value="<%=member.getMemPw()%>" required></td>
 								</tr>
 								<tr>

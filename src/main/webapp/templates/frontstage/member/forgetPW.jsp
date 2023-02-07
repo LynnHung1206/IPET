@@ -41,6 +41,7 @@
 		style="background-image:url(${pageContext.request.contextPath}/static/frontstage/img/banner/banner-2.jpg);">
 		<div class="container">
 			<div class="breadcrumb-content text-center">
+			<h2>忘記密碼</h2>
 				<ul>
 					<li><a href="index.html">home</a></li>
 					<li class="active">忘記密碼</li>
@@ -59,7 +60,7 @@
 									<div class="login-register-form">
 									<h1 style="color: red; font-size: 20px;">${wrong}</h1>
 										<form method="post"
-											action="${pageContext.request.contextPath}/ipet-back/member/changePW">
+											action="${pageContext.request.contextPath}/ipet-front/member/changePW">
 											<div>
 												<input type="text" class="form-control" placeholder="請輸入帳號"
 													id="memAc" name="memAc" required>
