@@ -1,10 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.util.*"%>
+<%@ page import="com.web.roomType.model.*"%>
+<%@ page import="com.web.roomType.model.entities.*"%>
+<%@ page import="com.web.roomType.model.service.*"%>
+<%@ page import="com.web.roomType.model.dao.*"%>
+<%@ page import="com.web.roomType.model.dao.impl.*"%>
 
 
-
+<%
+RoomType roomType = (RoomType) request.getAttribute("roomType");
+%>
 
 
 <!DOCTYPE html>

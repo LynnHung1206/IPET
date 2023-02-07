@@ -38,20 +38,7 @@ public class PhotoDAOImpl implements PhotoDAO{
 //		}
 //		return pks;
 //	}
-	@Override
-	public Integer deleteByRoomTypeId(Integer roomTypeId) {
-		Session session =getSession();
-		String hql ="DELETE FROM Photo WHERE roomTypeId = :roomTypeId";
-		
-		return session.createQuery(hql).setParameter("roomTypeId", roomTypeId).executeUpdate();
-	}
 	
-	@Override
-	public Photo getById(Photo.PK id) {
-		Session session =getSession();
-		return session.get(Photo.class,id);
-		
-	}
 	
 	@Override 
 	public List<Photo> getAll(){
@@ -71,5 +58,23 @@ public class PhotoDAOImpl implements PhotoDAO{
 		Session session =getSession();
 		String hql ="FROM Photo WHERE roomTypeId = :roomTypeId";
 		return session.createQuery(hql, Photo.class).setParameter("roomTypeId", roomTypeId).list();
+	}
+
+	@Override
+	public Photo getById(Byte id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Byte add(Photo t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer deleteById(Integer roomTypePhotoId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

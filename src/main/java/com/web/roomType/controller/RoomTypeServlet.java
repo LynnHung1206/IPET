@@ -130,13 +130,13 @@ public class RoomTypeServlet extends HttpServlet{
 				return; // 程式中斷
 			}
 			/*************************** 2.開始新增資料 ***************************************/
-			RoomTypeService roomTypeSvc = new RoomTypeService();
-			RoomType roomType = roomTypeSvc.addRoomType(roomAmount, roomTypeName, dogSize, roomTypeContent, roomTypePhoto, roomTypePrice, roomTypeStatus);
-			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("roomTypeVO", roomType); // 資料庫update成功後,正確的物件,存入req
-			String url = "/templates/backstage/roomType/showRoomTyoe.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交showRoomType.jsp
-			successView.forward(req, res);
+//			RoomTypeService roomTypeSvc = new RoomTypeService();
+//			RoomType roomType = roomTypeSvc.addRoomType(roomAmount, roomTypeName, dogSize, roomTypeContent, roomTypePhoto, roomTypePrice, roomTypeStatus);
+//			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+//			req.setAttribute("roomTypeVO", roomType); // 資料庫update成功後,正確的物件,存入req
+//			String url = "/templates/backstage/roomType/showRoomTyoe.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交showRoomType.jsp
+//			successView.forward(req, res);
 
 		}
 		// 來自showsRoomType.jsp的修改項目請求
