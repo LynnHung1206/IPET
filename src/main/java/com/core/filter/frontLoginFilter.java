@@ -18,7 +18,7 @@ public class frontLoginFilter extends HttpFilter {
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpSession session = req.getSession();
-		Object memId = session.getAttribute("memId");
+		Object memId = session.getAttribute("member");
 
 		if (memId != null) {
 			chain.doFilter(req, res);
