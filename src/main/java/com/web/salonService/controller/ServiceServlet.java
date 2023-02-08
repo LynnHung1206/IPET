@@ -80,7 +80,7 @@ public class ServiceServlet extends HttpServlet{
 		
 		//前台 - 顯示圖片(若無圖片顯示預設圖片)
 		if("/ipet-front/service/showSvcImg".equals(path)) {
-			showImg(req, res, "/static/frontstage/img/product/product-1.jpg");
+			showImg(req, res, "/static/frontstage/img/product/shop.jpg");
 		}
 		
 	}
