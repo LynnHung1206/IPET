@@ -2,21 +2,25 @@
 <!DOCTYPE xml>
 <Context>
 
-<!--    <Resource name="jdbc/javaFramework" type="javax.sql.DataSource"-->
-<!--        url="jdbc:mysql://localhost:3306/JAVA_FRAMEWORK"-->
-<!--        username="root"-->
-<!--        password="abc123"-->
-<!--        driverClassName="com.mysql.cj.jdbc.Driver"-->
-<!--        maxActive="8"-->
-<!--      	maxIdle="4"-->
-<!--      	maxWait="5000"-->
-<!--    />-->
+<!--    <Resource name="jdbc/javaFramework" type="javax.sql.DataSource" -->
+<!--        url="jdbc:mysql://localhost:3306/JAVA_FRAMEWORK" -->
+<!--        username="root" -->
+<!--        password="Password!" -->
+<!--        driverClassName="com.mysql.cj.jdbc.Driver" -->
+<!--        maxActive="8" -->
+<!--      	maxIdle="4" -->
+<!--      	maxWait="5000" -->
+<!--    /> -->
 
     <Resource name="jdbc/IPETDB" type="javax.sql.DataSource"
               driverClassName="com.mysql.cj.jdbc.Driver"
               jdbcUrl="jdbc:mysql://localhost:3306/IPETDB"
               username="root"
+<<<<<<< HEAD
               password="6960"
+=======
+              password="0000"
+>>>>>>> 016c3ddcb33af5688e1f75ead7500f0e2dc68b2c
               factory="com.zaxxer.hikari.HikariJNDIFactory"
               minimumIdle="5"
               maximumPoolSize="10"
