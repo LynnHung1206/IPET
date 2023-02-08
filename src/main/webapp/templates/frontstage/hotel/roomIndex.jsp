@@ -140,13 +140,13 @@ pageContext.setAttribute("list", list);
                     <h2 class="fw-normal">${roomTypeVO.roomTypeName}</h2>
                     <div class="d-grid gap-2 col-6 mx-auto">
                         <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">瀏覽詳情</button>
+                            data-bs-target="#exampleModal${roomTypeVO.roomTypeId}" >瀏覽詳情</button>
                     </div>
                 </div>
             </div><!-- /.col-lg-4 -->
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal${roomTypeVO.roomTypeId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content" style="width:500px; left:50%; transform:translate(-50% ,-10%) ;" >
                 <div class="modal-header">
