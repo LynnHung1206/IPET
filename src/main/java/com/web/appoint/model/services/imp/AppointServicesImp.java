@@ -251,4 +251,51 @@ public class AppointServicesImp implements AppointServices {
         return all;
     }
 
+	@Override
+	public Appointment addAppointment(Appointment appointment) {
+		// 0. 獲得對應的班表 與 Appointment的服務細項
+        JobSchedule job = jobScheduleDAO.getById(appointment.getSchID());
+        AppointmentDetail[] apps = appointment.getAppointmentDetails();
+
+
+        // 1. 判斷此預約所預定的班表是否尚未被預約
+        if (job.getApmId() != null){
+            appointment.setSuccessful(false);
+            appointment.setMessage("新增失敗，該時段已被其他人預約");
+            return appointment;
+        }
+
+        // 2. 判斷此預約是否只預約一種 Service category
+        Set<Integer> serviceCategoryIds = new HashSet<>();
+        for(int i = 0; i < apps.length; i++) {
+        	Integer svcId = apps[i].getSvcId();
+        	serviceCategoryIds.add(serviceDAO.getById(svcId).getCatId());
+        }
+        
+        if (serviceCategoryIds.size() != 1) {
+            appointment.setSuccessful(false);
+            appointment.setMessage("新增失敗，服務類別數量異常");
+            return appointment;
+        }
+
+        // 3. 將資料加進 Appointment Table，並獲得 apmId
+        appointment.setSuccessful(true);
+        appointment.setMessage("新增成功");
+        Integer ampId = appointmentDAO.add(appointment);
+        
+        //將ampId加入進AppointmentDetail裡面
+        for(int i = 0; i < apps.length; i++) {
+        	apps[i].setApmId(ampId);
+        }
+
+        // 4. 更新 jobschedule: 將 ApmID 加進 job schedule中
+        job.setApmId(ampId);
+        jobScheduleDAO.update(job);
+
+        // 4. 新增 AppointmentDetail: 將 Appointment 的服務細項新增至 AppointmentDetail Table
+        appointmentDetailDAO.addBatch(apps);
+
+        return appointment;
+	}
+
 }

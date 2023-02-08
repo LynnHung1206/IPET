@@ -43,26 +43,23 @@ public class SaleService {
 		sale.setStartTime(startTime);
 		sale.setEndTime(endTime);
 		
-		Long now = System.currentTimeMillis();
-		Sale oldSale = saleDAO.getById(saleId);
-		Timestamp oldEndTime = oldSale.getEndTime();
-		Timestamp oldStartTime = oldSale.getStartTime();
-		
-		//判斷此優惠若已經結束，則不可更改
-		if (oldEndTime.getTime() < now) {
-			sale.setSuccessful(false);
-			sale.setMessage("此優惠已經結束，不可更改！");
-			return sale;
-		}
-		
-		//判斷此優惠若已經開始，則不可更改開始時間
-		if(oldStartTime.getTime() < now) {
-			if (oldStartTime != startTime) {
-				sale.setSuccessful(false);
-				sale.setMessage("此優惠已經開始，不可更改開始時間！");
-				return sale;
-			}
-		}
+//		Long nowlong = System.currentTimeMillis();
+//		Sale oldSale = saleDAO.getById(saleId);
+//		Long oldEndTimeLong = oldSale.getEndTime().getTime();
+//		Long oldStartTimeLong = oldSale.getStartTime().getTime();
+//		
+//		//判斷此優惠若已經結束，則不可更改
+//		if (oldEndTimeLong < nowlong) {
+//			sale.setSuccessful(false);
+//			sale.setMessage("此優惠已經結束，不可更改！");
+//			System.out.println("此優惠已經結束，不可更改！");
+//			return sale;
+//		}
+//		
+//		//判斷此優惠若未開始，可以更改開始時間
+//		if(oldStartTimeLong > nowlong) {
+//			
+//		}
 		
 		//開始更改
 		saleDAO.upadate(sale);
@@ -72,15 +69,20 @@ public class SaleService {
 	public Sale deleteSale(Integer saleId) {
 		Sale sale = saleDAO.getById(saleId);
 		
+		Long nowlong = System.currentTimeMillis();
+		Long startTimeLong = sale.getStartTime().getTime();
+		
 		//判斷此優惠若未開始則可以刪除
 		List<Sale> list = saleDAO.findNotYetStartSale();
 		for(Sale notYetStartSale : list) {
 			if(notYetStartSale.getSaleId() == saleId) {
-				//刪除優惠細項
-				saleDetailDAO.deleteBySaleId(saleId);
-				//刪除優惠
-				saleDAO.deleteById(saleId);
-				return sale;
+				if(startTimeLong > nowlong) {
+					//刪除優惠細項
+					saleDetailDAO.deleteBySaleId(saleId);
+					//刪除優惠
+					saleDAO.deleteById(saleId);
+					return sale;
+				}
 			}
 		}
 		//判斷此優惠若已經開始或結束，則不可刪除

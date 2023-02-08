@@ -56,6 +56,9 @@ public class Service extends Core {
 	@Transient
     private String svcStatusName;
 	
+	@Transient
+    private boolean hasDetail;
+	
 	public Service(Integer svcId, String svcName, String svcContent, byte[] svcImg, Integer catId, Integer typeId, Integer svcPrice, Integer svcStatus) {
 		this.svcId = svcId;
 		this.svcName = svcName;
@@ -189,6 +192,14 @@ public class Service extends Core {
 
 	public void setSvcStatusName(String svcStatusName) {
 		this.svcStatusName = svcStatusName;
+	}
+	
+	public boolean isHasDetail() {
+		return hasDetail;
+	}
+
+	public void setHasDetail(boolean hasDetail) {
+		this.hasDetail = hasDetail;
 	}
 
 	//for join catId to CategoryVO

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.core.model.entities.Core;
 
 @Entity
@@ -57,6 +59,20 @@ public class SaleDetail extends Core{
 	@Column(name = "SALE_PRICE")
 	private Integer salePrice;
 	
+	@Transient
+	private String saleStatus;
+	
+	@Transient
+	private String svcName;
+	
+	@Transient
+	private String catName;
+	
+	@Transient
+    private String typeName;
+	
+	@Transient
+	private Integer svcPrice;
 	
 	public SaleDetail(Integer saleId, Integer svcId, Integer salePrice) {
 		this.saleId = saleId;
@@ -88,6 +104,46 @@ public class SaleDetail extends Core{
 
 	public void setSalePrice(Integer salePrice) {
 		this.salePrice = salePrice;
+	}
+	
+	public String getSaleStatus() {
+		return saleStatus;
+	}
+
+	public void setSaleStatus(String saleStatus) {
+		this.saleStatus = saleStatus;
+	}
+
+	public String getSvcName() {
+		return svcName;
+	}
+
+	public void setSvcName(String svcName) {
+		this.svcName = svcName;
+	}
+
+	public String getCatName() {
+		return catName;
+	}
+
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public Integer getSvcPrice() {
+		return svcPrice;
+	}
+
+	public void setSvcPrice(Integer svcPrice) {
+		this.svcPrice = svcPrice;
 	}
 
 	@Override

@@ -355,6 +355,13 @@ pageContext.setAttribute("catlist", catlist);
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 	<!-- Navbar script-->
+	
+	<!-- sidebar menu Class -->
+	<script>
+	  $("p:contains(服務項目管理)").closest("li").addClass("menu-open");
+	  $("p:contains(服務總覽)").closest("a").addClass("active");
+	</script>
+	
 	<script>
 		$(function() {
 			$("#Mynavbar").load("../../navbar_pages.html");
@@ -413,11 +420,14 @@ pageContext.setAttribute("catlist", catlist);
 		            	},
 		            	responsivePriority: 5,
 		            },
-		            { data: "svcId",
+		            { data: null,
 		            	render: function(data, type){
+		            		if(data.hasDetail){
+		            			return ``;
+		            		}
 		            		return `
-			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/editService">
-									<input type="hidden" name="svcId" value=` + data + `>
+			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService">
+									<input type="hidden" name="svcId" value=` + data.svcId + `>
 									<label><i class="nav-icon fas fa-solid fa-trash"></i>
 										<input type="submit" style="display: none;">
 									</label>

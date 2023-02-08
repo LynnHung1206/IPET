@@ -362,7 +362,7 @@
 							<div class="toInline">
 								<label for="saleName">優惠名稱</label>
 								<input type="text" id="saleName" class="form-control input-shadow"
-									placeholder="請輸入優惠名稱" required name="saleName" value="測試用名稱">
+									placeholder="請輸入優惠名稱" required name="saleName" value="">
 							</div>
 							<div class="toInline toInline-right">
 								<label for="reservationtime" style="margin-top: 10px;">優惠時間</label>
@@ -377,7 +377,7 @@
 							<div id="summernoteFather">
 								<label for="summernote">優惠描述</label>
 								<div>
-									<textarea id="summernote" name="saleContent">測試優惠描述</textarea>
+									<textarea id="summernote" name="saleContent"></textarea>
 								</div>
 							</div>
 						</div>
@@ -417,8 +417,7 @@
 								<th>刪除</th>
 							</tr>
 						</thead>
-						<tbody id="showList">
-						</tbody>
+						<tbody id="showList"></tbody>
 					</table>
 					</div>
 			
@@ -469,6 +468,13 @@
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/moment/moment.min.js"></script>
   	<script src="${pageContext.request.contextPath}/static/backstage/plugins/daterangepicker/daterangepicker.js"></script>
 	<!-- Navbar script-->
+	
+	<!-- sidebar menu Class -->
+	<script>
+	  $("p:contains(美容優惠管理)").closest("li").addClass("menu-open");
+	  $("p:contains(新增優惠)").closest("a").addClass("active");
+	</script>
+	
 	<script>
     $(function () {
       $("#Mynavbar").load("../../navbar_pages.html");
@@ -503,12 +509,12 @@
 	            },
 	            { data: "svcId", responsivePriority: 1 },
 	            { data: "svcName", responsivePriority: 2 },
-	            { data: "catName", responsivePriority: 6 },
+	            { data: "catName", responsivePriority: 5 },
 	            { data: "typeName", responsivePriority: 3 },
 	            { data: "svcPrice", 
 	            	render: DataTable.render.number(',', null, 0, '$ '),
 	            	responsivePriority: 4 },
-	            { data: "svcStatusName", responsivePriority: 7 },
+	            { data: "svcStatusName", responsivePriority: 6 },
 	        ],
 			language: {
 		           "sProcessing": "查詢中...",
@@ -677,7 +683,7 @@
 		        <td>
 		        	<div style="position: relative; display: inline-block;">
 						<span id="money-icon">$</span>
-						<input type="number" class="beSentSalePrice" min="0" max="999999999" required>
+						<input type="number" class="beSentSalePrice" min="0" max="999999999" placeholder="請輸入優惠價格" required>
 					</div>
 				</td>
 		        <td>
@@ -695,13 +701,28 @@
 		  }
 	  });
 	  
-      
 	    /*===================== 送出新增資訊到後台 ==========================*/
 	    
 	    let formData;
 	    
 	    $(document).on("submit", "#addSvcForm", function (e){
 	    	e.preventDefault();
+	    	
+	    	//判斷必填欄位是否都有填
+	    	if($("#showList").html() === ""){
+	    		const yes = confirm("尚未新增優惠服務，確定新增？");
+	    		if (!yes) {
+	    		    return;
+	    		}
+	    	}
+	    	
+	    	const beSentSalePrice = document.querySelectorAll(".beSentSalePrice");
+	    	for(let i = 0; i < beSentSalePrice.length; i++){
+	    		if($(beSentSalePrice[i]).val() === ""){
+		    		alert("請設定優惠價格！");
+		    		return;
+		    	}
+	    	}
 	    	
 	    	//迴圈存入金額和品種物件
 		  	 let svcAndSalePrice = [];

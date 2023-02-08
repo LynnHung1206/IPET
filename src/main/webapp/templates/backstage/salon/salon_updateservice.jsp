@@ -215,6 +215,13 @@ pageContext.setAttribute("catlist", catlist);
 	<!-- Summernote -->
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 	<!-- Navbar script-->
+	
+	<!-- sidebar menu Class -->
+	<script>
+	  $("p:contains(服務項目管理)").closest("li").addClass("menu-open");
+	  $("p:contains(服務總覽)").closest("a").addClass("active");
+	</script>
+	
 	<script>
     $(function () {
       $("#Mynavbar").load("../../navbar_pages.html");

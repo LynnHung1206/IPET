@@ -90,7 +90,9 @@ public class ServiceService {
 	
 	private List<Service> enterInformation(List<Service> services) {
 		
+		a:
 		for (Service service : services) {
+			Integer svdId = service.getSvcId();
 			
 			service.setCatName(service.getCategoryVO().getCatName());
 			service.setTypeName(service.getPetTypeVO().getTypeName());			service.setPetSize(service.getPetTypeVO().getPetSize());
@@ -111,11 +113,21 @@ public class ServiceService {
 			List<SaleDetail> SvcOnSale =  SvcIsOnSale();
 			for(SaleDetail saleDetail : SvcOnSale) {
 				//若正在優惠中，儲存優惠價格
-				if(saleDetail.getSvcId() == service.getSvcId()) {
+				if(saleDetail.getSvcId() == svdId) {
 					service.setSalePrice(saleDetail.getSalePrice());
 					service.setSaleId(saleDetail.getSaleId());
 				}
 			}
+			
+			//查詢是否有在優惠細項中
+			List<SaleDetail> saleDetails = new SaleDetailService().selectAll();
+			for(SaleDetail saleDetail : saleDetails) {
+				if(saleDetail.getSvcId() == svdId) {
+					service.setHasDetail(true);
+					continue a;
+				}
+			}
+			service.setHasDetail(false);
 			
 		}
 		return services;

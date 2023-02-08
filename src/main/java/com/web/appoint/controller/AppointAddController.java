@@ -17,7 +17,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.web.appoint.model.entities.Appointment;
 import com.web.appoint.model.entities.AppointmentDetail;
-import com.web.appoint.model.services.AppointServices;
 import com.web.appoint.model.services.imp.AppointServicesImp;
 import com.web.job.model.entities.JobSchedule;
 import com.web.job.model.services.imp.JobScheduleServicesImp;
@@ -42,7 +41,6 @@ public class AppointAddController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String path = req.getServletPath();
-        AppointServices appointDetailServices = new AppointServicesImp();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.serializeNulls()
                 .setDateFormat("yyyy-MM-dd")
@@ -156,10 +154,30 @@ public class AppointAddController extends HttpServlet{
 				
 				appointmentDetail.setSvcPrice(svcPrice);
 				appointmentDetail.setSalePrice(salePrice);
+				apps[i] = appointmentDetail;
+			}
+			
+			/*********************3.開始新增資料************************/
+			AppointServicesImp appointServicesImp = new AppointServicesImp();
+			Appointment appointment = new Appointment();
+			appointment.setMemID(memID);
+			appointment.setPetID(petID);
+			appointment.setSchID(schID);
+			appointment.setCustomerNote(customerNote);
+			appointment.setTotalPrice(totalPrice);
+			appointment.setApmStatus(0);
+			appointment.setAppointmentDetails(apps);
+			
+			Appointment ifError = appointServicesImp.addAppointment(appointment);
+			if(ifError.isSuccessful() == false) {
+				System.out.println(ifError.getMessage());
+				errorMsgs.put("unSuccessful",ifError.getMessage());
+				res.getWriter().print(new Gson().toJson(errorMsgs));
+				return; //程式中斷
 			}
 			
 			
-			/*********************3.送至綠界金流付款************************/
+			/*********************4.送至綠界金流付款************************/
 			// 檢查後台: 信用卡收單 - 交易明細 - 查詢
         	// 信用卡測試卡號 : 4311-9522-2222-2222 
         	// 安全碼 : 222
@@ -189,23 +207,6 @@ public class AppointAddController extends HttpServlet{
 	        res.setCharacterEncoding("UTF-8");
 	        res.getWriter().print("<html><body>" + form + "</body></html>");
 			 
-			/*********************4.開始新增資料************************/
-			AppointServicesImp appointServicesImp = new AppointServicesImp();
-			Appointment appointment = new Appointment();
-			appointment.setMemID(memID);
-			appointment.setPetID(petID);
-			appointment.setSchID(schID);
-			appointment.setCustomerNote(customerNote);
-			appointment.setTotalPrice(totalPrice);
-			appointment.setAppointmentDetails(apps);
-			
-			Appointment ifError = appointServicesImp.makeAppoint(appointment);
-			if(ifError.isSuccessful() == false) {
-				errorMsgs.put("unSuccessful",ifError.getMessage());
-				res.getWriter().print(new Gson().toJson(errorMsgs));
-				return; //程式中斷
-			}
-			
 		}
 		
 //		if()

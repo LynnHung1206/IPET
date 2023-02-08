@@ -209,7 +209,6 @@
                             <h4 class="shop-sidebar-title">寵物品種</h4>
 	                        <div id="choose-pet-father">
 									<select id="pet-size" class="form-control custom-select">
-										<option selected style="display: none;">請選擇寵物體型</option>
 										<option>大型犬</option>
 										<option>中型犬</option>
 										<option>小型犬</option>
@@ -402,7 +401,7 @@
 				language: {
 			           "sProcessing": "查詢中...",
 			           "sLengthMenu": "顯示 _MENU_ 項服務",
-			           "sZeroRecords": "查無資料",
+			           "sZeroRecords": "尚無服務",
 			           "sInfoPostFix": "",
 			           "sUrl": "",
 			           "sEmptyTable": "尚未新增服務",

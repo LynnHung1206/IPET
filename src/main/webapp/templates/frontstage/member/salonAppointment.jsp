@@ -345,6 +345,10 @@
                 "data": ${appoints},
                 "order": [[0, 'desc']],
                 "columns" : [
+                	{ data: "apmID", 
+		            	className: "apmID",	
+		            	"visible": false
+		            },
                 	{ data: "schDate", 
 		            	className: "schDate",	
 		            	"visible": false

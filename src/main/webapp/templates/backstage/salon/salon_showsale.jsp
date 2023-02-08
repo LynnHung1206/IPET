@@ -178,8 +178,9 @@
 		<div style="color: red">${message.value}</div>
 	</c:forEach>
 </c:if>
-
-	<a href="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">新增優惠</a>
+	<button class="col-4 justify-content-end">
+		<a href="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">新增優惠</a>
+	</button>
 	  <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -255,6 +256,13 @@
 	<!-- Summernote -->
 	<script src="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.js"></script>
 	<!-- Navbar script-->
+	
+	<!-- sidebar menu Class -->
+	<script>
+	  $("p:contains(美容優惠管理)").closest("li").addClass("menu-open");
+	  $("p:contains(優惠總覽)").closest("a").addClass("active");
+	</script>
+	
 	<script>
     $(function () {
       $("#Mynavbar").load("../../navbar_pages.html");

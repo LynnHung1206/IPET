@@ -368,7 +368,7 @@ pageContext.setAttribute("catlist", catlist);
 				<form method="post" enctype="multipart/form-data" id="addSvcForm" action="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">
 					<div class="card card-secondary">
 						<div class="card-header">
-							<h3 class="card-title">新增美容優惠</h3>
+							<h3 class="card-title">修改美容優惠</h3>
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
 									data-card-widget="collapse" title="Collapse">
@@ -380,34 +380,28 @@ pageContext.setAttribute("catlist", catlist);
 						<div class="card-body">
 							
 							<div class="row">
+								<input type="hidden" value="${param.saleId}" name="saleId">
 								
 								<div class="col-6">
 									<label for="saleName" style="margin-top: 10px;">優惠名稱</label>
-									<input type="text" id="saleName" class="form-control input-shadow" placeholder="請輸入優惠名稱" required name="saleName" value="測試用名稱">
+									<input type="text" id="saleName" class="form-control input-shadow" placeholder="請輸入優惠名稱" required name="saleName" value="${param.saleName}">
 								</div>
 								
-								<c:if test ="${param.saleStatus eq '未開始'}" var="true">
-									<div class="col-6">
-										<label for="reservationtime" style="margin-top: 10px;">開始時間</label>
-										<div class="input-group">
-						                    <div class="input-group-prepend">
-						                      <span class="input-group-text"><i class="far fa-clock"></i></span>
-						                    </div>
-						                    <input type="text" class="form-control float-right" 
-							                    	id="reservationtime" value="${param.startTime} - ${param.endTime}" name="saleTime">
-						                </div>
-									</div>
-								</c:if>
-								
-								<c:if test ="${param.saleStatus eq '優惠中'}" var="true">
-									<div class="col-3">
+								<div class="col-3">
 										<label for="reservationtime-startTime" style="margin-top: 10px;">開始時間</label>
 										<div class="input-group">
 						                    <div class="input-group-prepend">
 						                      <span class="input-group-text"><i class="far fa-clock"></i></span>
 						                    </div>
-						                    <input type="text" class="form-control float-right" 
-							                    	id="reservationtime-startTime" value="${param.startTime}" name="saleTime" disabled>
+						                    <c:if test ="${param.saleStatus eq '優惠中'}" var="true">
+						                    	<input type="text" class="form-control float-right" 
+							                    	id="reservationtime-startTime" value="${param.startTime}" disabled>
+						                    	<input type="hidden" value="${param.startTime}" name="startTime">
+							                </c:if>
+							                <c:if test ="${param.saleStatus eq '未開始'}" var="true">
+							                	<input type="text" class="form-control float-right" 
+							                    	id="reservationtime-startTime" value="${param.startTime}" name="startTime">
+							                </c:if>
 						                </div>
 									</div>
 									
@@ -418,17 +412,16 @@ pageContext.setAttribute("catlist", catlist);
 					                      <span class="input-group-text"><i class="far fa-clock"></i></span>
 					                    </div>
 					                    <input type="text" class="form-control float-right" 
-					                    	id="reservationtime-endTime" value="${param.endTime}" name="saleTime">
+					                    	id="reservationtime-endTime" value="${param.endTime}" name="endTime">
 					                </div>
 								</div>
-								</c:if>
 								
 							</div>
 							
 							<div id="summernoteFather">
 								<label for="summernote">優惠描述</label>
 								<div>
-									<textarea id="summernote" name="saleContent">測試優惠描述</textarea>
+									<textarea id="summernote" name="saleContent">${param.saleContent}</textarea>
 								</div>
 							</div>
 						</div>
@@ -469,6 +462,30 @@ pageContext.setAttribute("catlist", catlist);
 							</tr>
 						</thead>
 						<tbody id="showList">
+						
+						<c:forEach var="saleDetail" items="${saleDetails}">
+							<tr class="beSentTr">
+						        <td class="beSentSvcId">${saleDetail.svcId}</td>
+						        <td>${saleDetail.svcName}</td>
+						        <td>${saleDetail.catName}</td>
+						        <td>${saleDetail.typeName}</td>
+						        <td class="innerSvcPrice">${saleDetail.svcPrice}</td>
+						        <td>
+						        	<div style="position: relative; display: inline-block;">
+										<span id="money-icon">$</span>
+										<input type="number" class="beSentSalePrice" min="0" max="999999999" placeholder="請輸入優惠價格" required value="${saleDetail.salePrice}">
+									</div>
+								</td>
+						        <td>
+									<input type="number" class="saleCount" min="0" max="10">
+								</td>
+								<td>
+								<i class="nav-icon fas fa-solid fa-trash"></i>
+								<div style="display: none;">${saleDetail.svcId}</div>
+								</td>
+						      </tr>
+						</c:forEach>
+						
 						</tbody>
 					</table>
 					</div>
@@ -477,7 +494,7 @@ pageContext.setAttribute("catlist", catlist);
 				</div>
 				<!-- /.card -->
 				<div id="before-submit">
-					<input type="submit" class="service-submit" value="新增優惠" form="addSvcForm">
+					<input type="submit" class="service-submit" value="修改優惠" form="addSvcForm">
 				</div>
 			</section>
 		</div>
@@ -552,14 +569,16 @@ pageContext.setAttribute("catlist", catlist);
 	            		return `<input type="checkbox" id="svcId` + data + `"class="chooseSvcId" style="width: 20px; height: 20px;" value=` + data + `>`;
 	            	},
 	            },
-	            { data: "svcId", responsivePriority: 1 },
+	            { data: "svcId", 
+	            	className: "tableSvcId",
+	            	responsivePriority: 1 },
 	            { data: "svcName", responsivePriority: 2 },
-	            { data: "catName", responsivePriority: 6 },
+	            { data: "catName", responsivePriority: 5 },
 	            { data: "typeName", responsivePriority: 3 },
 	            { data: "svcPrice", 
 	            	render: DataTable.render.number(',', null, 0, '$ '),
 	            	responsivePriority: 4 },
-	            { data: "svcStatusName", responsivePriority: 7 },
+	            { data: "svcStatusName", responsivePriority: 6 },
 	        ],
 			language: {
 		           "sProcessing": "查詢中...",
@@ -581,143 +600,122 @@ pageContext.setAttribute("catlist", catlist);
 		     }
 		});
     	
+    	/*===================== 載入時將優惠細項對應的dataTable欄位disable ==========================*/
+    	const innerSvcIds = [];
+    	
+    	//存取從伺服器讀入的svcId並存入陣列
+    	const beSentSvcId = document.querySelectorAll(".beSentSvcId");
+    	for(let i = 0; i < beSentSvcId.length; i++){
+    		innerSvcIds[innerSvcIds.length] = beSentSvcId[i].innerText;
+    	}
+    	
+    	for(let i = 0; i < innerSvcIds.length; i++){
+    		$("#svcId"+ innerSvcIds[i]).prop("checked", false).attr("disabled", true);
+    		$("#svcId"+ innerSvcIds[i]).parents("tr").addClass("cantSee");
+    	}
+    	
+    	/*===================== 載入時將優惠細項對應的折扣輸入 ==========================*/
+    		
+    	const beSentSalePrice = document.querySelectorAll(".beSentSalePrice");
+    		
+    	for(let i = 0; i < beSentSalePrice.length; i++){
+    		const thisValue = $(beSentSalePrice[i]).val();
+    		const svcSrice = $(beSentSalePrice[i]).parent().parent().prev().text();
+    			
+    		//轉換成數字
+    	   	const noDot = svcSrice.replace(",","");
+    	   	const spaceStr = noDot.indexOf(" ");
+    	   	const svcPriceNum = noDot.substring(spaceStr + 1);
+    	    	
+    	   	const finalPrice = thisValue / svcPriceNum * 10
+    	    	
+    	   	const svcSalePrice = finalPrice.toFixed(2);
+    	    	
+    	   	$(beSentSalePrice[i]).parent().parent().next().children().val(svcSalePrice);
+    	}
+    		
+    	
     	/*===================== 查詢 ==========================*/
     	$("#searchSvc").on("keyup click", function(){
     		datatable.search($(this).val()).draw();
     	});
     	
     	//Date range picker with time picker => 使用手冊 https://www.daterangepicker.com/
-    	$('#reservationtime').daterangepicker({
-          timePicker: true,
-          timePickerIncrement: 1,
-          timePickerSeconds: true,
-          timePicker24Hour: true,
-          minDate: moment().add(0.5, 'hours'),
-          "opens": "left",
-          "locale": {
-            "format": "YYYY/MM/DD HH:mm:ss",
-            "separator": " - ",
-            "applyLabel": "選擇",
-            "cancelLabel": "取消",
-            "fromLabel": "From",
-            "toLabel": "To",
-            "customRangeLabel": "Custom",
-            "weekLabel": "W",
-            "daysOfWeek": [
-              "日",
-              "一",
-              "二",
-              "三",
-              "四",
-              "五",
-              "六"
-            ],
-            "monthNames": [
-              "一月",
-              "二月",
-              "三月",
-              "四月",
-              "五月",
-              "六月",
-              "七月",
-              "八月",
-              "九月",
-              "十月",
-              "十一月",
-              "十二月"
-            ],
-            "firstDay": 1
-          }
-        });
     	
+    	const locale = {
+                "format": "YYYY/MM/DD HH:mm:ss",
+                "separator": " - ",
+                "applyLabel": "選擇",
+                "cancelLabel": "取消",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                  "日",
+                  "一",
+                  "二",
+                  "三",
+                  "四",
+                  "五",
+                  "六"
+                ],
+                "monthNames": [
+                  "一月",
+                  "二月",
+                  "三月",
+                  "四月",
+                  "五月",
+                  "六月",
+                  "七月",
+                  "八月",
+                  "九月",
+                  "十月",
+                  "十一月",
+                  "十二月"
+                ],
+                "firstDay": 1
+              };
     	
         $('#reservationtime-startTime').daterangepicker({
           timePicker: true,
           timePickerIncrement: 1,
           timePickerSeconds: true,
           timePicker24Hour: true,
+          minDate: moment().add(0.5, 'hours'),
           "singleDatePicker": true,
           "opens": "left",
-          "locale": {
-            "format": "YYYY/MM/DD HH:mm:ss",
-            "separator": " - ",
-            "applyLabel": "選擇",
-            "cancelLabel": "取消",
-            "fromLabel": "From",
-            "toLabel": "To",
-            "customRangeLabel": "Custom",
-            "weekLabel": "W",
-            "daysOfWeek": [
-              "日",
-              "一",
-              "二",
-              "三",
-              "四",
-              "五",
-              "六"
-            ],
-            "monthNames": [
-              "一月",
-              "二月",
-              "三月",
-              "四月",
-              "五月",
-              "六月",
-              "七月",
-              "八月",
-              "九月",
-              "十月",
-              "十一月",
-              "十二月"
-            ],
-            "firstDay": 1
-          }
+          "locale": locale
         });
-    	
-        $('#reservationtime-endTime').daterangepicker({
+        
+        
+        let endTimePicker = $('#reservationtime-endTime').daterangepicker({
             timePicker: true,
             timePickerIncrement: 1,
             timePickerSeconds: true,
             timePicker24Hour: true,
-            minDate: `${param.startTime}`,
+            minDate: $('#reservationtime-startTime').val(),
             "singleDatePicker": true,
             "opens": "left",
-            "locale": {
-              "format": "YYYY/MM/DD HH:mm:ss",
-              "separator": " - ",
-              "applyLabel": "選擇",
-              "cancelLabel": "取消",
-              "fromLabel": "From",
-              "toLabel": "To",
-              "customRangeLabel": "Custom",
-              "weekLabel": "W",
-              "daysOfWeek": [
-                "日",
-                "一",
-                "二",
-                "三",
-                "四",
-                "五",
-                "六"
-              ],
-              "monthNames": [
-                "一月",
-                "二月",
-                "三月",
-                "四月",
-                "五月",
-                "六月",
-                "七月",
-                "八月",
-                "九月",
-                "十月",
-                "十一月",
-                "十二月"
-              ],
-              "firstDay": 1
-            }
+            "locale": locale
           });
-    	
+        
+		$(document).on("change", "#reservationtime-startTime", function (){
+			const endTimePicker2 = $('#reservationtime-endTime').daterangepicker({
+	            timePicker: true,
+	            timePickerIncrement: 1,
+	            timePickerSeconds: true,
+	            timePicker24Hour: true,
+	            minDate: $('#reservationtime-startTime').val(),
+	            "singleDatePicker": true,
+	            "opens": "left",
+	            "locale": locale
+	          });
+			
+			endTimePicker = endTimePicker2;
+        });
+        
+        
     	/*===================== 彈出視窗 ==========================*/
 
 		//點擊按鈕時打開彈出視窗
@@ -757,6 +755,7 @@ pageContext.setAttribute("catlist", catlist);
     	const thisId = $(this).next().text();
     	const thisSvcId = $(`#svcId` + thisId);
     	thisSvcId.attr("disabled", false);
+    	thisSvcId.parents("tr").removeClass("cantSee");
         $(this).parentsUntil("tbody").remove();
       });
 
@@ -830,6 +829,7 @@ pageContext.setAttribute("catlist", catlist);
 	      	`);
           	//關閉選過的checkedbox可選狀態
           	svcIdNum.children().prop("checked", false).attr("disabled", true);
+          	svcIdNum.parent().addClass("cantSee");
 		    }
 		  }
 	  });
@@ -841,6 +841,22 @@ pageContext.setAttribute("catlist", catlist);
 	    
 	    $(document).on("submit", "#addSvcForm", function (e){
 	    	e.preventDefault();
+	    	
+	    	//判斷必填欄位是否都有填
+	    	if($("#showList").html() === ""){
+	    		const yes = confirm("尚未新增優惠服務，確定新增？");
+	    		if (!yes) {
+	    		    return;
+	    		}
+	    	}
+	    	
+	    	const beSentSalePrice = document.querySelectorAll(".beSentSalePrice");
+	    	for(let i = 0; i < beSentSalePrice.length; i++){
+	    		if($(beSentSalePrice[i]).val() === ""){
+		    		alert("請設定優惠價格！");
+		    		return;
+		    	}
+	    	}
 	    	
 	    	//迴圈存入金額和品種物件
 		  	 let svcAndSalePrice = [];
@@ -857,7 +873,7 @@ pageContext.setAttribute("catlist", catlist);
 	    	 formData.append("svcAndSalePrice", JSON.stringify(svcAndSalePrice));
 	    	 
 	    	 $.ajax({
-	    	        url : "${pageContext.request.contextPath}/ipet-back/salonSale/addSale",
+	    	        url : "${pageContext.request.contextPath}/ipet-back/salonSale/updateSale",
 	    	        type : "POST",
 	    	        data : formData,
 	    	        cache: false,

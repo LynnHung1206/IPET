@@ -1,6 +1,9 @@
 package com.web.salonSale.model.dao.impl;
 
 import java.util.List;
+
+import org.hibernate.Session;
+
 import com.web.salonSale.model.dao.SaleDAO;
 import com.web.salonSale.model.entities.Sale;
 
@@ -15,16 +18,15 @@ public class SaleDAOImpl implements SaleDAO{
 
 	@Override
 	public Integer upadate(Sale sale) {
-		getSession().save(sale);
+		getSession().merge(sale);
 		return sale.getSaleId();
 	}
 	
 	@Override
 	public Integer deleteById(Integer saleId) {
-		Sale sale = new Sale();
-		sale.setSaleId(saleId);
-		
-		getSession().remove(sale);
+		Session session = getSession();
+		Sale sale = session.load(Sale.class, saleId);
+		session.remove(sale);
 		return saleId;
 	}
 

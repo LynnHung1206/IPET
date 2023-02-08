@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 
+import com.web.salonSale.model.entities.Sale;
 import com.web.salonService.model.dao.ServiceDAO;
 import com.web.salonService.model.entities.Service;
 
@@ -40,10 +41,9 @@ public class ServiceDAOImpl implements ServiceDAO {
 
 	@Override
 	public Integer deleteById(Integer svcId) {
-		Service service = new Service();
-		service.setSvcId(svcId);
-		
-		getSession().remove(service);
+		Session session = getSession();
+		Service service = session.load(Service.class, svcId);
+		session.remove(service);
 		return svcId;
 	}
 

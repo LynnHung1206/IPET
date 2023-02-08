@@ -111,7 +111,6 @@ public class ServiceServlet extends HttpServlet{
 		
 		/**********************************進入新增頁面，新增資料************************************/
 		if("/ipet-back/service/addService".equals(path)) {
-			res.setContentType("text/text;charset=UTF-8");
 			Map<String,String> errorMsgs = new HashMap<>();
 		
 				/*************1.接收請求參數 - 輸入格式的錯誤處理**********/

@@ -73,6 +73,22 @@ public class Appointment extends Core {
         this.totalPrice = totalPrice;
         this.appointmentDetails = appointmentDetails;
     }
+    
+    public Appointment(Integer apmStatus, String apmStatusDesc, Integer memID, String memName, Integer petID, String petName, Integer schID, Date schDate, String schPeriod, Timestamp apmBuildTime, String customerNote, Integer totalPrice, AppointmentDetail[] appointmentDetails) {
+        this.apmStatus = apmStatus;
+        this.apmStatusDesc = apmStatusDesc;
+        this.memID = memID;
+        this.memName = memName;
+        this.petID = petID;
+        this.petName = petName;
+        this.schID = schID;
+        this.schDate = schDate;
+        this.schPeriod = schPeriod;
+        this.apmBuildTime = apmBuildTime;
+        this.customerNote = customerNote;
+        this.totalPrice = totalPrice;
+        this.appointmentDetails = appointmentDetails;
+    }
 
     @Override
     public boolean equals(Object o) {
