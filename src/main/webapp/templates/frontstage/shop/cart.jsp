@@ -25,7 +25,7 @@ pageContext.setAttribute("list", list);
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>Marten - Pet Food eCommerce Bootstrap4 Template</title>
+<title>IPET寵物商城</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Favicon -->
@@ -73,7 +73,7 @@ pageContext.setAttribute("list", list);
 	<!-- shopping-cart-area start -->
 	<div class="cart-main-area pt-95 pb-100">
 		<div class="container">
-			<h3 class="page-title">購物車清單</h3>
+			<h3 class="page-title">IPET寵物商城</h3>
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-12">
 					<form action="#">
