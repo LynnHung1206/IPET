@@ -47,12 +47,12 @@ public class StaffLoginServlet extends HttpServlet {
 				req.changeSessionId();
 			}
 			final HttpSession session = req.getSession();
-			session.setAttribute("loggedin", true);
 			session.setAttribute("staff", staff);
 			session.setAttribute("name", staff.getName());
 			session.setAttribute("id", staff.getId());
 			session.setAttribute("adminId", admin.getAdminID());
 		}
+
 		turnToJson(resp, staff);
 	}
 
