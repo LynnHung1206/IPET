@@ -39,9 +39,9 @@ public class StaffLoginServlet extends HttpServlet {
 		}
 		StaffService staffSvc = new StaffServiceImpl();
 		staff = staffSvc.login(staff);
-		Admin admin = new Admin();
-		AdminService adminSvc = new AdminServiceImpl();
-		admin = adminSvc.getOneAdminByInt(staff.getId());
+		
+		
+		
 		if (staff.isSuccessful()) {
 			if (req.getSession(false) != null) {
 				req.changeSessionId();
@@ -50,6 +50,9 @@ public class StaffLoginServlet extends HttpServlet {
 			session.setAttribute("staff", staff);
 			session.setAttribute("name", staff.getName());
 			session.setAttribute("id", staff.getId());
+			Admin admin = new Admin();
+			AdminService adminSvc = new AdminServiceImpl();
+			admin = adminSvc.getOneAdminByInt(staff.getId());
 			session.setAttribute("adminId", admin.getAdminID());
 		}
 
