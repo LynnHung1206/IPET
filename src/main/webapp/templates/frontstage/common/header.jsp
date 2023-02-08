@@ -15,10 +15,8 @@
             right: 50px;
             bottom: 50px;
             opacity: 0.5;
-
             /* 整個標籤透明度0-1 */
         }
-
         #msg:hover {
             opacity: 1;
         }
@@ -55,27 +53,20 @@
 								<ul>
 									<li><a
 										href="${pageContext.request.contextPath}/ipet-front/news/allNews">最新消息</a></li>
-									<li class="mega-menu-position"><a href="shop-page.html">商城</a>
-										<ul class="mega-menu">
-											<li>
-												<ul>
-													<li class="mega-menu-title">狗日用品</li>
-													<li><a href="shop-page.html">狗飼料</a></li>
-													<li><a href="shop-page.html">狗玩具</a></li>
-													<li><a href="shop-page.html">狗背帶</a></li>
-													<li><a href="shop-page.html">狗零食</a></li>
-												</ul>
-											</li>
-											<li>
-												<ul>
-													<li class="mega-menu-title">貓日用品</li>
-													<li><a href="shop-page.html">貓飼料</a></li>
-													<li><a href="shop-page.html">貓玩具</a></li>
-													<li><a href="shop-page.html">貓砂</a></li>
-													<li><a href="shop-page.html">貓零食</a></li>
-												</ul>
-											</li></li>
-								</ul>
+									<li><a href="${pageContext.request.contextPath}/ipet-front/shop/home">商城</a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <ul>
+                                                    <li><a href="category?typeID=1">食品</a></li>
+													<li><a href="category?typeID=2">玩具</a></li>
+													<li><a href="category?typeID=3">居家用品</a></li>
+													<li><a href="category?typeID=4">外出用品</a></li>
+													<li><a href="category?typeID=5">美容用品</a></li>
+													<li><a href="category?typeID=6">其他雜貨</a></li>
+                                                </ul>
+                                            </li>
+                                		</ul>
+                                    </li>
 								</li>
 								<li><a href="#">住宿</a>
 									<ul class="submenu">
@@ -124,7 +115,7 @@
 										<c:if test="${!empty member}">
 											<li><a href="<c:url value='/ipet-front/member/edit' />">會員資料修改</a></li>
 											<li><a href="<c:url value='/ipet-front/member/listPet' />">寵物資料管理</a></li>
-											<li><a href="<c:url value='#' />">商城訂單查詢</a></li>
+											<li><a href="<c:url value='/ipet-front/shop/myOrder' />">商城訂單查詢</a></li>
 											<li><a href="<c:url value='/ipet-front/member/salonAppointment' />">美容預約查詢</a></li>
 											<li><a href="<c:url value='#' />">住宿預約查詢</a></li>
 											<li><a href="<c:url value='/ipet-front/member/loginOut' />">會員登出</a></li>
@@ -141,53 +132,54 @@
 
 							<div class="header-cart same-style">
 								<button class="icon-cart">
-									<i class="icon-handbag"></i> <span class="count-style">02</span>
+									<i class="icon-handbag"></i> <span class="count-style">0</span>
 								</button>
 								<div class="shopping-cart-content">
-									<ul>
-										<li class="single-shopping-cart">
-											<div class="shopping-cart-img">
-												<a href="#"><img alt=""
-													src="${pageContext.request.contextPath}/static/frontstage/img/cart/cart-1.jpg"></a>
-											</div>
-											<div class="shopping-cart-title">
-												<h4>
-													<a href="#">Dog Calcium Food </a>
-												</h4>
-												<h6>Qty: 02</h6>
-												<span>$260.00</span>
-											</div>
-											<div class="shopping-cart-delete">
-												<a href="#"><i class="ti-close"></i></a>
-											</div>
-										</li>
-										<li class="single-shopping-cart">
-											<div class="shopping-cart-img">
-												<a href="#"><img alt=""
-													src="${pageContext.request.contextPath}/static/frontstage/img/cart/cart-2.jpg"></a>
-											</div>
-											<div class="shopping-cart-title">
-												<h4>
-													<a href="#">Dog Calcium Food</a>
-												</h4>
-												<h6>Qty: 02</h6>
-												<span>$260.00</span>
-											</div>
-											<div class="shopping-cart-delete">
-												<a href="#"><i class="ti-close"></i></a>
-											</div>
-										</li>
-									</ul>
-									<div class="shopping-cart-total">
-										<h4>
-											Shipping : <span>$20.00</span>
-										</h4>
-										<h4>
-											Total : <span class="shop-total">$260.00</span>
-										</h4>
-									</div>
+<!-- 									<ul> -->
+<!-- 										<li class="single-shopping-cart"> -->
+<!-- 											<div class="shopping-cart-img"> -->
+<!-- 												<a href="#"><img alt="" -->
+<%-- 													src="${pageContext.request.contextPath}/static/frontstage/img/cart/cart-1.jpg"></a> --%>
+<!-- 											</div> -->
+<!-- 											<div class="shopping-cart-title"> -->
+<!-- 												<h4> -->
+<!-- 													<a href="#">Dog Calcium Food </a> -->
+<!-- 												</h4> -->
+<!-- 												<h6>Qty: 02</h6> -->
+<!-- 												<span>$260.00</span> -->
+<!-- 											</div> -->
+<!-- 											<div class="shopping-cart-delete"> -->
+<!-- 												<a href="#"><i class="ti-close"></i></a> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 										<li class="single-shopping-cart"> -->
+<!-- 											<div class="shopping-cart-img"> -->
+<!-- 												<a href="#"><img alt="" -->
+<%-- 													src="${pageContext.request.contextPath}/static/frontstage/img/cart/cart-2.jpg"></a> --%>
+<!-- 											</div> -->
+<!-- 											<div class="shopping-cart-title"> -->
+<!-- 												<h4> -->
+<!-- 													<a href="#">Dog Calcium Food</a> -->
+<!-- 												</h4> -->
+<!-- 												<h6>Qty: 02</h6> -->
+<!-- 												<span>$260.00</span> -->
+<!-- 											</div> -->
+<!-- 											<div class="shopping-cart-delete"> -->
+<!-- 												<a href="#"><i class="ti-close"></i></a> -->
+<!-- 											</div> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
+<!-- 									<div class="shopping-cart-total"> -->
+<!-- 										<h4> -->
+<!-- 											Shipping : <span>$20.00</span> -->
+<!-- 										</h4> -->
+<!-- 										<h4> -->
+<!-- 											Total : <span class="shop-total">$260.00</span> -->
+<!-- 										</h4> -->
+<!-- 									</div> -->
 									<div class="shopping-cart-btn">
-										<a href="cart.html">view cart</a> <a href="checkout.html">checkout</a>
+										<a href="cart">查看購物車</a> <a href="wishList">查看我的最愛</a>
+										<a href="checkout">結帳去</a>
 									</div>
 								</div>
 							</div>
@@ -199,4 +191,18 @@
 	</header>
 	 <a id=msg style="z-index:999" href="${pageContext.request.contextPath}/templates/frontstage/customerservice/index.jsp"><img alt="" src="${pageContext.request.contextPath}/static/frontstage/img/msn-icon.png"></a>
 </body>
+<script
+	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/jquery-1.12.0.min.js"></script>
+<script>
+const contextPath = "<%=request.getContextPath()%>";
+// $(document).ready(function() {
+// 	  setInterval(function() {
+// 	    $.post(contextPath + "/ipet-front/prod/header", {
+// 	      action: "head"
+// 	    }, function(data) {
+// 	      $(".count-style").text(data);
+// 	    });
+// 	  }, 500);
+// 	});
+</script>
 </html>

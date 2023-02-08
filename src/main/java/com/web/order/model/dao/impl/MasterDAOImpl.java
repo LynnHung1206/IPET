@@ -2,16 +2,25 @@ package com.web.order.model.dao.impl;
 
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
+import com.core.util.HibernateUtil;
 import com.web.order.model.dao.MasterDAO;
+import com.web.order.model.entities.OrderDetail;
 import com.web.order.model.entities.OrderMaster;
 
 public class MasterDAOImpl implements MasterDAO {
 
 	@Override
-	public OrderMaster getById(Integer id) {
-		Session session = getSession();
-		return session.get(OrderMaster.class, id);
+	public List<OrderMaster> getBymemID(Integer memID) {
+		String hql = "FROM OrderMaster Where memID = :memID";
+		return getSession().createQuery(hql, OrderMaster.class).setParameter("memID", memID).list();
+	}
+	
+	@Override
+	public OrderMaster getById(Integer orderID) {
+		return getSession().get(OrderMaster.class, orderID);
 	}
 
 	@Override
@@ -23,15 +32,14 @@ public class MasterDAOImpl implements MasterDAO {
 
 	@Override
 	public void update(OrderMaster orderMater) {
-		Session session = getSession();
-		OrderMaster oldorderMater = session.get(OrderMaster.class, orderMater.getOrderID());
-		oldorderMater.setMemID(orderMater.getMemID());
-		oldorderMater.setOrderSum(orderMater.getOrderSum());
-		oldorderMater.setOrderStatus(orderMater.getOrderStatus());
-		oldorderMater.setOrderRecName(orderMater.getOrderRecName());
-		oldorderMater.setOrderRecPhone(orderMater.getOrderRecName());
-		oldorderMater.setOrderRecAddress(orderMater.getOrderRecAddress());
 		
+		Session session = getSession();
+		OrderMaster oldOrderMaster = session.get(OrderMaster.class, orderMater.getOrderID());
+		oldOrderMaster.setOrderSum(orderMater.getOrderSum());
+		oldOrderMaster.setOrderStatus(orderMater.getOrderStatus());
+		oldOrderMaster.setOrderRecAddress(orderMater.getOrderRecAddress());
+		oldOrderMaster.setOrderRecName(orderMater.getOrderRecName());
+		oldOrderMaster.setOrderRecPhone(orderMater.getOrderRecPhone());
 	}
 
 	@Override
@@ -45,10 +53,20 @@ public class MasterDAOImpl implements MasterDAO {
 
 	@Override
 	public List<OrderMaster> getAll() {
-		Session session = getSession();
 		String hql = "FROM OrderMaster";
-		return session.createQuery(hql,OrderMaster.class).list();
+		return getSession().createQuery(hql,OrderMaster.class).list();
 	}
 
-	
+	@Override
+	public void addWithOrderDetail(OrderMaster orderMaster, List<OrderDetail> orderDetails) {
+		
+		Session session = getSession();
+		
+		session.persist(orderMaster);
+			
+		for(OrderDetail od : orderDetails) {
+			od.setOrderID(orderMaster.getOrderID());
+			session.persist(od);
+		}	
+	}
 }

@@ -11,4 +11,5 @@ public interface DetailDAO extends CoreDAO<OrderDetail, Integer> {
 	void delete(Integer orderID, Integer prodID);
 	
 	List<OrderDetail> getAll();
+	List<OrderDetail> getByOrderID(Integer orderID);
 }
