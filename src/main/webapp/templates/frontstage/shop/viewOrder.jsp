@@ -51,14 +51,12 @@
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     
-    <!-- test -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">   
-    <!-- test -->
+   
   	<style>
   		th,td {
     		text-align: center;
-     		vertical-align: middle;
+     		vertical-align: top;
+     		font-size: 14px;
     	}
   	</style>
 </head>

@@ -58,7 +58,7 @@ public class MasterDAOImpl implements MasterDAO {
 	}
 
 	@Override
-	public void addWithOrderDetail(OrderMaster orderMaster, List<OrderDetail> orderDetails) {
+	public Integer addWithOrderDetail(OrderMaster orderMaster, List<OrderDetail> orderDetails) {
 		
 		Session session = getSession();
 		
@@ -67,6 +67,8 @@ public class MasterDAOImpl implements MasterDAO {
 		for(OrderDetail od : orderDetails) {
 			od.setOrderID(orderMaster.getOrderID());
 			session.persist(od);
-		}	
+		}
+		
+		return orderMaster.getOrderID();
 	}
 }
