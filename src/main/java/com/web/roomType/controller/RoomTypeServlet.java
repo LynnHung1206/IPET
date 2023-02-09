@@ -176,8 +176,10 @@ public class RoomTypeServlet extends HttpServlet {
 				   roomTypePhoto = new byte[in.available()];
 			    in.read(roomTypePhoto);
 			    in.close();
-			   } else
-			    errorMsgs.put("", " 記得上傳照片");
+			   } else {
+					RoomTypeService roomTypeSvc = new RoomTypeService();
+					roomTypePhoto = roomTypeSvc.getOneRoomType(roomTypeId).getRoomTypePhoto();
+				}
 			// 取得房型價格
 			Integer roomTypePrice = null;
 			try {
