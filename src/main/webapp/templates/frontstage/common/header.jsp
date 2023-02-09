@@ -57,12 +57,12 @@
                                         <ul class="submenu">
                                             <li>
                                                 <ul>
-                                                    <li><a href="category?typeID=1">食品</a></li>
-													<li><a href="category?typeID=2">玩具</a></li>
-													<li><a href="category?typeID=3">居家用品</a></li>
-													<li><a href="category?typeID=4">外出用品</a></li>
-													<li><a href="category?typeID=5">美容用品</a></li>
-													<li><a href="category?typeID=6">其他雜貨</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=1">食品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=2">玩具</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=3">居家用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=4">外出用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=5">美容用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=6">其他雜貨</a></li>
                                                 </ul>
                                             </li>
                                 		</ul>
@@ -178,8 +178,9 @@
 <!-- 										</h4> -->
 <!-- 									</div> -->
 									<div class="shopping-cart-btn">
-										<a href="cart">查看購物車</a> <a href="wishList">查看我的最愛</a>
-										<a href="checkout">結帳去</a>
+										<a href="${pageContext.request.contextPath}/ipet-front/shop/cart">查看購物車</a>
+										<a href="${pageContext.request.contextPath}/ipet-front/shop/wishList">查看我的最愛</a>
+										<a href="${pageContext.request.contextPath}/ipet-front/shop/checkout">結帳去</a>
 									</div>
 								</div>
 							</div>

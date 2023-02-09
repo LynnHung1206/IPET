@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter({ "/ipet-front/salon/addAppointment" })
+@WebFilter({ "/ipet-front/salon/addAppointment",
+	"/ipet-front/shop/cart", "/ipet-front/shop/wishList",
+	"/ipet-front/shop/checkout", "/ipet-front/shop/addOrder",
+	"/ipet-front/shop/cancel", "/ipet-front/shop/orderDetail"})
 public class frontLoginFilter extends HttpFilter {
 	private static final long serialVersionUID = 1L;
 
