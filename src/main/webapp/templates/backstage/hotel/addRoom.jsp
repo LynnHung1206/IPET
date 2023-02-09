@@ -7,10 +7,18 @@
 <%@ page import="com.web.room.model.service.*"%>
 <%@ page import="com.web.room.model.dao.*"%>
 <%@ page import="com.web.room.model.dao.impl.*"%>
+<%@ page import="com.web.roomType.model.entities.*"%>
+<%@ page import="com.web.roomType.model.service.*"%>
+<%@ page import="com.web.roomType.model.dao.*"%>
+<%@ page import="com.web.roomType.model.dao.impl.*"%>
 <%@ page import="java.util.*"%>
 
 <%
 Room room = (Room) request.getAttribute("room");
+
+RoomTypeService roomSvc = new RoomTypeService();
+List<RoomType> list = roomSvc.selectAll();
+pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -41,8 +49,6 @@ table, th, td {
 	text-align: center;
 }
 
-
-
 input#addNew {
 	background-color: lightgray;
 	border: none;
@@ -52,6 +58,25 @@ input#addNew {
 
 input#addNew:hover, #search:hover {
 	cursor: pointer;
+}
+
+h4 {
+	text-shadow: 1px 1px 0px gray, -1px -1px 0px gray, 1px -1px 0px gray,
+		-1px 1px 0px gray;
+	color: rgb(208, 208, 208) !important;
+	opacity: 0.8 !important;
+	font-weight: bold !important;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif !important;
+	line-height: 120px !important;
+	font-size: 3em !important;
+	filter: drop-shadow(0 0 2px #000) !important;
+	background: linear-gradient(to bottom, rgba(140, 0, 0, 0.15) 0%,
+		rgba(0, 0, 0, 0.15) 100%),
+		radial-gradient(at top center, rgba(200, 100, 100, 0.40) 0%,
+		rgba(0, 0, 0, 0.40) 120%) #989898;
+	background-blend-mode: multiply, multiply;
+	text-align: center;
 }
 </style>
 
@@ -82,37 +107,44 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-				<h3>新增房間</h3>
-					<form action="${pageContext.request.contextPath}/ipet-back/hotel/addRoom"
-						method="post" >
+					<h4>新增房間</h4>
+					<form
+						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoom"
+						method="post">
 						<table id="roomdata">
-								<tr>
-									<td>房型</td>
-									<td><select name="roomTypeId">
-											<option value="1" ${room.getroomTypeId() == 1 ?'selected':''}>小型犬房</option>
-											<option value="2" ${room.getroomTypeId() == 2 ?'selected':''}>中型犬房</option>
-											<option value="3" ${room.getroomTypeId() == 3 ?'selected':''}>大型犬房</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>房間狀態</td>
-									<td><select name="roomCheckStatus">
-											<option value="0" ${room.getroomCheckStatus() == 0 ?'selected':''}>空房</option>
-											<option value="1" ${room.getroomCheckStatus() == 1 ?'selected':''}>已預約</option>
-											<option value="2" ${room.getroomCheckStatus() == 2 ?'selected':''}>已入住</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>上下架狀態</td>
-									<td><select name="roomSaleStatus">
-											<option value="0" ${room.getroomCheckStatus() == 0 ?'selected':''}>上架</option>
-											<option value="1" ${room.getroomCheckStatus() == 1 ?'selected':''}>下架</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td><input type="hidden" name="action" value="insert"></td>
-									<td><input type="submit" value="送出新增"></td>
-								</tr>
+							<tr>
+								<td>房型</td>
+								<td><select id="room_Type_id" size="1" name="roomTypeId">
+										<c:forEach var="roomTypeVO" items="${list}">
+											<option value="${roomTypeVO.roomTypeId}"
+												${(param.roomTypeId == roomTypeVO.roomTypeId) ? 'selected' : ''}>${roomTypeVO.roomTypeName}</option>
+										</c:forEach>
+								</select></td>
+							</tr>
+							<tr>
+								<td>房間狀態</td>
+								<td><select name="roomCheckStatus">
+										<option value="0"
+											${room.getroomCheckStatus() == 0 ?'selected':''}>空房</option>
+										<option value="1"
+											${room.getroomCheckStatus() == 1 ?'selected':''}>已預約</option>
+										<option value="2"
+											${room.getroomCheckStatus() == 2 ?'selected':''}>已入住</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td>上下架狀態</td>
+								<td><select name="roomSaleStatus">
+										<option value="0"
+											${room.getroomCheckStatus() == 0 ?'selected':''}>上架</option>
+										<option value="1"
+											${room.getroomCheckStatus() == 1 ?'selected':''}>下架</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td><input type="hidden" name="action" value="insert"></td>
+								<td><input type="submit" value="送出新增"></td>
+							</tr>
 						</table>
 					</form>
 				</div>

@@ -15,9 +15,7 @@
 
 <%
 Room room = (Room) request.getAttribute("room");
-%>
 
-<%
 RoomTypeService roomSvc = new RoomTypeService();
 List<RoomType> list = roomSvc.selectAll();
 pageContext.setAttribute("list", list);
@@ -62,6 +60,25 @@ input#addNew {
 input#addNew:hover, #search:hover {
 	cursor: pointer;
 }
+
+h4 {
+	text-shadow: 1px 1px 0px gray, -1px -1px 0px gray, 1px -1px 0px gray,
+		-1px 1px 0px gray;
+	color: rgb(208, 208, 208) !important;
+	opacity: 0.8 !important;
+	font-weight: bold !important;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif !important;
+	line-height: 120px !important;
+	font-size: 3em !important;
+	filter: drop-shadow(0 0 2px #000) !important;
+	background: linear-gradient(to bottom, rgba(140, 0, 0, 0.15) 0%,
+		rgba(0, 0, 0, 0.15) 100%),
+		radial-gradient(at top center, rgba(200, 100, 100, 0.40) 0%,
+		rgba(0, 0, 0, 0.40) 120%) #989898;
+	background-blend-mode: multiply, multiply;
+	text-align: center;
+}
 </style>
 
 
@@ -91,7 +108,7 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-					<h3>房間修改</h3>
+					<h4>房間修改</h4>
 					<c:if test="${not empty errorMsgs}">
 						<font style="color: red">請修正以下錯誤:</font>
 						<ul>
@@ -112,25 +129,22 @@ input#addNew:hover, #search:hover {
 								<td><label for="room_Type_Id">房型:</label></td>
 								<td><select id="room_Type_id" size="1" name="roomTypeId">
 										<c:forEach var="roomTypeVO" items="${list}">
-									<option value="${roomTypeVO.roomTypeId}"
-										${(param.roomTypeId == roomTypeVO.roomTypeId) ? 'selected' : ''}>${roomTypeVO.roomTypeName}</option>
-								</c:forEach>
+											<option value="${roomTypeVO.roomTypeId}"
+												${(param.roomTypeId == roomTypeVO.roomTypeId) ? 'selected' : ''}>${roomTypeVO.roomTypeName}</option>
+										</c:forEach>
 								</select></td>
 							</tr>
 							<tr>
 								<td><label>房間狀態:</label></td>
-								<td><select name="roomCheckStatus">
-										<option value="0"
-											${room.getroomCheckStatus() == 0 ?'selected':''}>空房
-										<option value="1"
-											${room.getroomCheckStatus() == 1 ?'selected':''}>已預約
-										<option value="2"
-											${room.getroomCheckStatus() == 2 ?'selected':''}>已入住
+								<td><select name="roomCheckStatus" id="roomCheckStatus">
+										<option value="0">空房
+										<option value="1">已預約
+										<option value="2">已入住
 								</select></td>
 							</tr>
 							<tr>
 								<td><label>上下架狀態:</label></td>
-								<td><select name="roomSaleStatus" >
+								<td><select name="roomSaleStatus">
 										<option value="0"
 											${room.getroomSaleStatus() == 0 ?'selected':''}>上架</option>
 										<option value="1"
@@ -174,6 +188,20 @@ input#addNew:hover, #search:hover {
 	<script>
 		$("p:contains(房間管理)").closest("li").addClass("menu-open");
 		$("p:contains(房間列表)").closest("a").addClass("active");
+	</script>
+	<script>
+		let roomCheckStatus = "<c:out value="${roomVO.roomCheckStatus}"/>";
+		 switch (roomCheckStatus) {
+		    case '空房':
+		        $('#roomCheckStatus').val(0);
+		        break;
+		    case '已預約':
+		        $('#roomCheckStatus').val(1);
+		        break;
+		    case '已入住':
+		        $('#roomCheckStatus').val(2);
+		        break;
+		}
 	</script>
 </body>
 </html>
