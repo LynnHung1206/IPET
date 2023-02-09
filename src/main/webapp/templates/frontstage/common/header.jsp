@@ -57,12 +57,12 @@
                                         <ul class="submenu">
                                             <li>
                                                 <ul>
-                                                    <li><a href="category?typeID=1">食品</a></li>
-													<li><a href="category?typeID=2">玩具</a></li>
-													<li><a href="category?typeID=3">居家用品</a></li>
-													<li><a href="category?typeID=4">外出用品</a></li>
-													<li><a href="category?typeID=5">美容用品</a></li>
-													<li><a href="category?typeID=6">其他雜貨</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=1">食品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=2">玩具</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=3">居家用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=4">外出用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=5">美容用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=6">其他雜貨</a></li>
                                                 </ul>
                                             </li>
                                 		</ul>
