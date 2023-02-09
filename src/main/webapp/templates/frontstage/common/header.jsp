@@ -74,7 +74,7 @@
                                             <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/roomIndex.jsp">房型瀏覽</a>
                                         </li>
                                         <li>
-                                            <a href="shop-list.html">我要預約</a>
+                                            <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/comingSoon.jsp">我要預約</a>
                                         </li>
                                     </ul></li>
 								<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容</a>
