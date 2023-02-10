@@ -108,6 +108,7 @@ public class ServiceService {
 			
 			//將優惠價格設為服務價格
 			service.setSalePrice(service.getSvcPrice());
+			service.setSaleName("");
 			
 			//新增優惠價格
 			List<SaleDetail> SvcOnSale =  SvcIsOnSale();
@@ -116,6 +117,7 @@ public class ServiceService {
 				if(saleDetail.getSvcId() == svdId) {
 					service.setSalePrice(saleDetail.getSalePrice());
 					service.setSaleId(saleDetail.getSaleId());
+					service.setSaleName(new SaleService().getOneSale(saleDetail.getSaleId()).getSaleName());
 				}
 			}
 			

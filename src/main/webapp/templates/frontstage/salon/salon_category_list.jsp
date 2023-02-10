@@ -177,6 +177,16 @@
 			margin-top: 15px;
 		}
 		
+		.highlight {
+			background-color: #fffacf;
+			padding: 5px 9px;
+			margin-right: 10px;
+			font-weight: 500;
+			position: relative !important;
+		    bottom: 3px;
+		    border-radius: 27px;
+		}
+		
     </style>
 </head>
 
@@ -228,7 +238,15 @@
                         </div>
                         
                         <div class="shop-widget">
-                            <h4 class="shop-sidebar-title">寵物品種</h4>
+                            <h4 class="shop-sidebar-title">價格區間</h4>
+                            <p></p>
+                            <input type="text" class="form-control" placeholder="$ 最低價" id="lowerPrice">
+								<p></p>
+							<input type="text" class="form-control" placeholder="$ 最高價" id="highestPrice">
+                        </div>
+                        
+                        <div class="shop-widget">
+                            <h4 class="shop-sidebar-title" style="margin-top: 25px;">寵物品種</h4>
 	                        <div id="choose-pet-father">
 									<select id="pet-size" class="form-control custom-select">
 										<option>大型犬</option>
@@ -314,13 +332,6 @@
 								</div>
 							</div>
                         
-                        <div class="shop-widget">
-                            <h4 class="shop-sidebar-title">價格區間</h4>
-                            <p></p>
-                            <input type="text" class="form-control" placeholder="$ 最低價" id="lowerPrice">
-								<p></p>
-							<input type="text" class="form-control" placeholder="$ 最高價" id="highestPrice">
-                        </div>
 
                     </div>
                 </div>
@@ -385,7 +396,7 @@
 		            		const notOnSale = `<span class="old">$ ` + svcPrice + `</span>`;
 		            		const onSale = `
 						            		<span class="old" style="text-decoration:line-through;">$ ` + svcPrice + `</span>
-				                            <span class="new"> ` + salePrice + `</span>`;
+				                            <span class="new"> ` + salePrice + `</span><span class="highlight">` + data.saleName + `</span>`;
 				            
 				            const showHtml1 = `
 				            	<div class="product-width col-lg-6 col-xl-4 col-md-6 col-sm-6">
@@ -471,34 +482,31 @@
                 datatable.columns(".typeName").search($(this).val()).draw();
             });
             
-//         	let min = $('#lowerPrice');
-//             let max = $('#highestPrice');
-         
-//             // Custom range filtering function
-//             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-//                 const min = parseInt(min.val(), 10);
-//                 const max = parseInt(max.val(), 10);
-//                 const price = parseFloat(data[2]) || 0; // use data for the age column
-         
-//                 if (
-//                     (isNaN(min) && isNaN(max)) ||
-//                     (isNaN(min) && price <= max) ||
-//                     (min <= price && isNaN(max)) ||
-//                     (min <= price && price <= max)
-//                 ) {
-//                     return true;
-//                 }
-         
-//                 return false;
-//             });
-         
-//             // Changes to the inputs will trigger a redraw to update the table
-//             min.on('input', function () {
-//             	datatable.draw();
-//             });
-//             max.on('input', function () {
-//             	datatable.draw();
-//             });
+        	/* Custom filtering function which will search data in column four between two values */
+        	$.fn.dataTable.ext.search.push(
+        	    function( settings, data, dataIndex ) {
+        	        var min = parseInt( $('#lowerPrice').val(), 10 );
+        	        var max = parseInt( $('#highestPrice').val(), 10 );
+        	        var price = parseFloat( data[3] ) || 0; // use data for the age column
+        	 
+        	        if ( ( isNaN( min ) && isNaN( max ) ) ||
+        	             ( isNaN( min ) && price <= max ) ||
+        	             ( min <= price   && isNaN( max ) ) ||
+        	             ( min <= price   && price <= max ) )
+        	        {
+        	            return true;
+        	        }
+        	        return false;
+        	    }
+        	);
+        	 
+        	$(document).ready(function() {
+        	 
+        	    // Event listener to the two range filtering inputs to redraw on input
+        	    $('#lowerPrice, #highestPrice').keyup( function() {
+        	    	datatable.draw();
+        	    } );
+        	} );
 
         	/*===================== 寵物品種查詢變色 ==========================*/
         	$(".pet-type").on("click", function () {

@@ -51,6 +51,23 @@ pageContext.setAttribute("petTypes", petTypes);
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     
     <style>
+	    .error {
+			color: red;
+			padding-left: 5px;
+			font-size: 12px;
+			font-weight: 700;
+	 		font-style: italic;
+		}
+		
+		.errorRed {
+			border: 1px solid red;
+			box-shadow: 0 0 2px 1px #ffb9b9;
+		}
+    
+    	.panel-body {
+    		margin-bottom: 13px;
+    	}
+    
     	.cantSee {
 			display: none !important;
 		}
@@ -65,7 +82,7 @@ pageContext.setAttribute("petTypes", petTypes);
 		
 		.getsvcId {
 			position: relative;
-		    top: 30px;
+		    top: 40px;
 		    width: 20px;
 		    height: 20px;
 		}
@@ -199,13 +216,13 @@ pageContext.setAttribute("petTypes", petTypes);
 		color: #f51515;
 		font-weight: 500;
 		position: relative;
-    	top: 15px;
+    	top: 25px;
 	}
 	
 	.svcBlock-noSalePrice {
 		margin-top: 7px;
 		position: relative;
-    	top: 15px;
+    	top: 25px;
 	}
 	
 	.alignR {
@@ -217,6 +234,15 @@ pageContext.setAttribute("petTypes", petTypes);
 		padding: 5px 9px;
 		margin-right: 10px;
 		font-weight: 500;
+	}
+	
+	.choiceSaleName {
+		background-color: #fffacf;
+	    padding: 4px 5px;
+	    margin-right: 10px;
+	    font-weight: 500;
+	    font-size: 12px;
+	    color: #7e4c4f;
 	}
 	
 	.svcBlock-totalPrice {
@@ -292,8 +318,8 @@ pageContext.setAttribute("petTypes", petTypes);
     .billing-information-wrapper {
         border-radius: 0 0 0.25rem 0.25rem;
         border: 1px solid #dcdcdc !important;
-        padding-top: 40px;
-        height: 415px;
+        padding-top: 25px;
+        height: 380px;
     }
 
     .billing-information-wrapper.choiceSvc {
@@ -349,64 +375,64 @@ pageContext.setAttribute("petTypes", petTypes);
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                         <div class="billing-info">
-                                            <label>預約時段</label>
+                                            <label>預約時段</label><span class="error periodError">*</span>
                                             <select id="schPeriod" class="selectStyle system">
-                                                <option value="" id="morning">上午</option>
-                                                <option value="" id="afternoon">下午</option>
-                                                <option value="" id="night">晚上</option>
+                                                <option value="上午" id="morning">上午</option>
+                                                <option value="下午" id="afternoon">下午</option>
+                                                <option value="晚上" id="night">晚上</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="billing-info">
-                                            <label>預約日期</label>
+                                            <label>預約日期</label><span class="error schDateError">* ${errorMsgs.schID}</span>
                                             <select id="schDate" class="selectStyle system">
                                             <option style="display: none; color: #7c7c7c;" value="" id="defaultDate">請選擇日期</option>
                                             
                                             <% 
 										    	List<JobSchedule> noAppointmentSchs = new JobScheduleServicesImp().findNoAppointmentSch();
-										    	for( JobSchedule sch : noAppointmentSchs){
-										    		String schPeriod = sch.getSchPeriod();
-										    		if ("上午".equals(schPeriod)){
-										    %>
-										    			<option class="schDateOption schDate-morning" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
-										    <%		
-										    		}else if("下午".equals(schPeriod)){
-										    %>
-														<option class="schDateOption schDate-afternoon cantSee3" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
-											<%
-												    }else if("晚上".equals(schPeriod)){
-											%>
-														<option class="schDateOption schDate-night cantSee3" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
-											<%
-												    }
-										    	}
-										    %>
+                                            	pageContext.setAttribute("noApmSchs", noAppointmentSchs);
+                                            	
+                                            %>
+                                            <c:forEach var="apm" items="${noApmSchs}">
                                             
-                                            <option class="cantSee2" style="color: #7c7c7c;" value="" id="noDate" disabled>沒有可預約的日期</option>
+                                            	<c:if test="${'上午' eq apm.schPeriod}" var="true">
+													<option class="schDateOption schDate-morning" value="${apm.schID}" ${(apm.schID == schID) ? 'selected' : ''} >${apm.schDate}</option>
+                                        		</c:if>
+                                        		
+                                        		<c:if test="${'下午' eq apm.schPeriod}" var="true">
+													<option class="schDateOption schDate-afternoon cantSee3" value="${apm.schID}" ${(apm.schID == schID) ? 'selected' : ''} >${apm.schDate}</option>
+                                        		</c:if>
+                                        		
+                                        		<c:if test="${'晚上' eq apm.schPeriod}" var="true">
+													<option class="schDateOption schDate-night cantSee3" value="${apm.schID}" ${(apm.schID == schID) ? 'selected' : ''} >${apm.schDate}</option>
+                                        		</c:if>
+											</c:forEach>
+                                            
+                                            	<option class="cantSee2" style="color: #7c7c7c;" value="" id="noDate" disabled>沒有可預約的日期</option>
                                             
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="billing-info">
-                                            <label>寵物名稱</label>
+                                            <label>寵物名稱</label><span class="error petIDError">* ${errorMsgs.petID}</span>
                                             <select id="petID" class="selectStyle system">
                                             	<option style="display: none; color: #7c7c7c;" value="">請選擇寵物名稱</option>
 	                                            <c:forEach var="pet" items="${pets}">
-													<option value="${pet.petId}">${pet.petName}</option>
+													<option value="${pet.petId}" ${(pet.petId == petID) ? 'selected' : ''}>${pet.petName}</option>
 												</c:forEach>
                                             </select>
                                             
                                             <select style="display: none;" id="searchPetType" class="selectStyle system">
-                                            	<option style="display: none; color: #7c7c7c;" value="">請選擇寵物名稱</option>
+                                            	<option style="display: none; color: #7c7c7c;" value=""></option>
 	                                            <c:forEach var="pet" items="${pets}">
 													<option id="searchOption${pet.petId}" value="${pet.petId}">${pet.petVarId}</option>
 												</c:forEach>
                                             </select>
                                             
                                             <select style="display: none;" id="searchPetSize" class="selectStyle system">
-                                            	<option style="display: none; color: #7c7c7c;" value="">請選擇寵物名稱</option>
+                                            	<option style="display: none; color: #7c7c7c;" value=""></option>
 	                                            <c:forEach var="pet" items="${pets}">
 													<option id="searchOptionSize${pet.petId}" value="${pet.petId}">${pet.petSize}</option>
 												</c:forEach>
@@ -419,7 +445,7 @@ pageContext.setAttribute("petTypes", petTypes);
                                     <div class="col-lg-12 col-md-12">
                                         <div class="billing-info">
                                             <label>備註</label>
-                                            <textarea id="customerNote" rows="5" style= "resize:none;"></textarea>
+                                            <textarea id="customerNote" rows="3" style= "resize:none;">${customerNote}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -429,17 +455,18 @@ pageContext.setAttribute("petTypes", petTypes);
                 </div>
 
 
-                <div class="col-lg-6 col-md-6 d-flex align-items-center">
+                <div class="col-lg-6 col-md-6">
                     <div id="my-account-1" class="panel-collapse collapse show">
                         <div class="panel-body">
                             <div class="block-header">
                                 <h4>選擇服務</h4>
                             </div>
-                            <div class="billing-information-wrapper choiceSvc">
+                            <div class="billing-information-wrapper choiceSvc col-12">
                                 <div class="row">
                                 	<div class="col-12">
+                                		<span class="error schDateError">${errorMsgs.svcId}</span>
                                         <select id="selectCat" class="selectStyle">
-                                        	<option class="defaultSelect" style="display: none; color: #7c7c7c;" value="">其他服務類別</option>
+<!--                                         	<option class="defaultSelect" style="display: none; color: #7c7c7c;" value="">其他服務類別</option> -->
                                         	<c:forEach var="cat" items="${catlist}">
 												<option value="${cat.catId}" ${(cat.catId == catId) ? 'selected' : ''}>${cat.catName}</option>
 											</c:forEach>
@@ -468,7 +495,7 @@ pageContext.setAttribute("petTypes", petTypes);
                                         </select>
                                     </div> 
                                         
-                                  <form id="sendApmForm" method="post" action="${pageContext.request.contextPath}/ipet-front/salon/ECPay" style="width: 100%;">
+                                  <form id="sendApmForm" method="post" action="${pageContext.request.contextPath}/ipet-front/salon/enterAppointment" style="width: 100%;">
                                   		<input type="hidden" name="schID" id="unshowSchDate">
                                   		<input type="hidden" name="petID" id="unshowPetID">
                                   		<input type="hidden" name="customerNote" id="unshowNote">
@@ -489,37 +516,27 @@ pageContext.setAttribute("petTypes", petTypes);
                         </div>
                     </div>
                 </div>
-
-                <div style="padding-bottom: 55px; width: 100%; margin: 0 15px 100px;">
+<!-- 				<input type="submit" class="apmsubmit mt-10 col-12" value="確認服務" style="color: white; background-color: #7e4c4f; font-size: 1.4rem; margin: 0 15px;"> -->
+                
+                <div id="ApmList" style="padding:35px 0 55px; width: 100%; margin: 0 15px 100px;">
                     <h4 style="text-align: center; padding: 10px; font-weight: 700;">預約明細</h4>
                     <hr class="myHr">
                     <div class="showAppointDetail">
 		            					
                         <div class="ApmDetailHeader">
-                            <div>預約日期：</div><div id="Apmtime">預約時段</div>
-                            <div class="floatR">狗狗名字</div>
+                            預約日期：<div id="ApmDate">請選擇日期</div><div id="Apmtime">請選擇預約時段</div>
+                            <div class="floatR" id="ApmPetName">請選擇一隻您的毛孩</div>
                         </div>
                         <hr class="myHr">
-                        <div class="mt-25 mb-25 svcBlock">
-<%--                             <div class="product-img" style="background-image: url(${pageContext.request.contextPath}/ipet-front/service/showSvcImg?svcId=\${detail.svcId});"></div> --%>
-                                <div class="svcBlock-info">
-                                    <h5>服務名稱</h5><span class="ifSaleName">優惠名稱</span>
-                                    <div class="toBlock">服務描述</div>
-                                </div>
-                                <div class="floatRB">
-                                    <div class="svcBlock-noSalePrice">服務價格</div>
-                                    <div class="svcBlock-salePrice">優惠價格</div>
-                                </div>
-                            </div>
+                        <div id="ApmSvc"></div>
                         <hr class="myHr">
 		    				<div class="alignR mr-15 mt-15 mb-15">
-		    					<span>備註：</span>
-		    					sssss
+		    					<span>備註：<span id="ApmNote"></span></span>
 		    				</div>
 		    			<hr class="myHr">
                         <div class="mt-25 mb-15">
                             <h5 class="svcBlock-totalPrice">總金額： </h5>
-                            <h5 class="alignR inline">$3333</h5>
+                            <h5 class="alignR inline" id="ApmTotalPrice"></h5>
                         </div>
 							<input type="submit" form="sendApmForm" class="apmsubmit mt-45" value="確認結帳" id="submitAll" style="color: white; background-color: #7e4c4f; font-size: 1.4rem;">
 		    		</div>
@@ -584,31 +601,6 @@ pageContext.setAttribute("petTypes", petTypes);
                 		const svcPrice = data.svcPrice;
 	            		const salePrice = data.salePrice;
 	            		
-// 	            		const notOnSale = `
-// 			            			<span class="svcBlock-salePrice"></span>
-// 		                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
-// 			                	</div>
-// 	            		`;
-// 	            		const onSale = `
-// 			            			<span class="svcBlock-salePrice">` + salePrice + `</span>
-// 		                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
-// 			                	</div>
-// 	            		`;
-	            		
-// 	            		const showBeforeSale = `
-// 		            			<div class="col-12 middle mt-15 mb-15">
-// 				                    <span class="col-1">
-// 				                        <input type="checkbox" class="getsvcId" id="svcshow` + data.svcId + `" value="` + data.svcId + `" name="svcId">
-// 				                    </span>
-// 				                    <label class="col-9 noPadding" for="svcshow` + data.svcId + `">
-// 				                        <div class="choicesvcName">` + data.svcName + ` - ` + data.typeName + `</div>
-// 				                        <div class="choiceContent">` + data.svcContent + `</div>
-// 				                    </label>
-// 	            		`;
-	            		
-	            		
-	            		
-	            		
 	            		const notOnSale = `
 	            						<div class="col-1">
 					            			<span class="svcBlock-salePrice"></span>
@@ -630,13 +622,11 @@ pageContext.setAttribute("petTypes", petTypes);
 					                        <input type="checkbox" class="getsvcId" id="svcshow` + data.svcId + `" value="` + data.svcId + `" name="svcId">
 					                    </div>
 					                    <label class="col-10 noPadding" for="svcshow` + data.svcId + `">
+					                        <span class="choiceSaleName ifSaleName">` + data.saleName + `</span>
 					                        <div class="choicesvcName">` + data.svcName + ` - ` + data.typeName + `</div>
 					                        <div class="choiceContent">` + data.svcContent + `</div>
 					                    </label>
 	            		`;
-	            		
-	            		
-	            		
 	            		
 	            		
 	            		if(svcPrice === salePrice){
@@ -693,11 +683,36 @@ pageContext.setAttribute("petTypes", petTypes);
     		datatable.columns(".catId").search($("#selectCat").val()).draw();
     		datatable.columns(".svcId").search("").draw();
     		$(".getsvcId").prop("checked", false);
+    		$("#ApmSvc").empty();
+    		$("#ApmTotalPrice").empty();
+    		
+			/*===================== 優惠background-color隱藏 ==========================*/
+        	
+        	const ifSaleName = document.querySelectorAll(".ifSaleName");
+        	
+        	for(let i = 0; i < ifSaleName.length; i++){
+        		const saleName = ifSaleName[i];
+        		if(saleName.innerHTML === "" || saleName.textContent === ""){
+        			saleName.style.backgroundColor = "white";
+        		}
+        	}
+        	
+			/*===================== 價格刪除線 ==========================*/
+        	
+        	const salePriceCheck = document.querySelectorAll(".svcBlock-salePrice");
+        	
+        	for(let i = 0; i < salePriceCheck.length; i++){
+        		const sale = salePriceCheck[i];
+        		if(sale.textContent !== ""){
+        			document.querySelectorAll(".svcBlock-noSalePrice")[i].style.textDecoration = "line-through";
+        		}
+        	}
     	});
     	
     	$(document).on("change", "#petID", function (e){
     		if($("#petID").val() !== sessionSvcId){
     			datatable.columns(".svcId").search("").draw();
+    			$("#ApmSvc").empty();
     		}
     		//將值輸入要送出的hidden表格
     		$("#unshowPetID").val($(this).val());
@@ -730,6 +745,100 @@ pageContext.setAttribute("petTypes", petTypes);
     		}
     	});
     	
+    	/*===================== 動態填入下方明細 ==========================*/
+    	
+    	$("#Apmtime").html($("#schPeriod").val());
+    	$("#ApmDate").html($("#schDate option:selected").text());
+    	$("#ApmPetName").html($("#petID option:selected").text());
+    	$("#ApmNote").html($("#customerNote").val());
+    	
+    	//選擇時段
+    	$(document).on("change", "#schPeriod", function (e){
+    		$("#Apmtime").html($("#schPeriod").val());
+    		$("#ApmDate").html("請選擇日期");
+    	});
+    	
+    	//選擇日期
+    	$(document).on("change", "#schDate", function (e){
+    		$("#ApmDate").html($("#schDate option:selected").text());
+    	});
+    	
+    	//選擇寵物
+    	$(document).on("change", "#petID", function (e){
+    		$("#ApmPetName").html($("#petID option:selected").text());
+    	});
+    	
+    	//輸入備註
+    	$(document).on("blur", "#customerNote", function (e){
+    		$("#ApmNote").html($("#customerNote").val());
+    	});
+    	
+    	
+    	//選擇服務
+    	$(document).on("click", ".getsvcId", function (e){
+    		const thisId = $(this).val();
+    		const svcName = $(this).parent().next().find(".choicesvcName").text();
+    		const saleName = $(this).parent().next().find(".choiceSaleName").text();
+    		const svcContent = $(this).parent().next().find(".choiceContent").text();
+    		const salePrice = $(this).parent().next().next().find(".svcBlock-salePrice").text();
+    		const svcPrice = $(this).parent().next().next().find(".svcBlock-noSalePrice").text();
+    		const innerText = `
+    			<div id="showApmDetail` + thisId + `">
+	    			<div class="mt-25 mb-25 svcBlock">
+	                <div class="product-img" style="background-image: url(${pageContext.request.contextPath}/ipet-front/service/showSvcImg?svcId=` + thisId + `);"></div>
+	                    <div class="svcBlock-info">
+	                        <h5>` + svcName + `</h5><span class="ifSaleName">` + saleName + `</span>
+	                        <div class="toBlock">` + svcContent + `</div>
+	                    </div>
+	                    <div class="floatRB">
+	                        <div class="svcBlock-salePrice-show" style="color: #f51515;">` + salePrice + `</div>
+	                        <div class="svcBlock-noSalePrice-show">` + svcPrice + `</div>
+	                    </div>
+	            	</div>
+	            </div>
+    		`;
+    		if($("#showApmDetail" + thisId).length > 0){
+    			$("#showApmDetail" + thisId).remove();
+    		}else {
+    			$("#ApmSvc").append(innerText);
+    			const salePriceCheck2 = document.querySelectorAll(".svcBlock-salePrice-show");
+    	    	
+    	    	for(let i = 0; i < salePriceCheck2.length; i++){
+    	    		const sale = salePriceCheck2[i];
+    	    		if(sale.textContent !== ""){
+    	    			document.querySelectorAll(".svcBlock-noSalePrice-show")[i].style.textDecoration = "line-through";
+    	    		}
+    	    	}
+    	    	
+    	    	/*===================== 優惠background-color隱藏 ==========================*/
+            	
+            	const ifSaleName = document.querySelectorAll(".ifSaleName");
+            	
+            	for(let i = 0; i < ifSaleName.length; i++){
+            		const saleName = ifSaleName[i];
+            		if(saleName.innerHTML === "" || saleName.textContent === ""){
+            			saleName.style.backgroundColor = "white";
+            		}
+            	}
+    		}
+    	    	/*===================== totalPrice ==========================*/
+    			const getsvcId = document.querySelectorAll(".getsvcId");
+    	    	let totalPrice = 0;
+    	    	
+    			for(let i = 0; i < getsvcId.length; i++){
+    				if(getsvcId[i].checked){
+    					const tr = $(getsvcId[i]).closest("tr");
+    					const allValue = datatable.row(tr).data();
+    					console.log(allValue);
+    					const salePrice = allValue.salePrice;
+    					totalPrice += salePrice;
+    				}
+            	}
+    			
+    			$("#ApmTotalPrice").html("$" + totalPrice);
+    		
+    	});
+    	
         /*===================== 價格刪除線 ==========================*/
     	
     	const salePriceCheck = document.querySelectorAll(".svcBlock-salePrice");
@@ -741,10 +850,22 @@ pageContext.setAttribute("petTypes", petTypes);
     		}
     	}
     	
+    	
     	/*===================== 若無資料，顯示尚無資料 ==========================*/
     	
     	if($(".schDateOption").length === 2){
     		$("#noDate").removeClass("cantSee2");
+    	}
+    	
+    	/*===================== 優惠background-color隱藏 ==========================*/
+    	
+    	const ifSaleName = document.querySelectorAll(".ifSaleName");
+    	
+    	for(let i = 0; i < ifSaleName.length; i++){
+    		const saleName = ifSaleName[i];
+    		if(saleName.innerHTML === "" || saleName.textContent === ""){
+    			saleName.style.backgroundColor = "white";
+    		}
     	}
     	
     	/*===================== 點擊時段回傳日期 ==========================*/

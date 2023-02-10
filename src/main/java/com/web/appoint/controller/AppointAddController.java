@@ -24,20 +24,38 @@ import com.web.member.model.entity.Member;
 import com.web.pet.model.entity.Pet;
 import com.web.pet.model.service.PetService;
 import com.web.salonService.model.entities.Service;
-import com.web.salonService.model.services.CategoryService;
 import com.web.salonService.model.services.ServiceService;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutOneTime;
 
 @WebServlet({"/ipet-front/salon/addAppointment",
-			 "/ipet-front/salon/ECPay"
+			 "/ipet-front/salon/ECPay",
+			 "/ipet-front/salon/addApmColumns",
+			 "/ipet-front/salon/enterAppointment"
 			})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AppointAddController extends HttpServlet{
 	
 	public static AllInOne domain;
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		String path = req.getServletPath();
+		
+		if("/ipet-front/salon/addApmColumns".equals(path)) {
+			
+			Appointment appointment = (Appointment) req.getSession().getAttribute("addAppointment");
+			
+			AppointServicesImp appointServicesImp = new AppointServicesImp();
+			appointServicesImp.addAppointment(appointment);
+			System.out.println("新增一筆預約！預約編號：" + appointment.getApmID());
+			
+			req.getRequestDispatcher("/ipet-front/member/salonAppointment").forward(req, res);
+		}
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -99,8 +117,8 @@ public class AppointAddController extends HttpServlet{
         }
         
 		
-        //新增預約，前往綠界金流
-		if("/ipet-front/salon/ECPay".equals(path)) {
+        //檢查資料
+		if("/ipet-front/salon/enterAppointment".equals(path)) {
 		
 			Map<String,String> errorMsgs = new HashMap<>();
 			
@@ -136,6 +154,7 @@ public class AppointAddController extends HttpServlet{
 			
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
+				
 				List<Pet> pets = new PetService().getPetByMemId(member.getMemId());
 	        	req.setAttribute("pets", pets);
 	        	
@@ -179,8 +198,7 @@ public class AppointAddController extends HttpServlet{
 				apps[i] = appointmentDetail;
 			}
 			
-			/*********************3.開始新增資料************************/
-			AppointServicesImp appointServicesImp = new AppointServicesImp();
+			/*********************3.傳送資料到ECPay************************/
 			Appointment appointment = new Appointment();
 			appointment.setMemID(memID);
 			appointment.setPetID(petID);
@@ -190,16 +208,18 @@ public class AppointAddController extends HttpServlet{
 			appointment.setApmStatus(0);
 			appointment.setAppointmentDetails(apps);
 			
-			Appointment ifError = appointServicesImp.addAppointment(appointment);
-			if(ifError.isSuccessful() == false) {
-				System.out.println(ifError.getMessage());
-				errorMsgs.put("unSuccessful",ifError.getMessage());
-				res.getWriter().print(new Gson().toJson(errorMsgs));
-				return; //程式中斷
-			}
+			req.getSession().setAttribute("addAppointment", appointment);
 			
+			req.getRequestDispatcher("/ipet-front/salon/ECPay").forward(req, res);
 			
-			/*********************4.送至綠界金流付款************************/
+		}
+		
+		//綠界金流
+		if("/ipet-front/salon/ECPay".equals(path)) {
+			
+			Appointment appointment = (Appointment) req.getSession().getAttribute("addAppointment");
+			Integer totalPrice = appointment.getTotalPrice();
+			
 			// 檢查後台: 信用卡收單 - 交易明細 - 查詢
         	// 信用卡測試卡號 : 4311-9522-2222-2222 
         	// 安全碼 : 222
@@ -219,7 +239,7 @@ public class AppointAddController extends HttpServlet{
 	        // ReturnURL   : 必填  我用不到所以是隨便填一個英文字
 	        obj.setReturnURL("a");
 	        // OrderResultURL   : 選填 消費者完成付費後。重新導向的位置
-	        path="http://localhost:8081/CGA105G1/ipet-front/member/salonAppointment";
+	        path="http://localhost:8081/CGA105G1/ipet-front/salon/addApmColumns";
 	        obj.setClientBackURL(path);
 	        obj.setNeedExtraPaidInfo("N");
 	        
@@ -228,10 +248,8 @@ public class AppointAddController extends HttpServlet{
 	        String form = domain.aioCheckOut(obj, null);
 	        res.setCharacterEncoding("UTF-8");
 	        res.getWriter().print("<html><body>" + form + "</body></html>");
-			 
 		}
 		
-//		if()
 		
 	}
 	

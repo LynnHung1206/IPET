@@ -711,7 +711,6 @@ pageContext.setAttribute("catlist", catlist);
           timePickerIncrement: 1,
           timePickerSeconds: true,
           timePicker24Hour: true,
-          minDate: moment().add(0.5, 'hours'),
           "singleDatePicker": true,
           "opens": "left",
           "locale": locale
