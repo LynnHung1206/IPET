@@ -7,11 +7,6 @@
 <%@ page import="com.web.roomType.model.dao.*" %>
 <%@ page import="com.web.roomType.model.dao.impl.*" %>
 
-<%
-RoomTypeService roomTypesvc = new RoomTypeService();
-List<RoomType> list = roomTypesvc.selectAll();
-pageContext.setAttribute("list", list);
-%>
 <!doctype html>
 <html class="no-js" lang="zxx">
 <title>寵物住宿 | Ipet寵物商城</title>
