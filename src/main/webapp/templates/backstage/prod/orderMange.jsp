@@ -371,7 +371,7 @@
 <script>
 		$('.formEdit').on('submit', function (e) {
         	let form = this;
-        	let orderID = $('input:first').val();
+        	let orderID = $(this).find('input:first').val();
         	e.preventDefault();
         	swal({
             	title: '請確認是否修改訂單',
