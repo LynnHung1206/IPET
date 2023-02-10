@@ -17,7 +17,7 @@ import com.web.roomType.model.entities.RoomType;
 import com.web.roomType.model.service.RoomTypeService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
-@WebServlet({ "/ipet-back/roomType/showRoomType","/ipet-back/roomType/addRoomType","/ipet-back/roomType/editRoomType","/ipet-back/roomType/updateRoomType","/ipet-back/roomType/deleteRoomType"})
+@WebServlet({ "/ipet-back/roomType/showRoomType","/ipet-back/roomType/addRoomType","/ipet-back/roomType/editRoomType","/ipet-back/roomType/updateRoomType","/ipet-back/roomType/deleteRoomType","/ipet-front/hotel/roomIndex"})
 public class RoomTypeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,6 +29,9 @@ public class RoomTypeServlet extends HttpServlet {
 		}
 		if ("/ipet-back/roomType/addRoomType".equals(path)) {
 			req.getRequestDispatcher("/templates/backstage/roomType/addRoomType.jsp").forward(req, res);
+		}
+		if ("/ipet-front/hotel/roomIndex".equals(path)) {
+			req.getRequestDispatcher("/templates/frontstage/hotel/roomIndex.jsp").forward(req, res);
 		}
 
 	}

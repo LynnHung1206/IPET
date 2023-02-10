@@ -87,7 +87,7 @@
 								<li><a href="#">住宿</a>
 									<ul class="submenu">
                                         <li>
-                                            <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/roomIndex.jsp">房型瀏覽</a>
+                                            <a href="${pageContext.request.contextPath}/ipet-front/hotel/roomIndex">房型瀏覽</a>
                                         </li>
                                         <li>
                                             <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/comingSoon.jsp">我要預約</a>
