@@ -40,33 +40,31 @@ pageContext.setAttribute("list", list);
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 <!-- childTable style -->
+
 <style>
-.childTable th {
-	background-color: rgb(238, 182, 149, 0.45);
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	background-color:#ededed;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-family:Verdana;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 10px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
 }
-
-.childTable tr:nth-child(even) {
-	background-color: #fffaf082;
+.myButton:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	background-color:#dfdfdf;
 }
-
-.childTable tr:nth-child(odd) {
-	background-color: #fffffc !important;
-}
-
-td.details-control {
-	background:
-		url("${pageContext.request.contextPath}/static/backstage/img/more.png")
-		no-repeat center;
-	background-size: 25px;
-	cursor: pointer;
-}
-
-tr.shown td.details-control {
-	background:
-		url("${pageContext.request.contextPath}/static/backstage/img/close.png")
-		no-repeat center;
-	background-size: 20px;
-	cursor: pointer;
+.myButton:active {
+	position:relative;
+	top:1px;
 }
 </style>
 
@@ -75,7 +73,6 @@ tr.shown td.details-control {
 
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
-
 		<!--  Navbar -->
 		<%@ include file="/templates/backstage/common/navbar.jsp"%>
 		<!-- /.navbar -->
@@ -83,22 +80,17 @@ tr.shown td.details-control {
 		<!-- 左邊選單區 Main Sidebar Container -->
 		<%@ include file="/templates/backstage/common/sidebar.jsp"%>
 		<!-- /.aside -->
-
+		
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			
-		
+
+
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
 					<div class="row">
-
 						<div class="col-12">
-
-							
-
-
 							<!-- table -->
 							<div class="card">
 								<div class="card-header">
@@ -106,7 +98,7 @@ tr.shown td.details-control {
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body">
-									<table id="reserveTable"
+									<table id="tablexx"
 										class="table table-bordered table-striped  display">
 										<thead>
 											<tr>
@@ -120,14 +112,17 @@ tr.shown td.details-control {
 												<th>圖片</th>
 												<th>修改</th>
 												<th>刪除</th>
-												<th></th>
 											</tr>
 										</thead>
-										<%@ include file="page1.file"%>
-										<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>"
-											end="<%=pageIndex+rowsPerPage-1%>">
+										<%-- 										<%@ include file="page1.file"%> --%>
+										
+
+											<%-- 											<%@ include file="page1.file"%> --%>
+											<%-- 										<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" --%>
+											<%-- 											end="<%=pageIndex+rowsPerPage-1%>"> --%>
 
 											<tbody>
+											<c:forEach var="prodVO" items="${list}">
 												<tr>
 													<td>${prodVO.prodID}</td>
 													<td>${prodVO.prodName}</td>
@@ -147,7 +142,7 @@ tr.shown td.details-control {
 														<FORM METHOD="post"
 															ACTION="<%=request.getContextPath()%>/ipet-back/prod/getOneForUpdate"
 															style="margin-bottom: 0px;">
-															<input type="submit" value="修改"> <input
+															<input type="submit" value="修改" class="myButton"> <input
 																type="hidden" name="prodID" value="${prodVO.prodID}">
 															<input type="hidden" name="action"
 																value="getOne_For_Update">
@@ -157,7 +152,7 @@ tr.shown td.details-control {
 														<FORM METHOD="post"
 															ACTION="<%=request.getContextPath()%>/ipet-back/prod/delete"
 															style="margin-bottom: 0px;">
-															<input type="submit" value="刪除"> <input
+															<input type="submit" value="刪除" class="myButton"> <input
 																type="hidden" name="prodID" value="${prodVO.prodID}">
 															<input type="hidden" name="action" value="delete">
 														</FORM>
@@ -168,7 +163,7 @@ tr.shown td.details-control {
 										</c:forEach>
 										</tbody>
 									</table>
-									<%@ include file="page2.file"%>
+									<%-- 									<%@ include file="page2.file"%> --%>
 								</div>
 								<!-- /.card-body -->
 							</div>
@@ -183,108 +178,11 @@ tr.shown td.details-control {
 			<!-- /.content --
 
 
-    <!-- Edit Modal content   -->
-			<div class="modal fade" id="EditModal" data-backdrop="static"
-				data-keyboard="false" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">資料編輯</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<%-- 預約日期 --%>
-								<div class="form-group">
-									<label for="reserveDate-modal-edit" class="col-form-label">預約日期</label>
-									<input type="date" class="form-control"
-										id="reserveDate-modal-edit" readonly>
-								</div>
-								<%-- 預約時段 --%>
-								<div class="form-group">
-									<label for="reservePeriod-modal-edit" class="col-form-label">預約時段</label>
-									<input type="text" id="reservePeriod-modal-edit"
-										class="form-control" readonly>
-								</div>
-								<%-- 預約單狀態 --%>
-								<div class="form-group">
-									<label for="reserveStatus-modal-edit" class="col-form-label">預約單狀態</label>
-									<select id="reserveStatus-modal-edit" class="form-control">
-										<option value="0">已支付訂金</option>
-										<option value="1">已完成預約</option>
-										<option value="2">已取消</option>
-										<option value="3">逾時未到</option>
-									</select>
-								</div>
+    
 
-								<div>
-									<button type="button" class="btn btn-outline-dark"
-										id="searchAvailableJob">查詢可用班表</button>
-								</div>
-								<%-- 班表編號 --%>
-								<div class="form-group">
-									<label for="jobId-modal-edit" class="col-form-label">班表編號</label>
-									<select id="jobId-modal-edit" class="form-control">
-									</select>
-								</div>
-								<%-- 備註 --%>
-								<div>
-									<label for="jobId-modal-edit" class="col-form-label">顧客備註</label>
-									<textarea id="clientNote-modal-edit" class="form-control"></textarea>
-								</div>
-								<div>
-									<p id="editModalMessage"></p>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button data-toggle="modal"
-								class="btn btn-primary btn-edit-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /. Edit Modal content   -->
-
-			<!-- Edit Confirm Modal content   -->
-			<div class="modal fade" id="EditConfirmModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							確認要修改此筆資料? <br>
-							<p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或
-								"逾時未到"，該筆資料後續將無法再被更改。</p>
-							<br>
-							<p id="editConfirmModalMessage"></p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button type="submit"
-								class="btn btn-danger btn-edit-confirm-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /.Edit Confirm Modal content   -->
-
-		</div>
+		
 		<!-- /.content-wrapper -->
-
+		</div>
 		<!-- Main Footer -->
 		<%@ include file="/templates/backstage/common/footer.jsp"%>
 
@@ -335,10 +233,32 @@ tr.shown td.details-control {
 		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/js/dataTables.select.js"></script>
 
 	<!-- sidebar menu Class -->
+
+	<!-- sidebar menu Class -->
 	<script>
-  $("p:contains(商品管理)").closest("li").addClass("menu-open");
-  $("p:contains(商品列表)").closest("a").addClass("active");
-</script>
+		$("p:contains(商品管理)").closest("li").addClass("menu-open");
+		$("p:contains(商品列表)").closest("a").addClass("active");
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#tablexx').DataTable({
+				language: {
+				      search: '搜尋：',
+				      lengthMenu: '顯示 _MENU_ 筆資料',
+				      zeroRecords: '沒有符合的結果',
+				      info: '顯示第 _START_ 至 _END_ 筆資料，共 _TOTAL_ 筆',
+				      infoEmpty: '顯示 0 至 0 筆資料，共 0 筆',
+				      infoFiltered: '(從 _MAX_ 筆資料中篩選)',
+				      paginate: {
+				        first: '第一頁',
+				        last: '最後一頁',
+				        next: '下一頁',
+				        previous: '上一頁'
+				      }
+				    }
+			});
+		});
+	</script>
 
 </body>
 </html>

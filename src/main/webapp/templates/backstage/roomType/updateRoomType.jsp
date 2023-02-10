@@ -50,6 +50,42 @@ input#addNew {
 input#addNew:hover, #search:hover {
 	cursor: pointer;
 }
+
+
+h4 {
+	text-shadow: 1px 1px 0px gray, -1px -1px 0px gray, 1px -1px 0px gray,
+		-1px 1px 0px gray;
+	color: rgb(208, 208, 208) !important;
+	opacity: 0.8 !important;
+	font-weight: bold !important;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif !important;
+	line-height: 120px !important;
+	font-size: 3em !important;
+	filter: drop-shadow(0 0 2px #000) !important;
+	background: linear-gradient(to bottom, rgba(140, 0, 0, 0.15) 0%,
+		rgba(0, 0, 0, 0.15) 100%),
+		radial-gradient(at top center, rgba(200, 100, 100, 0.40) 0%,
+		rgba(0, 0, 0, 0.40) 120%) #989898;
+	background-blend-mode: multiply, multiply;
+	text-align: center;
+}
+
+.error {
+	color: #ff0000;
+	font-style: italic;
+	font-weight: lighter;
+}
+
+.errorblock {
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 5px;
+	margin: 5px;
+	width: 500px;
+	font-weight: normal;
+}
 </style>
 
 
@@ -79,15 +115,7 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-				<h3>房型修改</h3>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color: red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color: red">${message.value}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
+				<h4>房型修改</h4>
 					<form
 						action="${pageContext.request.contextPath}/ipet-back/roomType/updateRoomType"
 						method="post" enctype="multipart/form-data">
@@ -99,22 +127,23 @@ input#addNew:hover, #search:hover {
 							<tr>
 								<td>房間數量:</td>
 								<td><input type="TEXT" name="roomAmount" size="45"
-									value="${roomTypeVO.roomAmount}" /></td>
+									value="${roomTypeVO.roomAmount}"/></td>
 							</tr>
 							<tr>
 								<td>房間名稱:</td>
 								<td><input type="TEXT" name="roomTypeName" size="45"
-									value="${roomTypeVO.roomTypeName}" /></td>
+									value="${roomTypeVO.roomTypeName}"/></td>
+								
 							</tr>
 							<tr>
 								<td>寵物體型:</td>
 								<td><select name="dogSize">
 										<option value="小型犬"
-											${roomType.getDogSize() == "小型犬" ?'selected':''}>小型犬</option>
+											${roomTypeVO.dogSize.equals("小型犬") ?'selected':''}>小型犬</option>
 										<option value="中型犬"
-											${room.getDogSize() == "中型犬" ?'selected':''}>中型犬</option>
+											${roomTypeVO.dogSize.equals("中型犬") ?'selected':''}>中型犬</option>
 										<option value="大型犬"
-											${room.getDogSize() == "大型犬" ?'selected':''}>中型犬</option>
+											${roomTypeVO.dogSize.equals("大型犬") ?'selected':''}>大型犬</option>
 								</select></td>
 							</tr>
 							<tr>
@@ -138,9 +167,9 @@ input#addNew:hover, #search:hover {
 								<td>上下架狀態:</td>
 								<td><select name="roomTypeStatus">
 										<option value="0"
-											${room.getRoomTypeStatus() == 0 ?'selected':''}>上架</option>
+											${roomTypeVO.roomTypeStatus == 0 ?'selected':''}>上架</option>
 										<option value="1"
-											${room.getRoomTypeStatus() == 1 ?'selected':''}>下架</option>
+											${roomTypeVO.roomTypeStatus == 1 ?'selected':''}>下架</option>
 								</select></td>
 							</tr>
 							<tr>
@@ -151,6 +180,7 @@ input#addNew:hover, #search:hover {
 							</tr>
 						</table>
 					</form>
+				</div>
 				</div>
 				<!-- /.container-fluid -->
 			</section>
@@ -181,6 +211,12 @@ input#addNew:hover, #search:hover {
 	<script>
 		$("p:contains(房型管理)").closest("li").addClass("menu-open");
 		$("p:contains(房型列表)").closest("a").addClass("active");
+	</script>
+	<script>
+	//清除提示信息
+	function hideContent(d) {
+	     document.getElementById(d).style.display = "none";
+	}
 	</script>
 </body>
 </html>

@@ -27,9 +27,13 @@ public class WishListServlet extends HttpServlet {
 		System.out.println(action);
 
 		if ("add".equals(action)) { // 來自productDetail的請求
+			
+			String memIDStr = request.getParameter("memID");
+
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			Integer memID = Integer.valueOf(request.getParameter("memID"));
+			Integer memID = Integer.valueOf(memIDStr);
 			Integer prodID = Integer.valueOf(request.getParameter("prodID"));
+			
 
 			/**************************** 2.先查詢是否有新增過收藏****************************/
 			WishService wishSvc = new WishService();

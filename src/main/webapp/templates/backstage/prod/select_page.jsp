@@ -137,104 +137,7 @@ tr.shown td.details-control {
 			<!-- /.content --
 
 
-    <!-- Edit Modal content   -->
-			<div class="modal fade" id="EditModal" data-backdrop="static"
-				data-keyboard="false" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">資料編輯</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<%-- 預約日期 --%>
-								<div class="form-group">
-									<label for="reserveDate-modal-edit" class="col-form-label">預約日期</label>
-									<input type="date" class="form-control"
-										id="reserveDate-modal-edit" readonly>
-								</div>
-								<%-- 預約時段 --%>
-								<div class="form-group">
-									<label for="reservePeriod-modal-edit" class="col-form-label">預約時段</label>
-									<input type="text" id="reservePeriod-modal-edit"
-										class="form-control" readonly>
-								</div>
-								<%-- 預約單狀態 --%>
-								<div class="form-group">
-									<label for="reserveStatus-modal-edit" class="col-form-label">預約單狀態</label>
-									<select id="reserveStatus-modal-edit" class="form-control">
-										<option value="0">已支付訂金</option>
-										<option value="1">已完成預約</option>
-										<option value="2">已取消</option>
-										<option value="3">逾時未到</option>
-									</select>
-								</div>
-
-								<div>
-									<button type="button" class="btn btn-outline-dark"
-										id="searchAvailableJob">查詢可用班表</button>
-								</div>
-								<%-- 班表編號 --%>
-								<div class="form-group">
-									<label for="jobId-modal-edit" class="col-form-label">班表編號</label>
-									<select id="jobId-modal-edit" class="form-control">
-									</select>
-								</div>
-								<%-- 備註 --%>
-								<div>
-									<label for="jobId-modal-edit" class="col-form-label">顧客備註</label>
-									<textarea id="clientNote-modal-edit" class="form-control"></textarea>
-								</div>
-								<div>
-									<p id="editModalMessage"></p>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button data-toggle="modal"
-								class="btn btn-primary btn-edit-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /. Edit Modal content   -->
-
-			<!-- Edit Confirm Modal content   -->
-			<div class="modal fade" id="EditConfirmModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							確認要修改此筆資料? <br>
-							<p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或
-								"逾時未到"，該筆資料後續將無法再被更改。</p>
-							<br>
-							<p id="editConfirmModalMessage"></p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button type="submit"
-								class="btn btn-danger btn-edit-confirm-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /.Edit Confirm Modal content   -->
+   
 
 		</div>
 		<!-- /.content-wrapper -->
@@ -290,9 +193,6 @@ tr.shown td.details-control {
 
 	<!-- sidebar menu Class -->
 
-<script>
-  $("p:contains(商品管理)").closest("li").addClass("menu-open");
-  $("p:contains(搜尋商品)").closest("a").addClass("active");
-</script>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-<%@page import="com.web.member.model.entity.Member"%>
+<%@ page import="com.web.member.model.entity.Member"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -50,11 +50,13 @@
  	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-	
+    
+   
   	<style>
   		th,td {
     		text-align: center;
-     		vertical-align: middle;
+     		vertical-align: top;
+     		font-size: 14px;
     	}
   	</style>
 </head>
@@ -111,7 +113,6 @@
                   								
                   							<tbody>
                   								<c:forEach var="orderMaster" items="${OrderMasterList}">
-                  									
                   								<tr>
                       								<td>${orderMaster.orderID}</td>
                       								<td>${orderMaster.memID}</td>
@@ -124,13 +125,12 @@
                       								<td>${orderMaster.orderRecAddress}</td>
                       								<td><a href="orderDetail?orderID=${orderMaster.orderID}"><i class="fas fa-sharp fa-solid fa-eye"></i></a></td>
                       								<td>
-                      									<form action="cancel" method="post">
+                      									<form action="cancel" method="post" class="formCancel">
                       										<input type="hidden" name="orderID" value="${orderMaster.orderID}">
                       										<button type="submit" class="btn btn-danger">取消</button>
                       									</form>
                       								</td>
-                      								
-                    							</tr>
+                      							</tr>
                     							</c:forEach>
                   							</tbody>
                 						</table>
@@ -149,12 +149,15 @@
 			</div>
 		</div>
 	</div>
-
+	
+	
+	
 	<!-- footer -->
 	<%@include file="/templates/frontstage/common/footer.jsp"%>
 	
 	<!-- all js here -->
     <script src="${pageContext.request.contextPath}/static/frontstage/js/vendor/jquery-1.12.0.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/popper.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/jquery.counterup.min.js"></script>
@@ -191,7 +194,7 @@
       		});
     	});
   	</script>
-	
+  	
 	<script>
   		$('.orderStatus').each(function(){
 	  		if($(this).text() == 0){
@@ -223,6 +226,28 @@
 		  		$(this).parent().find('button').attr('disabled', '');
 	  		}
   		});
+	</script>
+	
+	<script>
+		$('.formCancel').on('submit', function (e) {
+        	let form = this;
+        	let orderID = $(this).parent().parent().children('td:first').text();
+        	e.preventDefault();
+        	swal({
+            	title: '請確認是否取消訂單',
+            	text: '你將會取消訂單 no.' + orderID,
+            	icon: 'warning',
+            	buttons: ['NO', 'YES'],
+            	dangerMode: true,
+        	}).then(function (isConfirm) {
+            if (isConfirm) {
+            	swal('取消成功','','success');
+            	setTimeout(() => {
+            		form.submit();
+                }, 1000);
+            }
+       	 	});
+   		});
 	</script>
 
   <!-- order detail modal -->

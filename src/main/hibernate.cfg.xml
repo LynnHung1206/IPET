@@ -4,14 +4,15 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<!-- <property name="hibernate.connection.driver_class"> -->
-		<!-- com.mysql.cj.jdbc.Driver -->
-		<!-- </property> -->
-		<!-- <property name="hibernate.connection.url"> -->
-		<!-- jdbc:mysql://localhost:3306/IPETDB -->
-		<!-- </property> -->
-		<!-- <property name="hibernate.connection.username">root</property> -->
-		<!-- <property name="hibernate.connection.password">0000</property> -->
+
+<!-- 		<property name="hibernate.connection.driver_class"> -->
+<!-- 			com.mysql.cj.jdbc.Driver -->
+<!-- 		</property> -->
+<!-- 		<property name="hibernate.connection.url"> -->
+<!-- 			jdbc:mysql://localhost:3306/IPETDB -->
+<!-- 		</property> -->
+<!-- 		<property name="hibernate.connection.username">root</property> -->
+<!-- 		<property name="hibernate.connection.password">0000</property> -->
 
 		<!-- 這裡的 jdbc/javaFramework 對應到 content.xml 的 Resource name="jdbc/IPETDB" -->
 		<property name="hibernate.connection.datasource">java:comp/env/jdbc/IPETDB</property>
