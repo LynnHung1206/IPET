@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 
 import com.core.util.HibernateUtil;
 import com.web.product.model.dao.ProductImgDAO;
@@ -16,7 +17,7 @@ public class ProductImgDAOImpBack implements ProductImgDAO {
 	public List<ProductImg> getAll() {
 		Session session = getSession();
 		String hql = "FROM ProductImg";
-		return session.createQuery(hql,ProductImg.class).list();
+		return session.createQuery(hql, ProductImg.class).list();
 	}
 
 	@Override
@@ -36,31 +37,30 @@ public class ProductImgDAOImpBack implements ProductImgDAO {
 	public void insert(ProductImg prod_IMGVO) {
 		Session session = getSession();
 		session.save(prod_IMGVO);
-		
+
 	}
 
 	@Override
 	public void update(ProductImg prod_IMGVO) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public ProductImg findByProdID(Integer prodID) {
 		Session session = getSession();
-//		ProductImg productImg = new ProductImg();
-//		productImg.setProdID(prodID);
-//		productImg.setImgFile(null);
-//		productImg.setImgID(prodID);
-//		
-		
-		return session.get(ProductImg.class,prodID);
+
+		NativeQuery<ProductImg> query = session.createNativeQuery("select * from product_img where prod_id = :prodID",
+				ProductImg.class);
+		query.setParameter("prodID", prodID);
+
+		return (ProductImg) query.uniqueResult();
+
 	}
 
 	@Override
 	public void insert2(ProductImg prod_IMGVO, Connection conn) {
-		
-		
+
 	}
 
 	@Override
@@ -70,15 +70,15 @@ public class ProductImgDAOImpBack implements ProductImgDAO {
 		productImg.setProdID(prodid);
 		session.delete(prodid);
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		ProductImg productImg = new ProductImg();
-		byte by []= {1,2,3};
+		byte by[] = { 1, 2, 3 };
 		productImg.setImgFile(by);
 		productImg.setProdID(41);
-		
+
 		session.save(productImg);
 	}
 
@@ -87,9 +87,5 @@ public class ProductImgDAOImpBack implements ProductImgDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
-	
 
 }
