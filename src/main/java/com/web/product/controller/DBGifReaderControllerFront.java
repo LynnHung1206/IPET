@@ -1,4 +1,4 @@
-package com.web.product.model.service;
+package com.web.product.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.web.product.model.entity.Product;
+import com.web.product.model.service.ProductServiceBack;
 
 @WebServlet("/ipet-front/prod/DBGifReaderFront")
 public class DBGifReaderControllerFront extends HttpServlet {

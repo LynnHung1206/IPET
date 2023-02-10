@@ -100,7 +100,7 @@ pageContext.setAttribute("list", list);
 											</td>
 											<td class="product-quantity">
 												<div class="cart-plus-minus">
-													<input class="cart-plus-minus-box" type="text"
+													<input id="count" class="cart-plus-minus-box" type="text"
 														name="qtybutton" value="${cartVO.count}" />
 												</div>
 											</td>
@@ -160,7 +160,6 @@ function deleteID(id){
 	    dangerMode: true
 	  });
 }
-
 </script>
 
 </html>

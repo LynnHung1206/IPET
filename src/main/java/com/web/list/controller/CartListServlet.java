@@ -61,11 +61,15 @@ public class CartListServlet extends HttpServlet {
 
 			CartListPK cartListPK = new CartListPK(memID, prodID);
 			cartList = cartSvc.selectOne(cartListPK);
-			// 如果沒有就新增 有就移除
+			// 如果沒有就新增 有就修改數量
+			
 			if (cartList == null) {
 				cartSvc.addOneProd(memID, prodID, count, total);
+				
 			} else {
-				cartSvc.removeOneProd(memID, prodID);
+				Integer oldCount =cartList.getCount();
+				Integer oldTotal =cartList.getTotal();
+				cartSvc.ajustCart(memID,count,oldCount,total,oldTotal);
 			}
 		}
 
@@ -92,10 +96,12 @@ public class CartListServlet extends HttpServlet {
 			CartListPK cartListPK = new CartListPK();
 			
 			Member member = (Member) request.getSession().getAttribute("member");
-			if(member.getMemId()!=null) {
+			if(member !=null) {
 				cartListPK.setMemID(member.getMemId());
 			}else {
-				cartListPK.setMemID(1);
+				response.setContentType("text/html; charset=utf-8");
+				response.getWriter().print(0);
+				return;
 			}
 			CartList cartList = new CartList();
 			cartList.setCartListPK(cartListPK);

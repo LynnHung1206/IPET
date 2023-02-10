@@ -198,8 +198,9 @@
 <!-- 										</h4> -->
 <!-- 									</div> -->
 									<div class="shopping-cart-btn">
-										<a href="cart">查看購物車</a> <a href="wishList">查看我的最愛</a>
-										<a href="checkout">結帳去</a>
+										<a href="${pageContext.request.contextPath}/ipet-front/shop/cart">查看購物車</a>
+										<a href="${pageContext.request.contextPath}/ipet-front/shop/wishList">查看我的最愛</a>
+										<a href="${pageContext.request.contextPath}/ipet-front/shop/checkout">結帳去</a>
 									</div>
 								</div>
 							</div>
@@ -215,15 +216,15 @@
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/jquery-1.12.0.min.js"></script>
 <script>
 const contextPath = "<%=request.getContextPath()%>";
-// $(document).ready(function() {
-// 	  setInterval(function() {
-// 	    $.post(contextPath + "/ipet-front/prod/header", {
-// 	      action: "head"
-// 	    }, function(data) {
-// 	      $(".count-style").text(data);
-// 	    });
-// 	  }, 500);
-// 	});
+$(document).ready(function() {
+	  setInterval(function() {
+	    $.post(contextPath + "/ipet-front/prod/header", {
+	      action: "head"
+	    }, function(data) {
+	      $(".count-style").text(data);
+	    });
+	  }, 800);
+	});
 </script>
 
 

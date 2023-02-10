@@ -14,5 +14,5 @@ public interface MasterDAO extends CoreDAO<OrderMaster, Integer>{
 	List<OrderMaster> getAll();
 	List<OrderMaster> getBymemID(Integer memID);
 	
-	void addWithOrderDetail(OrderMaster orderMaster, List<OrderDetail> orderDetails);
+	Integer addWithOrderDetail(OrderMaster orderMaster, List<OrderDetail> orderDetails);
 }

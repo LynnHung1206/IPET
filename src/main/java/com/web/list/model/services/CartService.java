@@ -18,9 +18,9 @@ public class CartService {
 //		return dao.add(prodID);
 //	}
 //
-//	public void update(CartList cartList) {
-//		dao.update(cartList);
-//	}
+	public void ajustCart(Integer memId, Integer count, Integer oldCount, Integer total, Integer oldTotal) {
+		dao.update(memId, count, oldCount, total, oldTotal);
+	}
 //
 //	public void delete(Integer prodID) {
 //		dao.delete(prodID);
@@ -33,51 +33,49 @@ public class CartService {
 //	public List<CartList> getAll() {
 //		return dao.getAll();
 //	}
-	
-	public void addOneProd(Integer memId,Integer prodID,Integer count, Integer total) {
+
+	public void addOneProd(Integer memId, Integer prodID, Integer count, Integer total) {
 		CartList cartList = new CartList();
 		cartList.setCount(count);
 		cartList.setTotal(total);
 		CartListPK cartListPK = new CartListPK();
 		cartListPK.setMemID(memId);
 		cartListPK.setProdID(prodID);
-		
-		
+
 		cartList.setCartListPK(cartListPK);
 		dao.insert(cartList, cartListPK);
-		
+
 	};
-	
-	public void addOneProd2(Integer memId,Integer prodID) {
+
+	public void addOneProd2(Integer memId, Integer prodID) {
 		CartList cartList = new CartList();
 		CartListPK cartListPK = new CartListPK();
 		cartListPK.setMemID(memId);
 		cartListPK.setProdID(prodID);
-		
-		
+
 		cartList.setCartListPK(cartListPK);
 		dao.insert(cartList, cartListPK);
-		
+
 	};
-	
-	public void removeOneProd(Integer memId,Integer prodID) {
+
+	public void removeOneProd(Integer memId, Integer prodID) {
 //		CartList cartList = new CartList();
 		CartListPK cartListPK = new CartListPK();
 		cartListPK.setMemID(memId);
 		cartListPK.setProdID(prodID);
 //		cartList.setCartListPK(cartListPK);
-		
+
 		dao.remove(cartListPK);
 	};
-	
+
 	public CartList selectOne(CartListPK cartListPK) {
 		return dao.selectOne(cartListPK);
 	};
-	
-	public List<CartList> getAll(CartList cartList){
+
+	public List<CartList> getAll(CartList cartList) {
 		return dao.selectAll(cartList);
 	};
-	
+
 	public void removeAllProd(Integer memID) {
 		dao.remove(memID);
 	}

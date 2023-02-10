@@ -130,7 +130,8 @@ pageContext.setAttribute("list", list);
                                 </div>
                             </div>
                                 
-                        <div class="panel panel-default">
+						<form action="addOrder" method="post">
+                        	<div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq"
                                             href="#payment-5">付款資訊</a></h5>
@@ -140,7 +141,7 @@ pageContext.setAttribute("list", list);
                                         <div class="payment-info-wrapper">
                                             <div class="ship-wrapper">
                                                 <div class="single-ship">
-                                                    <input type="radio" checked="" value="dadress" name="address">
+                                                    <input type="radio" checked value="dadress" name="address">
                                                     <label>信用卡</label>
                                                 </div>
                                             </div>
@@ -149,13 +150,13 @@ pageContext.setAttribute("list", list);
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="billing-info">
                                                             <label>持卡人姓名</label>
-                                                            <input type="text">
+                                                            <input type="text" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="billing-select card-mrg">
                                                             <label>信用卡種類</label>
-                                                            <select>
+                                                            <select required>
                                                                 <option>American Express</option>
                                                                 <option>Visa</option>
                                                                 <option>MasterCard</option>
@@ -166,7 +167,7 @@ pageContext.setAttribute("list", list);
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>信用卡號</label>
-                                                            <input type="text">
+                                                            <input type="text" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -175,7 +176,7 @@ pageContext.setAttribute("list", list);
                                                     <div class="row">
                                                         <div class="col-lg-6 col-md-6">
                                                             <div class="billing-select month-mrg">
-                                                                <select>
+                                                                <select required>
                                                                     <option>Month</option>
                                                                     <option>January</option>
                                                                     <option>February</option>
@@ -194,7 +195,7 @@ pageContext.setAttribute("list", list);
                                                         </div>
                                                         <div class="col-lg-6 col-md-6">
                                                             <div class="billing-select">
-                                                                <select>
+                                                                <select required>
                                                                     <option>Year</option>
                                                                     <option>2023</option>
                                                                     <option>2024</option>
@@ -213,7 +214,7 @@ pageContext.setAttribute("list", list);
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>驗證碼</label>
-                                                            <input type="text">
+                                                            <input type="text" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -223,7 +224,6 @@ pageContext.setAttribute("list", list);
                                 </div>
                             </div>
                             
-                            <form action="addOrder" method="post">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq"
@@ -235,25 +235,26 @@ pageContext.setAttribute("list", list);
                                             <div class="col-lg-6 col-md-6">
                                                  <div class="billing-info">
                                                       <label>收件人姓名</label>
-                                                      <input type="text" name="orderRecName">
+                                                      <input type="text" name="orderRecName" required>
                                                  </div>
                                                  <div class="billing-info">
                                                       <label>收件人電話</label>
-                                                      <input type="text" name="orderRecPhone">
+                                                      <input type="text" name="orderRecPhone" required>
                                                  </div>
                                                  <div class="billing-info">
                                                       <label>收件人地址</label>
-                                                      <input type="text" name="orderRecAddress">
+                                                      <input type="text" name="orderRecAddress" required>
                                                  </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        	
                         	<div class="billing-btn">
                                  <button type="submit">確認訂單</button>
                             </div>
-                        	</form>
+						</form>
                         </div>
                     </div>
                 </div>
