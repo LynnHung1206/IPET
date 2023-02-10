@@ -219,35 +219,7 @@ tr.shown td.details-control {
 			</div>
 			<!-- /. Edit Modal content   -->
 
-			<!-- Edit Confirm Modal content   -->
-			<div class="modal fade" id="EditConfirmModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							確認要修改此筆資料? <br>
-							<p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或
-								"逾時未到"，該筆資料後續將無法再被更改。</p>
-							<br>
-							<p id="editConfirmModalMessage"></p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button type="submit"
-								class="btn btn-danger btn-edit-confirm-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /.Edit Confirm Modal content   -->
+			
 
 		</div>
 		<!-- /.content-wrapper -->

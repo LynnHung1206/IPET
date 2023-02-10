@@ -7,6 +7,7 @@
 
 <%
 Member member = (Member) request.getSession().getAttribute("member");
+
 Product product = (Product) request.getAttribute("product");
 pageContext.setAttribute("product", product);
 %>
@@ -85,7 +86,8 @@ pageContext.setAttribute("product", product);
 			<div class="breadcrumb-content text-center">
 				<h2>Product Detail</h2>
 				<ul>
-					<li><a href="<%= request.getContextPath() %>/ipet-front/shop/home">home</a></li>
+					<li><a
+						href="<%=request.getContextPath()%>/ipet-front/shop/home">home</a></li>
 					<li class="active">Shop</li>
 				</ul>
 			</div>
@@ -179,22 +181,26 @@ pageContext.setAttribute("product", product);
 		src="${pageContext.request.contextPath}/static/frontstage/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 </body>
 
 <script>		
-
+let memberId = "${member.memId}" || null;
 		$("#wish").click(function(e) {
 		    e.preventDefault();
 		        $.post(
 		            contextPath + "/ipet-front/prod/fromProductDetailWish", {
 		                action:"add",
 		                prodID: ${product.prodID},
-		                memID:${member.memId}
+		                memID:memberId
 		            },
 		            function(data) {
-		                // 回應
+		            	console.log(0 === parseInt(data));
+		                if(0 === parseInt(data)){
+		                	location.href = contextPath +'/templates/frontstage/member/login.jsp';
+		                }
 		            }
 		            
 		        );
@@ -210,17 +216,20 @@ pageContext.setAttribute("product", product);
 		            contextPath + "/ipet-front/prod/fromProductDetailCart", {
 		                action:"add",
 		                prodID: ${product.prodID},
-		                memID: ${member.memId},
+		                memID: memberId,
 		                count:parseInt(document.querySelector(`#qty`).value),
 		                total:${product.prodPrice} * count,
 		            },
 		            function(data) {
-		                // 回應
+		            	console.log(0 === parseInt(data));
+		                if(0 === parseInt(data)){
+		                	location.href = contextPath +'/templates/frontstage/member/login.jsp';
+		                }
 		            }
-		            
+		           
 		        );
-
-		        $(this).find("i").toggleClass("clicked");
+		        swal("成功加入購物車!", "", "success");
+		        
 		    
 		});
 		
