@@ -101,7 +101,7 @@ Product prodVO = (Product) request.getAttribute("prodVO");
 								<!-- /.card-header -->
 								<div class="card-body">
 									<FORM METHOD="post"
-										ACTION="${pageContext.request.contextPath}/ipet-back/prod/addOneProd"
+										ACTION="${pageContext.request.contextPath}/ipet-back/prod/addOneProd1"
 										name="form1" enctype="multipart/form-data">
 										<table id="reserveTable"
 											class="table table-bordered table-striped  display">
