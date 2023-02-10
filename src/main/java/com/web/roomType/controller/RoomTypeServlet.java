@@ -140,7 +140,8 @@ public class RoomTypeServlet extends HttpServlet {
 		// 修改
 		if ("/ipet-back/roomType/updateRoomType".equals(path)) {
 			res.setContentType("text/text;charset=UTF-8");
-			Map<String, String> errorMsgs = new HashMap<>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 
 			/************* 1.接收請求參數 - 輸入格式的錯誤處理 **********/
 			// 取得房間編號
@@ -152,9 +153,10 @@ public class RoomTypeServlet extends HttpServlet {
 			try {
 				roomAmount = Integer.valueOf(req.getParameter("roomAmount").trim());
 			} catch (NumberFormatException e) {
-				roomAmount = 0;
+				roomAmount = null;
 				errorMsgs.put("roomTypeAmount", "房型數量請填數字");
 			}
+			//取得房型名稱
 			String roomTypeName = req.getParameter("roomTypeName");
 
 			if (roomTypeName == null || roomTypeName.trim().length() == 0) {
