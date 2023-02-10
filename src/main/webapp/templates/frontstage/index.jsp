@@ -95,7 +95,7 @@
 				<div class="col-lg-4 col-md-4">
 					<div class="single-food-category cate-padding-3 text-center mb-30">
 						<a
-							href="${pageContext.request.contextPath}/templates/frontstage/hotel/roomIndex.jsp">
+							href="${pageContext.request.contextPath}/ipet-front/hotel/roomIndex">
 							<div class="single-food-hover-2">
 								<img
 									src="${pageContext.request.contextPath}/static/frontstage/img/product/hotel.jpg"
