@@ -73,12 +73,12 @@
                                         <ul class="submenu">
                                             <li>
                                                 <ul>
-                                                    <li><a href="category?typeID=1">食品</a></li>
-													<li><a href="category?typeID=2">玩具</a></li>
-													<li><a href="category?typeID=3">居家用品</a></li>
-													<li><a href="category?typeID=4">外出用品</a></li>
-													<li><a href="category?typeID=5">美容用品</a></li>
-													<li><a href="category?typeID=6">其他雜貨</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=1">食品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=2">玩具</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=3">居家用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=4">外出用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=5">美容用品</a></li>
+													<li><a href="${pageContext.request.contextPath}/ipet-front/shop/category?typeID=6">其他雜貨</a></li>
                                                 </ul>
                                             </li>
                                 		</ul>
@@ -86,10 +86,13 @@
 								</li>
 								<li><a href="#">住宿</a>
 									<ul class="submenu">
-										<li><a href="">住宿環境</a></li>
-										<li><a href="shop-page.html">房型參考</a></li>
-										<li><a href="shop-list.html">我要預約</a></li>
-									</ul></li>
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/roomIndex.jsp">房型瀏覽</a>
+                                        </li>
+                                        <li>
+                                            <a href="${pageContext.request.contextPath}/templates/frontstage/hotel/comingSoon.jsp">我要預約</a>
+                                        </li>
+                                    </ul></li>
 								<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容</a>
 									<ul class="submenu">
 										<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容服務</a></li>
@@ -223,6 +226,7 @@ const contextPath = "<%=request.getContextPath()%>";
 // 	});
 </script>
 
+
 <script>
     $(function () {
     	
@@ -285,3 +289,4 @@ const contextPath = "<%=request.getContextPath()%>";
     </script>
 
 </html>
+

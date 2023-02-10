@@ -19,6 +19,13 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
+<style>
+.content-wrapper{
+background-image: url('${pageContext.request.contextPath}/static/backstage/img/cutedog.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+}
+</style>
 </head>
 <!--
 `body` tag options:
@@ -40,7 +47,7 @@
   <!-- /.aside -->
 
   <!-- 中間頁面 Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
