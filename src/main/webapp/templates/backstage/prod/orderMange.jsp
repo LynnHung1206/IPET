@@ -59,6 +59,7 @@
   <script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
     $(document).ready(function () {
       $('#example2').DataTable({
@@ -265,7 +266,7 @@
             </button>
           </div>
         
-          <form action="edit" method="post">
+          <form action="edit" method="post" class="formEdit">
           <div class="card-body">
       	    <div class="modal-body">
           	  <p>
@@ -280,7 +281,7 @@
           	  </p>
           	  <p>
           	    <label for="">訂單日期:</label><br>
-          	    <input type="text" name="orderDate" value="${orderMaster.orderDate}" disabled>
+          	    <input type="text" name="orderDate" value="<fmt:formatDate value="${orderMaster.orderDate}" pattern="yyyy-MM-dd"/>" disabled>
           	  </p>
           	  <p>
                 <label for="">金額:</label><br>
@@ -366,6 +367,28 @@
 	  }
   });
 </script>
+
+<script>
+		$('.formEdit').on('submit', function (e) {
+        	let form = this;
+        	let orderID = $('input:first').val();
+        	e.preventDefault();
+        	swal({
+            	title: '請確認是否修改訂單',
+            	text: '你將會修改訂單 no.' + orderID,
+            	icon: 'warning',
+            	buttons: ['NO', 'YES'],
+            	dangerMode: true,
+        	}).then(function (isConfirm) {
+            if (isConfirm) {
+            	swal('修改成功','','success');
+            	setTimeout(() => {
+            		form.submit();
+                }, 1000);
+            }
+       	 	});
+   		});
+	</script>
 
 </body>
 </html>

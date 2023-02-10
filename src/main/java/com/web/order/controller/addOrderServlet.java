@@ -73,7 +73,7 @@ public class addOrderServlet extends HttpServlet{
 		
 		//send email
 		OrderMaster newOrderMaster = orderServiceImp.findOrderMaster(orderID);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		orderServiceImp.sendEmail(member.getMemEmail(),
 								  dateFormat.format(new Date()),
 								  newOrderMaster.getOrderID().toString(),
