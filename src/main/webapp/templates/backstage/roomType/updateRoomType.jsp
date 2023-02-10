@@ -127,14 +127,13 @@ h4 {
 							<tr>
 								<td>房間數量:</td>
 								<td><input type="TEXT" name="roomAmount" size="45"
-									value="${roomTypeVO.roomAmount}" onclick="hideContent('roomAmount.errors');"/></td>
-								<td><span  id ="roomAmount.errors" class="error">${errorMsgs.roomAmount}</span></td>
+									value="${roomTypeVO.roomAmount}"/></td>
 							</tr>
 							<tr>
 								<td>房間名稱:</td>
 								<td><input type="TEXT" name="roomTypeName" size="45"
-									value="${roomTypeVO.roomTypeName}" onclick="hideContent('roomTypeName.errors');"/></td>
-								<td><span  id ="roomTypeName.errors" class="error">${errorMsgs.roomTypeName}</span></td>
+									value="${roomTypeVO.roomTypeName}"/></td>
+								
 							</tr>
 							<tr>
 								<td>寵物體型:</td>
