@@ -108,6 +108,7 @@ h4 {
 			<section class="content-header">
 				<div class="container-fluid">
 					<h4>新增房間</h4>
+					<div class="d-flex justify-content-center">
 					<form
 						action="${pageContext.request.contextPath}/ipet-back/hotel/addRoom"
 						method="post">
@@ -147,6 +148,7 @@ h4 {
 							</tr>
 						</table>
 					</form>
+				</div>
 				</div>
 				<!-- /.container-fluid -->
 			</section>

@@ -117,47 +117,49 @@ h4 {
 							</c:forEach>
 						</ul>
 					</c:if>
-					<form
-						action="${pageContext.request.contextPath}/ipet-back/hotel/updateRoom"
-						method="post">
-						<table id="discountdata">
-							<tr>
-								<td><label>房間編號:</label></td>
-								<td>${roomVO.roomId}</td>
-							</tr>
-							<tr>
-								<td><label for="room_Type_Id">房型:</label></td>
-								<td><select id="room_Type_id" size="1" name="roomTypeId">
-										<c:forEach var="roomTypeVO" items="${list}">
-											<option value="${roomTypeVO.roomTypeId}"
-												${(param.roomTypeId == roomTypeVO.roomTypeId) ? 'selected' : ''}>${roomTypeVO.roomTypeName}</option>
-										</c:forEach>
-								</select></td>
-							</tr>
-							<tr>
-								<td><label>房間狀態:</label></td>
-								<td><select name="roomCheckStatus" id="roomCheckStatus">
-										<option value="0">空房
-										<option value="1">已預約
-										<option value="2">已入住
-								</select></td>
-							</tr>
-							<tr>
-								<td><label>上下架狀態:</label></td>
-								<td><select name="roomSaleStatus">
-										<option value="0"
-											${room.getroomSaleStatus() == 0 ?'selected':''}>上架</option>
-										<option value="1"
-											${room.getroomSaleStatus() == 1 ?'selected':''}>下架</option>
-								</select></td>
-							</tr>
-							<tr>
-								<td><input type="hidden" name="action" value="update">
-									<input type="hidden" name="roomId" value="${roomVO.roomId}"></td>
-								<td><input type="submit" value="送出修改"></td>
-							</tr>
-						</table>
-					</form>
+					<div class="d-flex justify-content-center">
+						<form
+							action="${pageContext.request.contextPath}/ipet-back/hotel/updateRoom"
+							method="post">
+							<table id="discountdata">
+								<tr>
+									<td><label>房間編號:</label></td>
+									<td>${roomVO.roomId}</td>
+								</tr>
+								<tr>
+									<td><label for="room_Type_Id">房型:</label></td>
+									<td><select id="room_Type_id" size="1" name="roomTypeId">
+											<c:forEach var="roomTypeVO" items="${list}">
+												<option value="${roomTypeVO.roomTypeId}"
+													${(roomVO.roomTypeId == roomTypeVO.roomTypeId) ? 'selected' : ''}>${roomTypeVO.roomTypeName}</option>
+											</c:forEach>
+									</select></td>
+								</tr>
+								<tr>
+									<td><label>房間狀態:</label></td>
+									<td><select name="roomCheckStatus" id="roomCheckStatus">
+											<option value="0">空房
+											<option value="1">已預約
+											<option value="2">已入住
+									</select></td>
+								</tr>
+								<tr>
+									<td><label>上下架狀態:</label></td>
+									<td><select name="roomSaleStatus">
+											<option value="0"
+												${roomVO.roomSaleStatus == 0 ?'selected':''}>上架</option>
+											<option value="1"
+												${roomVO.roomSaleStatus == 1 ?'selected':''}>下架</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td><input type="hidden" name="action" value="update">
+										<input type="hidden" name="roomId" value="${roomVO.roomId}"></td>
+									<td><input type="submit" value="送出修改"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
 				</div>
 				<!-- /.container-fluid -->
 			</section>
@@ -191,16 +193,16 @@ h4 {
 	</script>
 	<script>
 		let roomCheckStatus = "<c:out value="${roomVO.roomCheckStatus}"/>";
-		 switch (roomCheckStatus) {
-		    case '空房':
-		        $('#roomCheckStatus').val(0);
-		        break;
-		    case '已預約':
-		        $('#roomCheckStatus').val(1);
-		        break;
-		    case '已入住':
-		        $('#roomCheckStatus').val(2);
-		        break;
+		switch (roomCheckStatus) {
+		case '空房':
+			$('#roomCheckStatus').val(0);
+			break;
+		case '已預約':
+			$('#roomCheckStatus').val(1);
+			break;
+		case '已入住':
+			$('#roomCheckStatus').val(2);
+			break;
 		}
 	</script>
 </body>
