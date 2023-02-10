@@ -4,6 +4,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
+import com.core.util.HibernateUtil;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
 import com.web.list.model.dao.CartDAO;
 import com.web.list.model.entities.CartList;
 import com.web.list.model.entities.CartList.CartListPK;
@@ -91,5 +93,13 @@ public class CartDAOImpl implements CartDAO {
 		String sql = "delete from cart_list where MEM_ID = :memID";
 		getSession().createNativeQuery(sql).setParameter("memID", memID).executeUpdate();
 	}
-
+	
+	public void update (Integer memId,Integer count,Integer oldCount,Integer total,Integer oldTotal) {
+		Session session = getSession();
+		session.clear();
+		String sql = "update cart_list set count = :count, total = :total where mem_id = :memID";
+		session.createNativeQuery(sql).setParameter("count", count+oldCount).setParameter("memID", memId).setParameter("total", total+oldTotal).executeUpdate();
+	}
+	
+	
 }

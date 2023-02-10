@@ -153,12 +153,7 @@
                 <p>新增商品</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="${pageContext.request.contextPath}/ipet-back/prod/select_page1" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>搜尋商品</p>
-              </a>
-            </li>
+            
           </ul>
         </li>
         <li class="nav-item">

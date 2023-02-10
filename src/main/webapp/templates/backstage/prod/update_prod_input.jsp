@@ -35,32 +35,34 @@ Product prodVO = (Product) request.getAttribute("prodVO"); //ProdServlet.java (C
 	href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 <!-- childTable style -->
 <style>
-.childTable th {
-	background-color: rgb(238, 182, 149, 0.45);
-}
-
-.childTable tr:nth-child(even) {
-	background-color: #fffaf082;
-}
-
-.childTable tr:nth-child(odd) {
-	background-color: #fffffc !important;
-}
-
-td.details-control {
-	background:
-		url("${pageContext.request.contextPath}/static/backstage/img/more.png")
-		no-repeat center;
-	background-size: 25px;
+.myButton {
+	box-shadow: inset 0px 1px 0px 0px #ffffff;
+	background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	background-color: #ededed;
+	border-radius: 6px;
+	border: 1px solid #dcdcdc;
+	display: inline-block;
 	cursor: pointer;
+	color: #777777;
+	font-family: Verdana;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 7px 10px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #ffffff;
+	margin-left:10px;
+	
+	
 }
 
-tr.shown td.details-control {
-	background:
-		url("${pageContext.request.contextPath}/static/backstage/img/close.png")
-		no-repeat center;
-	background-size: 20px;
-	cursor: pointer;
+.myButton:hover {
+	background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	background-color: #dfdfdf;
+}
+
+.myButton:active {
+	position: relative;
+	top: 1px;
 }
 </style>
 
@@ -111,56 +113,60 @@ tr.shown td.details-control {
 									<FORM METHOD="post"
 										ACTION="${pageContext.request.contextPath}/ipet-back/prod/updateProdInput"
 										name="form1" enctype="multipart/form-data">
-										<table id="reserveTable"
+										<table id="tablecc"
 											class="table table-bordered table-striped  display">
-											<tr>
-												<td>商品編號:<font color=red><b>*</b></font></td>
-												<td><%=prodVO.getProdID()%></td>
-											</tr>
+											<tbody>
+												<tr>
+													<td>商品編號:<font color=red><b>*</b></font></td>
+													<td><%=prodVO.getProdID()%></td>
+												</tr>
 
-											<!-- 這裡代表直接取原本的值跟顯示欄位 -->
-											<tr>
-												<td>商品名稱:</td>
-												<td><input type="TEXT" name="prodName" size="45"
-													value="<%=prodVO.getProdName()%>" /></td>
-											</tr>
-											<tr>
-												<td>價錢:</td>
-												<td><input type="TEXT" name="prodPrice" size="45"
-													value="<%=prodVO.getProdPrice()%>" /></td>
-											</tr>
+												<!-- 這裡代表直接取原本的值跟顯示欄位 -->
+												<tr>
+													<td>商品名稱:</td>
+													<td><input type="TEXT" name="prodName" size="45"
+														value="<%=prodVO.getProdName()%>" /></td>
+												</tr>
+												<tr>
+													<td>價錢:</td>
+													<td><input type="TEXT" name="prodPrice" size="45"
+														value="<%=prodVO.getProdPrice()%>" /></td>
+												</tr>
 
-											<tr>
-												<td>商品描述:</td>
-												<td><input type="TEXT" name="prodDescription" size="45"
-													value="<%=prodVO.getProdDescription()%>" /></td>
-											</tr>
-											<tr>
-												<td>上架狀態:</td>
-												<td><input type="TEXT" name="prodStatus" size="45"
-													value="<%=prodVO.getProdStatus()%>" /></td>
-											</tr>
+												<tr>
+													<td>商品描述:</td>
+													<td><input type="TEXT" name="prodDescription"
+														size="45" value="<%=prodVO.getProdDescription()%>" /></td>
+												</tr>
+												<tr>
+													<td>上架狀態:</td>
+													<td><input type="TEXT" name="prodStatus" size="45"
+														value="<%=prodVO.getProdStatus()%>" /></td>
+												</tr>
 
-											<jsp:useBean id="prodTypeSvc" scope="page"
-												class="com.web.product.model.service.ProductTypeServiceBack" />
+												<jsp:useBean id="prodTypeSvc" scope="page"
+													class="com.web.product.model.service.ProductTypeServiceBack" />
 
 
-											<tr>
-												<td>類別:<font color=red><b>*</b></font></td>
-												<td><select size="1" name="typeID">
-														<c:forEach var="prodTypeVO" items="${prodTypeSvc.all}">
-															<option value="${prodTypeVO.typeID}"
-																${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
-														</c:forEach>
-												</select></td>
-											</tr>
+												<tr>
+													<td>類別:<font color=red><b>*</b></font></td>
+													<td><select size="1" name="typeID">
+															<c:forEach var="prodTypeVO" items="${prodTypeSvc.all}">
+																<option value="${prodTypeVO.typeID}"
+																	${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
+															</c:forEach>
+													</select></td>
+												</tr>
 										</table>
-										<input type="file" name="imgFile" value="上傳圖片"
-											accept="image/*" /> <input type="hidden" name="action"
-											value="update"> <input type="hidden" name="prodID"
-											value="<%=prodVO.getProdID()%>"> <input type="submit"
-											value="送出修改">
+										<label for="imgFile" class="btn btn-primary"> <i
+											class="fas fa-cloud-upload-alt"></i> 上傳圖片
+										</label> <input type="file" id="imgFile" name="imgFile" value="上傳圖片"
+											accept="image/*" style="display: none;" /><span id="fileName"></span> <input
+											type="hidden" name="action" value="update"> <input
+											type="hidden" name="prodID" value="<%=prodVO.getProdID()%>">
+										<input type="submit" value="送出修改" class="myButton">
 									</FORM>
+
 								</div>
 								<!-- /.card-body -->
 							</div>
@@ -172,109 +178,8 @@ tr.shown td.details-control {
 				</div>
 				<!-- /.container-fluid -->
 			</section>
-			<!-- /.content --
-
-
-    <!-- Edit Modal content   -->
-			<div class="modal fade" id="EditModal" data-backdrop="static"
-				data-keyboard="false" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">資料編輯</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<%-- 預約日期 --%>
-								<div class="form-group">
-									<label for="reserveDate-modal-edit" class="col-form-label">預約日期</label>
-									<input type="date" class="form-control"
-										id="reserveDate-modal-edit" readonly>
-								</div>
-								<%-- 預約時段 --%>
-								<div class="form-group">
-									<label for="reservePeriod-modal-edit" class="col-form-label">預約時段</label>
-									<input type="text" id="reservePeriod-modal-edit"
-										class="form-control" readonly>
-								</div>
-								<%-- 預約單狀態 --%>
-								<div class="form-group">
-									<label for="reserveStatus-modal-edit" class="col-form-label">預約單狀態</label>
-									<select id="reserveStatus-modal-edit" class="form-control">
-										<option value="0">已支付訂金</option>
-										<option value="1">已完成預約</option>
-										<option value="2">已取消</option>
-										<option value="3">逾時未到</option>
-									</select>
-								</div>
-
-								<div>
-									<button type="button" class="btn btn-outline-dark"
-										id="searchAvailableJob">查詢可用班表</button>
-								</div>
-								<%-- 班表編號 --%>
-								<div class="form-group">
-									<label for="jobId-modal-edit" class="col-form-label">班表編號</label>
-									<select id="jobId-modal-edit" class="form-control">
-									</select>
-								</div>
-								<%-- 備註 --%>
-								<div>
-									<label for="jobId-modal-edit" class="col-form-label">顧客備註</label>
-									<textarea id="clientNote-modal-edit" class="form-control"></textarea>
-								</div>
-								<div>
-									<p id="editModalMessage"></p>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button data-toggle="modal"
-								class="btn btn-primary btn-edit-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /. Edit Modal content   -->
-
-			<!-- Edit Confirm Modal content   -->
-			<div class="modal fade" id="EditConfirmModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">確認修改</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							確認要修改此筆資料? <br>
-							<p style="color: red">注意! 若更改狀態為 "已取消"、"已完成預約" 或
-								"逾時未到"，該筆資料後續將無法再被更改。</p>
-							<br>
-							<p id="editConfirmModalMessage"></p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">離開</button>
-							<button type="submit"
-								class="btn btn-danger btn-edit-confirm-confirm">確認修改</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /.Edit Confirm Modal content   -->
-
 		</div>
+		<!-- /.content --
 		<!-- /.content-wrapper -->
 
 		<!-- Main Footer -->
@@ -327,6 +232,13 @@ tr.shown td.details-control {
 		src="${pageContext.request.contextPath}/static/backstage/plugins/datatables-select/js/dataTables.select.js"></script>
 
 	<!-- sidebar menu Class -->
+	<script>
+		var fileInput = document.getElementById("imgFile");
+		fileInput.addEventListener("change", function() {
+			var fileName = this.value.split("\\").pop();
+			document.getElementById("fileName").innerHTML = fileName;
+		});
+	</script>
 
 
 </body>

@@ -24,7 +24,7 @@ import com.web.product.model.service.ProductServiceBack;
 @WebServlet({ "/ipet-back/prod/listOneProd", "/ipet-back/prod/getOneForUpdate", "/ipet-back/prod/delete",
 		"/ipet-back/prod/updateProdInput", "/ipet-back/prod/addOneProd", "/ipet-back/prod/listAllProd1",
 		"/ipet-back/prod/addOneProd1", "/ipet-back/prod/select_page1" })
-@MultipartConfig(location = "C:\\CGA_105_WebApp\\eclipse_WTP_workspace1")
+@MultipartConfig
 public class ProductServletBack extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

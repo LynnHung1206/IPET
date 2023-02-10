@@ -112,13 +112,13 @@
 									<div class="product-width col-lg-6 col-xl-4 col-md-6 col-sm-6">
 										<div class="product-wrapper mb-10">
 											<div class="product-img">
-												<a href="detail?prodID=${product.prodID}">
+												<a href="${pageContext.request.contextPath}/ipet-front/shop/detail?prodID=${product.prodID}">
 													<img src="<%=request.getContextPath()%>/ipet-front/prod/DBGifReaderFront?prodID=${product.prodID}">
 												</a>
 											</div>
 											<div class="product-content content_cust">
 												<h4>
-													<a href="detail?prodID=${product.prodID}">${product.prodName}</a>
+													<a href="${pageContext.request.contextPath}/ipet-front/shop/detail?prodID=${product.prodID}">${product.prodName}</a>
 												</h4>
 												<div class="product-price">
 													<span class="new">$ ${product.prodPrice}</span>

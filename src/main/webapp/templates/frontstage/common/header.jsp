@@ -195,14 +195,14 @@
 	src="${pageContext.request.contextPath}/static/frontstage/js/vendor/jquery-1.12.0.min.js"></script>
 <script>
 const contextPath = "<%=request.getContextPath()%>";
-// $(document).ready(function() {
-// 	  setInterval(function() {
-// 	    $.post(contextPath + "/ipet-front/prod/header", {
-// 	      action: "head"
-// 	    }, function(data) {
-// 	      $(".count-style").text(data);
-// 	    });
-// 	  }, 500);
-// 	});
+$(document).ready(function() {
+	  setInterval(function() {
+	    $.post(contextPath + "/ipet-front/prod/header", {
+	      action: "head"
+	    }, function(data) {
+	      $(".count-style").text(data);
+	    });
+	  }, 800);
+	});
 </script>
 </html>
