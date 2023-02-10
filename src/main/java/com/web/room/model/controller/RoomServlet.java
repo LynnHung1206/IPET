@@ -104,8 +104,9 @@ public class RoomServlet extends HttpServlet {
 			Room room = roomSvc.getOneRoom(roomId);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-//					
-
+//			
+//			System.out.println(room.getRoomId());
+//			System.out.println(room.getRoomCheckStatus());
 			req.setAttribute("roomVO", room); // 資料庫update成功後,正確的物件,存入req
 			String url = "/templates/backstage/hotel/updateRoom.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交showRoom.jsp
