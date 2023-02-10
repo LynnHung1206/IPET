@@ -52,6 +52,24 @@ input#addNew {
 input#addNew:hover, #search:hover {
 	cursor: pointer;
 }
+h4 {
+	text-shadow: 1px 1px 0px gray, -1px -1px 0px gray, 1px -1px 0px gray,
+		-1px 1px 0px gray;
+	color: rgb(208, 208, 208) !important;
+	opacity: 0.8 !important;
+	font-weight: bold !important;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif !important;
+	line-height: 120px !important;
+	font-size: 3em !important;
+	filter: drop-shadow(0 0 2px #000) !important;
+	background: linear-gradient(to bottom, rgba(140, 0, 0, 0.15) 0%,
+		rgba(0, 0, 0, 0.15) 100%),
+		radial-gradient(at top center, rgba(200, 100, 100, 0.40) 0%,
+		rgba(0, 0, 0, 0.40) 120%) #989898;
+	background-blend-mode: multiply, multiply;
+	text-align: center;
+}
 </style>
 
 
@@ -81,7 +99,7 @@ input#addNew:hover, #search:hover {
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<div class="container-fluid">
-					<h3>房型瀏覽</h3>
+					<h4>房型列表</h4>
 					
 					<a	href="${pageContext.request.contextPath}/templates/backstage/roomType/addRoomType.jsp"><button>新增房型</button></a>
 						
