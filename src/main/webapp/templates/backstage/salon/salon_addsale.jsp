@@ -32,6 +32,27 @@
 		display: none !important;
 	}
 	
+	.error {
+		color: red;
+		padding-left: 5px;
+		font-size: 12px;
+		font-weight: 700;
+ 		font-style: italic;
+	}
+	
+	.errorRed {
+		border: 1px solid red;
+		box-shadow: 0 0 2px 1px #ffb9b9;
+	}
+	
+	.content-header {
+	    padding: 15px 25px;
+	}
+	
+	.content-wrapper > .content {
+	    padding: 0 26px;
+	}
+	
 	.input-shadow {
 		box-shadow: inset 0 1px 2px rgb(0 0 0/ 8%);
 	}
@@ -335,7 +356,8 @@
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/salonSale/allSale">優惠管理</a></li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容服務總覽</a></li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/salonSale/allSale">優惠總覽</a></li>
 								<li class="breadcrumb-item active">新增美容優惠</li>
 							</ol>
 						</div>
@@ -360,12 +382,12 @@
 						<!-- card-body -->
 						<div class="card-body">
 							<div class="toInline">
-								<label for="saleName">優惠名稱</label>
+								<label for="saleName">優惠名稱</label><span class="error nameError">*</span>
 								<input type="text" id="saleName" class="form-control input-shadow"
 									placeholder="請輸入優惠名稱" required name="saleName" value="">
 							</div>
 							<div class="toInline toInline-right">
-								<label for="reservationtime" style="margin-top: 10px;">優惠時間</label>
+								<label for="reservationtime" style="margin-top: 10px;">優惠時間</label><span class="error timeError">*</span>
 								<div class="input-group">
 				                    <div class="input-group-prepend">
 				                      <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -402,7 +424,7 @@
 					</div>
 					<div class="card-body">
 						<button id="addSaleBtn" class="button-style" style="color: #4a4747; border-color: #4a4747;"><i class="fas fa-thin fa-plus" style="margin-right: 5px;"></i>
-						<span style="font-weight: 700;">新增服務</span></button>
+						<span style="font-weight: 700;">新增服務</span></button><span class="error typeAndPriceError"></span>
 						
 						<table class="view-type-price c3">
 						<thead>
@@ -585,6 +607,14 @@
           }
         });
     	
+    	/*===================== 點擊優化 ==========================*/
+    	
+	    $('#example2').on('click','tr',function() {
+	    	const IdNum = datatable.row( this ).data().svcId;
+	    	const checkBoxId = $("#svcId" + IdNum);
+	    	checkBoxId.prop("checked", !checkBoxId.prop("checked"));
+        });
+    	
     	/*===================== 彈出視窗 ==========================*/
 
 		//點擊按鈕時打開彈出視窗
@@ -701,12 +731,32 @@
 		  }
 	  });
 	  
+	  
+		/*===================== 若警告訊息輸入紅框消失 ==========================*/
+	      
+	      $(document).on("change", "#saleName", function (){
+	      	$(this).removeClass("errorRed");
+	      });
+		
+	      $(document).on("change", "#reservationtime", function (){
+		      	$(this).removeClass("errorRed");
+		   });
+	      
+	      $(document).on("change", ".beSentSalePrice", function (){
+		      	$(this).removeClass("errorRed");
+		   });
+	        
 	    /*===================== 送出新增資訊到後台 ==========================*/
 	    
 	    let formData;
 	    
 	    $(document).on("submit", "#addSvcForm", function (e){
 	    	e.preventDefault();
+	    	
+	    	//清空警告訊息
+	       	 $(".nameError").text("*");
+	       	 $(".timeError").text("*");
+	       	 $(".typeAndPriceError").text("");
 	    	
 	    	//判斷必填欄位是否都有填
 	    	if($("#showList").html() === ""){
@@ -717,12 +767,22 @@
 	    	}
 	    	
 	    	const beSentSalePrice = document.querySelectorAll(".beSentSalePrice");
+	    	let count = 0;
+	    	let checkValue = 0;
 	    	for(let i = 0; i < beSentSalePrice.length; i++){
 	    		if($(beSentSalePrice[i]).val() === ""){
-		    		alert("請設定優惠價格！");
-		    		return;
+		    		$(beSentSalePrice[i]).addClass("errorRed");
+		    		count += 1;
+		    	}
+	    		if($(beSentSalePrice[i]).val() === "0" || $(beSentSalePrice[i]).val().match(/[-]/)){
+		    		$(beSentSalePrice[i]).addClass("errorRed");
+		    		count += 1;
 		    	}
 	    	}
+	    	if(count !== 0){
+    			alert("請確定優惠價格！");
+    			return;
+    		}
 	    	
 	    	//迴圈存入金額和品種物件
 		  	 let svcAndSalePrice = [];
@@ -754,9 +814,21 @@
 		    	        	showSwal("success-message");
 	    	        	}else {
 		    	        	const res = JSON.parse(response);
-	    	 				console.log(res);
+		    	        	if(res.typeAndPrice){
+	  	    	        		$(".typeAndPriceError").text("*" + res.typeAndPrice);
+	  	    	        		window.scrollTo( 0, 600 );
+	  	    	        	}
+		    	        	if(res.saleName){
+	  	    	        		$(".nameError").text("*" + res.saleName);
+	  	    	        		$("#saleName").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 100 );
+	  	    	        	}
+		    	        	if(res.saleTime){
+	  	    	        		$(".timeError").text("*" + res.saleTime);
+	  	    	        		$("#reservationtime").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 100 );
+	  	    	        	}
 	    	        	}
-						console.log(errorMsgs);
 	    	        },error: function(response) {
 	    	        	showSwal("something-Wrong");
 						alert("something-Wrong");

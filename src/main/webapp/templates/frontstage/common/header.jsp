@@ -6,6 +6,9 @@
 <html class="no-js" lang="zxx">
 
 <head>
+	<!-- sweetalert -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </head>
 <style type="text/css" media="screen">
         #msg {
@@ -19,6 +22,19 @@
         }
         #msg:hover {
             opacity: 1;
+        }
+        
+        #headerApm {
+        	background-color: white;
+		    border: none;
+		    position: relative;
+		    right: 6px;
+		    color: #555;
+        }
+        
+        #headerApm:hover {
+        	cursor: pointer;
+         	color: #7e4c4f;
         }
     </style>
 <body>
@@ -78,7 +94,8 @@
 									<ul class="submenu">
 										<li><a href="<c:url value='/ipet-front/salon/salonCategory' />">美容服務</a></li>
 <!-- 										<li><a href="blog-leftsidebar.html">注意事項</a></li> -->
-										<li><a href="<c:url value='/ipet-front/salon/addAppointment' />">我要預約</a></li>
+<%-- 										<li><a href="<c:url value='/ipet-front/salon/addAppointment' />">我要預約</a></li> --%>
+										<li><button id="headerApm">我要預約</button></li>
 									</ul></li>
 								<li><a href="${pageContext.request.contextPath}/templates/frontstage/about-us.jsp">關於我們</a></li>
 								</ul>
@@ -205,4 +222,66 @@ const contextPath = "<%=request.getContextPath()%>";
 // 	  }, 500);
 // 	});
 </script>
+
+<script>
+    $(function () {
+    	
+    	/*===================== 點擊我要預約，檢查是否有寵物資訊定跳轉頁面 ==========================*/
+    	$(document).on("click", "#headerApm", function (e){
+    		const url = "${pageContext.request.contextPath}/ipet-front/salon/addAppointment";
+    		$.ajax({
+      	        url : url,
+      	        type : "POST",
+      	        success : function(response) {
+      	        	if(response === "noPet"){
+      	        		swal({
+    		    	    	title: "Welcome！",
+    		    	    	text: "還沒有新增毛孩的資訊，將跳轉到新增頁面！",
+    		    	    }, function(){
+	    		    	    location.replace("${pageContext.request.contextPath}/ipet-front/pet/addNew");	
+    		    	    });
+      	        	}else{
+      	        		let actionForm = $('<form>', {'action': '${pageContext.request.contextPath}/ipet-front/salon/addAppointment', 'method': 'post'}).append($('<input>', {'type': 'hidden'}));
+      	        		actionForm.appendTo('body').submit();
+      	        	}
+      	        },error: function(response) {
+      	        	showSwal("something-Wrong");
+      	        }
+      	 	});
+    		
+    	});
+    	
+    	
+    	
+    	
+    	
+    	
+    });
+    
+    
+    /*===================== 新增成功提示 ==========================*/
+    (function($) {
+    	  showSwal = function(type) {
+    	    "use strict";
+    	     if (type === "success-message") {
+    	    	 swal({
+    	    	        title: '新增成功!',
+    	    	        type: 'success',
+     	    		  	showConfirmButton: false,
+     	    		  	timer: 1500
+    	    	      })
+    	    }else if (type === "something-Wrong"){
+    	    	swal({
+	    	        title: "OOPS！Something's Wrong:(",
+	    	        text: "請再次嘗試或聯繫客服人員協助處理",
+	    	        type: 'info',
+ 	    		  	showConfirmButton: true,
+	    	      })
+    	    } 
+    	  }
+
+    	})(jQuery);
+    
+    </script>
+
 </html>

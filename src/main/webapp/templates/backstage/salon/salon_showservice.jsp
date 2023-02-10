@@ -30,9 +30,33 @@ pageContext.setAttribute("catlist", catlist);
 		href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
+	
+	<!-- sweetalert -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	
 	<!-- showsevice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_showservice.css">
 <style>
+	.content-header {
+	    padding: 15px 26px 30px 8px;
+	}
+
+	.ahrefStyle {
+		background-color: #007bff;
+	    color: white;
+	    position: relative;
+	    top: 17px;
+	    left: 14px;
+	    padding: 10px 65px;
+	    border-radius: 0.25rem;
+	}
+	
+	.ahrefStyle:hover {
+		background-color: #1988ff;
+		color: white;
+	}
+	
 	/* ============ 彈出視窗-Loading =============*/
 	/* 彈出視窗出現時的暗色背景 */
 	#mainModal {
@@ -100,7 +124,10 @@ pageContext.setAttribute("catlist", catlist);
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h3 style="margin-top: .6rem;">美容服務總覽</h3>
+							<a href="${pageContext.request.contextPath}/ipet-back/service/addService" id="addSvcBottom"
+							 class="ahrefStyle"
+							 >新增服務</a>
+							<!-- <h3 style="margin-top: .6rem;">新增美容服務</h3> -->
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -281,7 +308,7 @@ pageContext.setAttribute("catlist", catlist);
 								<input type="submit" class="search-submit" value="查詢">
 							</div>
 				</form>
-					<a href="${pageContext.request.contextPath}/ipet-back/service/addService">新增資料</a>
+					
 						</div>
 						<!-- /.card-body -->
 			</div>
@@ -292,7 +319,7 @@ pageContext.setAttribute("catlist", catlist);
 						<div class="card">
 							<!-- /.card-header -->
 							<div class="card-body">
-								<table id="example2" class="table table-bordered table-hover">
+								<table id="example2" class="table table-hover">
 									<thead>
 										<tr>
 											<th style="width: 90px;">服務編號</th>
@@ -301,8 +328,8 @@ pageContext.setAttribute("catlist", catlist);
 											<th>寵物種類</th>
 											<th>服務單價</th>
 											<th>狀態</th>
-											<th>修改</th>
-											<th>刪除</th>
+											<th></th>
+											<th></th>
 										</tr>
 									</thead>
 									<tfoot>
@@ -406,7 +433,7 @@ pageContext.setAttribute("catlist", catlist);
 		            { data: "svcPrice", 
 		            	render: DataTable.render.number(',', null, 0, '$ '),
 		            	responsivePriority: 4 },
-		            { data: "svcStatusName", responsivePriority: 7 },
+		            { data: "svcStatusName", responsivePriority: 7, "width": "80px"},
 		            { data: "svcId",
 		            	render: function(data, type){
 		            		return `
@@ -418,6 +445,8 @@ pageContext.setAttribute("catlist", catlist);
 								</form>
 		            		`;
 		            	},
+		            	"width": "50px",
+		            	orderable: false,
 		            	responsivePriority: 5,
 		            },
 		            { data: null,
@@ -426,7 +455,7 @@ pageContext.setAttribute("catlist", catlist);
 		            			return ``;
 		            		}
 		            		return `
-			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService">
+			            		<form METHOD="post" class="deleteSvc" ACTION="${pageContext.request.contextPath}/ipet-back/service/deleteService">
 									<input type="hidden" name="svcId" value=` + data.svcId + `>
 									<label><i class="nav-icon fas fa-solid fa-trash"></i>
 										<input type="submit" style="display: none;">
@@ -434,6 +463,8 @@ pageContext.setAttribute("catlist", catlist);
 								</form>
 		            		`;
 		            	},
+		            	"width": "50px",
+		            	orderable: false,
 		            	responsivePriority: 5,
 		            }
 		        ],
@@ -527,23 +558,23 @@ pageContext.setAttribute("catlist", catlist);
 			    $this.data('checked', this.checked);
 			})
 			
-			$("#svc-Status1").click(function(){
-				if($(this).data("checked")){
-					$("#mybtnlabel-left").addClass("labelOn");
-					$("#mybtnlabel-right").removeClass("labelOn");
-				}else{
-					$("#mybtnlabel-left").removeClass("labelOn");
-				}
-			});
-			
-			$("#svc-Status2").click(function(){
-				if($(this).data("checked")){
-					$("#mybtnlabel-right").addClass("labelOn");
-					$("#mybtnlabel-left").removeClass("labelOn");
-				}else{
-					$("#mybtnlabel-right").removeClass("labelOn");
-				}
-			});
+			$(document).on("click", "#svc-Status1", function(){
+		  		if($(this).prop("checked")){
+		  			$("#mybtnlabel-left").addClass("labelOn");
+		  			$("#mybtnlabel-right").removeClass("labelOn");
+		  		}else{
+		  			$("#mybtnlabel-left").removeClass("labelOn");
+		  		}
+		  	});
+		      
+		    $(document).on("click", "#svc-Status2", function(){
+		  		if($(this).prop("checked")){
+		  			$("#mybtnlabel-right").addClass("labelOn");
+		  			$("#mybtnlabel-left").removeClass("labelOn");
+		  		}else{
+		  			$("#mybtnlabel-right").removeClass("labelOn");
+		  		}
+		  	});
 			
 			/*===================== 清空查詢 ==========================*/
 			$(".clear").click(function(){
@@ -551,7 +582,65 @@ pageContext.setAttribute("catlist", catlist);
 				$("#mybtnlabel-right").removeClass("labelOn");
 			});
 			
+			
+			/*===================== 刪除服務 ==========================*/
+	        $(document).on("submit", ".deleteSvc", function (e){
+	       	e.preventDefault();
+	        	 
+	  	  	 //資料：formData
+	      	 let formData = new FormData(this);
+	      	 
+	      	 $.ajax({
+	      	        url : "${pageContext.request.contextPath}/ipet-back/service/deleteService",
+	      	        type : "POST",
+	      	        data : formData,
+	      	        cache: false,
+	      	        processData: false,
+	      	        contentType: false,
+	      	        success : function(response) {
+	      	        	if(!response){
+	  	    	        	showSwal("success-message");
+	  	    	        	myTable.ajax.reload();
+	      	        	}else {
+	      	        		//顯示錯誤訊息
+// 	  	    	        	const res = JSON.parse(response);
+	      	        		console.log(response);
+	      	        	}
+	      	        },error: function(response) {
+	      	        	showSwal("something-Wrong");
+	  					alert("something-Wrong");
+	      	        }
+	      	 });
+	      });
+	      
+			
+			
+			
 		});
+		
+		
+		 /*===================== 新增成功提示 ==========================*/
+	    (function($) {
+	    	  showSwal = function(type) {
+	    	    "use strict";
+	    	     if (type === "success-message") {
+	    	    	 swal({
+	    	    	        title: '成功刪除 1 筆服務',
+	    	    	        type: 'success',
+	     	    		  	showConfirmButton: false,
+	     	    		  	timer: 1500
+	    	    	      })
+	    	    }else if (type === "something-Wrong"){
+	    	    	swal({
+		    	        title: "OOPS！Something's Wrong:(",
+		    	        text: "請再次嘗試或聯繫客服人員協助處理",
+		    	        type: 'info',
+	 	    		  	showConfirmButton: true,
+		    	      })
+	    	    } 
+	    	  }
+
+	    	})(jQuery);
 	</script>
 </body>
 

@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -108,9 +107,14 @@ public class ServiceServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.serializeNulls()
+                .setDateFormat("yyyy-MM-dd")
+                .create();
 		
 		/**********************************進入新增頁面，新增資料************************************/
 		if("/ipet-back/service/addService".equals(path)) {
+			res.setContentType("text/html;charset=utf-8");
 			Map<String,String> errorMsgs = new HashMap<>();
 		
 				/*************1.接收請求參數 - 輸入格式的錯誤處理**********/
@@ -130,6 +134,9 @@ public class ServiceServlet extends HttpServlet{
 					try(InputStream in = img.getInputStream()){
 						svcImg = new byte[in.available()];
 						in.read(svcImg);
+						if(svcImg.length == 0) {
+							svcImg = null;
+						}
 					}
 				}
 				
@@ -156,11 +163,9 @@ public class ServiceServlet extends HttpServlet{
 				String typeAndPrice = req.getParameter("typeAndPrice");
 				JsonArray jsonArray = null;
 				if(typeAndPrice.equals("[]")) {
-					errorMsgs.put("typeAndPrice","請選擇品種與價格");
+					errorMsgs.put("typeAndPrice","請選擇品種並輸入價格");
 				}else {
 					try {
-						Gson gson = new Gson();
-						
 						jsonArray = gson.fromJson(typeAndPrice, JsonArray.class);
 						for (JsonElement element : jsonArray) {
 							JsonObject obj = element.getAsJsonObject();
@@ -168,20 +173,18 @@ public class ServiceServlet extends HttpServlet{
 							obj.get("svcPrice").getAsInt();
 						}
 					} catch (Exception e) {
-						errorMsgs.put("typeAndPrice","請輸入正確品種與價格");
+						errorMsgs.put("noPrice","請確認或取消修改價格");
 					}
 				}
 				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					res.getWriter().print(new Gson().toJson(errorMsgs));
+					res.getWriter().print(gson.toJson(errorMsgs));
 					return; //程式中斷
 				}
 				
 				/*********************2.開始新增資料************************/
-				Gson gson = new Gson();
-				
 				jsonArray = gson.fromJson(typeAndPrice, JsonArray.class);
 				ServiceService svcSvc = new ServiceService();
 				int typeId;
@@ -207,9 +210,6 @@ public class ServiceServlet extends HttpServlet{
 				List<Service> list  = svcSvc.findIfService(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				Gson gson = new GsonBuilder().serializeNulls()
-						.setDateFormat("yyyy-MM-dd")
-						.create();
 				res.getWriter().print(gson.toJson(list));
 		}
 		
@@ -240,10 +240,11 @@ public class ServiceServlet extends HttpServlet{
 				req.getRequestDispatcher(url).forward(req, res);	// 轉交 updateservice.jsp
 		}
 		
-		if ("/ipet-back/service/updateService".equals(path)) { // 來自salon_updateservice.jsp的請求
+		// 來自salon_updateservice.jsp的update請求
+		if ("/ipet-back/service/updateService".equals(path)) { 
 			
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			res.setContentType("text/html;charset=utf-8");
+			Map<String,String> errorMsgs = new HashMap<>();
 		
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer svcId = Integer.valueOf(req.getParameter("svcId").trim());
@@ -304,28 +305,19 @@ public class ServiceServlet extends HttpServlet{
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/templates/backstage/salon/salon_updateservice.jsp");
-					failureView.forward(req, res);
+					res.getWriter().print(gson.toJson(errorMsgs));
 					return; //程式中斷
 				}
 				
 				/***************************2.開始修改資料*****************************************/
 			
 				ServiceService svcSvc = new ServiceService();
-				Service service = svcSvc.updateService(svcId, svcName, svcContent, svcImg, catId, typeId, svcPrice, svcStatus);
+				svcSvc.updateService(svcId, svcName, svcContent, svcImg, catId, typeId, svcPrice, svcStatus);
 				
-				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("serviceVO", service); // 資料庫update成功後,正確的物件,存入req
-				String url = "/templates/backstage/salon/salon_showservice.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交salon_showservice.jsp
-				successView.forward(req, res);
 		}
 		
 		//刪除請求
 		if ("/ipet-back/service/deleteService".equals(path)) {
-			
-			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 			
 				/***************************1.接收請求參數***************************************/
 				Integer svcId = Integer.valueOf(req.getParameter("svcId"));
@@ -335,10 +327,7 @@ public class ServiceServlet extends HttpServlet{
 				ServiceService svcSvc = new ServiceService();
 				svcSvc.deleteService(svcId);
 				
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/templates/backstage/salon/salon_showservice.jsp";
-				req.getRequestDispatcher(url).forward(req, res);// 刪除成功後,轉交回送出刪除的來源網頁
-				
+				return;
 		}
 	}
 }

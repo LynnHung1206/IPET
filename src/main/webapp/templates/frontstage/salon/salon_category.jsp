@@ -22,6 +22,32 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/responsive.css">
     <script src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- sweetalert -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    
+    <style>
+    
+    li.active {
+       	padding-right: 0;
+   	}
+    /* ============ 我要預約按鈕樣式 =============*/
+    	.addtocart-btn {
+    	    background-color: #7e4c4f;
+		    color: white;
+		    font-weight: 700;
+		    border: 1px solid #7e4c4f;
+		    padding: 14px 33px;
+		    border-radius: 26px;
+    	}
+    	
+    	.addtocart-btn:hover{
+    		cursor: pointer;
+    	    background-color: #8b585b;
+    	}
+    
+    </style>
+    
 </head>
 
 <body>
@@ -32,10 +58,10 @@
                 <h2>美容服務</h2>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li class="active">美容服務</li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/ipet-front/salon/salonCategory">美容服務</a></li>
                 </ul>
                 <p></p>
-                <a class="btn-style" href="<c:url value='/ipet-front/salon/addAppointment' />">我要預約</a>
+                <button class="addtocart-btn">我要預約</button>
             </div>
         </div>
     </div>
@@ -109,6 +135,7 @@
             </div>
         </div>
     </div>
+    
   <%@include file="/templates/frontstage/common/footer.jsp"%>
     
 
@@ -125,6 +152,68 @@
     <script src="${pageContext.request.contextPath}/static/frontstage/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/plugins.js"></script>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/main.js"></script>
+    
+    <script>
+    $(function () {
+    	
+    	/*===================== 點擊我要預約，檢查是否有寵物資訊定跳轉頁面 ==========================*/
+    	$(document).on("click", ".addtocart-btn", function (e){
+    		$.ajax({
+      	        url : "${pageContext.request.contextPath}/ipet-front/salon/addAppointment",
+      	        type : "POST",
+      	        success : function(response) {
+      	        	if(response === "noPet"){
+      	        		swal({
+    		    	    	title: "Welcome！",
+    		    	    	text: "還沒有新增毛孩的資訊，將跳轉到新增頁面！",
+    		    	    }, function(){
+	    		    	    location.replace("${pageContext.request.contextPath}/ipet-front/pet/addNew");	
+    		    	    });
+      	        	}else{
+      	        		let actionForm = $('<form>', {'action': '${pageContext.request.contextPath}/ipet-front/salon/addAppointment', 'method': 'post'}).append($('<input>', {'type': 'hidden'}));
+      	        		actionForm.appendTo('body').submit();
+      	        	}
+      	        },error: function(response) {
+      	        	showSwal("something-Wrong");
+      	        }
+      	 	});
+    		
+    	});
+    	
+    	
+    	
+    	
+    	
+    	
+    });
+    
+    
+    /*===================== 新增成功提示 ==========================*/
+    (function($) {
+    	  showSwal = function(type) {
+    	    "use strict";
+    	     if (type === "success-message") {
+    	    	 swal({
+    	    	        title: '新增成功!',
+    	    	        type: 'success',
+     	    		  	showConfirmButton: false,
+     	    		  	timer: 1500
+    	    	      })
+    	    }else if (type === "something-Wrong"){
+    	    	swal({
+	    	        title: "OOPS！Something's Wrong:(",
+	    	        text: "請再次嘗試或聯繫客服人員協助處理",
+	    	        type: 'info',
+ 	    		  	showConfirmButton: true,
+	    	      })
+    	    } 
+    	  }
+
+    	})(jQuery);
+    
+    </script>
+    
+    
 </body>
 
 </html>

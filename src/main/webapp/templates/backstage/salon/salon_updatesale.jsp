@@ -45,8 +45,29 @@ pageContext.setAttribute("catlist", catlist);
 
 <style>
 
+	.content-header {
+	    padding: 15px 25px;
+	}
+	
+	.content-wrapper > .content {
+	    padding: 0 26px;
+	}
+
 	.cantSee {
 		display: none !important;
+	}
+	
+	.error {
+		color: red;
+		padding-left: 5px;
+		font-size: 12px;
+		font-weight: 700;
+ 		font-style: italic;
+	}
+	
+	.errorRed {
+		border: 1px solid red;
+		box-shadow: 0 0 2px 1px #ffb9b9;
 	}
 	
 	.input-shadow {
@@ -354,8 +375,9 @@ pageContext.setAttribute("catlist", catlist);
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/salonSale/allSale">優惠管理</a></li>
-								<li class="breadcrumb-item active">新增美容優惠</li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容服務總覽</a></li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/salonSale/allSale">優惠總覽</a></li>
+								<li class="breadcrumb-item active">編輯美容優惠</li>
 							</ol>
 						</div>
 					</div>
@@ -368,7 +390,7 @@ pageContext.setAttribute("catlist", catlist);
 				<form method="post" enctype="multipart/form-data" id="addSvcForm" action="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">
 					<div class="card card-secondary">
 						<div class="card-header">
-							<h3 class="card-title">修改美容優惠</h3>
+							<h3 class="card-title">編輯美容優惠</h3>
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool"
 									data-card-widget="collapse" title="Collapse">
@@ -383,12 +405,12 @@ pageContext.setAttribute("catlist", catlist);
 								<input type="hidden" value="${param.saleId}" name="saleId">
 								
 								<div class="col-6">
-									<label for="saleName" style="margin-top: 10px;">優惠名稱</label>
+									<label for="saleName" style="margin-top: 10px;">優惠名稱</label><span class="error nameError">*</span>
 									<input type="text" id="saleName" class="form-control input-shadow" placeholder="請輸入優惠名稱" required name="saleName" value="${param.saleName}">
 								</div>
 								
 								<div class="col-3">
-										<label for="reservationtime-startTime" style="margin-top: 10px;">開始時間</label>
+										<label for="reservationtime-startTime" style="margin-top: 10px;">開始時間</label><span class="error startTimeError">*</span>
 										<div class="input-group">
 						                    <div class="input-group-prepend">
 						                      <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -406,7 +428,7 @@ pageContext.setAttribute("catlist", catlist);
 									</div>
 									
 									<div class="col-3">
-									<label for="reservationtime-endTime" style="margin-top: 10px;">結束時間</label>
+									<label for="reservationtime-endTime" style="margin-top: 10px;">結束時間</label><span class="error endTimeError">*</span>
 									<div class="input-group">
 					                    <div class="input-group-prepend">
 					                      <span class="input-group-text"><i class="far fa-clock"></i></span>
@@ -447,6 +469,7 @@ pageContext.setAttribute("catlist", catlist);
 					<div class="card-body">
 						<button id="addSaleBtn" class="button-style" style="color: #4a4747; border-color: #4a4747;"><i class="fas fa-thin fa-plus" style="margin-right: 5px;"></i>
 						<span style="font-weight: 700;">新增服務</span></button>
+						<span class="error typeAndPriceError"></span>
 						
 						<table class="view-type-price c3">
 						<thead>
@@ -576,7 +599,6 @@ pageContext.setAttribute("catlist", catlist);
 	            { data: "catName", responsivePriority: 5 },
 	            { data: "typeName", responsivePriority: 3 },
 	            { data: "svcPrice", 
-	            	render: DataTable.render.number(',', null, 0, '$ '),
 	            	responsivePriority: 4 },
 	            { data: "svcStatusName", responsivePriority: 6 },
 	        ],
@@ -590,7 +612,6 @@ pageContext.setAttribute("catlist", catlist);
 		           "sUrl": "",
 		           "sEmptyTable": "尚未新增服務",
 		           "sLoadingRecords": "載入中...",
-		           "sInfoThousands": ",",
 		           "oPaginate": {
 		               "sFirst": "第一頁",
 		               "sPrevious": "上一頁",
@@ -633,6 +654,14 @@ pageContext.setAttribute("catlist", catlist);
     	    	
     	   	$(beSentSalePrice[i]).parent().parent().next().children().val(svcSalePrice);
     	}
+    	
+		/*===================== 點擊優化 ==========================*/
+    	
+	    $('#example2').on('click','tr',function() {
+	    	const IdNum = datatable.row( this ).data().svcId;
+	    	const checkBoxId = $("#svcId" + IdNum);
+	    	checkBoxId.prop("checked", !checkBoxId.prop("checked"));
+        });
     		
     	
     	/*===================== 查詢 ==========================*/
@@ -793,6 +822,24 @@ pageContext.setAttribute("catlist", catlist);
 	    	$(this).parent().parent().next().children().val(svcSalePrice);
 	    });
       
+	  /*===================== 若警告訊息輸入紅框消失 ==========================*/
+	      
+	      $(document).on("change", "#saleName", function (){
+	      	$(this).removeClass("errorRed");
+	      });
+		
+	      $(document).on("change", "#reservationtime-startTime", function (){
+		      	$(this).removeClass("errorRed");
+		   });
+	      
+	      $(document).on("change", "#reservationtime-endTime", function (){
+		      	$(this).removeClass("errorRed");
+		   });
+	      
+	      $(document).on("change", ".beSentSalePrice", function (){
+		      	$(this).removeClass("errorRed");
+		   });  
+	    
 	  /*===================== 點擊 新增服務按鈕 新增優惠服務 ==========================*/
 	  
 	  //點擊新增價格按鈕 
@@ -842,6 +889,12 @@ pageContext.setAttribute("catlist", catlist);
 	    $(document).on("submit", "#addSvcForm", function (e){
 	    	e.preventDefault();
 	    	
+	    	//清空警告訊息
+	       	 $(".nameError").text("*");
+	       	 $(".startTimeError").text("*");
+	       	 $(".endTimeError").text("*");
+	       	 $(".typeAndPriceError").text("");
+	    	
 	    	//判斷必填欄位是否都有填
 	    	if($("#showList").html() === ""){
 	    		const yes = confirm("尚未新增優惠服務，確定新增？");
@@ -851,12 +904,22 @@ pageContext.setAttribute("catlist", catlist);
 	    	}
 	    	
 	    	const beSentSalePrice = document.querySelectorAll(".beSentSalePrice");
+	    	let count = 0;
+	    	let checkValue = 0;
 	    	for(let i = 0; i < beSentSalePrice.length; i++){
 	    		if($(beSentSalePrice[i]).val() === ""){
-		    		alert("請設定優惠價格！");
-		    		return;
+		    		$(beSentSalePrice[i]).addClass("errorRed");
+		    		count += 1;
+		    	}
+	    		if($(beSentSalePrice[i]).val() === "0" || $(beSentSalePrice[i]).val().match(/[-]/)){
+		    		$(beSentSalePrice[i]).addClass("errorRed");
+		    		count += 1;
 		    	}
 	    	}
+	    	if(count !== 0){
+    			alert("請確定優惠價格！");
+    			return;
+    		}
 	    	
 	    	//迴圈存入金額和品種物件
 		  	 let svcAndSalePrice = [];
@@ -888,9 +951,26 @@ pageContext.setAttribute("catlist", catlist);
 		    	        	showSwal("success-message");
 	    	        	}else {
 		    	        	const res = JSON.parse(response);
-	    	 				console.log(res);
+		    	        	if(res.typeAndPrice){
+	  	    	        		$(".typeAndPriceError").text("*" + res.typeAndPrice);
+	  	    	        		window.scrollTo( 0, 600 );
+	  	    	        	}
+		    	        	if(res.saleName){
+	  	    	        		$(".nameError").text("*" + res.saleName);
+	  	    	        		$("#saleName").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 100 );
+	  	    	        	}
+		    	        	if(res.startTime){
+	  	    	        		$(".startTimeError").text("*" + res.startTime);
+	  	    	        		$("#reservationtime-startTime").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 100 );
+	  	    	        	}
+		    	        	if(res.endTime){
+	  	    	        		$(".endTimeError").text("*" + res.endTime);
+	  	    	        		$("#reservationtime-endTime").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 100 );
+	  	    	        	}
 	    	        	}
-						console.log(errorMsgs);
 	    	        },error: function(response) {
 	    	        	showSwal("something-Wrong");
 						alert("something-Wrong");

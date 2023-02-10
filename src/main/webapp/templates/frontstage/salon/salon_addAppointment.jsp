@@ -4,7 +4,22 @@
 <%@ page import="com.web.job.model.services.*"%>
 <%@ page import="com.web.job.model.services.imp.*"%>
 <%@ page import="com.web.job.model.dao.*"%>
+<%@ page import="com.web.salonService.model.*"%>
+<%@ page import="com.web.salonService.model.entities.*"%>
+<%@ page import="com.web.salonService.model.services.*"%>
+<%@ page import="com.web.salonService.model.dao.*"%>
+<%@ page import="com.web.salonService.model.dao.impl.*"%>
 <%@ page import="java.util.*"%>
+
+<%
+CategoryService catsvc = new CategoryService();
+List<Category> catlist = catsvc.selectAll();
+pageContext.setAttribute("catlist", catlist);
+
+PetTypeService petSvc = new PetTypeService();
+List<PetType> petTypes = petSvc.selectAll();
+pageContext.setAttribute("petTypes", petTypes);
+%>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -43,10 +58,21 @@
     	.cantSee2 {
 			display: none !important;
 		}
-    
+		
+    	.cantSee3 {
+			display: none !important;
+		}
+		
+		.getsvcId {
+			position: relative;
+		    top: 30px;
+		    width: 20px;
+		    height: 20px;
+		}
+		
     	.table td {
-		    padding: 0.75rem 0;
-		    }
+		    padding: 18px 0;
+		}
     	
     	.col-9.noPadding{
     		padding: 0 5px 0 5px;
@@ -54,7 +80,7 @@
 	        top: 10px;
     	}
     
-    	.col-12.middle span.choicePrice{
+    	.row div.choicePrice{
 	        display: inline-block;
 	        text-align: center;
 	        letter-spacing: 0px;
@@ -62,7 +88,7 @@
 	        bottom: 10px;
 	    } 
 	    
-	    .col-12.middle span.svcBlock-salePrice{
+	    .row div.svcBlock-salePrice{
 	        display: inline-block;
 	        text-align: center;
 	        letter-spacing: 0px;
@@ -172,10 +198,14 @@
 	.svcBlock-salePrice {
 		color: #f51515;
 		font-weight: 500;
+		position: relative;
+    	top: 15px;
 	}
 	
 	.svcBlock-noSalePrice {
 		margin-top: 7px;
+		position: relative;
+    	top: 15px;
 	}
 	
 	.alignR {
@@ -206,7 +236,11 @@
 	}
 
     /* ============ 預約資料選擇 =============*/
-
+	.row.myRow {
+		margin-right: 33px;
+    	margin-left: 0px;
+	}
+	
     .choicesvcName {
         font-size: 1.1rem; 
         font-weight: 700;
@@ -234,7 +268,7 @@
     }
 
     .selectStyle {
-        margin: 0 15px 20px; 
+        margin-bottom: 20px; 
         border: 1px solid #bebebe; 
         height: 40px; 
         border-radius: 0.25rem; 
@@ -301,7 +335,6 @@
     </div>
 
     
-
     <div class="pt-100 pb-100">
         <div class="container">
             <div class="row">
@@ -340,11 +373,11 @@
 										    <%		
 										    		}else if("下午".equals(schPeriod)){
 										    %>
-														<option class="schDateOption schDate-afternoon cantSee" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
+														<option class="schDateOption schDate-afternoon cantSee3" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
 											<%
 												    }else if("晚上".equals(schPeriod)){
 											%>
-														<option class="schDateOption schDate-night cantSee" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
+														<option class="schDateOption schDate-night cantSee3" value="<%= sch.getSchID()%>"><%= sch.getSchDate()%></option>
 											<%
 												    }
 										    	}
@@ -364,6 +397,23 @@
 													<option value="${pet.petId}">${pet.petName}</option>
 												</c:forEach>
                                             </select>
+                                            
+                                            <select style="display: none;" id="searchPetType" class="selectStyle system">
+                                            	<option style="display: none; color: #7c7c7c;" value="">請選擇寵物名稱</option>
+	                                            <c:forEach var="pet" items="${pets}">
+													<option id="searchOption${pet.petId}" value="${pet.petId}">${pet.petVarId}</option>
+												</c:forEach>
+                                            </select>
+                                            
+                                            <select style="display: none;" id="searchPetSize" class="selectStyle system">
+                                            	<option style="display: none; color: #7c7c7c;" value="">請選擇寵物名稱</option>
+	                                            <c:forEach var="pet" items="${pets}">
+													<option id="searchOptionSize${pet.petId}" value="${pet.petId}">${pet.petSize}</option>
+												</c:forEach>
+                                            </select>
+                                            
+                                            <input type="hidden" value="${svcId}" id="sessionSvcId">
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
@@ -387,24 +437,38 @@
                             </div>
                             <div class="billing-information-wrapper choiceSvc">
                                 <div class="row">
-                                        <select id="" class="selectStyle">
-                                            <option value="">服務類別</option>
-                                            <option value="">服務類別1</option>
-                                            <option value="">服務類別2</option>
+                                	<div class="col-12">
+                                        <select id="selectCat" class="selectStyle">
+                                        	<option class="defaultSelect" style="display: none; color: #7c7c7c;" value="">其他服務類別</option>
+                                        	<c:forEach var="cat" items="${catlist}">
+												<option value="${cat.catId}" ${(cat.catId == catId) ? 'selected' : ''}>${cat.catName}</option>
+											</c:forEach>
                                         </select>
-                                        <select id="" class="selectStyle">
-                                            <option value="">寵物體型</option>
-                                            <option value="">服務類別1</option>
-                                            <option value="">服務類別2</option>
+                                    </div>
+                                    <div class="mainChoiceBox col-12 cantSee">
+                                        <select id="selectSize" class="selectStyle">
+                                        	<option class="defaultSelect" style="display: none; color: #7c7c7c;" value="">請選擇寵物體型</option>
+                                            <option value="大型犬">大型犬</option>
+                                            <option value="中型犬">中型犬</option>
+                                            <option value="小型犬">小型犬</option>
                                         </select>
-                                        <select id="" class="selectStyle">
-                                            <option value="">寵物品種</option>
-                                            <option value="">服務類別1</option>
-                                            <option value="">服務類別2</option>
+                                        <select id="selectType" class="selectStyle">
+                                        	<option class="defaultSelect" style="display: none; color: #7c7c7c;" value="">請選擇寵物品種</option>
+                                        	<c:forEach var="petType" items="${petTypes}">
+                                        		<c:if test="${'大型犬' eq petType.petSize}" var="true">
+													<option class="bigSize allPetType" value="${petType.typeId}">${petType.typeName}</option>
+                                        		</c:if>
+                                        		<c:if test="${'中型犬' eq petType.petSize}" var="true">
+													<option class="middleSize allPetType" value="${petType.typeId}">${petType.typeName}</option>
+                                        		</c:if>
+                                        		<c:if test="${'小型犬' eq petType.petSize}" var="true">
+													<option class="smallSize allPetType" value="${petType.typeId}">${petType.typeName}</option>
+                                        		</c:if>
+											</c:forEach>
                                         </select>
+                                    </div> 
                                         
-                                        
-                                  <form id="sendApmForm" method="post" action="${pageContext.request.contextPath}/ipet-front/salon/addAppointment">
+                                  <form id="sendApmForm" method="post" action="${pageContext.request.contextPath}/ipet-front/salon/ECPay" style="width: 100%;">
                                   		<input type="hidden" name="schID" id="unshowSchDate">
                                   		<input type="hidden" name="petID" id="unshowPetID">
                                   		<input type="hidden" name="customerNote" id="unshowNote">
@@ -513,33 +577,67 @@
             	{ data: "svcId", "visible": false, className: "svcId" },
             	{ data: "catId", "visible": false, className: "catId" },
             	{ data: "petSize", "visible": false, className: "petSize" },
+            	{ data: "typeName", "visible": false, className: "typeName" },
             	{ data: "typeId", "visible": false, className: "typeId" },
                 { data: null,
                 	render: function(data, type){
                 		const svcPrice = data.svcPrice;
 	            		const salePrice = data.salePrice;
 	            		
+// 	            		const notOnSale = `
+// 			            			<span class="svcBlock-salePrice"></span>
+// 		                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
+// 			                	</div>
+// 	            		`;
+// 	            		const onSale = `
+// 			            			<span class="svcBlock-salePrice">` + salePrice + `</span>
+// 		                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
+// 			                	</div>
+// 	            		`;
+	            		
+// 	            		const showBeforeSale = `
+// 		            			<div class="col-12 middle mt-15 mb-15">
+// 				                    <span class="col-1">
+// 				                        <input type="checkbox" class="getsvcId" id="svcshow` + data.svcId + `" value="` + data.svcId + `" name="svcId">
+// 				                    </span>
+// 				                    <label class="col-9 noPadding" for="svcshow` + data.svcId + `">
+// 				                        <div class="choicesvcName">` + data.svcName + ` - ` + data.typeName + `</div>
+// 				                        <div class="choiceContent">` + data.svcContent + `</div>
+// 				                    </label>
+// 	            		`;
+	            		
+	            		
+	            		
+	            		
 	            		const notOnSale = `
-		            			<span class="svcBlock-salePrice"></span>
-	                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
-			                	</div>
+	            						<div class="col-1">
+					            			<span class="svcBlock-salePrice"></span>
+				                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
+			                            </div>
+				                	</div>
 	            		`;
 	            		const onSale = `
-		            			<span class="svcBlock-salePrice">` + salePrice + `</span>
-	                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
-			                	</div>
+	            						<div class="col-1">
+					            			<span class="svcBlock-salePrice">` + salePrice + `</span>
+				                            <span class="svcBlock-noSalePrice choicePrice">$` + svcPrice + `</span>
+			                            </div>
+				                	</div>
 	            		`;
 	            		
 	            		const showBeforeSale = `
-		            			<div class="col-12 middle mt-15 mb-15">
-			                    <span class="col-1">
-			                        <input type="checkbox" class="getsvcId" id="svcshow` + data.svcId + `" value="` + data.svcId + `" name="svcId">
-			                    </span>
-			                    <label class="col-9 noPadding" for="svcshow` + data.svcId + `">
-			                        <div class="choicesvcName">` + data.svcName + ` - ` + data.typeName + `</div>
-			                        <div class="choiceContent">` + data.svcContent + `</div>
-			                    </label>
+			            			<div class="row myRow">
+					                    <div class="col-1 prices">
+					                        <input type="checkbox" class="getsvcId" id="svcshow` + data.svcId + `" value="` + data.svcId + `" name="svcId">
+					                    </div>
+					                    <label class="col-10 noPadding" for="svcshow` + data.svcId + `">
+					                        <div class="choicesvcName">` + data.svcName + ` - ` + data.typeName + `</div>
+					                        <div class="choiceContent">` + data.svcContent + `</div>
+					                    </label>
 	            		`;
+	            		
+	            		
+	            		
+	            		
 	            		
 	            		if(svcPrice === salePrice){
 			            	return showBeforeSale + notOnSale;
@@ -552,7 +650,7 @@
     		language: {
     	           "sProcessing": "查詢中...",
     	           "sLengthMenu": "顯示 _MENU_ 項服務",
-    	           "sZeroRecords": "查無資料",
+    	           "sZeroRecords": "沒有可以預約的服務",
     	           "sInfoPostFix": "",
     	           "sUrl": "",
     	           "sEmptyTable": "尚未新增服務",
@@ -567,6 +665,71 @@
     	     }
           });
         
+    	
+    	/*===================== 若有session svcId 值，載入時勾選 ==========================*/
+    	
+    	const sessionSvcId = $("#sessionSvcId").val();
+    	
+    	if(sessionSvcId !== ""){
+    		$("#svcshow" + sessionSvcId).prop("checked", true);
+    	}
+    	
+    	/*===================== 查詢 ==========================*/
+    	//當載入時搜索
+    	datatable.columns(".catId").search($("#selectCat").val()).draw();
+    	datatable.columns(".svcId").search(sessionSvcId).draw();
+    	
+    	$(document).on("change", "#selectType", function (e){
+    		datatable.columns(".typeId").search($("#selectType").val()).draw();
+    		datatable.columns(".svcId").search("").draw();
+    	});
+    	
+    	$(document).on("change", "#selectSize", function (e){
+    		datatable.columns(".petSize").search($("#selectSize").val()).draw();
+    		datatable.columns(".svcId").search("").draw();
+    	});
+    	
+    	$(document).on("change", "#selectCat", function (e){
+    		datatable.columns(".catId").search($("#selectCat").val()).draw();
+    		datatable.columns(".svcId").search("").draw();
+    		$(".getsvcId").prop("checked", false);
+    	});
+    	
+    	$(document).on("change", "#petID", function (e){
+    		if($("#petID").val() !== sessionSvcId){
+    			datatable.columns(".svcId").search("").draw();
+    		}
+    		//將值輸入要送出的hidden表格
+    		$("#unshowPetID").val($(this).val());
+    		//改變查詢表格值
+    		$("#searchPetType").val($(this).val());
+    		const searchPetTypeId = $("#searchPetType").val();
+    		$("#selectSize").val($("#searchOptionSize" + searchPetTypeId).text());
+    		datatable.columns(".petSize").search($("#selectSize").val()).draw();
+    		
+    		//查詢寵物品種
+    		let petVar = $("#searchOption" + searchPetTypeId).text();
+    		datatable.columns(".typeName").search(petVar).draw();
+    		
+    		//select體型回傳顯示品種
+    		$("#selectType").children(".defaultSelect").prop("selected", "true");
+    		if($("#selectSize").val() === "大型犬"){
+    			$(".bigSize").removeClass("cantSee");
+    			$(".middleSize").addClass("cantSee");
+    			$(".smallSize").addClass("cantSee");
+    		}
+    		if($("#selectSize").val() === "中型犬"){
+    			$(".bigSize").addClass("cantSee");
+    			$(".middleSize").removeClass("cantSee");
+    			$(".smallSize").addClass("cantSee");
+    		}
+    		if($("#selectSize").val() === "小型犬"){
+    			$(".bigSize").addClass("cantSee");
+    			$(".middleSize").addClass("cantSee");
+    			$(".smallSize").removeClass("cantSee");
+    		}
+    	});
+    	
         /*===================== 價格刪除線 ==========================*/
     	
     	const salePriceCheck = document.querySelectorAll(".svcBlock-salePrice");
@@ -586,18 +749,38 @@
     	
     	/*===================== 點擊時段回傳日期 ==========================*/
     	$("#schPeriod").change(function(){
-    		$(".schDateOption").addClass("cantSee");
+    		$(".schDateOption").addClass("cantSee3");
     		$("#noDate").addClass("cantSee2");
     		$("#defaultDate").prop("selected", true);
     		if($("#schPeriod :selected").text() === "下午"){
-    			$(".schDate-afternoon").removeClass("cantSee");
+    			$(".schDate-afternoon").removeClass("cantSee3");
     		}else if($("#schPeriod :selected").text() === "上午"){
-    			$(".schDate-morning").removeClass("cantSee");
+    			$(".schDate-morning").removeClass("cantSee3");
     		}else if($("#schPeriod :selected").text() === "晚上"){
-    			$(".schDate-night").removeClass("cantSee");
+    			$(".schDate-night").removeClass("cantSee3");
     		}
-    		if($(".cantSee").length === $(".schDateOption").length){
+    		if($(".cantSee3").length === $(".schDateOption").length){
     			$("#noDate").removeClass("cantSee2");
+    		}
+    	});
+    	
+    	/*===================== select體型回傳顯示品種 ==========================*/
+    	$(document).on("change", "#selectSize", function(){
+    		$("#selectType").children(".defaultSelect").prop("selected", "true");
+    		if($(this).val() === "大型犬"){
+    			$(".bigSize").removeClass("cantSee");
+    			$(".middleSize").addClass("cantSee");
+    			$(".smallSize").addClass("cantSee");
+    		}
+    		if($(this).val() === "中型犬"){
+    			$(".bigSize").addClass("cantSee");
+    			$(".middleSize").removeClass("cantSee");
+    			$(".smallSize").addClass("cantSee");
+    		}
+    		if($(this).val() === "小型犬"){
+    			$(".bigSize").addClass("cantSee");
+    			$(".middleSize").addClass("cantSee");
+    			$(".smallSize").removeClass("cantSee");
     		}
     	});
     	
@@ -606,9 +789,6 @@
     		$("#unshowSchDate").val($(this).val());
     	});
     	
-    	$(document).on("change", "#petID", function (e){
-    		$("#unshowPetID").val($(this).val());
-    	});
     	
     	$(document).on("keyup click", "#customerNote", function (e){
     		$("#unshowNote").val($(this).val());
@@ -630,7 +810,7 @@
 //        	 	formData.append("customerNote", customerNote);
     		
 //     		$.ajax({
-//     	        url : "${pageContext.request.contextPath}/ipet-front/salon/addAppointment",
+//     	        url : "${pageContext.request.contextPath}/ipet-front/salon/ECPay",
 //     	        type : "POST",
 //     	        data : formData,
 //     	        cache: false,

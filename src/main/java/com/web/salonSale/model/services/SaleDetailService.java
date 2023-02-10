@@ -71,8 +71,8 @@ public class SaleDetailService {
 			Service service = serviceDAO.getById(saleDetail.getSvcId());
 			
 			saleDetail.setSvcName(service.getSvcName());
-			saleDetail.setCatName(service.getCatName());
-			saleDetail.setTypeName(service.getTypeName());
+			saleDetail.setCatName(service.getCategoryVO().getCatName());
+			saleDetail.setTypeName(service.getPetTypeVO().getTypeName());
 			saleDetail.setSvcPrice(service.getSvcPrice());
 			saleDetail.setSaleStatus(saleDAO.getById(saleDetail.getSaleId()).getSaleStatus());
 		}

@@ -133,7 +133,7 @@ public class SaleService {
 			}
 			
 			//優惠詳情
-			List<SaleDetail> saleDetails = saleDetailDAO.findSvcsById(sale.getSaleId());
+			List<SaleDetail> saleDetails = new SaleDetailService().selectSvcsOfSale(sale.getSaleId());
 			sale.setSaleDetails(saleDetails.toArray(SaleDetail[]::new));
 		}
 		return sales;

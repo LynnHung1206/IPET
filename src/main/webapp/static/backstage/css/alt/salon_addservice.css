@@ -111,10 +111,13 @@
 		height: 30px;
 		width: 200px;
 		text-align: center;
-		border: 1px solid #ced4da;
 		border-radius: 0.25rem;
 		padding-left: 30px;
 		padding-right: 5px;
+	}
+	
+	.myborderLook {
+		border: 1px solid #ced4da;
 	}
 	
 	#enterPrice:focus {

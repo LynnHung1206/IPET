@@ -35,38 +35,15 @@ pageContext.setAttribute("catlist", catlist);
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
-		#mainModal {
- 		display: none; 
-		position: fixed;
-		z-index: 9999;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgba(0,0,0,0.4);
-		box-sizing: border-box;
+
+	.content-header {
+	    padding: 15px 23px;
 	}
-	
-	/* 彈出視窗本人
-	.main-modal-content {
-		background-color: #fafafa;
-		margin: 15% auto;
-		border: 1px solid #888;
-		width: 500px;
-		border-radius: 0.5rem;
-	} */
-	
-	.d-flex.align-items-center {
-		margin: 20% auto;
-		width: 180px;
+
+	.content-wrapper > .content {
+	    padding: 0 29px;
 	}
-	
-	#loading-text {
-		color: #f8f9fa;
-		font-size: 16px
-	}
-	
+
 	#showImg {
 		position: absolute;
 		top: 0;
@@ -77,6 +54,60 @@ pageContext.setAttribute("catlist", catlist);
 		background-size: cover;
 	}
 	
+	.error {
+		color: red;
+		padding-left: 5px;
+		font-size: 12px;
+		font-weight: 700;
+ 		font-style: italic;
+	}
+	
+	.errorRed {
+		border: 1px solid red;
+		box-shadow: 0 0 2px 1px #ffb9b9;
+	}
+	
+	/* ======== 上下架按鈕 =========*/
+	.mybtn {
+  	 	display: none;
+	}
+	
+	.mybtngroup {
+		display: inline-block;
+		font-size: 0px;
+	}
+	
+	#mybtnlabel-left {
+		font-size: 1rem;
+		width: 150px;
+	    height: 32px;
+	    border-radius: 0.25rem 0 0 0.25rem;
+	    border-left: 1px solid #7c7c7c;
+	    border-top: 1px solid #7c7c7c;
+	    border-bottom: 1px solid #7c7c7c;
+	    padding: 3px;
+	    text-align: center;
+	}
+	
+	#mybtnlabel-right {
+		font-size: 1rem;
+		width: 150px;
+	    height: 32px;
+	    border-radius: 0 0.25rem 0.25rem 0;
+	    border-right: 1px solid #7c7c7c;
+	    border-top: 1px solid #7c7c7c;
+	    border-bottom: 1px solid #7c7c7c;
+	    padding: 3px;
+	    text-align: center;
+	}
+	
+	#mybtnlabel-right:hover, #mybtnlabel-left:hover, select:hover{
+		cursor: pointer;
+	}
+	
+	.labelOn {
+		background-color: #dae0e5;
+	}
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -89,6 +120,15 @@ pageContext.setAttribute("catlist", catlist);
 	  <!-- 左邊選單區 Main Sidebar Container -->
 	  <%@ include file="/templates/backstage/common/sidebar.jsp" %>
 	  <!-- /.aside -->
+	  
+	  <!-- ================== 新增時的loading畫面 ==================== -->
+		<div id="mainModal">
+			<div class="d-flex align-items-center">
+				 <strong id="loading-text">服務修改中...</strong>
+				 <div class="spinner-border ml-auto text-light" role="status" aria-hidden="true"></div>
+			</div>
+		</div>
+	  <!-- ================== 新增時的loading畫面 end ==================== -->
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -97,12 +137,11 @@ pageContext.setAttribute("catlist", catlist);
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<!-- <h3 style="margin-top: .6rem;">新增美容服務</h3> -->
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容專區</a></li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容服務總覽</a></li>
 								<li class="breadcrumb-item active">編輯美容服務</li>
 							</ol>
 						</div>
@@ -111,33 +150,23 @@ pageContext.setAttribute("catlist", catlist);
 				<!-- /.container-fluid -->
 			</section>
 			
-
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message.value}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-
 			<!-- Main content -->
 			<section class="content">
-				<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/ipet-back/service/updateService" name="form1">
+				<form method="post" id="sendUpdateForm">
 				<div class="card card-secondary">
 					<!-- card-body -->
 						<div class="card-body">
 
 							<input type="hidden" value="${param.svcId}" name="svcId">
 
-							<label for="svc_category_id">服務類型</label>
+							<label for="svc_category_id">服務類型</label><span class="error catError">*</span>
 							<select id="svc_category_id" class="form-control custom-select" name="catId">
 								<c:forEach var="catVO" items="${catlist}">
 									<option value="${param.catId}"
-										${(param.catId == catVO.catId) ? 'selected' : ''}>${catVO.catName}</option>
+										${(param.catId == catVO.catId) ? 'selected' : ''}>${catVO.catName} ${(catVO.catStatus == 1) ? '(未上架)' : ''}</option>
 								</c:forEach>
 							</select>
-								<label for="svc_name" class="c3">服務名稱</label>
+								<label for="svc_name" class="c3">服務名稱</label><span class="error nameError">*</span>
 								<c:if test="${not empty errorMsgs}">
 									<span style="color: red;">${message.value}</span>
 								</c:if>
@@ -156,24 +185,27 @@ pageContext.setAttribute("catlist", catlist);
 											<textarea id="summernote" name="svcContent">${param.svcContent}</textarea>
 										</div>
 								</div>
-							<label for="pet_type" class="c3">寵物品種</label>
+							<label for="pet_type" class="c3">寵物品種</label><span class="error typeError">*</span>
 							<input type="hidden" value="${param.typeId}" name="typeId">
 							<input type="text" readonly id="pet_type" class="form-control input-shadow" value="${param.typeNameAndSize}">
 							
-							<label for="svc_price" class="c3">服務單價</label>
+							<label for="svc_price" class="c3">服務單價</label><span class="error priceError">*</span>
 							<input type="text" id="svc_price" class="form-control input-shadow" value="${param.svcPrice}" name="svcPrice">
 							
-							<input type="radio" id="svc_status1" value="0" ${(param.svcStatus == 0) ? 'checked' : ''} name="svcStatus">
-							<label for="svc_status1" class="c3">上架</label>
-
-							<input type="radio" id="svc_status2" value="1" ${(param.svcStatus == 1) ? 'checked' : ''} name="svcStatus">
-							<label for="svc_status2" class="c3">未上架</label>
+							<label class="c3">服務狀態</label><span class="error statusError">*</span><br>
+							<div class="mybtngroup">
+					           <label id="mybtnlabel-left" for="svc-Status1" class="${(param.svcStatus == 0) ? 'labelOn' : ''}">上架</label>
+					           <input type="radio" id="svc-Status1" class="mybtn" value="0" name="svcStatus" ${(param.svcStatus == 0) ? 'checked' : ''}>
+					                  
+					           <label id="mybtnlabel-right" for="svc-Status2" class="${(param.svcStatus == 1) ? 'labelOn' : ''}">下架</label>
+					           <input type="radio" id="svc-Status2" class="mybtn" value="1" name="svcStatus" ${(param.svcStatus == 1) ? 'checked' : ''}>
+							</div>
 						</div>
 						<!-- /.card-body -->
 				</div>
 				<!-- /.card -->
 				<div id="before-submit">
-					<input type="submit" class="service-submit" value="確認修改" id="submit">
+					<input type="submit" class="service-submit" value="確認修改" id="submitUpdate" form="sendUpdateForm">
 				</div>
 				
 				</form>
@@ -237,24 +269,6 @@ pageContext.setAttribute("catlist", catlist);
 	<!-- Page specific script -->
 	<script>
 		$(function() {
-			$("#example1").DataTable(
-					{
-						"responsive" : true,
-						"lengthChange" : false,
-						"autoWidth" : false,
-						"buttons" : [ "copy", "csv", "excel", "pdf", "print",
-								"colvis" ]
-					}).buttons().container().appendTo(
-					'#example1_wrapper .col-md-6:eq(0)');
-			$('#example2').DataTable({
-				"paging" : true,
-				"lengthChange" : false,
-				"searching" : false,
-				"ordering" : true,
-				"info" : true,
-				"autoWidth" : false,
-				"responsive" : true,
-			});
 
 			/*===================== 點擊 card-header 開關 ==========================*/
 
@@ -268,112 +282,148 @@ pageContext.setAttribute("catlist", catlist);
 				}
 			});
 
-			/*===================== 點擊 鉛筆 更改價格 ==========================*/
-			let priceValue;
-
-			$(document)
-					.on(
-							"click",
-							".fa-pen",
-							function() {
-								//變換成圖示+輸入框
-								const td4 = $(this).parent();
-								const ok = $("<button>").text("修改").addClass(
-										"button-style short ok")
-								const cancel = $("<button>")
-										.text("取消")
-										.addClass(
-												"button-style short red cancel");
-								priceValue = td4.prev().text();
-								const updatePrice = `<input type="number" value="${priceValue}" min="0" max="999999999" class="updatePrice">`;
-								td4.prev().html(updatePrice);
-								td4.next().html(cancel);
-								td4.html(ok);
-							});
-
-			// 確定修改
-			$(document)
-					.on(
-							"click",
-							".ok",
-							function() {
-								const ok = $(this).parent();
-								const uppriceNum = ok.prev().children().val();
-								if (uppriceNum === "0"
-										|| uppriceNum.match(/[-]/)) {
-									alert("服務價格不可小於或等於0！");
-									return;
-								}
-								const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
-								const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
-								ok.prev().html(uppriceNum);
-								ok.next().html(faTrash);
-								ok.html(faPen);
-							});
-
-			//取消修改
-			$(document)
-					.on(
-							"click",
-							".cancel",
-							function() {
-								const cancel = $(this).parent();
-								const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
-								const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
-								const pricesubling = cancel.prev().prev();
-								pricesubling.html(priceValue);
-								cancel.prev().html(faPen);
-								cancel.html(faTrash);
-							});
-
-			/*===================== 點擊 垃圾桶 刪除價格 ==========================*/
-			$(document).on("click", ".fa-trash", function() {
-				$(this).parentsUntil("tbody").remove();
-			});
-
 			/*===================== Summernote ==========================*/
 			$("#summernote").summernote();
 
-			/*===================== 點擊 大中小標籤 換犬種 ==========================*/
-			$("#pet-size").change(function() {
-				if ($("#pet-size :selected").text() === "大型犬") {
-					$("#showBigDog").removeClass("cantSee");
-					$("#showMediumDog").addClass("cantSee");
-					$("#showSmallDog").addClass("cantSee");
-				} else if ($("#pet-size :selected").text() === "中型犬") {
-					$("#showBigDog").addClass("cantSee");
-					$("#showMediumDog").removeClass("cantSee");
-					$("#showSmallDog").addClass("cantSee");
-				} else if ($("#pet-size :selected").text() === "小型犬") {
-					$("#showBigDog").addClass("cantSee");
-					$("#showMediumDog").addClass("cantSee");
-					$("#showSmallDog").removeClass("cantSee");
-				}
-			});
+			/*===================== 上下架顏色 ==========================*/
+		      
+		    $(document).on("click", "#svc-Status1", function(){
+		  		if($(this).prop("checked")){
+		  			$("#mybtnlabel-left").addClass("labelOn");
+		  			$("#mybtnlabel-right").removeClass("labelOn");
+		  		}else{
+		  			$("#mybtnlabel-left").removeClass("labelOn");
+		  		}
+		  	});
+		      
+		    $(document).on("click", "#svc-Status2", function(){
+		  		if($(this).prop("checked")){
+		  			$("#mybtnlabel-right").addClass("labelOn");
+		  			$("#mybtnlabel-left").removeClass("labelOn");
+		  		}else{
+		  			$("#mybtnlabel-right").removeClass("labelOn");
+		  		}
+		  	});
 
-			/*===================== 點擊  ==========================*/
-			$("#addService").click(function() {
-				// 		  alert($("#svc_category_id").val());
-				// 		  alert($("#svc_name").val());
-				// 		  alert($("#add-img").files[0]);
-				// 		  alert($("#summernote").val());
-				// 		  alert($("#enterPrice").val());
-				// 		  alert($(".aType").val());
-				const aTypeLength = $(".aType").length;
-				for (let i = 0; i < aTypeLength; i++) {
-					const aTypeNum = $(".aType").eq(i);
-					if (aTypeNum.prop("checked")) {
-						alert(aTypeNum.val());
-					}
-				}
-			});
-			
 			/*===================== 匯入圖片檔案時預覽 ==========================*/
 			$(document).on("change", "#add-img", function (){
 				$("#showImg").css("background-image", "url(" + URL.createObjectURL(event.target.files[0]) + ")");
 		      });
+			
+			/*===================== 若警告訊息輸入紅框消失 ==========================*/
+		      
+		      $(document).on("change", "#svc_category_id", function (){
+		      	$(this).removeClass("errorRed");
+		      });
+		        
+		      $(document).on("change", "#svc_name", function (){
+		      	$(this).removeClass("errorRed");
+		      });
+		      
+		      $(document).on("change", "#pet_type", function (){
+		      	$(this).removeClass("errorRed");
+		      });
+		      
+		      $(document).on("change", "#svc_price", function (){
+		      	$(this).removeClass("errorRed");
+		      });
+			
+			/*===================== 送出新增資訊到後台 ==========================*/
+	        $(document).on("submit", "#sendUpdateForm", function (e){
+	        	 e.preventDefault();
+	        	 
+	        	 //清空警告訊息
+	        	 $(".catError").text("*");
+	        	 $(".nameError").text("*");
+	        	 $(".typeError").text("*");
+	        	 $(".priceError").text("*");
+	        	 $(".statusError").text("*");
+	        	 
+	  	  	 //資料：formData
+	      	 let formData = new FormData(this);
+	      	 
+	      	 $.ajax({
+	      	        url : "${pageContext.request.contextPath}/ipet-back/service/updateService",
+	      	        type : "POST",
+	      	        data : formData,
+	      	        cache: false,
+	      	        processData: false,
+	      	        contentType: false,
+// 	      	        beforeSend: function(){
+// 	      	        	$("#mainModal").css("display","block");
+// 	      	        },
+	      	        success : function(response) {
+	      	        	$("#mainModal").css("display","none");
+	      	        	if(!response){
+	  	    	        	showSwal("success-message");
+	      	        	}else {
+	      	        		//顯示錯誤訊息
+	  	    	        	const res = JSON.parse(response);
+	  	    	        	if(res.svcStatus){
+	  	    	        		$(".statusError").text("*" + res.svcStatus);
+	  	    	        		window.scrollTo( 0, 800 );
+	  	    	        	}
+	  	    	        	if(res.svcPrice){
+	  	    	        		$(".priceError").text("*" + res.svcPrice);
+	  	    	        		$("#svc_price").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 800 );
+	  	    	        	}
+	  	    	        	if(res.typeError){
+	  	    	        		$(".typeError").text("*" + res.typeError);
+	  	    	        		$("#pet_type").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 800 );
+	  	    	        	}
+	  	    	        	if(res.svcName){
+	  	    	        		$(".nameError").text("*" + res.svcName);
+	  	    	        		$("#svc_name").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 150 );
+	  	    	        	}
+	  	    	        	if(res.catId){
+	  	    	        		$(".catError").text("*" + res.catId);
+	  	    	        		$("#svc_category_id").addClass("errorRed");
+	  	    	        		window.scrollTo( 0, 100 );
+	  	    	        	}
+	      	 				console.log(res);
+	      	        	}
+	      	        },error: function(response) {
+	      	        	showSwal("something-Wrong");
+	  					alert("something-Wrong");
+	      	        }
+	      	 	});
+	      	});
+			
+			
 
 		});
+		
+		
+		
+		
+		 /*===================== 新增成功提示 ==========================*/
+	    (function($) {
+	    	  showSwal = function(type) {
+	    	    "use strict";
+	    	     if (type === "success-message") {
+	    	    	 swal({
+	    	    	        title: '修改成功!',
+	    	    	        type: 'success',
+	     	    		  	showConfirmButton: false,
+	     	    		  	timer: 1500
+	    	    	      }, function(){
+	    	    	    	  location.replace("${pageContext.request.contextPath}/ipet-back/service/allService");
+	    	    	      })
+	    	    }else if (type === "something-Wrong"){
+	    	    	swal({
+		    	        title: "OOPS！Something's Wrong:(",
+		    	        text: "請再次嘗試或聯繫客服人員協助處理",
+		    	        type: 'info',
+	 	    		  	showConfirmButton: true,
+		    	      })
+	    	    } 
+	    	  }
+
+	    	})(jQuery);
+	    	    	
 	</script>
 </body>
 </html>

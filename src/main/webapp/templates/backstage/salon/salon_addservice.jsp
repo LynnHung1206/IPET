@@ -23,11 +23,20 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/adminlte.css">
 	<!-- summernote -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/plugins/summernote/summernote-bs4.min.css">
+	<!-- sweetalert -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
+	.content-header {
+	    padding: 15px 23px;
+	}
+
+	.content-wrapper > .content {
+	    padding: 0 29px;
+	}
+
 	#showImg {
 		position: absolute;
 		top: 0;
@@ -36,6 +45,65 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: cover;
+	}
+	
+	.typePriceBorder {
+		border-radius: 0.25rem;
+	}
+	
+	.error {
+		color: red;
+		padding-left: 5px;
+		font-size: 12px;
+		font-weight: 700;
+ 		font-style: italic;
+	}
+	
+	.errorRed {
+		border: 1px solid red;
+		box-shadow: 0 0 2px 1px #ffb9b9;
+	}
+	
+	/* ======== 上下架按鈕 =========*/
+	.mybtn {
+ 	 	display: none;
+	}
+	
+	.mybtngroup {
+		display: inline-block;
+		font-size: 0px;
+	}
+	
+	#mybtnlabel-left {
+		font-size: 1rem;
+		width: 150px;
+	    height: 32px;
+	    border-radius: 0.25rem 0 0 0.25rem;
+	    border-left: 1px solid #7c7c7c;
+	    border-top: 1px solid #7c7c7c;
+	    border-bottom: 1px solid #7c7c7c;
+	    padding: 3px;
+	    text-align: center;
+	}
+	
+	#mybtnlabel-right {
+		font-size: 1rem;
+		width: 150px;
+	    height: 32px;
+	    border-radius: 0 0.25rem 0.25rem 0;
+	    border-right: 1px solid #7c7c7c;
+	    border-top: 1px solid #7c7c7c;
+	    border-bottom: 1px solid #7c7c7c;
+	    padding: 3px;
+	    text-align: center;
+	}
+	
+	#mybtnlabel-right:hover, #mybtnlabel-left:hover, select:hover, label.pet-label:hover, .aType:hover{
+		cursor: pointer;
+	}
+	
+	.labelOn {
+		background-color: #dae0e5;
 	}
 </style>
 	</head>
@@ -71,7 +139,7 @@
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容專區</a></li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容服務總覽</a></li>
 								<li class="breadcrumb-item active">新增美容服務</li>
 							</ol>
 						</div>
@@ -95,10 +163,11 @@
 						</div>
 						<!-- card-body -->
 						<div class="card-body">
-							<label for="svc_category_id">服務類型</label> <select
+							<label for="svc_category_id">服務類型</label><span class="error catError">*</span>
+								<select
 								id="svc_category_id" class="form-control custom-select" required
 								name="catId">
-								<option selected style="display: none;">請選擇服務類型</option>
+								<option selected style="display: none;" id="catIsNull">請選擇服務類型</option>
 								<%
 								List<Category> listcaCategoryVOs = new ArrayList<Category>();
 														CategoryService categorySvc = new CategoryService();
@@ -125,9 +194,10 @@
 								}
 								%>
 
-							</select> <label for="svc_name" class="c3">服務名稱</label> <input type="text"
+							</select> <label for="svc_name" class="c3">服務名稱</label><span class="error nameError">*</span>
+							 <input type="text"
 								id="svc_name" class="form-control input-shadow"
-								placeholder="請輸入服務名稱" required name="svcName">
+								placeholder="請輸入服務名稱" name="svcName">
 							<div>
 								<div class="choice-title c3">服務圖片</div>
 								<label class="svc_picture_label input-shadow">
@@ -142,11 +212,15 @@
 									<textarea id="summernote" name="svcContent"> </textarea>
 								</div>
 							</div>
-							<label>是否立即上架</label><br>
-							<input type="radio" id="svc_status1" value="0" name="svcStatus">
-							<label for="svc_status1" class="c3" style="margin-top: 8px; margin-right: 20px;">是</label>
-							<input type="radio" id="svc_status2" value="1" checked name="svcStatus">
-							<label for="svc_status2" class="c3" style="margin-top: 8px;">否</label>
+							<label>是否立即上架</label><span class="error statusError">*</span><br>
+							<div class="mybtngroup">
+					           <label id="mybtnlabel-left" for="svc-Status1" >是</label>
+					           <input type="radio" id="svc-Status1" class="mybtn" value="0" name="svcStatus">
+					                  
+					           <label id="mybtnlabel-right" for="svc-Status2" class="labelOn">否</label>
+					           <input type="radio" id="svc-Status2" class="mybtn" value="1" checked name="svcStatus">
+							</div>
+							
 						</div>
 						<!-- /.card-body -->
 				</div>
@@ -168,7 +242,9 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<label for="svc_img" style="margin-top: 8.5px;">寵物品種與價格</label> <select
+						<label for="pet-size" style="margin-top: 8.5px;">寵物品種與價格</label><span class="error typeError">*</span>
+						<div class="typePriceBorder">
+						<select
 							id="pet-size" class="form-control custom-select">
 							<option selected style="display: none;">請選擇寵物體型</option>
 							<option>大型犬</option>
@@ -251,12 +327,14 @@
 							}
 							%>
 						</div>
+						</div>
 						<div class="add-service">
 							<div id="to-right">
 								<span>服務單價：</span>
 								<div style="position: relative; display: inline-block;">
-									<span id="money-icon">$</span> <input type="number"
-										id="enterPrice" class="input-shadow" min="0" max="999999999">
+									<span id="money-icon">$</span>
+									<input type="number"
+										id="enterPrice" class="myborderLook input-shadow typePriceBorder" min="0" max="999999999">
 								</div>
 								<button class="button-style blue" id="addService">新增價格</button>
 							</div>
@@ -370,7 +448,7 @@
         const ok = $("<button>").text("修改").addClass("button-style short ok")
         const cancel = $("<button>").text("取消").addClass("button-style short red cancel");
         priceValue = td4.prev().text();
-        const updatePrice = `<input type="number" value="` + priceValue + `" min="0" max="999999999" class="updatePrice">`;
+        const updatePrice = `<input type="number" value="` + priceValue + `" min="0" max="999999999" class="updatePrice noPrice">`;
         td4.prev().html(updatePrice);
         td4.next().html(cancel);
         td4.html(ok);
@@ -384,6 +462,10 @@
           alert("服務價格不可小於或等於0！");
           return;
         }
+        if(uppriceNum === ""){
+            alert("請填入服務價格！");
+            return;
+          }
         const faPen = `<i class="nav-icon fas fa-solid fa-pen"></i>`;
         const faTrash = `<i class="nav-icon fas fa-solid fa-trash"></i>`;
         ok.prev().html(uppriceNum);
@@ -413,6 +495,26 @@
 
       /*===================== Summernote ==========================*/
       $("#summernote").summernote();
+      
+      /*===================== 上下架顏色 ==========================*/
+      
+	    $(document).on("click", "#svc-Status1", function(){
+	  		if($(this).prop("checked")){
+	  			$("#mybtnlabel-left").addClass("labelOn");
+	  			$("#mybtnlabel-right").removeClass("labelOn");
+	  		}else{
+	  			$("#mybtnlabel-left").removeClass("labelOn");
+	  		}
+	  	});
+	      
+	    $(document).on("click", "#svc-Status2", function(){
+	  		if($(this).prop("checked")){
+	  			$("#mybtnlabel-right").addClass("labelOn");
+	  			$("#mybtnlabel-left").removeClass("labelOn");
+	  		}else{
+	  			$("#mybtnlabel-right").removeClass("labelOn");
+	  		}
+	  	});
       
       /*===================== 點擊 大中小標籤 換犬種 ==========================*/
 	  $("#pet-size").change(function () {
@@ -452,8 +554,11 @@
 		  }
 		  if(enterPrice <= 0){
 			  alert("金額不可小於等於零！");
+			  $(".typePriceBorder").addClass("errorRed");
 			  return;
 		  }
+		  
+		  $(".typePriceBorder").removeClass("errorRed");
 		  //判斷checkbox是否選取，若是，append into tbody
 		  for(let i = 0; i < aTypeLength; i++){
 			const aTypeNum = $(".aType").eq(i);
@@ -481,52 +586,97 @@
     	  $("#showImg").css("background-image", "url(" + URL.createObjectURL(event.target.files[0]) + ")");
       });
       
+      /*===================== 若警告訊息輸入紅框消失 ==========================*/
+      
+      $(document).on("change", "#svc_category_id", function (){
+      	$(this).removeClass("errorRed");
+      });
+        
+      $(document).on("change", "#svc_name", function (){
+      	$(this).removeClass("errorRed");
+      });
+      
+      $(document).on("change", ".noPrice", function (){
+      	$(this).removeClass("errorRed");
+      });
+      
+      /*===================== 送出新增資訊到後台 ==========================*/
+        $(document).on("submit", "#addSvcForm", function (e){
+        	 e.preventDefault();
+        	 
+        	 //清空警告訊息
+        	 $(".catError").text("*");
+        	 $(".nameError").text("*");
+        	 $(".typeError").text("*");
+        	 
+      	 //迴圈存入金額和品種物件
+  	  	 let priceAndTypeArray = [];
+  	  	 const beSentTrLength = $(".beSentTr").length;
+  	  	 for(let i = 0; i< beSentTrLength; i++){
+  	  		priceAndTypeArray.push({
+  	  			typeId : $(".beSentTypeId").eq(i).text(),
+  	  			svcPrice : $(".beSentPrice").eq(i).text()
+  	  		});
+  	  	 }
+  	  	 
+  	  	 //資料：formData
+      	 let formData = new FormData(this);
+      	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
+      	 
+      	 $.ajax({
+      	        url : "${pageContext.request.contextPath}/ipet-back/service/addService",
+      	        type : "POST",
+      	        data : formData,
+      	        cache: false,
+      	        processData: false,
+      	        contentType: false,
+//       	        beforeSend: function(){
+//       	        	$("#mainModal").css("display","block");
+//       	        },
+      	        success : function(response) {
+      	        	$("#mainModal").css("display","none");
+      	        	if(!response){
+  	    	        	showSwal("success-message");
+      	        	}else {
+      	        		//顯示錯誤訊息
+  	    	        	const res = JSON.parse(response);
+  	    	        	if(res.noPrice){
+  	    	        		$(".typeError").text("*" + res.noPrice);
+  	    	        		$(".noPrice").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 1000 );
+  	    	        	}
+  	    	        	if(res.typeAndPrice){
+  	    	        		$(".typeError").text("*" + res.typeAndPrice);
+  	    	        		$(".typePriceBorder").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 800 );
+  	    	        	}
+  	    	        	if(res.svcStatus){
+  	    	        		$(".statusError").text("*" + res.svcStatus);
+  	    	        		window.scrollTo( 0, 600 );
+  	    	        	}
+  	    	        	if(res.svcName){
+  	    	        		$(".nameError").text("*" + res.svcName);
+  	    	        		$("#svc_name").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 250 );
+  	    	        	}
+  	    	        	if(res.catId){
+  	    	        		$(".catError").text("*" + res.catId);
+  	    	        		$("#svc_category_id").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 100 );
+  	    	        	}
+      	 				console.log(res);
+      	        	}
+      	        },error: function(response) {
+      	        	showSwal("something-Wrong");
+  					alert("something-Wrong");
+      	        }
+      	 });
+      });
+      
+      
+      
     });
     
-    
-    /*===================== 送出新增資訊到後台 ==========================*/
-      $(document).on("submit", "#addSvcForm", function (e){
-      	 e.preventDefault();
-    	
-    	 //迴圈存入金額和品種物件
-	  	 let priceAndTypeArray = [];
-	  	 const beSentTrLength = $(".beSentTr").length;
-	  	 for(let i = 0; i< beSentTrLength; i++){
-	  		priceAndTypeArray.push({
-	  			typeId : $(".beSentTypeId").eq(i).text(),
-	  			svcPrice : $(".beSentPrice").eq(i).text()
-	  		});
-	  	 }
-	  	 
-	  	 //資料：formData
-    	 let formData = new FormData(this);
-    	 formData.append("typeAndPrice", JSON.stringify(priceAndTypeArray));
-    	 
-    	 $.ajax({
-    	        url : "${pageContext.request.contextPath}/ipet-back/service/addService",
-    	        type : "POST",
-    	        data : formData,
-    	        cache: false,
-    	        processData: false,
-    	        contentType: false,
-    	        beforeSend: function(){
-    	        	$("#mainModal").css("display","block");
-    	        },
-    	        success : function(response) {
-    	        	$("#mainModal").css("display","none");
-    	        	if(!response){
-	    	        	showSwal("success-message");
-    	        	}else {
-	    	        	const res = JSON.parse(response);
-    	 				console.log(res);
-    	        	}
-// 					console.log(errorMsgs);
-    	        },error: function(response) {
-    	        	showSwal("something-Wrong");
-					alert("something-Wrong");
-    	        }
-    	 });
-    });
     
     
       /*===================== 新增成功提示 ==========================*/

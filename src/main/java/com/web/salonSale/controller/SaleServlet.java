@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +62,8 @@ public class SaleServlet extends HttpServlet {
 		String path = req.getServletPath();
 
 		if ("/ipet-back/salonSale/addSale".equals(path)) {
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			res.setContentType("text/html;charset=utf-8");
+			Map<String,String> errorMsgs = new HashMap<>();
 
 			/************* 1.接收請求參數 - 輸入格式的錯誤處理 **********/
 			// 取得優惠名稱
@@ -107,6 +108,8 @@ public class SaleServlet extends HttpServlet {
 			// 處理字串>服務ID與優惠價格
 			String svcAndSalePrice = req.getParameter("svcAndSalePrice");
 			JsonArray jsonArray = null;
+			
+			Integer salePriceCheck = null;
 
 			try {
 				Gson gson = new Gson();
@@ -114,11 +117,16 @@ public class SaleServlet extends HttpServlet {
 				for (JsonElement element : jsonArray) {
 					JsonObject obj = element.getAsJsonObject();
 					obj.get("svcId").getAsInt();
-					obj.get("salePrice").getAsInt();
+					salePriceCheck = obj.get("salePrice").getAsInt();
+					if(salePriceCheck <= 0) {
+						errorMsgs.put("typeAndPrice", "優惠價格不可小於或等於0");
+					}
 				}
 			} catch (Exception e) {
 				errorMsgs.put("typeAndPrice", "請輸入正確服務與價格");
 			}
+			
+			
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -158,9 +166,6 @@ public class SaleServlet extends HttpServlet {
 		// 來自salon_showsale.jsp的修改項目請求
 		if ("/ipet-back/salonSale/editSale".equals(path)) {
 
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
 			/*************************** 1.接收請求參數 ****************************************/
 			Integer saleId = Integer.valueOf(req.getParameter("saleId"));
 
@@ -193,8 +198,8 @@ public class SaleServlet extends HttpServlet {
 
 		// 來自salon_updatesale.jsp的update請求
 		if ("/ipet-back/salonSale/updateSale".equals(path)) {
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			res.setContentType("text/html;charset=utf-8");
+			Map<String,String> errorMsgs = new HashMap<>();
 
 			/************* 1.接收請求參數 - 輸入格式的錯誤處理 **********/
 			//取得優惠ID
@@ -240,13 +245,18 @@ public class SaleServlet extends HttpServlet {
 			String svcAndSalePrice = req.getParameter("svcAndSalePrice");
 			JsonArray jsonArray = null;
 
+			Integer salePriceCheck = null;
+			
 			try {
 				Gson gson = new Gson();
 				jsonArray = gson.fromJson(svcAndSalePrice, JsonArray.class);
 				for (JsonElement element : jsonArray) {
 					JsonObject obj = element.getAsJsonObject();
 					obj.get("svcId").getAsInt();
-					obj.get("salePrice").getAsInt();
+					salePriceCheck = obj.get("salePrice").getAsInt();
+					if(salePriceCheck <= 0) {
+						errorMsgs.put("typeAndPrice", "優惠價格不可小於或等於0");
+					}
 				}
 			} catch (Exception e) {
 				errorMsgs.put("typeAndPrice", "請輸入正確服務與價格");

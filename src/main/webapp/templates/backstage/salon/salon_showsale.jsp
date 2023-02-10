@@ -31,7 +31,52 @@
 	<!-- addsevice and updateservice css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/static/backstage/css/alt/salon_addservice.css">
 <style>
+
+	.deTailTitle {
+		font-weight: 700;
+	    margin-bottom: 8px;
+	    padding: 5px 0;
+	}
+	
+	.deTailTitle.mb {
+	    border-bottom: 1px solid #bdbdbd;
+	}
+
+	.saleDescription {
+		padding: 0 20px;
+		margin: 0 45px 45px;
+    	width: 92%;
+	}
+
+	.showDetails:hover {
+		cursor: pointer;
+		color: #007bff;
+	}
+	
 /* ================== 預約導覽列 ====================*/
+	.content-header {
+	    padding: 15px 21px 24px 20px;
+	}
+	
+	.content-wrapper > .content {
+	    padding: 0 20px;
+	}
+
+	.ahrefStyle {
+		background-color: #6c757d;
+	    color: white;
+	    position: relative;
+	    top: 10px;
+	    left: 1px;
+	    padding: 10px 65px;
+	    border-radius: 0.25rem;
+	}
+	
+	.ahrefStyle:hover {
+		background-color: #7c8287;
+		color: white;
+	}
+
     .card-header {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -68,7 +113,7 @@
 
    /* ============ 彈出視窗-優惠選擇服務 =============*/
 	#addSaleBox {
-/*  		display: none;  */
+  		display: none;
 		position: fixed;
 		z-index: 9998;
 		left: 0;
@@ -82,6 +127,7 @@
 	
 	/* 	 彈出視窗本人 */
 	.main-modal-content {
+		border-radius: 0;
 		background-color: #fafafa;
 		margin: 3% auto;
 		border: 1px solid #888;
@@ -101,6 +147,13 @@
 	#modalClose:hover {
 		cursor: pointer;
 	}
+	
+   /* ============ table樣式 =============*/
+   
+   #example2 tr th:nth-child(5), #example2 tr th:nth-child(6){
+   		border-right: 1px solid white;
+   }
+   
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -114,42 +167,20 @@
 	  <%@ include file="/templates/backstage/common/sidebar.jsp" %>
 	  <!-- /.aside -->
 	  
+	  
 	  <!-- ====================== 彈出視窗 ========================= -->
 	  	<div id="addSaleBox" style="overflow-y: hidden;">
-			<div class="main-modal-content" style="overflow-y: scroll;">
+			<div class="main-modal-content" style="overflow-y: scroll; overflow-x: hidden;">
 				<i class="nav-icon fas fa-sharp fa-solid fa-times" id="modalClose"></i>
 				
-		<!-- 快速查詢 -->
-				<div style="padding: 35px;">
-				<div style="border-radius: 0.25rem; margin: 20px 0;">
-						<!-- card-body -->
-						<div class="card-body" style="display: none;">
-						</div>
-							<input type="text" id="searchSvc" placeholder="快速查詢..." style="border: 1px solid #d2d2d2; width: 100%; height: 40px; padding-left: 10px;">
+				<div id="detailTable" class="saleDescription row col-12">
 				</div>
-						<!-- /.card-body -->
 				
-			<!-- datatable -->	
-					<table id="example" class="table table-bordered table-hover">
-						<thead style="background-color: #6c757d; color: white;">
-							<tr>
-								<th></th>
-								<th style="width: 90px;">服務編號</th>
-								<th>服務名稱</th>
-								<th>服務類別</th>
-								<th>寵物種類</th>
-								<th>服務單價</th>
-								<th>狀態</th>
-							</tr>
-						</thead>
-						<tfoot>
-						</tfoot>
-					</table>
-					<input type="button" class="service-submit" value="新增服務" id="submitAll">
-				</div>
 			</div>
 		</div>
+	  
 	  <!-- ====================== /彈出視窗 ========================= -->
+	  
 	  
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -158,13 +189,16 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
+							<a href="${pageContext.request.contextPath}/ipet-back/salonSale/addSale" id="addSvcBottom"
+							 class="ahrefStyle"
+							 >新增優惠</a>
 							<!-- <h3 style="margin-top: .6rem;">新增美容服務</h3> -->
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/ipet-back/home">Home</a></li>
-								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容專區</a></li>
-								<li class="breadcrumb-item active">新增美容服務</li>
+								<li class="breadcrumb-item active"><a href="${pageContext.request.contextPath}/ipet-back/service/allService">美容服務總覽</a></li>
+								<li class="breadcrumb-item active">優惠總覽</li>
 							</ol>
 						</div>
 					</div>
@@ -172,15 +206,6 @@
 				<!-- /.container-fluid -->
 			</section>
 
-<c:if test="${not empty errorMsgs}">
-	<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
-	<c:forEach var="message" items="${errorMsgs}">
-		<div style="color: red">${message.value}</div>
-	</c:forEach>
-</c:if>
-	<button class="col-4 justify-content-end">
-		<a href="${pageContext.request.contextPath}/ipet-back/salonSale/addSale">新增優惠</a>
-	</button>
 	  <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -195,7 +220,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="example2" class="table table-hover">
                     <thead>
                       <tr>
                         <th>編號</th>
@@ -203,6 +228,8 @@
                         <th>優惠開始時間</th>
                         <th>優惠結束時間</th>
                         <th>狀態</th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tfoot>
@@ -267,7 +294,6 @@
     $(function () {
       $("#Mynavbar").load("../../navbar_pages.html");
       
-		console.log(${sales});
     })
   </script>
 
@@ -293,8 +319,9 @@
 	            { data: "saleId", responsivePriority: 1 },
 	            { data: null,
 	            	render: function(data, type){
-	            		return data.saleName + `<div style="font-size: 10px; margin-top: 10px;">` + data.salContent + `</div>`;
+	            		return `<div>` + data.saleName + `</div><div style="font-size: 10px; margin-top: 10px;">` + data.salContent + `</div>`;
 	            	},
+	            	className: "showDetails",
 	            	responsivePriority: 2
 	            },
 	            { data: "startTime", 
@@ -336,6 +363,7 @@
 	            			return null;
 	            		}
 	            	},
+	            	orderable: false,
 	            	responsivePriority: 6
 	            },
 	            { data: null,
@@ -359,7 +387,7 @@
 			language: {
 		           "sProcessing": "查詢中...",
 		           "sLengthMenu": "顯示 _MENU_ 項服務",
-		           "sZeroRecords": "查無資料",
+		           "sZeroRecords": "尚無優惠",
 		           "sInfoPostFix": "",
 		           "sUrl": "",
 		           "sEmptyTable": "尚未新增服務",
@@ -373,6 +401,98 @@
 		           },
 		     }
           });
+    	
+		/*===================== 點擊優惠名稱跳出細項 ==========================*/
+    	
+	    $('#example2 tbody').on('click','td.showDetails',function() {
+	    	let tr = $(this).closest('tr');
+	    	let row = datatable.row(tr);
+	    	const detailsTable = format(row.data());
+	    	$("#detailTable").html("");
+	    	$("#detailTable").html(detailsTable);
+	    	
+	    	addSaleBox.style.display = "block";
+			document.body.style.overflow = "hidden";
+			console.log(row.data());
+        });
+		
+
+		//點擊叉叉(X) 或 彈出視窗外面 關閉視窗
+		$("#modalClose").click(function() {
+			addSaleBox.style.display = "none";
+			document.body.style.overflow = "auto";
+		});
+
+		$(window).click(function() {
+			if (event.target == addSaleBox) {
+				addSaleBox.style.display = "none";
+				document.body.style.overflow = "auto";
+			}
+		});
+		
+	    /*===================== 顯示Detail ==========================*/
+	    
+	    function format (data){
+	    	let table = `
+			    		<div class="col-6">
+						<div class="deTailTitle mb">優惠名稱</div>
+						<div>\${data.saleName}</div>
+					</div>
+					<div class="col-6">
+						<div class="deTailTitle mb">開始時間</div>
+						<div>\${data.startTime}</div>
+					</div>
+					<div class="col-6" style="margin-top: 20px;">
+						<div class="deTailTitle mb">優惠狀態</div>
+						<div>\${data.saleStatus}</div>
+					</div>
+					<div class="col-6" style="margin-top: 20px;">
+						<div class="deTailTitle mb">結束時間</div>
+						<div>\${data.endTime}</div>
+					</div>
+					<div class="col-12" style="margin-top: 20px;">
+						<div class="deTailTitle mb">優惠描述</div>
+						<div>\${data.salContent}</div>
+					</div>
+					<div class="col-12" style="margin-top: 20px;">
+						<div class="deTailTitle">優惠細項</div>
+						<table class="table table-bordered table-hover">
+							<thead style="background-color: #6c757d; color: white;">
+				    		<tr>
+				                <th>服務編號</th>
+				                <th>服務名稱</th>
+				                <th>服務類別</th>
+				                <th>寵物種類</th>
+				                <th>服務單價</th>
+				                <th>優惠價</th>
+			            	</tr>
+			    			</thead>
+		            		<tbody id="detailTbody">
+	         `;
+	        if(data.saleDetails.length === 0){
+	        	table += `<tr><td colspan="6" style="text-align: center;">尚未新增優惠服務</td></tr>`;
+	        }else{
+	        	for (let detail of data.saleDetails){
+	    	        table += `
+	    	            <tr>
+	    	                <td>\${detail.svcId}</td>
+	    	                <td>\${detail.svcName}</td>
+	    	                <td>\${detail.catName}</td>
+	    	                <td>\${detail.typeName}</td>
+	    	                <td>$ \${detail.svcPrice}</td>
+	    	                <td>$ \${detail.salePrice}</td>
+	    	            </tr>
+	    	            `;
+	    	        }
+	        }
+
+	        table += `
+	        			</tbody></table>
+						</div>
+	                `;
+	        return table;
+		}
+	    
     	
     	/*===================== 切換狀態 ==========================*/
     	
@@ -398,21 +518,6 @@
             $(this).addClass("on");
         });
     	
-    	/*===================== 彈出視窗 ==========================*/
-		const mainModal = document.getElementById("mainModal");
-
-		//點擊按鈕時打開彈出視窗
-// 		$("#mainBtn").click(function() {
-// 			mainModal.style.display = "block";
-// 			document.body.style.overflow = "hidden";
-// 		});
-    	
-		$("tbody tr").click(function() {
-    			/*========== 顯示預約詳細 =============*/
-				const OneApm = datatable.row(this).data();
-    			console.log(OneApm);
-    	});
-	
     })
 		
   </script>

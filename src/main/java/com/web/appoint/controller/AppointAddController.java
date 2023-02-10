@@ -24,13 +24,14 @@ import com.web.member.model.entity.Member;
 import com.web.pet.model.entity.Pet;
 import com.web.pet.model.service.PetService;
 import com.web.salonService.model.entities.Service;
+import com.web.salonService.model.services.CategoryService;
 import com.web.salonService.model.services.ServiceService;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutOneTime;
 
 @WebServlet({"/ipet-front/salon/addAppointment",
-			 "/ECpay"
+			 "/ipet-front/salon/ECPay"
 			})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class AppointAddController extends HttpServlet{
@@ -39,37 +40,6 @@ public class AppointAddController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String path = req.getServletPath();
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.serializeNulls()
-                .setDateFormat("yyyy-MM-dd")
-                .create();
-        
-        //點選"我要預約"前往處
-        if ("/ipet-front/salon/addAppointment".equals(path)) {
-        	
-        	Member member = (Member) req.getSession().getAttribute("member");
-        	if(member == null) {
-        		req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
-        		return;
-        	}
-        	
-        	List<Pet> pets = new PetService().getPetByMemId(member.getMemId());
-        	req.setAttribute("pets", pets);
-        	
-        	List<JobSchedule> noAppointmentSchs = new JobScheduleServicesImp().findNoAppointmentSch();
-        	req.setAttribute("noApmSchs", noAppointmentSchs);
-        	
-        	List<Service> allservices = new ServiceService().selectAll();
-        	req.setAttribute("allservices", gson.toJson(allservices));
-        	
-        	req.getRequestDispatcher("/templates/frontstage/salon/salon_addAppointment.jsp").forward(req, res);
-        }
-        
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String path = req.getServletPath();
@@ -77,8 +47,60 @@ public class AppointAddController extends HttpServlet{
         Gson gson = builder.serializeNulls()
                 .setDateFormat("yyyy-MM-dd")
                 .create();
+        
+      //點選"我要預約"前往處
+        if ("/ipet-front/salon/addAppointment".equals(path)) {
+        	ServiceService serviceService = new ServiceService();
+        	
+        	Member member = (Member) req.getSession().getAttribute("member");
+        	if(member == null) {
+        		req.getRequestDispatcher("/templates/frontstage/member/login.jsp").forward(req, res);
+        		return;
+        	}
+        	
+        	Integer svcId = null;
+        	
+        	//檢查是否從網頁傳送服務Id
+        	try {
+            	svcId = Integer.valueOf(req.getParameter("svcId").trim());
+            	Service service = serviceService.getOneService(svcId);
+            	req.setAttribute("service", service);
+    		} catch (Exception e) {
+    		}
+        	
+        	//檢查之前是否有選擇過服務
+        	if(svcId == null) {
+        		svcId = (Integer) req.getSession().getAttribute("svcId");
+        	}
+        	req.getSession().setAttribute("svcId", svcId);
+        	
+        	try {
+				Integer catId = serviceService.getOneService(svcId).getCatId();
+				req.getSession().setAttribute("catId", catId);
+			} catch (Exception e) {
+			}
+        	
+        	//若沒有寵物則導向新增寵物畫面
+        	List<Pet> pets = new PetService().getPetByMemId(member.getMemId());
+        	if(pets.isEmpty()) {
+        		res.setContentType("text/plain;charset=utf-8");
+				res.getWriter().print("noPet");
+        		return;
+        	}
+        	req.setAttribute("pets", pets);
+        	
+        	List<JobSchedule> noAppointmentSchs = new JobScheduleServicesImp().findNoAppointmentSch();
+        	req.setAttribute("noApmSchs", noAppointmentSchs);
+        	
+        	List<Service> allservices = serviceService.selectAll();
+        	req.setAttribute("allservices", gson.toJson(allservices));
+        	
+        	req.getRequestDispatcher("/templates/frontstage/salon/salon_addAppointment.jsp").forward(req, res);
+        }
+        
 		
-		if("/ipet-front/salon/addAppointment".equals(path)) {
+        //新增預約，前往綠界金流
+		if("/ipet-front/salon/ECPay".equals(path)) {
 		
 			Map<String,String> errorMsgs = new HashMap<>();
 			
