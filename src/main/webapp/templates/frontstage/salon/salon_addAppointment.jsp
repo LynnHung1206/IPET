@@ -46,10 +46,6 @@ pageContext.setAttribute("petTypes", petTypes);
 <%--     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/frontstage/css/salonAddAppointment.css"> --%>
     <script src="${pageContext.request.contextPath}/static/frontstage/js/vendor/modernizr-2.8.3.min.js"></script>
     
-    <!-- sweetalert -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-    
     <style>
 	    .error {
 			color: red;
@@ -60,7 +56,7 @@ pageContext.setAttribute("petTypes", petTypes);
 		}
 		
 		.errorRed {
-			border: 1px solid red;
+			border: 1px solid red !important;
 			box-shadow: 0 0 2px 1px #ffb9b9;
 		}
     
@@ -317,11 +313,11 @@ pageContext.setAttribute("petTypes", petTypes);
     
     .billing-information-wrapper {
         border-radius: 0 0 0.25rem 0.25rem;
-        border: 1px solid #dcdcdc !important;
+        border: 1px solid #dcdcdc;
         padding-top: 25px;
         height: 380px;
     }
-
+    
     .billing-information-wrapper.choiceSvc {
         overflow-y: auto; 
         width: 100vh;
@@ -385,7 +381,7 @@ pageContext.setAttribute("petTypes", petTypes);
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="billing-info">
-                                            <label>預約日期</label><span class="error schDateError">* ${errorMsgs.schID}</span>
+                                            <label>預約日期</label><span class="error schDateError">*</span>
                                             <select id="schDate" class="selectStyle system">
                                             <option style="display: none; color: #7c7c7c;" value="" id="defaultDate">請選擇日期</option>
                                             
@@ -416,7 +412,7 @@ pageContext.setAttribute("petTypes", petTypes);
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="billing-info">
-                                            <label>寵物名稱</label><span class="error petIDError">* ${errorMsgs.petID}</span>
+                                            <label>寵物名稱</label><span class="error petIDError">*</span>
                                             <select id="petID" class="selectStyle system">
                                             	<option style="display: none; color: #7c7c7c;" value="">請選擇寵物名稱</option>
 	                                            <c:forEach var="pet" items="${pets}">
@@ -461,10 +457,10 @@ pageContext.setAttribute("petTypes", petTypes);
                             <div class="block-header">
                                 <h4>選擇服務</h4>
                             </div>
-                            <div class="billing-information-wrapper choiceSvc col-12">
+                            <div class="billing-information-wrapper choiceSvc col-12 showRed">
                                 <div class="row">
                                 	<div class="col-12">
-                                		<span class="error schDateError">${errorMsgs.svcId}</span>
+                                		<span class="error svcError"></span>
                                         <select id="selectCat" class="selectStyle">
 <!--                                         	<option class="defaultSelect" style="display: none; color: #7c7c7c;" value="">其他服務類別</option> -->
                                         	<c:forEach var="cat" items="${catlist}">
@@ -496,9 +492,9 @@ pageContext.setAttribute("petTypes", petTypes);
                                     </div> 
                                         
                                   <form id="sendApmForm" method="post" action="${pageContext.request.contextPath}/ipet-front/salon/enterAppointment" style="width: 100%;">
-                                  		<input type="hidden" name="schID" id="unshowSchDate">
-                                  		<input type="hidden" name="petID" id="unshowPetID">
-                                  		<input type="hidden" name="customerNote" id="unshowNote">
+<!--                                   		<input type="hidden" name="schID" id="unshowSchDate"> -->
+<!--                                   		<input type="hidden" name="petID" id="unshowPetID"> -->
+<!--                                   		<input type="hidden" name="customerNote" id="unshowNote"> -->
                                   		
                                         <table id="example2" class="table">
                                         
@@ -756,16 +752,22 @@ pageContext.setAttribute("petTypes", petTypes);
     	$(document).on("change", "#schPeriod", function (e){
     		$("#Apmtime").html($("#schPeriod").val());
     		$("#ApmDate").html("請選擇日期");
+    		$(this).removeClass("errorRed");
+    		$(".periodError").text("*");
     	});
     	
     	//選擇日期
     	$(document).on("change", "#schDate", function (e){
     		$("#ApmDate").html($("#schDate option:selected").text());
+    		$(this).removeClass("errorRed");
+    		$(".schDateError").text("*");
     	});
     	
     	//選擇寵物
     	$(document).on("change", "#petID", function (e){
     		$("#ApmPetName").html($("#petID option:selected").text());
+    		$(this).removeClass("errorRed");
+    		$(".petIDError").text("*");
     	});
     	
     	//輸入備註
@@ -776,6 +778,8 @@ pageContext.setAttribute("petTypes", petTypes);
     	
     	//選擇服務
     	$(document).on("click", ".getsvcId", function (e){
+    		$(".showRed").removeClass("errorRed");
+    		$(".svcError").text("");
     		const thisId = $(this).val();
     		const svcName = $(this).parent().next().find(".choicesvcName").text();
     		const saleName = $(this).parent().next().find(".choiceSaleName").text();
@@ -829,7 +833,6 @@ pageContext.setAttribute("petTypes", petTypes);
     				if(getsvcId[i].checked){
     					const tr = $(getsvcId[i]).closest("tr");
     					const allValue = datatable.row(tr).data();
-    					console.log(allValue);
     					const salePrice = allValue.salePrice;
     					totalPrice += salePrice;
     				}
@@ -916,70 +919,59 @@ pageContext.setAttribute("petTypes", petTypes);
     	});
     	
     	/*===================== 送出新增資訊到後台 ==========================*/
-//     	$(document).on("click", "#submitAll", function (e){
+    	$(document).on("click", "#submitAll", function (e){
+    		e.preventDefault();
     		
-//     		//要送出的資訊
-//     		const schID = $("#schDate").val();
-//     		const petID = $("#petID").val();
-//     		const customerNote = $("#customerNote").val();
+    		//要送出的資訊
+    		const schID = $("#schDate").val();
+    		const petID = $("#petID").val();
+    		const customerNote = $("#customerNote").val();
     		
-//     		//資料：formData
-//     		const form = document.getElementById("sendApmForm");
-//        	 	let formData = new FormData(form);
-//        	 	formData.append("schID", schID);
-//        	 	formData.append("petID", petID);
-//        	 	formData.append("customerNote", customerNote);
+    		//資料：formData
+    		const form = document.getElementById("sendApmForm");
+       	 	let formData = new FormData(form);
+       	 	formData.append("schID", schID);
+       	 	formData.append("petID", petID);
+       	 	formData.append("customerNote", customerNote);
     		
-//     		$.ajax({
-//     	        url : "${pageContext.request.contextPath}/ipet-front/salon/ECPay",
-//     	        type : "POST",
-//     	        data : formData,
-//     	        cache: false,
-//     	        processData: false,
-//     	        contentType: false,
-//     	        beforeSend: function(){
-//     	        	$("#mainModal").css("display","block");
-//     	        },
-//     	        success : function(response) {
-//     	        	$("#mainModal").css("display","none");
-//     	        	if(!response){
-// 	    	        	showSwal("success-message");
-//     	        	}else {
-//     	 				console.log(response);
-//     	        	}
-//     	        },error: function(response) {
-//     	        	showSwal("something-Wrong");
-// 					alert("something-Wrong");
-//     	        }
-// 			});
+    		$.ajax({
+    	        url : "${pageContext.request.contextPath}/ipet-front/salon/enterAppointment",
+    	        type : "POST",
+    	        data : formData,
+    	        cache: false,
+    	        processData: false,
+    	        contentType: false,
+    	        success : function(response) {
+    	        	if(!response){
+    	        		let actionForm = $('<form>', {'action': '${pageContext.request.contextPath}/ipet-front/salon/ECPay', 'method': 'post'}).append($('<input>', {'type': 'hidden'}));
+      	        		actionForm.appendTo('body').submit();
+    	        	}else {
+    	        		const res = JSON.parse(response);
+  	    	        	if(res.svcId){
+  	    	        		$(".svcError").text("*" + res.svcId);
+  	    	        		$(".showRed").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 300 );
+  	    	        	}
+  	    	        	if(res.schID){
+  	    	        		$(".schDateError").text("*" + res.schID);
+  	    	        		$("#schDate").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 300 );
+  	    	        	}
+  	    	        	if(res.petID){
+  	    	        		$(".petIDError").text("*" + res.petID);
+  	    	        		$("#petID").addClass("errorRed");
+  	    	        		window.scrollTo( 0, 300 );
+  	    	        	}
+    	        	}
+    	        },error: function(response) {
+    	        	showSwal("something-Wrong");
+					alert("something-Wrong");
+    	        }
+			});
     		
-//     	});
+    	});
     	
     });
-    
-    
-    /*===================== 新增成功提示 ==========================*/
-    (function($) {
-    	  showSwal = function(type) {
-    	    "use strict";
-    	     if (type === "success-message") {
-    	    	 swal({
-    	    	        title: '新增成功!',
-    	    	        type: 'success',
-     	    		  	showConfirmButton: false,
-     	    		  	timer: 1500
-    	    	      })
-    	    }else if (type === "something-Wrong"){
-    	    	swal({
-	    	        title: "OOPS！Something's Wrong:(",
-	    	        text: "請再次嘗試或聯繫客服人員協助處理",
-	    	        type: 'info',
- 	    		  	showConfirmButton: true,
-	    	      })
-    	    } 
-    	  }
-
-    	})(jQuery);
     
     </script>
     

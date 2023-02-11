@@ -53,7 +53,8 @@ public class AppointAddController extends HttpServlet{
 			appointServicesImp.addAppointment(appointment);
 			System.out.println("新增一筆預約！預約編號：" + appointment.getApmID());
 			
-			req.getRequestDispatcher("/ipet-front/member/salonAppointment").forward(req, res);
+			res.sendRedirect(req.getContextPath() + "/ipet-front/member/salonAppointment");
+			
 		}
 	}
 
@@ -119,7 +120,8 @@ public class AppointAddController extends HttpServlet{
 		
         //檢查資料
 		if("/ipet-front/salon/enterAppointment".equals(path)) {
-		
+			
+			res.setContentType("text/html;charset=utf-8");
 			Map<String,String> errorMsgs = new HashMap<>();
 			
 			/*************1.接收請求參數 - 輸入格式的錯誤處理**********/
@@ -154,18 +156,7 @@ public class AppointAddController extends HttpServlet{
 			
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				
-				List<Pet> pets = new PetService().getPetByMemId(member.getMemId());
-	        	req.setAttribute("pets", pets);
-	        	
-	        	List<JobSchedule> noAppointmentSchs = new JobScheduleServicesImp().findNoAppointmentSch();
-	        	req.setAttribute("noApmSchs", noAppointmentSchs);
-	        	
-	        	List<Service> allservices = new ServiceService().selectAll();
-	        	req.setAttribute("allservices", gson.toJson(allservices));
-	        	
-				req.setAttribute("errorMsgs", errorMsgs);
-				req.getRequestDispatcher("/templates/frontstage/salon/salon_addAppointment.jsp").forward(req, res);
+				res.getWriter().print(gson.toJson(errorMsgs));
 				return; //程式中斷
 			}
 			
@@ -198,7 +189,7 @@ public class AppointAddController extends HttpServlet{
 				apps[i] = appointmentDetail;
 			}
 			
-			/*********************3.傳送資料到ECPay************************/
+			/*********************3.在session中加入預約訂單************************/
 			Appointment appointment = new Appointment();
 			appointment.setMemID(memID);
 			appointment.setPetID(petID);
@@ -210,7 +201,7 @@ public class AppointAddController extends HttpServlet{
 			
 			req.getSession().setAttribute("addAppointment", appointment);
 			
-			req.getRequestDispatcher("/ipet-front/salon/ECPay").forward(req, res);
+//			req.getRequestDispatcher("/ipet-front/salon/ECPay").forward(req, res);
 			
 		}
 		

@@ -480,6 +480,7 @@
             
         	$(".aType").on("click", function () {
                 datatable.columns(".typeName").search($(this).val()).draw();
+                window.scrollTo( 0, 200 );
             });
             
         	/* Custom filtering function which will search data in column four between two values */
@@ -531,7 +532,10 @@
 				}
 			});
         	
-        	
+			/*===================== 換頁 ==========================*/
+        	$(document).on("click", "a.page-link", function(){
+        		window.scrollTo( 0, 200 );
+        	});
         	
         });
         

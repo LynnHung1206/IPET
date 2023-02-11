@@ -154,6 +154,10 @@
    		border-right: 1px solid white;
    }
    
+   .pagination {
+   	margin-left: 35%;
+   }
+   
 </style>
 	</head>
 	<body class="hold-transition sidebar-mini">
@@ -312,6 +316,7 @@
             "paging": true,
             "lengthChange": false,
             "ordering": true,
+            "info" : true,
             "autoWidth": false,
             "responsive": true,
             "data": ${sales},
@@ -518,7 +523,12 @@
             $(this).addClass("on");
         });
     	
-    })
+    	/*===================== 換頁 ==========================*/
+    	$(document).on("click", "a.page-link", function(){
+    		window.scrollTo( 0, 0 );
+    	});
+    	
+    });
 		
   </script>
 </body>

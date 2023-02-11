@@ -59,7 +59,7 @@
 		
 		/* ================== table ====================*/
 		.card {
-		    margin: 45px;
+		    margin: 25px;
 	    }
 	    
 	    table {
@@ -227,6 +227,12 @@
 		display: block;
 	}
 	
+	#searchApm {
+		border: 1px solid #dedede;
+		background-color: white;
+		text-align: center;
+	}
+	
     </style>
 </head>
 
@@ -247,8 +253,11 @@
     <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="row">
+          <div class="row" style="min-height: 500px;">
             <div class="col-12">
+              <div class="card">
+              	<input id="searchApm" type="text" placeholder="輸入寵物名稱、預約日期、服務名稱搜尋">
+              </div>
               <div class="card">
               	<div class="card-header">
                   <button class="card-change on" value="all" id="apm">所有預約</button>
@@ -357,6 +366,14 @@
 		            	className: "apmStatusDesc",	
 		            	"visible": false
 		            },
+		            { data: "petName", 
+		            	className: "petName",	
+		            	"visible": false
+		            },
+		            { data: "schPeriod", 
+		            	className: "schPeriod",	
+		            	"visible": false
+		            },
 		            { data: null,
 		            	render: function(data, type){
 		            		const allSvc = format(data);
@@ -405,6 +422,16 @@
 			           },
 			     }
               });
+        	
+        	/*===================== 換頁 ==========================*/
+        	$(document).on("click", "a.page-link", function(){
+        		window.scrollTo( 0, 230 );
+        	});
+        	
+        	/*===================== 查詢 ==========================*/
+        	$(document).on("keyup change", "#searchApm", function(){
+        		datatable.search($("#searchApm").val()).draw();
+        	});
         	
         	/*===================== 切換狀態 ==========================*/
         	

@@ -559,6 +559,7 @@
 		  }
 		  
 		  $(".typePriceBorder").removeClass("errorRed");
+		  $(".typeError").text("*");
 		  //判斷checkbox是否選取，若是，append into tbody
 		  for(let i = 0; i < aTypeLength; i++){
 			const aTypeNum = $(".aType").eq(i);
@@ -590,14 +591,17 @@
       
       $(document).on("change", "#svc_category_id", function (){
       	$(this).removeClass("errorRed");
+      	$(".catError").text("*");
       });
         
       $(document).on("change", "#svc_name", function (){
       	$(this).removeClass("errorRed");
+      	$(".nameError").text("*");
       });
       
       $(document).on("change", ".noPrice", function (){
       	$(this).removeClass("errorRed");
+      	$(".typeError").text("*");
       });
       
       /*===================== 送出新增資訊到後台 ==========================*/

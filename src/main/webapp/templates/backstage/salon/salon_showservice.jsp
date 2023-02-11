@@ -582,6 +582,10 @@ pageContext.setAttribute("catlist", catlist);
 				$("#mybtnlabel-right").removeClass("labelOn");
 			});
 			
+			/*===================== 換頁 ==========================*/
+        	$(document).on("click", "a.page-link", function(){
+        		window.scrollTo( 0, 120 );
+        	});
 			
 			/*===================== 刪除服務 ==========================*/
 	        $(document).on("submit", ".deleteSvc", function (e){
