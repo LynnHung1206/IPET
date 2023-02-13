@@ -45,7 +45,7 @@
 								<h3 class="animated">welcome to IPET</h3>
 								<h1 style="font-family: fantasy">即刻享用服務</h1>
 								<div class="slider-btn">
-									<a class="animated" href="product-details.html">SHOP NOW</a>
+									<a class="animated" href="${pageContext.request.contextPath}/ipet-front/shop/home">SHOP NOW</a>
 								</div>
 							</div>
 						</div>

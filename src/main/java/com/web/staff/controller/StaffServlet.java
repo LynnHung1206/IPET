@@ -33,6 +33,10 @@ public class StaffServlet extends HttpServlet {
 			StaffService staffSvc = new StaffServiceImpl();
 			List<Staff> list = staffSvc.getAll();
 			req.setAttribute("list", list);
+			
+			AdminService adminSvc = new AdminServiceImpl();
+			List<Admin> adminList = adminSvc.getAll();
+			req.setAttribute("adminvo", adminList);
 			req.getRequestDispatcher("/templates/backstage/staff/staffList.jsp").forward(req, res);
 		}
 		if ("/ipet-back/staff/addNew".equals(path)) {
