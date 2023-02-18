@@ -87,6 +87,18 @@ public class ServiceService {
 		return enterInformation(services);
 	}
 	
+	public List<Service> notOnSaleServices(){
+		List<Service> list = enterInformation(dao.getAll());
+		List<Service> services = new ArrayList<>();
+		
+		for(Service service : list) {
+			if(service.getSalePrice() == service.getSvcPrice()) {
+				services.add(service);
+			}
+		}
+		return services;
+	}
+	
 	
 	private List<Service> enterInformation(List<Service> services) {
 		

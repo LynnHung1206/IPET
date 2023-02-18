@@ -246,7 +246,7 @@
 						<div class="typePriceBorder">
 						<select
 							id="pet-size" class="form-control custom-select">
-							<option selected style="display: none;">請選擇寵物體型</option>
+<!-- 							<option selected style="display: none;">請選擇寵物體型</option> -->
 							<option>大型犬</option>
 							<option>中型犬</option>
 							<option>小型犬</option>

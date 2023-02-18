@@ -345,11 +345,12 @@ pageContext.setAttribute("catlist", catlist);
 					<table id="example2" class="table table-bordered table-hover">
 						<thead style="background-color: #6c757d; color: white;">
 							<tr>
-								<th></th>
+								<th><input type="checkbox" id="choiceAll" style="width: 20px; height: 20px;"></th>
 								<th style="width: 90px;">服務編號</th>
 								<th>服務名稱</th>
 								<th>服務類別</th>
 								<th>寵物種類</th>
+								<th>寵物體型</th>
 								<th>服務單價</th>
 								<th>狀態</th>
 							</tr>
@@ -470,6 +471,12 @@ pageContext.setAttribute("catlist", catlist);
 						<button id="addSaleBtn" class="button-style" style="color: #4a4747; border-color: #4a4747;"><i class="fas fa-thin fa-plus" style="margin-right: 5px;"></i>
 						<span style="font-weight: 700;">新增服務</span></button>
 						<span class="error typeAndPriceError"></span>
+						<div style="float: right; margin: 0 20px;">
+							<span>批量折扣：</span>
+							<input type="number" id="batchPrice" min="0" max="10">
+							<span>折</span>
+							<input type="submit" id="enterBatchPrice" value="套用" style="margin-left: 10px; width: 100px;">
+						</div>
 						
 						<table class="view-type-price c3">
 						<thead>
@@ -598,6 +605,7 @@ pageContext.setAttribute("catlist", catlist);
 	            { data: "svcName", responsivePriority: 2 },
 	            { data: "catName", responsivePriority: 5 },
 	            { data: "typeName", responsivePriority: 3 },
+	            { data: "petSize", responsivePriority: 7 },
 	            { data: "svcPrice", 
 	            	responsivePriority: 4 },
 	            { data: "svcStatusName", responsivePriority: 6 },
@@ -662,6 +670,27 @@ pageContext.setAttribute("catlist", catlist);
 	    	const checkBoxId = $("#svcId" + IdNum);
 	    	checkBoxId.prop("checked", !checkBoxId.prop("checked"));
         });
+    	
+	    $('#example2').on('click','.chooseSvcId',function() {
+	    	const IdNum = datatable.row($(this).parent()).data().svcId;
+	    	const checkBoxId = $("#svcId" + IdNum);
+	    	checkBoxId.prop("checked", !checkBoxId.prop("checked"));
+        });
+    	
+    	//全部選取
+    	$(document).on("click", "#choiceAll", function () {
+    		if($("#choiceAll").prop("checked") === false){
+    			$(".chooseSvcId").prop("checked", false);
+    		}else{
+    			$(".chooseSvcId").prop("checked", true);
+    			const all = document.querySelectorAll(".chooseSvcId");
+    			for(let i = 0; i < all.length; i++){
+    				if($(all[i]).prop("disabled") === true){
+    					$(all[i]).prop("checked", false);
+            		}
+    			}
+    		}
+    	});
     		
     	
     	/*===================== 查詢 ==========================*/
@@ -711,6 +740,7 @@ pageContext.setAttribute("catlist", catlist);
           timePickerIncrement: 1,
           timePickerSeconds: true,
           timePicker24Hour: true,
+          minDate: moment().add(0.5, 'hours'),
           "singleDatePicker": true,
           "opens": "left",
           "locale": locale
@@ -791,6 +821,25 @@ pageContext.setAttribute("catlist", catlist);
       $("#summernote").summernote();
       
 	  /*===================== 計算金額 ==========================*/
+	  	//批次
+	  	$(document).on("click", "#enterBatchPrice", function (){
+	  		const allSalePrice = document.querySelectorAll(".beSentSalePrice");
+	  		
+	  		for(let i = 0; i < allSalePrice.length; i++){
+	  			const input = $(allSalePrice[i]);
+	  			const svcSrice = input.parent().parent().prev().text();
+	  			
+	  			//轉換成數字
+		    	const noDot = svcSrice.replace(",","");
+		    	const spaceStr = noDot.indexOf(" ");
+		    	const svcPriceNum = noDot.substring(spaceStr + 1);
+		    	
+		    	const svcSalePrice = $("#batchPrice").val() * 0.1 * svcPriceNum;
+		    	input.val(Math.floor(svcSalePrice));
+		    	$(".saleCount").val($("#batchPrice").val());
+	  		}
+	    });
+	  
 	    
 	    $(document).on("keyup click", ".saleCount", function (){
 	    	const input = $(this).parent().prev().find(".beSentSalePrice");
@@ -857,7 +906,7 @@ pageContext.setAttribute("catlist", catlist);
 		        <td>` + svcIdNum.next().next().text() + `</td>
 		        <td>` + svcIdNum.next().next().next().text() + `</td>
 		        <td>` + svcIdNum.next().next().next().next().text() + `</td>
-		        <td>` + svcIdNum.next().next().next().next().next().text() + `</td>
+		        <td>` + svcIdNum.next().next().next().next().next().next().text() + `</td>
 		        <td>
 		        	<div style="position: relative; display: inline-block;">
 						<span id="money-icon">$</span>

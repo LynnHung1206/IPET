@@ -318,7 +318,7 @@
 						<!-- card-body -->
 						<div class="card-body" style="display: none;">
 						</div>
-							<input type="text" id="searchSvc" placeholder="快速查詢..." style="border: 1px solid #d2d2d2; width: 100%; height: 40px; padding-left: 10px;">
+							<input type="text" id="searchSvc" placeholder="快速查詢( 若多條件請以空白鍵區隔 )" style="border: 1px solid #d2d2d2; width: 100%; height: 40px; padding-left: 10px;">
 				</div>
 						<!-- /.card-body -->
 				
@@ -326,11 +326,12 @@
 					<table id="example2" class="table table-bordered table-hover">
 						<thead style="background-color: #6c757d; color: white;">
 							<tr>
-								<th></th>
+								<th><input type="checkbox" id="choiceAll" style="width: 20px; height: 20px;"></th>
 								<th style="width: 90px;">服務編號</th>
 								<th>服務名稱</th>
 								<th>服務類別</th>
 								<th>寵物種類</th>
+								<th>寵物體型</th>
 								<th>服務單價</th>
 								<th>狀態</th>
 							</tr>
@@ -425,6 +426,12 @@
 					<div class="card-body">
 						<button id="addSaleBtn" class="button-style" style="color: #4a4747; border-color: #4a4747;"><i class="fas fa-thin fa-plus" style="margin-right: 5px;"></i>
 						<span style="font-weight: 700;">新增服務</span></button><span class="error typeAndPriceError"></span>
+						<div style="float: right; margin: 0 20px;">
+							<span>批量折扣：</span>
+							<input type="number" id="batchPrice" min="0" max="10">
+							<span>折</span>
+							<input type="submit" id="enterBatchPrice" value="套用" style="margin-left: 10px; width: 100px;">
+						</div>
 						
 						<table class="view-type-price c3">
 						<thead>
@@ -533,6 +540,7 @@
 	            { data: "svcName", responsivePriority: 2 },
 	            { data: "catName", responsivePriority: 5 },
 	            { data: "typeName", responsivePriority: 3 },
+	            { data: "petSize", responsivePriority: 7 },
 	            { data: "svcPrice", 
 	            	render: DataTable.render.number(',', null, 0, '$ '),
 	            	responsivePriority: 4 },
@@ -615,6 +623,27 @@
 	    	checkBoxId.prop("checked", !checkBoxId.prop("checked"));
         });
     	
+	    $('#example2').on('click','.chooseSvcId',function() {
+	    	const IdNum = datatable.row($(this).parent()).data().svcId;
+	    	const checkBoxId = $("#svcId" + IdNum);
+	    	checkBoxId.prop("checked", !checkBoxId.prop("checked"));
+        });
+    	
+    	//全部選取
+    	$(document).on("click", "#choiceAll", function () {
+    		if($("#choiceAll").prop("checked") === false){
+    			$(".chooseSvcId").prop("checked", false);
+    		}else{
+    			$(".chooseSvcId").prop("checked", true);
+    			const all = document.querySelectorAll(".chooseSvcId");
+    			for(let i = 0; i < all.length; i++){
+    				if($(all[i]).prop("disabled") === true){
+    					$(all[i]).prop("checked", false);
+            		}
+    			}
+    		}
+    	});
+    	
     	/*===================== 彈出視窗 ==========================*/
 
 		//點擊按鈕時打開彈出視窗
@@ -661,6 +690,25 @@
       $("#summernote").summernote();
       
 	  /*===================== 計算金額 ==========================*/
+	  
+	    //批次
+	  	$(document).on("click", "#enterBatchPrice", function (){
+	  		const allSalePrice = document.querySelectorAll(".beSentSalePrice");
+	  		
+	  		for(let i = 0; i < allSalePrice.length; i++){
+	  			const input = $(allSalePrice[i]);
+	  			const svcSrice = input.parent().parent().prev().text();
+	  			
+	  			//轉換成數字
+		    	const noDot = svcSrice.replace(",","");
+		    	const spaceStr = noDot.indexOf(" ");
+		    	const svcPriceNum = noDot.substring(spaceStr + 1);
+		    	
+		    	const svcSalePrice = $("#batchPrice").val() * 0.1 * svcPriceNum;
+		    	input.val(Math.floor(svcSalePrice));
+		    	$(".saleCount").val($("#batchPrice").val());
+	  		}
+	    });
 	    
 	    $(document).on("keyup click", ".saleCount", function (){
 	    	const input = $(this).parent().prev().find(".beSentSalePrice");
@@ -709,7 +757,7 @@
 		        <td>` + svcIdNum.next().next().text() + `</td>
 		        <td>` + svcIdNum.next().next().next().text() + `</td>
 		        <td>` + svcIdNum.next().next().next().next().text() + `</td>
-		        <td>` + svcIdNum.next().next().next().next().next().text() + `</td>
+		        <td>` + svcIdNum.next().next().next().next().next().next().text() + `</td>
 		        <td>
 		        	<div style="position: relative; display: inline-block;">
 						<span id="money-icon">$</span>

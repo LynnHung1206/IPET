@@ -388,6 +388,7 @@
                 	{ data: "svcName", "visible": false, className: "svcName" },
                 	{ data: "typeName", "visible": false, className: "typeName" },
                 	{ data: "svcPrice", "visible": false, className: "svcPrice" },
+                	{ data: "svcStatus", "visible": false, className: "svcStatus" },
 		            { data: null,
 		            	render: function(data, type){
 		            		const svcPrice = data.svcPrice;
@@ -474,6 +475,8 @@
         	});
         	
             /*===================== 搜索 ==========================*/
+            datatable.columns(".svcStatus").search(0).draw();
+            
         	$("#searchSvcName").on('keyup click', function () {
         		datatable.search($(this).val()).draw();
         	});

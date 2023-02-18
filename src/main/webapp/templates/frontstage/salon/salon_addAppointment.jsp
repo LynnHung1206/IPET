@@ -658,6 +658,62 @@ pageContext.setAttribute("petTypes", petTypes);
     	
     	if(sessionSvcId !== ""){
     		$("#svcshow" + sessionSvcId).prop("checked", true);
+    		
+    		const thisId = $("#svcshow" + sessionSvcId).val();
+    		const svcName = $("#svcshow" + sessionSvcId).parent().next().find(".choicesvcName").text();
+    		const saleName = $("#svcshow" + sessionSvcId).parent().next().find(".choiceSaleName").text();
+    		const svcContent = $("#svcshow" + sessionSvcId).parent().next().find(".choiceContent").text();
+    		const salePrice = $("#svcshow" + sessionSvcId).parent().next().next().find(".svcBlock-salePrice").text();
+    		const svcPrice = $("#svcshow" + sessionSvcId).parent().next().next().find(".svcBlock-noSalePrice").text();
+    		const innerText = `
+    			<div id="showApmDetail` + thisId + `">
+	    			<div class="mt-25 mb-25 svcBlock">
+	                <div class="product-img" style="background-image: url(${pageContext.request.contextPath}/ipet-front/service/showSvcImg?svcId=` + thisId + `);"></div>
+	                    <div class="svcBlock-info">
+	                        <h5>` + svcName + `</h5><span class="ifSaleName">` + saleName + `</span>
+	                        <div class="toBlock">` + svcContent + `</div>
+	                    </div>
+	                    <div class="floatRB">
+	                        <div class="svcBlock-salePrice-show" style="color: #f51515;">` + salePrice + `</div>
+	                        <div class="svcBlock-noSalePrice-show">` + svcPrice + `</div>
+	                    </div>
+	            	</div>
+	            </div>
+    		`;
+    		$("#ApmSvc").append(innerText);
+    			const salePriceCheck2 = document.querySelectorAll(".svcBlock-salePrice-show");
+    	    	
+    	    	for(let i = 0; i < salePriceCheck2.length; i++){
+    	    		const sale = salePriceCheck2[i];
+    	    		if(sale.textContent !== ""){
+    	    			document.querySelectorAll(".svcBlock-noSalePrice-show")[i].style.textDecoration = "line-through";
+    	    	}
+    	    	
+    	    	/*===================== 優惠background-color隱藏 ==========================*/
+            	
+            	const ifSaleName = document.querySelectorAll(".ifSaleName");
+            	
+            	for(let i = 0; i < ifSaleName.length; i++){
+            		const saleName = ifSaleName[i];
+            		if(saleName.innerHTML === "" || saleName.textContent === ""){
+            			saleName.style.backgroundColor = "white";
+            		}
+            	}
+    		}
+    	    	/*===================== totalPrice ==========================*/
+    			const getsvcId = document.querySelectorAll(".getsvcId");
+    	    	let totalPrice = 0;
+    	    	
+    			for(let i = 0; i < getsvcId.length; i++){
+    				if(getsvcId[i].checked){
+    					const tr = $(getsvcId[i]).closest("tr");
+    					const allValue = datatable.row(tr).data();
+    					const salePrice = allValue.salePrice;
+    					totalPrice += salePrice;
+    				}
+            	}
+    			
+    			$("#ApmTotalPrice").html("$" + totalPrice);
     	}
     	
     	/*===================== 查詢 ==========================*/
@@ -706,6 +762,7 @@ pageContext.setAttribute("petTypes", petTypes);
     	});
     	
     	$(document).on("change", "#petID", function (e){
+    		$(".getsvcId").prop("checked", false);
     		if($("#petID").val() !== sessionSvcId){
     			datatable.columns(".svcId").search("").draw();
     			$("#ApmSvc").empty();
@@ -777,7 +834,7 @@ pageContext.setAttribute("petTypes", petTypes);
     	
     	
     	//選擇服務
-    	$(document).on("click", ".getsvcId", function (e){
+    	$(document).on("click", ".getsvcId", function addDetail(e){
     		$(".showRed").removeClass("errorRed");
     		$(".svcError").text("");
     		const thisId = $(this).val();

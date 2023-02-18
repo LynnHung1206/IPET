@@ -418,7 +418,6 @@
 	    	
 	    	addSaleBox.style.display = "block";
 			document.body.style.overflow = "hidden";
-			console.log(row.data());
         });
 		
 

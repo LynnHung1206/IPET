@@ -314,18 +314,22 @@ pageContext.setAttribute("catlist", catlist);
 		      
 		      $(document).on("change", "#svc_category_id", function (){
 		      	$(this).removeClass("errorRed");
+		      	$(".catError").text("*");
 		      });
 		        
 		      $(document).on("change", "#svc_name", function (){
 		      	$(this).removeClass("errorRed");
+		      	$(".nameError").text("*");
 		      });
 		      
 		      $(document).on("change", "#pet_type", function (){
 		      	$(this).removeClass("errorRed");
+		      	$(".typeError").text("*");
 		      });
 		      
 		      $(document).on("change", "#svc_price", function (){
 		      	$(this).removeClass("errorRed");
+		      	$(".priceError").text("*");
 		      });
 			
 			/*===================== 送出新增資訊到後台 ==========================*/

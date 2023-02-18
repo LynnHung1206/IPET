@@ -49,7 +49,7 @@ public class SaleServlet extends HttpServlet {
 		} else
 
 		if ("/ipet-back/salonSale/addSale".equals(path)) {
-			List<Service> services = new ServiceService().selectAll();
+			List<Service> services = new ServiceService().notOnSaleServices();
 			req.setAttribute("services", gson.toJson(services));
 			req.getRequestDispatcher("/templates/backstage/salon/salon_addsale.jsp").forward(req, res);
 		}
