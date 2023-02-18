@@ -14,11 +14,7 @@ StaffService staffSvc = new StaffServiceImpl();
 List<Staff> list = staffSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
-<%
-AdminService adminSvc = new AdminServiceImpl();
-List<Admin> adminvo = adminSvc.getAll();
-pageContext.setAttribute("adminvo", adminvo);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
