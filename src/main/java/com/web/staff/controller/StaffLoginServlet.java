@@ -40,12 +40,7 @@ public class StaffLoginServlet extends HttpServlet {
 		StaffService staffSvc = new StaffServiceImpl();
 		staff = staffSvc.login(staff);
 
-		if (staff.getStatus() == 1) {
-			staff.setMessage("此帳號已被停權");
-			staff.setSuccessful(false);
-			turnToJson(resp, staff);
-			return;
-		}
+		
 
 		if (staff.isSuccessful()) {
 			if (req.getSession(false) != null) {

@@ -68,6 +68,11 @@ public class StaffServiceImpl implements StaffService {
 			staff.setSuccessful(false);
 			return staff;
 		}
+		if (staff.getStatus() == 1) {
+			staff.setMessage("此帳號已被停權");
+			staff.setSuccessful(false);
+			return staff;
+		}
 		staff.setMessage("登入成功");
 		staff.setSuccessful(true);
 		return staff;
