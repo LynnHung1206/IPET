@@ -592,6 +592,7 @@ pageContext.setAttribute("petTypes", petTypes);
             	{ data: "petSize", "visible": false, className: "petSize" },
             	{ data: "typeName", "visible": false, className: "typeName" },
             	{ data: "typeId", "visible": false, className: "typeId" },
+            	{ data: "svcStatus", "visible": false, className: "svcStatus" },
                 { data: null,
                 	render: function(data, type){
                 		const svcPrice = data.svcPrice;
@@ -717,6 +718,8 @@ pageContext.setAttribute("petTypes", petTypes);
     	}
     	
     	/*===================== 查詢 ==========================*/
+    	datatable.columns(".svcStatus").search(0).draw();
+    	
     	//當載入時搜索
     	datatable.columns(".catId").search($("#selectCat").val()).draw();
     	datatable.columns(".svcId").search(sessionSvcId).draw();

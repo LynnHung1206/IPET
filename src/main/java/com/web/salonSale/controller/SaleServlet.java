@@ -317,10 +317,7 @@ public class SaleServlet extends HttpServlet {
 			saleService.deleteSale(saleId);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/templates/backstage/salon/salon_showsale.jsp";
-			List<Sale> sales = saleService.selectAll();
-			req.setAttribute("sales", gson.toJson(sales));
-			req.getRequestDispatcher(url).forward(req, res);// 刪除成功後,轉交回送出刪除的來源網頁
+			res.sendRedirect(req.getContextPath() + "/ipet-back/salonSale/allSale");
 		}
 	}
 	// 限制更動的開始時間只能比現在時間晚，否則更新失敗

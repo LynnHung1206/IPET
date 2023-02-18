@@ -375,7 +375,7 @@
 	            	render: function(data, type){
 	            		if(data.saleStatus === "未開始"){
 	            			return `
-			            		<form METHOD="post" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/deleteSale">
+			            		<form METHOD="post" class="deleteSale" ACTION="${pageContext.request.contextPath}/ipet-back/salonSale/deleteSale">
 									<input type="hidden" name="saleId" value=` + data.saleId + `>
 									<label><i class="nav-icon fas fa-solid fa-trash"></i>
 										<input type="submit" style="display: none;">
@@ -526,6 +526,16 @@
     	$(document).on("click", "a.page-link", function(){
     		window.scrollTo( 0, 0 );
     	});
+    	
+    	
+    	/*===================== 刪除優惠 ==========================*/
+        $(document).on("submit", ".deleteSale", function (e){
+       		const yes = confirm("將要刪除一項優惠，是否確定刪除？");
+       		if(!yes){
+       			e.preventDefault();
+       			return;
+       		}
+        });
     	
     });
 		
